@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "da-bubble-ca3ba": {
+      "hosting": {
+        "dabubble": [
+          "da-bubble-ca3ba"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "da-bubble-ca3ba"
+  }
+}
