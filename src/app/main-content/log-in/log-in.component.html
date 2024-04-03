@@ -14,17 +14,34 @@
       </div>      
     </mat-card-header>
     <mat-card-content class="card-content"> 
-      <form>
-        <mat-form-field class="full-width">
-          <mat-icon matSuffix>mail_outline</mat-icon>
-          <input matInput placeholder="beispielname@email.com">
-          <mat-hint>*Diese E-Mail-Adresse ist leider ungültig.</mat-hint>
-        </mat-form-field>
-        <mat-form-field class="full-width">
-          <mat-icon matSuffix>lock_outline</mat-icon>
-          <input matInput placeholder="Passwort">
-          <mat-hint>Falsches Passwort. Bitte noch einmal versuchen.</mat-hint>
-        </mat-form-field>
+      <form>        
+
+        <div class="form-box">
+          <div class="input-with-icon">
+            <input type="email" name="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" placeholder="beispielname@email.com" required>
+            <img src="./assets/img/log-in/mail.svg">
+
+            <!-- <img        
+        [src]="
+          email.valid
+          ? './assets/img/log-in/mail.svg'
+          : './assets/img/log-in/mail_black.svg'
+          "
+        alt="icon"
+        /> -->
+
+          </div>
+          <span class="required">*Diese E-Mail-Adresse ist leider ungültig.</span>
+        </div>
+
+        <div class="form-box">
+          <div class="input-with-icon">
+            <input type="text" name="password" placeholder="Passwort" required>
+            <img src="./assets/img/log-in/lock.svg">
+          </div>
+          <span class="required">Falsches Passwort. Bitte noch einmal versuchen.</span>
+        </div>
+        
       </form>
     </mat-card-content>
     <mat-card-actions>

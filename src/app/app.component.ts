@@ -15,5 +15,5 @@ import { LogInComponent } from './main-content/log-in/log-in.component';
 })
 export class AppComponent {
   title = 'dabubble';
-  isOnline: boolean = true; // muss aus dem Service kommen
+  isOnline: boolean = false; // muss aus dem Service kommen
 }
