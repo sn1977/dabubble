@@ -6,42 +6,55 @@
 
   <mat-card>
     <mat-card-header>
-      <div class="headline">        
+      <div class="headline">
         <mat-card-title>Anmeldung</mat-card-title>
         <mat-card-subtitle>
-          Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit verwendest.
+          Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit
+          verwendest.
         </mat-card-subtitle>
-      </div>      
+      </div>
     </mat-card-header>
-    <mat-card-content class="card-content"> 
-      <form>        
-
+    <mat-card-content class="card-content">
+      <form ngNativeValidate>
         <div class="form-box">
           <div class="input-with-icon">
-            <input type="email" name="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" placeholder="beispielname@email.com" required>
-            <img src="./assets/img/log-in/mail.svg">
-
-            <!-- <img        
-        [src]="
-          email.valid
-          ? './assets/img/log-in/mail.svg'
-          : './assets/img/log-in/mail_black.svg'
-          "
-        alt="icon"
-        /> -->
-
+            <input
+              type="email"
+              name="email"
+              #email="ngModel"
+              [(ngModel)]="contactData.email"
+              pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+              placeholder="beispielname@email.com"
+              required
+            />
+            <img
+              [src]="
+                email.valid || email.touched
+                  ? './assets/img/log-in/mail_black.svg'
+                  : './assets/img/log-in/mail.svg'
+              "
+              alt="icon"
+            />
           </div>
+          @if (!email.valid && email.touched && !email.disabled){
           <span class="required">*Diese E-Mail-Adresse ist leider ungültig.</span>
+          }
         </div>
 
         <div class="form-box">
           <div class="input-with-icon">
-            <input type="text" name="password" placeholder="Passwort" required>
-            <img src="./assets/img/log-in/lock.svg">
+            <input
+              type="text"
+              name="password"
+              placeholder="Passwort"
+              required
+            />
+            <img src="./assets/img/log-in/lock.svg" />
           </div>
-          <span class="required">Falsches Passwort. Bitte noch einmal versuchen.</span>
+          <span class="required"
+            >Falsches Passwort. Bitte noch einmal versuchen.</span
+          >
         </div>
-        
       </form>
     </mat-card-content>
     <mat-card-actions>

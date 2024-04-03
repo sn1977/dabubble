@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-
+import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import {
   MatDialogActions,
@@ -12,10 +12,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 
+
 @Component({
   selector: 'app-log-in',
   standalone: true,
-  imports: [
+  imports: [    
     MatCardModule,
     MatDialogModule,
     MatDialogContent,
@@ -24,11 +25,16 @@ import { FormsModule } from '@angular/forms';
     MatInputModule,
     MatFormFieldModule,
     FormsModule,
-    MatIconModule
+    MatIconModule,
   ],
   templateUrl: './log-in.component.html',
   styleUrl: './log-in.component.scss'
 })
-export class LogInComponent {
+export class LogInComponent {  
 
+  contactData = {
+    name: '',
+    email: '',
+    message: '',
+  };
 }
