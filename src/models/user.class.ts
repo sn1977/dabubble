@@ -11,7 +11,6 @@ export class User {
 
 
   constructor(obj?: any) {
-
     this.avatar = obj ? obj.avatar : '';
     this.badPasswordCount = obj ? obj.badPasswordCount : '';
     this.email = obj ? obj.email : '';
@@ -24,7 +23,14 @@ export class User {
 
   public toJSON() {
     return {
+      avatar: this.avatar,
+      badPasswordCount : this.badPasswordCount,
+      email: this.email,
+      isActive: this.isActive,
+      isBlocked: this.isBlocked,
+      isOnline: this.isOnline,      
       name: this.name,
+      password: this.password
     };
   }
 }
