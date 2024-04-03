@@ -1,1 +1,45 @@
-<p>log-in works!</p>
+<div class="content">  
+
+  <div class="logo">
+    <img src="./assets/img/log-in/logo.svg">
+    <span class="logo-name">DABubble</span>
+  </div>
+
+  <mat-card>
+    <mat-card-content>
+      
+      <mat-dialog-content>
+        <div class="mt-8">
+          <mat-form-field class="mr-16" appearance="outline">
+            <mat-label>First Name</mat-label>
+            <input [(ngModel)]="user" matInput />
+    
+          </mat-form-field>
+    
+          <mat-form-field appearance="outline">
+            <mat-label>Last Name</mat-label>
+            <input [(ngModel)]="user" matInput />
+          </mat-form-field>
+        </div>
+    
+        
+    
+        <div>
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Street + House No.</mat-label>
+            <input [(ngModel)]="user" matInput />
+          </mat-form-field>
+        </div>
+    
+      </mat-dialog-content>
+
+
+    </mat-card-content>
+  </mat-card>
+
+  <div class="new-user">
+    <span>Neu bei DABubble?</span>
+    <button>Konto erstellen</button>
+  </div>
+
+</div>

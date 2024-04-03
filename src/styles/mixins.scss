@@ -5,3 +5,10 @@
   flex-direction: $fd;
   gap: $g;
 }
+
+@mixin card($br: 30px, $plr: 80px, $ptb: 1px) {  
+  border-radius: $br;
+  padding: $plr $ptb;
+  background-color: #FFF;
+  box-shadow: 0px 2px 10px 0px #00000014;
+}
