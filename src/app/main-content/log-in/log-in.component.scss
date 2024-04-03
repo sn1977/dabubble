@@ -1,6 +1,7 @@
 @import "../../../styles/mixins.scss";
 
-.content {  
+.content {
+  position: relative;
   padding: 0 16px;
   height: 100vh;
   @include dFlex($jc: center, $ai: center, $fd: column, $g: 30px);
@@ -15,18 +16,34 @@
     }
 
     .logo-name{
-      font-size: 20.74px;
+      font-size: 24px;
       font-weight: 700;      
     }
   }
 }
 
-mat-card{  
-  @include card($w: 100%, $h: 552px, $br: 30px, $plr: 80px, $ptb: 1px);
-  mat-card-content{
+mat-card{
+  position: relative;
+  @include card($w: 100%, $h: 552px, $br: 30px, $ptb: 35px, $plr: 20px);
 
-    mat-dialog-content{
-      @include dFlex($jc: center, $ai: center, $fd: column, $g: 12.8px);
+  .mat-mdc-card-header {
+    @include dFlex($jc: center, $ai: center, $fd: column, $g: 60px);
+    
+    mat-card-title{      
+      @include fontBoldMobile($fw: 700, $fs: 32px, $lh: 38.4px, $ta: center, $c: #444DF2);
     }
+
+    mat-card-subtitle{
+      font-family: 'Nunito';
+      font-weight: 400;
+      font-size: 17px;
+      line-height: 20.4px;
+      text-align: center;
+      color: #000;
+    }
+  }
+
+  mat-card-content{
+    background-color: pink;
   }
 }

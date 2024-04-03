@@ -1,37 +1,27 @@
-<div class="content">  
-
+<div class="content">
   <div class="logo">
-    <img src="./assets/img/log-in/logo.svg">
+    <img src="./assets/img/log-in/logo.svg" />
     <span class="logo-name">DABubble</span>
   </div>
 
   <mat-card>
-    <mat-card-content>
-      
-      <mat-dialog-content>
-        <div>
-          <mat-form-field appearance="outline">
-            <mat-label>First Name</mat-label>
-            <input [(ngModel)]="user" matInput />    
-          </mat-form-field>
-        </div>
-    
-        <div>
-          <mat-form-field appearance="outline">
-            <mat-label>Street + House No.</mat-label>
-            <input [(ngModel)]="user" matInput />
-          </mat-form-field>
-        </div>
-    
-      </mat-dialog-content>
-
-
+    <mat-card-header class="mat-mdc-card-header">
+      <mat-card-title>Anmeldung</mat-card-title>
+      <mat-card-subtitle>
+        Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit verwendest.
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content> 
+      Inhalt
     </mat-card-content>
+    <mat-card-actions>
+      <button mat-button>LIKE</button>
+      <button mat-button>SHARE</button>
+    </mat-card-actions>
   </mat-card>
 
   <div class="new-user">
     <span>Neu bei DABubble?</span>
     <button>Konto erstellen</button>
   </div>
-
 </div>

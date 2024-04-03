@@ -6,11 +6,20 @@
   gap: $g;
 }
 
-@mixin card($w: 100%, $h: 50%, $br: 30px, $plr: 80px, $ptb: 1px) {  
+@mixin card($w: 100%, $h: 50%, $br: 30px, $ptb: 35px, $plr: 20px) {  
   width: $w;
   height: $h;
   border-radius: $br;
-  padding: $plr $ptb;
+  padding: $ptb $plr;
   background-color: #FFF;
   box-shadow: 0px 2px 10px 0px #00000014;
+}
+
+@mixin fontBoldMobile($fw: 700, $fs: 32px, $lh: 38.4px, $ta: center, $c: #444DF2){
+  font-weight: $fw;
+  font-size: $fs;
+  line-height: $lh;
+  text-align: $ta;
+  color: $c;
+  font-family: 'Nunito';
 }
