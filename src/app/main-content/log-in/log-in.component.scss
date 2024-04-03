@@ -19,9 +19,14 @@
       font-weight: 700;      
     }
   }
+}
 
-  mat-card{
-    @include card($br: 30px, $plr: 80px, $ptb: 1px);
+mat-card{  
+  @include card($w: 100%, $h: 552px, $br: 30px, $plr: 80px, $ptb: 1px);
+  mat-card-content{
+
+    mat-dialog-content{
+      @include dFlex($jc: center, $ai: center, $fd: column, $g: 12.8px);
+    }
   }
-
 }

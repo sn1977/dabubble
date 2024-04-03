@@ -6,7 +6,9 @@
   gap: $g;
 }
 
-@mixin card($br: 30px, $plr: 80px, $ptb: 1px) {  
+@mixin card($w: 100%, $h: 50%, $br: 30px, $plr: 80px, $ptb: 1px) {  
+  width: $w;
+  height: $h;
   border-radius: $br;
   padding: $plr $ptb;
   background-color: #FFF;
