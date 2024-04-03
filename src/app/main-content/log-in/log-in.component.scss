@@ -16,7 +16,7 @@
     }
 
     .logo-name{
-      font-size: 24px;
+      font-size: 1.6rem;
       font-weight: 700;      
     }
   }
@@ -26,24 +26,27 @@ mat-card{
   position: relative;
   @include card($w: 100%, $h: 552px, $br: 30px, $ptb: 35px, $plr: 20px);
 
-  .mat-mdc-card-header {
-    @include dFlex($jc: center, $ai: center, $fd: column, $g: 60px);
+  .mat-mdc-card-header,
+  .headline {
+    @include dFlex($jc: center, $ai: center, $fd: column, $g: 15px);
+    padding: 0;
     
     mat-card-title{      
-      @include fontBoldMobile($fw: 700, $fs: 32px, $lh: 38.4px, $ta: center, $c: #444DF2);
+      @include fontBoldMobile($fw: 700, $fs: 1.778rem, $lh: 38.4px, $ta: center, $c: #444DF2);
     }
 
     mat-card-subtitle{
       font-family: 'Nunito';
       font-weight: 400;
-      font-size: 17px;
+      font-size: 1rem;
       line-height: 20.4px;
       text-align: center;
       color: #000;
     }
   }
 
-  mat-card-content{
+  .card-content{
     background-color: pink;
+    @include dFlex($jc: center, $ai: center, $fd: column, $g: 30px);
   }
 }

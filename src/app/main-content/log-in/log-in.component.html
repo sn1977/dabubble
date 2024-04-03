@@ -5,14 +5,27 @@
   </div>
 
   <mat-card>
-    <mat-card-header class="mat-mdc-card-header">
-      <mat-card-title>Anmeldung</mat-card-title>
-      <mat-card-subtitle>
-        Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit verwendest.
-      </mat-card-subtitle>
+    <mat-card-header>
+      <div class="headline">        
+        <mat-card-title>Anmeldung</mat-card-title>
+        <mat-card-subtitle>
+          Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit verwendest.
+        </mat-card-subtitle>
+      </div>      
     </mat-card-header>
-    <mat-card-content> 
-      Inhalt
+    <mat-card-content class="card-content"> 
+      <form>
+        <mat-form-field class="full-width">
+          <mat-icon matSuffix>mail_outline</mat-icon>
+          <input matInput placeholder="beispielname@email.com">
+          <mat-hint>*Diese E-Mail-Adresse ist leider ungültig.</mat-hint>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <mat-icon matSuffix>lock_outline</mat-icon>
+          <input matInput placeholder="Passwort">
+          <mat-hint>*Diese E-Mail-Adresse ist leider ungültig.</mat-hint>
+        </mat-form-field>
+      </form>
     </mat-card-content>
     <mat-card-actions>
       <button mat-button>LIKE</button>
