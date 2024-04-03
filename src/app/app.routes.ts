@@ -9,7 +9,7 @@ export const routes: Routes = [
   { path: '', component: MainContentComponent },
   { path: 'imprint', component: ImprintComponent },
   { path: 'privacy-policy', component: PrivacyPolicyComponent },
-  { path: 'messager', component: MessagerComponent}
+  { path: 'messager', component: MessagerComponent},
   { path: 'channel', component: ChannelComponent}
 
   // { path: '', component: ComponentName },
