@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { LogInComponent } from './main-content/log-in/log-in.component';
-import {HeaderMobileComponent} from './shared/components/header-mobile/header-mobile.component';
+// import {HeaderMobileComponent} from './shared/components/header-mobile/header-mobile.component';
 import {MainContentComponent} from './main-content/main-content.component';
 @Component({
   selector: 'app-root',
@@ -11,7 +11,7 @@ import {MainContentComponent} from './main-content/main-content.component';
     CommonModule,
     RouterOutlet,
     LogInComponent,
-    HeaderMobileComponent,
+    // HeaderMobileComponent,
     MainContentComponent
   ],
   templateUrl: './app.component.html',
