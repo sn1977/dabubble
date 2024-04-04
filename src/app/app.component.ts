@@ -8,9 +8,11 @@ import {MainContentComponent} from './main-content/main-content.component';
   selector: 'app-root',
   standalone: true,
   imports: [
-    CommonModule, 
+    CommonModule,
     RouterOutlet,
-    LogInComponent
+    LogInComponent,
+    HeaderMobileComponent,
+    MainContentComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

@@ -6,7 +6,7 @@
   gap: $g;
 }
 
-@mixin card($w: 100%, $h: 50%, $br: 30px, $ptb: 35px, $plr: 20px) {  
+@mixin card($w: 100%, $h: 50%, $br: 30px, $ptb: 35px, $plr: 20px) {
   width: $w;
   height: $h;
   border-radius: $br;
@@ -21,5 +21,9 @@
   line-height: $lh;
   text-align: $ta;
   color: $c;
-  font-family: 'Nunito';
+  font-family: 'Nunito', serif;
+}
+
+@mixin bg-c($c) {
+  background-color: $c;
 }
