@@ -1,0 +1,40 @@
+@import "../../styles/mixins.scss";
+
+.bg-c {
+  @include bg-c(#FFFFFF);
+}
+
+.content-main {
+  height: 100vh;
+  padding: 15px 16px;
+
+  .br-42 {
+    border-radius: 42px;
+  }
+}
+
+.p-0 {
+  padding: 0;
+}
+
+.m-0 {
+  margin: 0;
+}
+
+.channel-menu {
+  @include dFlex($ai: center, $fd: row);
+  width: 100%;
+}
+
+.channel-headline {
+  //@include dFlex($jc: space-between, $ai: center, $fd: row, $g: 30px);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+}
+
+.jc-sb {
+  display: flex;
+
+}

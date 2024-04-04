@@ -1,6 +1,8 @@
-@if(!isOnline){
-  <app-log-in></app-log-in>
+@if(isOnline){
+  <router-outlet></router-outlet>
 }
 @else {
-  <router-outlet></router-outlet>
+<!--  <app-log-in></app-log-in>-->
+<!--  <app-header-mobile></app-header-mobile>-->
+  <app-main-content></app-main-content>
 }

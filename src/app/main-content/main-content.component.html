@@ -1,14 +1,46 @@
-<p>main-content works!</p>
+<app-header-mobile/>
+<div class="content-main bg-c">
+  <mat-form-field class="full-width">
+    <!--    <mat-label>Gehe zu...</mat-label>-->
+    <input matInput class="br-42" placeholder="Gehe zu...">
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+
+  <mat-accordion>
+    <mat-expansion-panel hideToggle>
+      <mat-expansion-panel-header class="p-0">
+        <mat-panel-title class="channel-menu m-0">
+          <div class="channel-headline jc-sb">
+          <div class="channel-headline">
+            <div>
+              <img src="assets/img/icon/arrow_drop_down.png">
+            </div>
+            <div class="channel-headline">
+              <img src="assets/img/icon/workspaces.png">
+              <span>Channels</span>
+            </div>
+          </div>
+          <img src="assets/img/icon/add.png">
+          </div>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <p>This is the primary content of the panel.</p>
+    </mat-expansion-panel>
+    <mat-expansion-panel (opened)="panelOpenState = true"
+                         (closed)="panelOpenState = false">
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
 
 @for (user of this.getUsers(); track $index) {
-<div> 
-  {{ user.avatar }} <br />
-  {{ user.badPasswordCount }} <br />
-  {{ user.email }} <br />
-  {{ user.isActive }} <br />
-  {{ user.isBlocked }} <br />
-  {{ user.isOnline }} <br />
-  {{ user.name }} <br />
-  {{ user.password }} <br />
-</div>
+  <div>
+    {{ user.avatar }} <br/>
+    {{ user.badPasswordCount }} <br/>
+    {{ user.email }} <br/>
+    {{ user.isActive }} <br/>
+    {{ user.isBlocked }} <br/>
+    {{ user.isOnline }} <br/>
+    {{ user.name }} <br/>
+    {{ user.password }} <br/>
+  </div>
 }
