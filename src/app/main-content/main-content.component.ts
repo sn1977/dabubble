@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FirebaseService } from '../shared/services/firebase.service';
 import { User } from '../../models/user.class';
 import { log } from 'console';
-import {HeaderMobileComponent} from '../shared/components/header-mobile/header-mobile.component';
+// import {HeaderMobileComponent} from '../shared/components/header-mobile/header-mobile.component';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -18,7 +18,7 @@ import {
   selector: 'app-main-content',
   standalone: true,
   imports: [
-    HeaderMobileComponent,
+    // HeaderMobileComponent,
     MatIconModule,
     MatInputModule,
     MatFormFieldModule,
