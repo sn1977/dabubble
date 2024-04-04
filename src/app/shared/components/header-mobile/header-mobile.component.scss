@@ -1,0 +1,20 @@
+@import "../../../../styles/mixins.scss";
+
+.content-header-mobile {
+  height: 80px;
+  padding: 15px 16px;
+  @include dFlex($jc: space-between, $ai: center, $fd: row, $g: 30px);
+}
+
+.bg-c {
+  @include bg-c(#ECEEFE);
+}
+
+.logo-header {
+  @include dFlex( $ai: center, $fd: row, $g: 8px);
+}
+
+.logo-name {
+  font-size: 1.6rem;
+  font-weight: 700;
+}

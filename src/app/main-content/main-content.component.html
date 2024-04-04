@@ -6,41 +6,95 @@
     <mat-icon matSuffix>search</mat-icon>
   </mat-form-field>
 
-  <mat-accordion>
-    <mat-expansion-panel hideToggle>
+  <mat-accordion [multi]="true">
+    <mat-expansion-panel hideToggle class="bs-none" [expanded]="true"
+                         (opened)="onPanelOpened(0)"
+                         (closed)="onPanelClosed(0)">
       <mat-expansion-panel-header class="p-0">
         <mat-panel-title class="channel-menu m-0">
           <div class="channel-headline jc-sb">
           <div class="channel-headline">
             <div>
-              <img src="assets/img/icon/arrow_drop_down.png">
+              <img [src]="getArrowImagePath(0)">
             </div>
-            <div class="channel-headline">
+            <div class="channel-menu-headline">
               <img src="assets/img/icon/workspaces.png">
               <span>Channels</span>
             </div>
           </div>
-          <img src="assets/img/icon/add.png">
+          <img class="plus-icon" src="assets/img/icon/add.png">
           </div>
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <p>This is the primary content of the panel.</p>
+      <div class="channel-name">
+        <span class="channel-tag">#</span>
+        <span>Entwicklerteam</span>
+      </div>
+      <div class="add-channel">
+        <img src="assets/img/icon/add_circle.png">
+        <span>Channel hinzufügen</span>
+      </div>
     </mat-expansion-panel>
-    <mat-expansion-panel (opened)="panelOpenState = true"
-                         (closed)="panelOpenState = false">
+
+<!--    <mat-expansion-panel (opened)="onPanelOpened()"-->
+<!--                         (closed)="onPanelClosed()">-->
+<!--    </mat-expansion-panel>-->
+
+    <mat-expansion-panel hideToggle class="bs-none" [expanded]="true"
+                         (opened)="onPanelOpened(1)"
+                         (closed)="onPanelClosed(1)">
+      <mat-expansion-panel-header class="p-0">
+        <mat-panel-title class="channel-menu m-0">
+          <div class="channel-headline jc-sb">
+            <div class="channel-headline">
+              <div>
+                <img [src]="getArrowImagePath(1)">
+              </div>
+              <div class="channel-menu-headline">
+                <img src="assets/img/icon/account_circle.png">
+                <span>Direknachrichten</span>
+              </div>
+            </div>
+          </div>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="channel-name pl-7">
+        <img src="assets/img/characters/character_FrederikBeck_online.svg">
+        <span>Frederik Beck (Du)</span>
+      </div>
+      <div class="channel-name pl-7">
+        <img src="assets/img/characters/character_SofiaMueller_online.svg">
+        <span>Sofia Müller</span>
+      </div>
+      <div class="channel-name pl-7">
+        <img src="assets/img/characters/character_NoahBraun_online.svg">
+        <span>Noah Braun</span>
+      </div>
+      <div class="channel-name pl-7">
+        <img src="assets/img/characters/character_EliseRoth_offline.svg">
+        <span>Elise Roth</span>
+      </div>
+      <div class="channel-name pl-7">
+        <img src="assets/img/characters/character_EliasNeumann_online.svg">
+        <span>Elias Neumann</span>
+      </div>
+      <div class="channel-name pl-7">
+        <img src="assets/img/characters/character_SteffenHoffmann_online.svg">
+        <span>Steffen Hoffmann</span>
+      </div>
     </mat-expansion-panel>
   </mat-accordion>
 </div>
 
-@for (user of this.getUsers(); track $index) {
-  <div>
-    {{ user.avatar }} <br/>
-    {{ user.badPasswordCount }} <br/>
-    {{ user.email }} <br/>
-    {{ user.isActive }} <br/>
-    {{ user.isBlocked }} <br/>
-    {{ user.isOnline }} <br/>
-    {{ user.name }} <br/>
-    {{ user.password }} <br/>
-  </div>
-}
+<!--@for (user of this.getUsers(); track $index) {-->
+<!--  <div>-->
+<!--    {{ user.avatar }} <br/>-->
+<!--    {{ user.badPasswordCount }} <br/>-->
+<!--    {{ user.email }} <br/>-->
+<!--    {{ user.isActive }} <br/>-->
+<!--    {{ user.isBlocked }} <br/>-->
+<!--    {{ user.isOnline }} <br/>-->
+<!--    {{ user.name }} <br/>-->
+<!--    {{ user.password }} <br/>-->
+<!--  </div>-->
+<!--}-->

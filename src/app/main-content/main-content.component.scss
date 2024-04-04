@@ -6,7 +6,7 @@
 
 .content-main {
   height: 100vh;
-  padding: 15px 16px;
+  padding: 30px 16px;
 
   .br-42 {
     border-radius: 42px;
@@ -24,10 +24,14 @@
 .channel-menu {
   @include dFlex($ai: center, $fd: row);
   width: 100%;
+
+  .plus-icon:hover {
+    background-color: #ECEEFE;
+    border-radius: 100%;
+  }
 }
 
 .channel-headline {
-  //@include dFlex($jc: space-between, $ai: center, $fd: row, $g: 30px);
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -36,5 +40,52 @@
 
 .jc-sb {
   display: flex;
+}
 
+.channel-menu-headline {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+
+  span {
+    font-weight: 700;
+    font-size: 20px;
+  }
+}
+
+.channel-name {
+  padding-left: 10px;
+  padding-top: 16px;
+  gap: 16px;
+  display: flex;
+  align-items: center;
+
+  span {
+    @include fontBoldMobile($fw: 400, $fs: 17px, $lh: 23.19px, $ta: center, $c: #000000)
+  }
+}
+
+.channel-tag {
+  font-size: 24px !important;
+  font-weight: bold !important;
+  font-family: "Nunito", serif;
+}
+
+.bs-none {
+  box-shadow: none !important;
+}
+
+.add-channel {
+  @include dFlex($jc: start, $ai: center, $fd: row, $g: 12px);
+  padding-left: 4px;
+  padding-top: 30px;
+
+  span {
+    @include fontBoldMobile($fw: 400, $fs: 17px, $lh: 23.19px, $ta: center, $c: #535AF1)
+  }
+}
+
+.pl-7 {
+  padding-left: 7px;
 }

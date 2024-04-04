@@ -35,7 +35,7 @@ export class MainContentComponent implements OnInit{
   user = new User();
   userList: any = [];
   channelList: any = [];
-  panelOpenState = false;
+  panelsState = [true, true]; // Beide Panels anfangs geöffnet
 
   constructor(private firebase: FirebaseService){}
 
@@ -51,5 +51,19 @@ export class MainContentComponent implements OnInit{
     this.firebase.userList;
    // this.firebase.channelList;
   }
+
+  onPanelOpened(index: number) {
+    this.panelsState[index] = true; // Aktualisiere den Zustand des Panels
+  }
+
+  onPanelClosed(index: number) {
+    this.panelsState[index] = false; // Aktualisiere den Zustand des Panels
+  }
+
+  getArrowImagePath(index: number): string {
+    // Bestimme den Bildpfad basierend auf dem Zustand des Panels
+    return this.panelsState[index] ? 'assets/img/icon/arrow_drop_down.png' : 'assets/img/icon/arrow_drop_down_color.png';
+  }
+
 
 }
