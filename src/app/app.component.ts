@@ -20,8 +20,7 @@ import { AuthService } from './shared/services/auth.service';
 })
 export class AppComponent implements OnInit{
   
-  title = 'dabubble';
-  isOnline: boolean = true; // muss aus dem Service kommen  
+  title = 'dabubble';  
   authService = inject(AuthService);
   
   ngOnInit(): void {
@@ -34,13 +33,12 @@ export class AppComponent implements OnInit{
       } else {
         this.authService.currentUserSig.set(null);
       }
-      console.log(this.authService.currentUserSig());
-      
+      console.log('Current User', this.authService.currentUserSig());      
     })
   }
 
   logout(): void{
-    console.log('logout');  
+    console.log('User logged out');
     this.authService.logout();  
   }
 

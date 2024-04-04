@@ -36,14 +36,14 @@ export class AuthService {
 
   login(email: string, password: string): Observable<void> {
     const promise = signInWithEmailAndPassword(
-      this.firebaseAuth, 
-      email, 
-      password,
-      ).then(() => {});
-      return from(promise);
+      this.firebaseAuth,
+      email,
+      password
+    ).then(() => {});
+    return from(promise);
   }
 
-  logout(): Observable<void>{
+  logout(): Observable<void> {
     const promise = signOut(this.firebaseAuth);
     return from(promise);
   }
