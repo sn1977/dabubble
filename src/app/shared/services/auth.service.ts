@@ -13,7 +13,7 @@ import { UserInterface } from '../interfaces/user.interface';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService {
+export class AuthService {  
   firebaseAuth = inject(Auth);
   user$ = user(this.firebaseAuth);
   currentUserSig = signal<UserInterface | null | undefined>(undefined);
