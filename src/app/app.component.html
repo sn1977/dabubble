@@ -1,8 +1,8 @@
-@if(isOnline){
+@if(authService.currentUserSig() == null){
+  <app-log-in></app-log-in>
+}
+@else if (authService.currentUserSig()) {
+  {{authService.currentUserSig()?.username}}
   <router-outlet></router-outlet>
 }
-@else {
-<!--  <app-log-in></app-log-in>-->
 <!--  <app-header-mobile></app-header-mobile>-->
-  <app-main-content></app-main-content>
-}
