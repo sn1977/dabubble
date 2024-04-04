@@ -6,6 +6,7 @@ import { MessagerComponent } from './messager/messager.component';
 import { ChannelComponent } from './channel/channel/channel.component';
 import { RegisterComponent } from './main-content/register/register.component';
 import { LogInComponent } from './main-content/log-in/log-in.component';
+import { AddChannelComponent } from './add-channel/add-channel/add-channel.component';
 
 export const routes: Routes = [  
   { path: '', component: MainContentComponent },
@@ -13,6 +14,7 @@ export const routes: Routes = [
   { path: 'privacy-policy', component: PrivacyPolicyComponent },
   { path: 'messager', component: MessagerComponent},
   { path: 'channel', component: ChannelComponent},
+  { path: 'addchannel', component: AddChannelComponent},
   { path: 'register', component: RegisterComponent},
   { path: 'login', component: LogInComponent},
 
