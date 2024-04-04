@@ -2,5 +2,42 @@
 @use "@material/line-ripple/mdc-line-ripple";
 @use "@material/notched-outline/mdc-notched-outline";
 @use "@material/textfield";
+@use "@material/button/styles";
 
 @include textfield.core-styles;
+
+@import "../../../styles/mixins.scss";
+
+.content {
+  position: relative;
+  padding: 0 16px;
+  height: 100vh;
+  @include dFlex($jc: center, $ai: center, $fd: column, $g: 30px);
+}
+
+.channel-header{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.cannel-container{
+    width: 100%;
+
+}
+
+.mdc-text-field__input{
+    width: 300px;
+}
+
+.mdc-button--raised{
+    background-color: rgb(68,77,242)!important;
+}
+
+.mdc-button__label{
+    color: white;
+}
+
+// Borderradius //??
+// Import von JS // ??
