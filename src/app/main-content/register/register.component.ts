@@ -1,5 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { AuthService } from '../../shared/services/auth.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import {
@@ -11,15 +13,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import { AuthService } from '../../shared/services/auth.service';
-import { Router } from '@angular/router';
-
 
 @Component({
-  selector: 'app-log-in',
+  selector: 'app-register',
   standalone: true,
-  imports: [    
+  imports: [
     MatCardModule,
     MatDialogModule,
     MatDialogContent,
@@ -30,26 +28,27 @@ import { Router } from '@angular/router';
     FormsModule,
     MatIconModule,
   ],
-  templateUrl: './log-in.component.html',
-  styleUrl: './log-in.component.scss'
+  templateUrl: './register.component.html',
+  styleUrl: './register.component.scss',
 })
-export class LogInComponent {  
-
+export class RegisterComponent {
   contactData = {
     name: '',
     email: '',
     password: '',
   };
+
   http = inject(HttpClient);
   authService = inject(AuthService);
   router = inject(Router);
-  
+
   errorMessage: string | null = null;
 
   onSubmit(): void {
     this.authService
-      .login(
+      .register(
         this.contactData.email,
+        this.contactData.name,
         this.contactData.password
       )
       .subscribe({
@@ -61,5 +60,4 @@ export class LogInComponent {
         },
       });
   }
-
 }

@@ -1,0 +1,107 @@
+<div class="content">
+  <div class="logo">
+    <img src="./assets/img/log-in/logo.svg" />
+    <span class="logo-name">DABubble</span>
+  </div>
+
+  <mat-card>
+    <mat-card-header>
+      <div class="headline">
+        <mat-card-title>Konto erstellen</mat-card-title>
+        <mat-card-subtitle>
+          Mit deinem Namen und deiner E-Mail-Adresse hast du dein neues DABubble-Konto
+        </mat-card-subtitle>
+      </div>
+    </mat-card-header>
+    <mat-card-content class="card-content">
+
+
+      @if(errorMessage){
+        <div class="required">{{ errorMessage }}</div>
+        <!-- auth/email-already-in-use -->
+      }
+
+      <form 
+      (ngSubmit)="onSubmit()"
+      #contactForm="ngForm"
+      ngNativeValidate>
+
+        <div class="form-box">
+          <div class="input-with-icon">
+            <input
+              type="text"
+              name="username"
+              #username="ngModel"
+              [(ngModel)]="contactData.name"
+              minlength="3"
+              placeholder="Name und Nachname"
+              required
+            />
+            <img
+              [src]="
+                username.valid || username.touched
+                  ? './assets/img/log-in/mail_black.svg'
+                  : './assets/img/log-in/mail.svg'
+              "
+              alt="icon"
+            />
+          </div>
+          @if (!username.valid && username.touched && !username.disabled){
+          <span class="required">Bitte schreiben Sie einen Namen.</span>
+          }
+        </div>
+
+        <div class="form-box">
+          <div class="input-with-icon">
+            <input
+              type="email"
+              name="email"
+              #email="ngModel"
+              [(ngModel)]="contactData.email"
+              pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+              placeholder="beispielname@email.com"
+              required
+            />
+            <img
+              [src]="
+                email.valid || email.touched
+                  ? './assets/img/log-in/mail_black.svg'
+                  : './assets/img/log-in/mail.svg'
+              "
+              alt="icon"
+            />
+          </div>
+          @if (!email.valid && email.touched && !email.disabled){
+          <span class="required">*Diese E-Mail-Adresse ist leider ungültig.</span>
+          }
+        </div>
+
+        <div class="form-box">
+          <div class="input-with-icon">
+            <input
+              type="password"
+              name="password"
+              #password="ngModel"
+              [(ngModel)]="contactData.password"
+              minlength="6"
+              placeholder="Passwort"
+              required
+            />            
+            <img
+              [src]="
+                password.valid || password.touched
+                  ? './assets/img/log-in/lock_black.svg'
+                  : './assets/img/log-in/lock.svg'
+              "
+              alt="icon"
+            />
+          </div>
+          @if (!password.valid && password.touched && !password.disabled){            
+            <span class="required">Bitte geben Sie ein Passwort ein.</span>
+            }
+        </div>
+        <input type="submit" value="submit">
+      </form>
+    </mat-card-content>    
+  </mat-card>  
+</div>
