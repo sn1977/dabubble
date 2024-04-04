@@ -7,6 +7,7 @@ import { ChannelComponent } from './channel/channel/channel.component';
 import { RegisterComponent } from './main-content/register/register.component';
 import { LogInComponent } from './main-content/log-in/log-in.component';
 import { AddChannelComponent } from './add-channel/add-channel/add-channel.component';
+import { NewChannelComponent } from './new-channel/new-channel.component';
 
 export const routes: Routes = [  
   { path: '', component: MainContentComponent },
@@ -17,6 +18,7 @@ export const routes: Routes = [
   { path: 'addchannel', component: AddChannelComponent},
   { path: 'register', component: RegisterComponent},
   { path: 'login', component: LogInComponent},
+  { path: 'newchannel', component: NewChannelComponent},
 
   // { path: '', component: ComponentName },
   // { path: '', component: ComponentName },
