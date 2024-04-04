@@ -4,13 +4,15 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
 import { MainContentComponent } from './main-content/main-content.component';
 import { MessagerComponent } from './messager/messager.component';
 import { ChannelComponent } from './channel/channel/channel.component';
+import { RegisterComponent } from './main-content/register/register.component';
 
 export const routes: Routes = [  
   { path: '', component: MainContentComponent },
   { path: 'imprint', component: ImprintComponent },
   { path: 'privacy-policy', component: PrivacyPolicyComponent },
   { path: 'messager', component: MessagerComponent},
-  { path: 'channel', component: ChannelComponent}
+  { path: 'channel', component: ChannelComponent},
+  { path: 'register', component: RegisterComponent},
 
   // { path: '', component: ComponentName },
   // { path: '', component: ComponentName },

@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import {
   MatDialogActions,
@@ -35,6 +35,6 @@ export class LogInComponent {
   contactData = {
     name: '',
     email: '',
-    message: '',
+    password: '',
   };
 }
