@@ -9,6 +9,7 @@ import {
 } from '@angular/fire/auth';
 import { Observable, from } from 'rxjs';
 import { UserInterface } from '../interfaces/user.interface';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +18,8 @@ export class AuthService {
   firebaseAuth = inject(Auth);
   user$ = user(this.firebaseAuth);
   currentUserSig = signal<UserInterface | null | undefined>(undefined);
+
+  constructor(private router : Router){}
 
   register(
     email: string,
@@ -45,6 +48,7 @@ export class AuthService {
 
   logout(): Observable<void> {
     const promise = signOut(this.firebaseAuth);
+    this.router.navigate(['/login']);
     return from(promise);
   }
 }
