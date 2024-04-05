@@ -55,6 +55,7 @@ export class LogInComponent {
       .subscribe({
         next: () => {
           this.router.navigateByUrl('/');
+          console.log('login');
         },
         error: (err) => {
           this.errorMessage = err.code;
@@ -62,4 +63,8 @@ export class LogInComponent {
       });
   }
 
+  logout(): void {
+    console.log('User logged out');
+    this.authService.logout();
+  }
 }

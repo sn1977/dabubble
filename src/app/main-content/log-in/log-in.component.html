@@ -15,13 +15,17 @@
       </div>
     </mat-card-header>
     <mat-card-content class="card-content">
-
       @if(errorMessage){
-        <div class="required">{{ errorMessage }}</div>
-        <!-- auth/email-already-in-use -->
+      <div class="required">{{ errorMessage }}</div>
+      <!-- auth/email-already-in-use -->
+      <!-- auth/user-disabled -->
       }
 
-      <form ngNativeValidate>
+      <form 
+      (ngSubmit)="onSubmit()"
+      #contactForm="ngForm"
+      ngNativeValidate>
+
         <div class="form-box">
           <div class="input-with-icon">
             <input
@@ -43,30 +47,35 @@
             />
           </div>
           @if (!email.valid && email.touched && !email.disabled){
-          <span class="required">*Diese E-Mail-Adresse ist leider ungültig.</span>
+          <span class="required"
+            >*Diese E-Mail-Adresse ist leider ungültig.</span
+          >
           }
         </div>
 
         <div class="form-box">
           <div class="input-with-icon">
             <input
-              type="text"
+              type="password"
               name="password"
+              #password="ngModel"
+              [(ngModel)]="contactData.password"
+              minlength="6"
               placeholder="Passwort"
               required
             />
             <img src="./assets/img/log-in/lock.svg" />
           </div>
+          @if (!password.valid && password.touched && !password.disabled){
           <span class="required"
             >Falsches Passwort. Bitte noch einmal versuchen.</span
           >
+          }
         </div>
+        <input type="submit" value="submit" />
+        <button (click)="logout()">Logout</button>
       </form>
     </mat-card-content>
-    <mat-card-actions>
-      <button mat-button>LIKE</button>
-      <button mat-button>SHARE</button>
-    </mat-card-actions>
   </mat-card>
 
   <div class="new-user">

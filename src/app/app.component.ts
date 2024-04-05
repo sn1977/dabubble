@@ -36,25 +36,5 @@ export class AppComponent implements OnInit {
       }
       console.log('Current User', this.authService.currentUserSig());
     });
-  }
-
-  logout(): void {
-    console.log('User logged out');
-    this.authService.logout();
-  }
-
-  isUserAuthenticated(): boolean {
-    return this.authService.currentUserSig() != null;
-  }
-
-  allowedComponents(componentName: string): boolean {
-    switch (componentName) {
-      case 'login':
-        return true;
-      case 'register':
-        return true;
-      default:
-        return this.isUserAuthenticated();
-    }
-  }
+  }  
 }
