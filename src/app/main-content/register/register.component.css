@@ -1,0 +1,152 @@
+.content {
+  position: relative;
+  padding: 0 16px;
+  height: 100vh;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 30px;
+}
+.content .logo {
+  height: 56px;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 12.8px;
+}
+.content .logo img {
+  height: 56px;
+  width: 56px;
+}
+.content .logo .logo-name {
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+mat-card {
+  position: relative;
+  width: 100%;
+  height: 552px;
+  border-radius: 30px;
+  padding: 35px 20px;
+  background-color: #FFF;
+  box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.0784313725);
+}
+mat-card .mat-mdc-card-header,
+mat-card .headline {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 15px;
+  padding: 0;
+}
+mat-card .mat-mdc-card-header mat-card-title,
+mat-card .headline mat-card-title {
+  font-weight: 700;
+  font-size: 1.778rem;
+  line-height: 38.4px;
+  text-align: center;
+  color: #444df2;
+  font-family: "Nunito", serif;
+}
+mat-card .mat-mdc-card-header mat-card-subtitle,
+mat-card .headline mat-card-subtitle {
+  font-family: "Nunito";
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 20.4px;
+  text-align: center;
+  color: #000;
+}
+mat-card .card-content {
+  padding: 0;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 30px;
+}
+mat-card .card-content form {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 30px;
+  width: 100%;
+}
+mat-card .card-content form .form-box {
+  position: relative;
+  width: 100%;
+  display: flex !important;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 10px;
+}
+mat-card .card-content form .form-box .input-with-icon {
+  display: flex !important;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-direction: row;
+  gap: 30px;
+  width: 100%;
+  position: relative;
+}
+mat-card .card-content form .form-box .input-with-icon img {
+  position: absolute;
+  left: 25px;
+  top: 25px;
+  transform: translateY(-50%);
+  width: 25px;
+  height: 25px;
+}
+mat-card .card-content form .form-box .hidden {
+  display: none;
+}
+mat-card .card-content form .required {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16.8px;
+  color: #e61c40;
+}
+mat-card .card-content form input[type=text],
+mat-card .card-content form input[type=email],
+mat-card .card-content form input[type=password] {
+  box-sizing: border-box;
+  padding-block: 0;
+  padding-inline: 0;
+  padding: 15px 70px;
+  background-color: #ECEEFE;
+  width: 100%;
+  height: 50px;
+  border: 1px transparent solid;
+  text-align: left;
+  color: #686868;
+  font-size: 18px;
+  font-family: "Nunito";
+  font-weight: 500;
+  line-height: 21.6px;
+  border-radius: 100px;
+  cursor: pointer;
+}
+mat-card .card-content form input[type=text]:hover,
+mat-card .card-content form input[type=email]:hover,
+mat-card .card-content form input[type=password]:hover {
+  border: 1px #686868 solid;
+}
+mat-card .card-content form input[type=text]:focus,
+mat-card .card-content form input[type=email]:focus,
+mat-card .card-content form input[type=password]:focus {
+  border: 1px #535AF1 solid;
+  color: #000;
+}
+mat-card .card-content form input[type=text]:valid,
+mat-card .card-content form input[type=email]:valid,
+mat-card .card-content form input[type=password]:valid {
+  color: #000;
+}
+
+/*# sourceMappingURL=register.component.css.map */
