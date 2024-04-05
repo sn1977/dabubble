@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FirebaseService } from '../shared/services/firebase.service';
 import { User } from '../../models/user.class';
 import { log } from 'console';
-// import {HeaderMobileComponent} from '../shared/components/header-mobile/header-mobile.component';
+import {HeaderMobileComponent} from '../shared/components/header-mobile/header-mobile.component';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -12,6 +12,8 @@ import {
   MatExpansionPanelDescription,
   MatExpansionPanelTitle
 } from '@angular/material/expansion';
+import {NgForOf} from '@angular/common';
+import {BottomSheetComponent} from './bottom-sheet/bottom-sheet.component';
 
 
 @Component({
@@ -26,7 +28,10 @@ import {
     MatExpansionPanel,
     MatExpansionPanelTitle,
     MatExpansionPanelDescription,
-    MatExpansionModule
+    MatExpansionModule,
+    HeaderMobileComponent,
+    NgForOf,
+    BottomSheetComponent
   ],
   templateUrl: './main-content.component.html',
   styleUrl: './main-content.component.scss'
@@ -35,7 +40,24 @@ export class MainContentComponent implements OnInit{
   user = new User();
   userList: any = [];
   channelList: any = [];
-  panelsState = [true, true]; // Beide Panels anfangs geöffnet
+
+  panels = [
+    {
+      expanded: true,
+      arrowImagePath: 'assets/img/icon/arrow_drop_down.png',
+      iconPath: 'assets/img/icon/workspaces.png',
+      title: 'Channels',
+      titleColor: '#000000', // Startfarbe beim Öffnen
+    },
+    {
+      expanded: true,
+      arrowImagePath: 'assets/img/icon/arrow_drop_down.png',
+      iconPath: 'assets/img/icon/account_circle.png',
+      title: 'Direktnachrichten',
+      titleColor: '#000000', // Startfarbe beim Öffnen
+    }
+  ];
+
 
   constructor(private firebase: FirebaseService){}
 
@@ -53,17 +75,19 @@ export class MainContentComponent implements OnInit{
   }
 
   onPanelOpened(index: number) {
-    this.panelsState[index] = true; // Aktualisiere den Zustand des Panels
+    this.panels[index].expanded = true;
+    this.panels[index].arrowImagePath = 'assets/img/icon/arrow_drop_down.png';
+    this.panels[index].iconPath = 'assets/img/icon/account_circle.png';
+    this.panels[index].titleColor = '#000000'; // Farbe, wenn geöffnet
   }
 
   onPanelClosed(index: number) {
-    this.panelsState[index] = false; // Aktualisiere den Zustand des Panels
+    this.panels[index].expanded = false;
+    this.panels[index].arrowImagePath = 'assets/img/icon/arrow_drop_down_color.png';
+    this.panels[index].iconPath = 'assets/img/icon/account_circle_color.png';
+    this.panels[index].titleColor = '#535AF1'; // Farbe, wenn geschlossen
   }
 
-  getArrowImagePath(index: number): string {
-    // Bestimme den Bildpfad basierend auf dem Zustand des Panels
-    return this.panelsState[index] ? 'assets/img/icon/arrow_drop_down.png' : 'assets/img/icon/arrow_drop_down_color.png';
-  }
 
 
 }

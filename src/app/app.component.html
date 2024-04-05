@@ -1,25 +1,10 @@
-<!-- {{authService.currentUserSig()?.username}} -->
-  <router-outlet></router-outlet>
-
-<!-- @if(authService.currentUserSig() == null){
-  <app-log-in></app-log-in>
+@if(authService.currentUserSig() == null){
+<!--  <app-log-in></app-log-in>-->
+<!--  <app-header-mobile></app-header-mobile>-->
+  <app-main-content></app-main-content>
 }
 @else if (authService.currentUserSig()) {
   {{authService.currentUserSig()?.username}}
   <router-outlet></router-outlet>
-} -->
- <!-- <app-header-mobile></app-header-mobile>
- <router-outlet></router-outlet> -->
+}
 
-<!-- @if(isUserAuthenticated()){
-<ng-container>
-  <router-outlet></router-outlet>
-</ng-container>
-} 
-
-@if(!isUserAuthenticated()){  
-  <ng-container>    
-    <app-log-in *ngIf="allowedComponents('login')"></app-log-in>
-    <app-register *ngIf="allowedComponents('register')"></app-register>
-  </ng-container>
-} -->

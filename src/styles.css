@@ -8,7 +8,8 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Nunito" !important;
+  font-family: "Nunito", serif !important;
+  overflow: hidden;
   display: flex !important;
   justify-content: center;
   align-items: center;

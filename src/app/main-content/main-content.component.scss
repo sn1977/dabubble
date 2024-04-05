@@ -1,5 +1,13 @@
 @import "../../styles/mixins.scss";
 
+.mat-mdc-form-field-has-icon-suffix .mat-mdc-text-field-wrapper {
+  border-radius: 42px;
+}
+
+.br-42 {
+  border-radius: 42px;
+}
+
 .bg-c {
   @include bg-c(#FFFFFF);
 }
@@ -7,9 +15,10 @@
 .content-main {
   height: 100vh;
   padding: 30px 16px;
+  border: 1px solid red;
 
-  .br-42 {
-    border-radius: 42px;
+  .wrapper-content-main {
+    border: 1px solid red;
   }
 }
 
@@ -89,3 +98,27 @@
 .pl-7 {
   padding-left: 7px;
 }
+
+.btn-position {
+  position: relative;
+}
+
+.btn-edit-message {
+  @include bg-c(#444DF2);
+  width: 60px;
+  height: 60px;
+  -webkit-border-radius: 100%;
+  -moz-border-radius: 100%;
+  border-radius: 100%;
+  border: none;
+  position: absolute;
+  right: 0;
+  bottom: 10px;
+  fill: #ffffff;
+}
+
+
+.white-icon {
+  color: white;
+}
+
