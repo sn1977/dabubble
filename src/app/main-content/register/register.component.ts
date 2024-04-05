@@ -36,6 +36,7 @@ export class RegisterComponent {
     name: '',
     email: '',
     password: '',
+    photoURL: ''
   };
 
   http = inject(HttpClient);
@@ -49,7 +50,8 @@ export class RegisterComponent {
       .register(
         this.contactData.email,
         this.contactData.name,
-        this.contactData.password
+        this.contactData.password,
+        this.contactData.photoURL
       )
       .subscribe({
         next: () => {
