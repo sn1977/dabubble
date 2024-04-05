@@ -4,6 +4,7 @@ import {MatBottomSheetModule, MatBottomSheetRef} from '@angular/material/bottom-
 import {MatListModule} from '@angular/material/list';
 import {MatButtonModule} from '@angular/material/button';
 import {MatLine} from '@angular/material/core';
+import {MatIcon} from '@angular/material/icon';
 
 
 @Component({
@@ -14,7 +15,8 @@ import {MatLine} from '@angular/material/core';
     MatBottomSheetModule,
     MatListModule,
     MatButtonModule,
-    MatLine
+    MatLine,
+    MatIcon
   ],
   templateUrl: './bottom-sheet.component.html',
   styleUrl: './bottom-sheet.component.scss'

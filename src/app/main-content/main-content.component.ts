@@ -52,7 +52,7 @@ export class MainContentComponent implements OnInit{
     {
       expanded: true,
       arrowImagePath: 'assets/img/icon/arrow_drop_down.png',
-      iconPath: 'assets/img/icon/account_circle.png',
+      iconPath: 'assets/img/icon/account_circle_big.png',
       title: 'Direktnachrichten',
       titleColor: '#000000', // Startfarbe beim Öffnen
     }
@@ -77,7 +77,7 @@ export class MainContentComponent implements OnInit{
   onPanelOpened(index: number) {
     this.panels[index].expanded = true;
     this.panels[index].arrowImagePath = 'assets/img/icon/arrow_drop_down.png';
-    this.panels[index].iconPath = 'assets/img/icon/account_circle.png';
+    this.panels[index].iconPath = 'assets/img/icon/account_circle_big.png';
     this.panels[index].titleColor = '#000000'; // Farbe, wenn geöffnet
   }
 
