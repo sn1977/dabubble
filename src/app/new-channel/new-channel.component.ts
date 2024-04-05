@@ -9,15 +9,19 @@ import { Component } from '@angular/core';
 })
 export class NewChannelComponent {
 
- openOverlay() {
-    const overlay = document.getElementById("overlay");
+  toggleOverlay(overlayId: string): void {
+    const overlay = document.getElementById(overlayId);
     if (overlay) {
-      overlay.style.display = "block";
+        if (overlay.style.display === "block") {
+            overlay.style.display = "none";
+        } else {
+            overlay.style.display = "block";
+        }
     }
-  }
+}
 
-  closeOverlay() {
-    const overlay = document.getElementById("overlay");
+closeOverlay(overlayId: string): void {
+    const overlay = document.getElementById(overlayId);
     if (overlay && overlay.style.display === "block") {
         overlay.style.display = "none";
     }

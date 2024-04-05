@@ -20,7 +20,7 @@
                 <span class="material-symbols-outlined"> expand_more</span>
             </div>
             <div>
-                <img (click)="openOverlay()" src="./../../assets/img/icon/44. Add members button.svg" alt="">
+                <img (click)="toggleOverlay('overlay1')" src="./../../assets/img/icon/44. Add members button.svg" alt="">
             </div>
         </div>
 
@@ -38,26 +38,29 @@
                     </span>
                     <input type="text" class="mdc-text-field__input" aria-labelledby="my-label-id">
                 </label>
-
-            </div>
-
-        </div>
-
-        <div id="overlay" (click)="closeOverlay()">
-            <div id="overlay-content">
-              <h2>Mitglieder</h2>
-              <p>Hier können Sie die Mitgliederliste anzeigen lassen.</p>
-              <!-- Hier kann der Inhalt des Overlays ergänzt werden -->
             </div>
         </div>
 
-        <div id="overlaytwo" (click)="closeOverlay()">
-            <div id="overlay-content">
-              <h2>Mitglieder</h2>
-              <p>Hier können Sie die Mitgliederliste anzeigen lassen.</p>
-              <!-- Hier kann der Inhalt des Overlays ergänzt werden -->
+        <div id="overlay1" class="overlay" (click)="closeOverlay('overlay1')">
+            <div class="overlay-content">
+            <h1>Mitglieder:</h1>
+              <h2>Mitglied 1</h2>
+              <h2>Mitglied 2</h2>
+              <h2>Mitglied 3</h2>
+              <div>
+                <img (click)="toggleOverlay('overlay2')" src="../../assets/img/icon/44. Add members button.svg" alt="">
+                <p>Mitglied hinzufügen</p>
+              </div>
             </div>
-        </div>
+          </div>
+
+        <div id="overlay2" class="overlay" (click)="closeOverlay('overlay2')">
+            <div class="overlay-content">
+            <h1>Leute hinzufügen</h1>
+              <input type="text" placeholder="Suche Mitglied" >
+              <button> Hinzufügen</button>
+            </div>
+          </div>
     </main>
 
 </div>

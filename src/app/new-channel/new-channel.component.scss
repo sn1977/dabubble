@@ -51,7 +51,7 @@ main{
     width: 300px;
 }
 
-#overlay {
+.overlay {
     display: none;
     position: fixed;
     top: 0;
@@ -63,7 +63,7 @@ main{
   }
   
   /* Stil für den Inhalt des Overlays */
-  #overlay-content {
+  .overlay-content {
     background-color: white;
     width: 60%;
     max-width: 400px;
