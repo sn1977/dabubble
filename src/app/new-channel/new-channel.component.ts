@@ -9,4 +9,18 @@ import { Component } from '@angular/core';
 })
 export class NewChannelComponent {
 
+ openOverlay() {
+    const overlay = document.getElementById("overlay");
+    if (overlay) {
+      overlay.style.display = "block";
+    }
+  }
+
+  closeOverlay() {
+    const overlay = document.getElementById("overlay");
+    if (overlay && overlay.style.display === "block") {
+        overlay.style.display = "none";
+    }
 }
+}
+

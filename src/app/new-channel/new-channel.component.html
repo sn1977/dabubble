@@ -20,7 +20,7 @@
                 <span class="material-symbols-outlined"> expand_more</span>
             </div>
             <div>
-                <img src="./../../assets/img/icon/44. Add members button.svg" alt="">
+                <img (click)="openOverlay()" src="./../../assets/img/icon/44. Add members button.svg" alt="">
             </div>
         </div>
 
@@ -41,6 +41,22 @@
 
             </div>
 
+        </div>
+
+        <div id="overlay" (click)="closeOverlay()">
+            <div id="overlay-content">
+              <h2>Mitglieder</h2>
+              <p>Hier können Sie die Mitgliederliste anzeigen lassen.</p>
+              <!-- Hier kann der Inhalt des Overlays ergänzt werden -->
+            </div>
+        </div>
+
+        <div id="overlaytwo" (click)="closeOverlay()">
+            <div id="overlay-content">
+              <h2>Mitglieder</h2>
+              <p>Hier können Sie die Mitgliederliste anzeigen lassen.</p>
+              <!-- Hier kann der Inhalt des Overlays ergänzt werden -->
+            </div>
         </div>
     </main>
 
