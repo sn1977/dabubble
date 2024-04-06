@@ -11,13 +11,11 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
   styleUrl: './profil-card.component.scss'
 })
 export class ProfilCardComponent {
-  public dialogRef: MatDialogRef<ProfilCardComponent> | undefined
+  constructor(public dialogRef: MatDialogRef<ProfilCardComponent>) {}
 
   @Inject(MAT_DIALOG_DATA) public data: any
 
-
   onNoClick(): void {
-    // @ts-ignore
     this.dialogRef.close();
   }
 }
