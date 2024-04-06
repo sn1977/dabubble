@@ -36,10 +36,4 @@ export class AppComponent implements OnInit{
       console.log('Current User', this.authService.currentUserSig());
     })
   }
-
-  logout(): void{
-    console.log('User logged out');
-    this.authService.logout();
-  }
-
 }

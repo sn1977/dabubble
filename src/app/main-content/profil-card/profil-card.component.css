@@ -1,3 +1,42 @@
+.custom-dialog-container {
+  border: 1px solid red;
+  border-radius: 30px;
+  padding: 45px 20px;
+  gap: 38px;
+}
 
+.profil-title {
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  gap: 0px;
+}
+.profil-title span {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 32.74px;
+  text-align: center;
+  color: #000000;
+  font-family: "Nunito", serif;
+}
+.profil-title .close-icon:hover {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  border-radius: 100%;
+  background-color: #ECEEFE;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 0px;
+}
+.profil-title .close-icon:hover .default-img {
+  display: none;
+}
+.profil-title .close-icon:hover .hover-img {
+  display: inline;
+}
 
 /*# sourceMappingURL=profil-card.component.css.map */

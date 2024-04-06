@@ -1,0 +1,33 @@
+@import "../../../styles/mixins.scss";
+
+.custom-dialog-container {
+  border: 1px solid red;
+  border-radius: 30px;
+  padding: 45px 20px;
+  gap: 38px;
+}
+
+.profil-title {
+  @include dFlex( $jc: space-between, $ai: center);
+
+  span {
+    @include fontBoldMobile($fw: 700, $fs: 24px, $lh: 32.74px, $ta: center, $c: #000000);
+  }
+
+  .close-icon:hover {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    border-radius: 100%;
+    @include bg-c(#ECEEFE);
+    @include dFlex( $jc: center, $ai: center);
+
+    .default-img {
+      display: none;
+    }
+
+    .hover-img {
+      display: inline;
+    }
+  }
+}

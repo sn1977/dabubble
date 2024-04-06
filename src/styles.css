@@ -57,4 +57,9 @@ app-root {
   border-top-right-radius: 23px;
 }
 
+.mat-mdc-dialog-container {
+  border-radius: 30px;
+  overflow: hidden;
+}
+
 /*# sourceMappingURL=styles.css.map */
