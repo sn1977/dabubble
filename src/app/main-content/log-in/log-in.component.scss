@@ -31,7 +31,7 @@ mat-card {
   .headline {
     @include dFlex($jc: center, $ai: center, $fd: column, $g: 15px);
     padding: 0;
-    margin-top: -24px;
+    margin-top: -8px;
 
     mat-card-title {
       @include fontBold(
@@ -58,7 +58,7 @@ mat-card {
     @include dFlex($jc: center, $ai: center, $fd: column, $g: 30px);
 
     form {
-      @include dFlex($jc: center, $ai: center, $fd: column, $g: 13px);
+      @include dFlex($jc: center, $ai: center, $fd: column, $g: 8px);
       width: 100%;
 
       .form-box {
