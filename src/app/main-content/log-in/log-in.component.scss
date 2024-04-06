@@ -23,7 +23,7 @@
 }
 
 mat-card {
-  position: relative;  
+  position: relative;
   @include dFlex($jc: center, $ai: center, $fd: column, $g: 20px);
   @include card($w: 100%, $h: 552px, $br: 30px, $ptb: 35px, $plr: 20px);
 
@@ -68,7 +68,7 @@ mat-card {
           $jc: space-between,
           $ai: flex-start,
           $fd: column,
-          $g: 10px
+          $g: 0px
         );
 
         .input-with-icon {
@@ -100,19 +100,20 @@ mat-card {
         font-weight: 400;
         font-size: 14px;
         line-height: 16.8px;
-        color: #e61c40;
+        color: #ED1E79;
         height: 17px;
+        font-family: 'Nunito';
+        margin-top: 4px;
       }
 
       input[type="text"],
       input[type="email"],
-      input[type="password"],
-      input[type="button"] {
+      input[type="password"] {
         box-sizing: border-box;
         padding-block: 0;
-        padding-inline: 0; 
-        padding: 15px 70px;        
-        background-color: #ECEEFE;
+        padding-inline: 0;
+        padding: 15px 70px;
+        background-color: #eceefe;
         width: 100%;
         height: 50px;
         border: 1px transparent solid;
@@ -124,29 +125,36 @@ mat-card {
         line-height: 21.6px;
         border-radius: 100px;
         cursor: pointer;
-        
+
         &:hover {
           border: 1px #686868 solid;
         }
         &:focus {
-          border: 1px #535AF1 solid;
+          border: 1px #535af1 solid;
           color: #000;
         }
-        &:valid {          
+        &:valid {
           color: #000;
         }
       }      
     }
 
-    .fontThin{
-      @include fontThin($fw: 400, $fs: 17px, $lh: 20.4px, $ta: center, $c: #797EF3);
+    .fontThin {
+      @include fontThin(
+        $fw: 400,
+        $fs: 17px,
+        $lh: 20.4px,
+        $ta: center,
+        $c: #797ef3
+      );
     }
 
     .seperator {
       position: relative;
       @include dFlex($jc: center, $ai: center, $fd: row, $g: 0);
+      margin: 20px 0;
     }
-  
+
     .seperator span {
       position: absolute;
       top: -10px;
@@ -155,12 +163,60 @@ mat-card {
       padding: 0 10px;
       height: 35px;
       width: 80px;
-      font-family: 'Nunito';
+      font-family: "Nunito";
       font-weight: 400;
       font-size: 17px;
       line-height: 23.19px;
-    }  
+    }
 
+    .google {
+      @include dFlex($jc: center, $ai: center, $fd: row, $g: 20px);
+      width: 100%;
+      box-sizing: border-box;
+      padding-block: 0;
+      padding-inline: 0;      
+      background-color: #eceefe;
+      height: 50px;
+      border: 1px transparent solid;
+      text-align: left;
+      color: #686868;
+      font-size: 18px;
+      font-family: "Nunito";
+      font-weight: 500;
+      line-height: 21.6px;
+      border-radius: 100px;
+
+      span {        
+        color: #444df2;
+        font-weight: 400;
+        font-size: 17px;
+      }
+      
+      .google-img {
+        height: 38px;
+        width: 38px;
+      }
+
+      &:hover{
+        border: 1px solid #444DF2;
+      }
+
+      &:focus{
+        border: 1px solid #686868;
+      }      
+
+
+    }
+
+    .buttons{
+      @include dFlex($jc: center, $ai: center, $fd: row, $g: 20px);
+      .btn-primary{
+        @include btn($h: 49px, $br: 25px, $ptb: 12px, $plr: 25px, $c: #FFF, $bgc: #444DF2, $bgch: #797EF3);
+      }
+      .btn-secondary{
+        @include btn($h: 49px, $br: 25px, $ptb: 12px, $plr: 25px, $c: #444DF2, $bgc: #FFF, $bgch: #535AF1);
+      }
+    }
 
   }
 }

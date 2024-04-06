@@ -30,9 +30,28 @@
   line-height: $lh;
   text-align: $ta;
   color: $c;
-  font-family: 'Figree', serif;
+  font-family: 'Figtree', serif;
 }
 
 @mixin bg-c($c) {
   background-color: $c;
+}
+
+@mixin btn($h, $br, $ptb, $plr, $c, $bgc, $bgch){
+  height: $h;
+  border: 1px solid #444DF2;
+  border-radius: $br;
+  padding: $ptb $plr;
+  color: $c;
+  background-color: $bgc;
+  font-family: 'Nunito';
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 24.55px;
+
+  &:hover{
+    border: 1px solid $bgch;
+    background-color: $bgch;
+  }
+
 }

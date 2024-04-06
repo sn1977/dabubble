@@ -23,11 +23,11 @@
       }
 
       <form 
-      (ngSubmit)="onSubmit()"
-      #contactForm="ngForm"
+      (ngSubmit)="onSubmit()" 
+      #contactForm="ngForm" 
       ngNativeValidate>
-
-        <div class="form-box">
+      
+      <div class="form-box">
           <div class="input-with-icon">
             <input
               type="email"
@@ -51,10 +51,8 @@
           <span class="required"
             >*Diese E-Mail-Adresse ist leider ungültig.</span
           >
-          }
-          @else {
-            <span class="required"></span
-          >
+          } @else {
+          <span class="required"></span>
           }
         </div>
 
@@ -75,41 +73,35 @@
           <span class="required"
             >Falsches Passwort. Bitte noch einmal versuchen.</span
           >
-          }
-          @else {
-            <span class="required"></span
-          >
+          } @else {
+          <span class="required"></span>
           }
         </div>
 
-        <span class="fontThin">Passwort vergessen?</span>
+        <span class="fontThin pointer">Passwort vergessen?</span>
 
         <div class="seperator">
-          <img src="./assets/img/log-in/line.svg" alt="">
+          <img src="./assets/img/log-in/line.svg" alt="" />
           <span>ODER</span>
         </div>
 
         <div class="form-box">
-          <div class="input-with-icon">
-            <input
-              type="button"
-              name="email"
-              value="Anmelden mit Google"
-            />
+          <div class="google pointer">
             <img
-              [src]="
-                email.valid || email.touched
-                  ? './assets/img/log-in/mail_black.svg'
-                  : './assets/img/log-in/mail.svg'
-              "
+              class="google-img"
+              src="./assets/img/log-in/google.svg"
               alt="icon"
             />
-          </div>          
+            <span>Anmelden mit Google</span>
+          </div>
+          <span class="required"></span>
         </div>
 
-
-        <input type="submit" value="submit" />
-        <button (click)="logout()">Logout</button>
+        <div class="buttons">
+          <button class="btn-primary pointer" type="submit">Anmelden</button>
+          <button class="btn-secondary pointer">Gäste-Login</button>
+        </div>
+        
       </form>
     </mat-card-content>
   </mat-card>
