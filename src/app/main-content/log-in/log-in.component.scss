@@ -23,7 +23,8 @@
 }
 
 mat-card {
-  position: relative;
+  position: relative;  
+  @include dFlex($jc: center, $ai: center, $fd: column, $g: 20px);
   @include card($w: 100%, $h: 552px, $br: 30px, $ptb: 35px, $plr: 20px);
 
   .mat-mdc-card-header,
@@ -32,7 +33,7 @@ mat-card {
     padding: 0;
 
     mat-card-title {
-      @include fontBoldMobile(
+      @include fontBold(
         $fw: 700,
         $fs: 1.778rem,
         $lh: 38.4px,
@@ -133,5 +134,30 @@ mat-card {
         }
       }      
     }
+
+    .fontThin{
+      @include fontThin($fw: 400, $fs: 17px, $lh: 20.4px, $ta: center, $c: #797EF3);
+    }
+
+    .seperator {
+      position: relative;
+      @include dFlex($jc: center, $ai: center, $fd: row, $g: 0);
+    }
+  
+    .seperator span {
+      position: absolute;
+      top: -10px;
+      background-color: white;
+      text-align: center;
+      padding: 0 10px;
+      height: 35px;
+      width: 80px;
+      font-family: 'Nunito';
+      font-weight: 400;
+      font-size: 17px;
+      line-height: 23.19px;
+    }  
+
+
   }
 }
