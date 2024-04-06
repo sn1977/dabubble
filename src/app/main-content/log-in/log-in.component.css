@@ -27,6 +27,11 @@
 
 mat-card {
   position: relative;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
   width: 100%;
   height: 552px;
   border-radius: 30px;
@@ -147,6 +152,35 @@ mat-card .card-content form input[type=text]:valid,
 mat-card .card-content form input[type=email]:valid,
 mat-card .card-content form input[type=password]:valid {
   color: #000;
+}
+mat-card .card-content .fontThin {
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 20.4px;
+  text-align: center;
+  color: #797EF3;
+  font-family: "Figree", serif;
+}
+mat-card .card-content .seperator {
+  position: relative;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 0;
+}
+mat-card .card-content .seperator span {
+  position: absolute;
+  top: -10px;
+  background-color: white;
+  text-align: center;
+  padding: 0 10px;
+  height: 35px;
+  width: 80px;
+  font-family: "Nunito";
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 23.19px;
 }
 
 /*# sourceMappingURL=log-in.component.css.map */

@@ -70,9 +70,9 @@
   display: flex;
   align-items: center;
 
-  /*span {
-    @include fontBoldMobile($fw: 400, $fs: 17px, $lh: 23.19px, $ta: center, $c: #000000)
-  } */
+  span {
+    @include fontBold($fw: 400, $fs: 17px, $lh: 23.19px, $ta: center, $c: #000000);
+  }
 }
 
 .channel-tag {
@@ -90,9 +90,9 @@
   padding-left: 4px;
   padding-top: 30px;
 
-  /*span {
-    @include fontBoldMobile($fw: 400, $fs: 17px, $lh: 23.19px, $ta: center, $c: #535AF1)
-  }*/
+  span {
+    @include fontBold($fw: 400, $fs: 17px, $lh: 23.19px, $ta: center, $c: #535AF1);
+  }
 }
 
 .pl-7 {

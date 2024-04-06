@@ -11,7 +11,7 @@
   @include dFlex( $jc: space-between, $ai: center);
 
   span {
-    @include fontBoldMobile($fw: 700, $fs: 24px, $lh: 32.74px, $ta: center, $c: #000000);
+    @include fontBold($fw: 700, $fs: 24px, $lh: 32.74px, $ta: center, $c: #000000);
   }
 
   .close-icon:hover {

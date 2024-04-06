@@ -1,44 +1,17 @@
-.mat-bottom-sheet-container {
-  border-top-left-radius: 23px;
-}
+/* Error: Undefined mixin.
+ *    ,
+ * 13 |   @include fontBoldMobile($fw: 600, $fs: 20px, $lh: 27.28px, $ta: center, $c: #000000);
+ *    |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ *    '
+ *   bottom-sheet.component.scss 13:3  root stylesheet */
 
-.img-rectangle {
-  padding-top: 16px;
-  padding-bottom: 32px;
-  display: flex !important;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  gap: 0px;
+body::before {
+  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
+      "Droid Sans Mono", monospace, monospace;
+  white-space: pre;
+  display: block;
+  padding: 1em;
+  margin-bottom: 1em;
+  border-bottom: 2px solid black;
+  content: "Error: Undefined mixin.\a    \2577 \a 13 \2502    @include fontBoldMobile($fw: 600, $fs: 20px, $lh: 27.28px, $ta: center, $c: #000000);\a    \2502    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\a    \2575 \a   bottom-sheet.component.scss 13:3  root stylesheet";
 }
-
-.profil-container {
-  display: flex !important;
-  justify-content: unset;
-  align-items: center;
-  flex-direction: row;
-  gap: 15px;
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 27.28px;
-  text-align: center;
-  color: #000000;
-  font-family: "Nunito", serif;
-  width: 154px;
-  padding: 10px 30px;
-  border-radius: 100px;
-}
-.profil-container:hover {
-  background-color: #ECEEFE;
-}
-
-.img-profil {
-  display: flex !important;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  gap: 15px;
-  font-size: 28px;
-}
-
-/*# sourceMappingURL=bottom-sheet.component.css.map */

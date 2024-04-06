@@ -21,7 +21,7 @@
   line-height: $lh;
   text-align: $ta;
   color: $c;
-  font-family: 'Nunito';
+  font-family: 'Nunito', serif;
 }
 
 @mixin fontThin($fw: 400, $fs: 17px, $lh: 20.4px, $ta: center, $c: #797EF3){
@@ -30,7 +30,7 @@
   line-height: $lh;
   text-align: $ta;
   color: $c;
-  font-family: 'Figree';
+  font-family: 'Figree', serif;
 }
 
 @mixin bg-c($c) {
