@@ -52,6 +52,10 @@
             >*Diese E-Mail-Adresse ist leider ungültig.</span
           >
           }
+          @else {
+            <span class="required"></span
+          >
+          }
         </div>
 
         <div class="form-box">
@@ -72,6 +76,10 @@
             >Falsches Passwort. Bitte noch einmal versuchen.</span
           >
           }
+          @else {
+            <span class="required"></span
+          >
+          }
         </div>
 
         <span class="fontThin">Passwort vergessen?</span>
@@ -81,7 +89,23 @@
           <span>ODER</span>
         </div>
 
-        
+        <div class="form-box">
+          <div class="input-with-icon">
+            <input
+              type="button"
+              name="email"
+              value="Anmelden mit Google"
+            />
+            <img
+              [src]="
+                email.valid || email.touched
+                  ? './assets/img/log-in/mail_black.svg'
+                  : './assets/img/log-in/mail.svg'
+              "
+              alt="icon"
+            />
+          </div>          
+        </div>
 
 
         <input type="submit" value="submit" />

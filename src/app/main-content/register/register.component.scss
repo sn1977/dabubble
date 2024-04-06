@@ -32,7 +32,7 @@ mat-card {
     padding: 0;
 
     mat-card-title {
-      @include fontBoldMobile(
+      @include fontBold(
         $fw: 700,
         $fs: 1.778rem,
         $lh: 38.4px,

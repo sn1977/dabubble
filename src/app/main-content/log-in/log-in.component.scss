@@ -31,6 +31,7 @@ mat-card {
   .headline {
     @include dFlex($jc: center, $ai: center, $fd: column, $g: 15px);
     padding: 0;
+    margin-top: -24px;
 
     mat-card-title {
       @include fontBold(
@@ -57,7 +58,7 @@ mat-card {
     @include dFlex($jc: center, $ai: center, $fd: column, $g: 30px);
 
     form {
-      @include dFlex($jc: center, $ai: center, $fd: column, $g: 30px);
+      @include dFlex($jc: center, $ai: center, $fd: column, $g: 13px);
       width: 100%;
 
       .form-box {
@@ -100,11 +101,13 @@ mat-card {
         font-size: 14px;
         line-height: 16.8px;
         color: #e61c40;
+        height: 17px;
       }
 
       input[type="text"],
       input[type="email"],
-      input[type="password"] {
+      input[type="password"],
+      input[type="button"] {
         box-sizing: border-box;
         padding-block: 0;
         padding-inline: 0; 
