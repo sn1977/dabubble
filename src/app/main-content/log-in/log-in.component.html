@@ -19,6 +19,7 @@
       <div class="required">{{ errorMessage }}</div>
       <!-- auth/email-already-in-use -->
       <!-- auth/user-disabled -->
+      <!-- auth/invalid-credential -->
       }
 
       <form 
@@ -72,6 +73,17 @@
           >
           }
         </div>
+
+        <span class="fontThin">Passwort vergessen?</span>
+
+        <div class="seperator">
+          <img src="./assets/img/log-in/line.svg" alt="">
+          <span>ODER</span>
+        </div>
+
+        
+
+
         <input type="submit" value="submit" />
         <button (click)="logout()">Logout</button>
       </form>
