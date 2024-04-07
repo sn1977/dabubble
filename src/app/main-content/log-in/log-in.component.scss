@@ -96,16 +96,6 @@ mat-card {
         }
       }
 
-      .required {
-        font-weight: 400;
-        font-size: 14px;
-        line-height: 16.8px;
-        color: #ed1e79;
-        height: 17px;
-        font-family: "Nunito";
-        margin-top: 4px;
-      }
-
       input[type="text"],
       input[type="email"],
       input[type="password"] {
@@ -167,9 +157,11 @@ mat-card {
       font-weight: 400;
       font-size: 17px;
       line-height: 23.19px;
-    }
+    }    
+  }
+}
 
-    .google {
+.google {
       @include dFlex($jc: center, $ai: center, $fd: row, $g: 20px);
       width: 100%;
       box-sizing: border-box;
@@ -201,12 +193,10 @@ mat-card {
         border: 1px solid #444df2;
       }
 
-      &:focus {
-        border: 1px solid #686868;
+      &:active {        
+        border: 1px solid #686868;        
       }
     }
-  }
-}
 
 .buttons {
   @include dFlex($jc: center, $ai: center, $fd: row, $g: 20px);
@@ -214,6 +204,14 @@ mat-card {
     @include btn($h: 49px, $br: 25px, $ptb: 12px, $plr: 25px, $c: #FFF, $bgc: #444df2, $bgch: #797ef3, $ch: #FFF, $fbc: #444DF2);
   }
   .btn-secondary {
-    @include btn($h: 49px, $br: 25px, $ptb: 12px, $plr: 25px, $c: #444df2, $bgc: #FFF, $bgch: #535af1, $ch: #FFF, $fbc: #444DF2);
+    @include btn($h: 49px, $br: 25px, $ptb: 12px, $plr: 25px, $c: #444df2, $bgc: transparent, $bgch: #535af1, $ch: #FFF, $fbc: #444DF2);
   }
+
+  span{
+    font-family: 'Nunito';
+    font-weight: 400;
+    font-size: 18px;
+    list-style: 24.55px;
+  }
+
 }

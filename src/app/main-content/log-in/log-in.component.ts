@@ -13,7 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../shared/services/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 
 @Component({
@@ -29,6 +29,7 @@ import { Router } from '@angular/router';
     MatFormFieldModule,
     FormsModule,
     MatIconModule,
+    RouterLink
   ],
   templateUrl: './log-in.component.html',
   styleUrl: './log-in.component.scss'

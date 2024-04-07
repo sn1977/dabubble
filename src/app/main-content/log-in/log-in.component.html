@@ -1,6 +1,6 @@
 <div class="content">
   <div class="logo">
-    <img src="./assets/img/log-in/logo.svg" />
+    <img src="./assets/img/auth/logo.svg" />
     <span class="logo-name">DABubble</span>
   </div>
 
@@ -37,8 +37,8 @@
             <img
               [src]="
                 email.valid || email.touched
-                  ? './assets/img/log-in/mail_black.svg'
-                  : './assets/img/log-in/mail.svg'
+                  ? './assets/img/auth/mail_black.svg'
+                  : './assets/img/auth/mail.svg'
               "
               alt="icon"
             />
@@ -60,7 +60,7 @@
               placeholder="Passwort"
               required
             />
-            <img src="./assets/img/log-in/lock.svg" />
+            <img src="./assets/img/auth/lock.svg" />
           </div>
           <span class="required">
             @if (!password.valid && password.touched && !password.disabled){
@@ -68,10 +68,10 @@
           </span>
         </div>
 
-        <span class="fontThin pointer">Passwort vergessen?</span>
+        <span class="fontThin pointer" routerLink="/send-email" routerLinkActive="router-link-active">Passwort vergessen?</span>
 
         <div class="seperator">
-          <img src="./assets/img/log-in/line.svg" alt="" />
+          <img src="./assets/img/auth/line.svg" alt="" />
           <span>ODER</span>
         </div>
 
@@ -79,7 +79,7 @@
           <div class="google pointer">
             <img
               class="google-img"
-              src="./assets/img/log-in/google.svg"
+              src="./assets/img/auth/google.svg"
               alt="icon"
             />
             <span>Anmelden mit Google</span>
@@ -95,8 +95,8 @@
     </mat-card-content>
   </mat-card>
 
-  <div class="buttons">
+  <div class="buttons" style="flex-direction: column;">
     <span>Neu bei DABubble?</span>    
-    <button class="btn-secondary pointer">Konto erstellen</button>
+    <button class="btn-secondary pointer" routerLink="/register" routerLinkActive="router-link-active">Konto erstellen</button>
   </div>
 </div>
