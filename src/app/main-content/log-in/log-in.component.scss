@@ -66,7 +66,7 @@ mat-card {
         width: 100%;
         @include dFlex(
           $jc: space-between,
-          $ai: flex-start,
+          $ai: center,
           $fd: column,
           $g: 0px
         );
@@ -215,3 +215,11 @@ mat-card {
   }
 
 }
+
+
+// @media (max-width: 400px){  
+//   .form-box,
+//   .seperator{
+//     width: 90% !important;
+//   }
+// }
