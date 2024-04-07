@@ -3,10 +3,15 @@
     <img src="./assets/img/auth/logo.svg" />
     <span class="logo-name">DABubble</span>
   </div>
-
+  
   <mat-card>
     <mat-card-header>
-      <div class="headline">
+      <div class="headline">        
+        
+        <div class="headline-icon">
+          <mat-icon class="pointer" fontIcon="arrow_back" routerLink="/login" routerLinkActive="router-link-active"></mat-icon>
+        </div>
+
         <mat-card-title>Konto erstellen</mat-card-title>
         <mat-card-subtitle>
           Mit deinem Namen und deiner E-Mail-Adresse hast du dein neues
@@ -99,7 +104,9 @@
             Bitte geben Sie ein Passwort ein. }
           </span>
         </div>
-        <input type="submit" value="submit" />
+        <div class="buttons">
+          <button class="btn-primary pointer">Weiter</button>          
+        </div>
       </form>
     </mat-card-content>
   </mat-card>

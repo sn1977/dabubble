@@ -25,7 +25,7 @@
 mat-card {
   position: relative;
   @include dFlex($jc: center, $ai: center, $fd: column, $g: 20px);
-  @include card($w: 100%, $h: 552px, $br: 30px, $ptb: 35px, $plr: 20px);
+  @include card($w: 100%, $h: auto, $br: 30px, $ptb: 35px, $plr: 20px);
 
   .mat-mdc-card-header,
   .headline {

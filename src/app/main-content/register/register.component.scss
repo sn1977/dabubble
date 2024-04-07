@@ -24,12 +24,29 @@
 
 mat-card {
   position: relative;
-  @include card($w: 100%, $h: 552px, $br: 30px, $ptb: 35px, $plr: 20px);
+  @include dFlex($jc: center, $ai: center, $fd: column, $g: 20px);
+  @include card($w: 100%, $h: auto, $br: 30px, $ptb: 35px, $plr: 20px);
 
   .mat-mdc-card-header,
   .headline {
     @include dFlex($jc: center, $ai: center, $fd: column, $g: 15px);
     padding: 0;
+    margin-top: -8px;        
+
+    .headline-icon{
+      @include dFlex($jc: center, $ai: center, $fd: column, $g: 0);
+      height: 40px;
+      width: 40px;
+      position: absolute;      
+      left: 24px;
+      top: 34px;      
+
+      &:hover{
+        background: #ECEEFE;
+        border-radius: 50px;
+        color: #535AF1;
+      }
+    }
 
     mat-card-title {
       @include fontBold(
@@ -56,26 +73,16 @@ mat-card {
     @include dFlex($jc: center, $ai: center, $fd: column, $g: 30px);
 
     form {
-      @include dFlex($jc: center, $ai: center, $fd: column, $g: 30px);
+      @include dFlex($jc: center, $ai: center, $fd: column, $g: 8px);
       width: 100%;
 
       .form-box {
         position: relative;
         width: 100%;
-        @include dFlex(
-          $jc: space-between,
-          $ai: flex-start,
-          $fd: column,
-          $g: 10px
-        );
+        @include dFlex($jc: space-between, $ai: flex-start, $fd: column, $g: 0);
 
         .input-with-icon {
-          @include dFlex(
-            $jc: space-between,
-            $ai: flex-start,
-            $fd: row,
-            $g: 30px
-          );
+          @include dFlex($jc: space-between, $ai: flex-start, $fd: row, $g: 30px);
           width: 100%;
           position: relative;
 
@@ -127,4 +134,12 @@ mat-card {
       }      
     }
   }
+}
+
+.buttons {
+  width: 100%;
+  @include dFlex($jc: flex-end, $ai: center, $fd: row, $g: 20px);
+  .btn-primary {
+    @include btn($h: 49px, $br: 25px, $ptb: 12px, $plr: 25px, $c: #FFF, $bgc: #444df2, $bgch: #797ef3, $ch: #FFF, $fbc: #444DF2);
+  }  
 }
