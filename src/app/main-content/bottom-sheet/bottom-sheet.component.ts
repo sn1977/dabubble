@@ -29,7 +29,7 @@ import {signOut} from '@angular/fire/auth';
 
 export class BottomSheetComponent {
   authService = inject(AuthService);
-  constructor(private _bottomSheetRef: MatBottomSheetRef<BottomSheetComponent>, public dialog: MatDialog) {}
+  constructor(private _bottomSheetRef: MatBottomSheetRef<BottomSheetComponent>, private dialog: MatDialog) {}
 
   openProfileCard(): void {
     const dialogRef = this.dialog.open(ProfilCardComponent, {

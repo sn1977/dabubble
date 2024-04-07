@@ -90,4 +90,8 @@ app-root {
   cursor: pointer;
 }
 
+.mat-mdc-card-content {
+  padding-left: 0 !important;
+}
+
 /*# sourceMappingURL=styles.css.map */

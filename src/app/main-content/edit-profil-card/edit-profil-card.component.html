@@ -1,0 +1,60 @@
+<mat-card class="custom-dialog-container">
+  <div class="profil-title">
+    <span>Dein Profil bearbeiten</span>
+    <div class="close-icon" (click)="closeEditProfilCard()">
+      <img ngSrc="assets/img/icon/close.png" class="default-img" height="24" width="24">
+      <img ngSrc="assets/img/icon/close_color.png" class="hover-img" style="display: none" height="16" width="16">
+    </div>
+  </div>
+  <img mat-card-image src="assets/img/characters/profile_menu.png">
+  <mat-card-content>
+    <div class="email-field">
+      <img ngSrc="assets/img/icon/account_circle_big.png" height="26" width="26">
+      <span>Vollständiger Name</span>
+    </div>
+    <div class="input-field">
+      <input
+        type="text"
+        name="name"
+        #name="ngModel"
+        [(ngModel)]="nameData.email"
+        [minLength]="5"
+        (ngModelChange)="checkInput($event)"
+        [class.input-has-value]="inputHasValue"
+        placeholder="Bitte gib Deinen Namen ein"
+        required
+        class="full-width input-field-design"
+      />
+    </div>
+
+  </mat-card-content>
+  <mat-card-content>
+    <div>
+      <div class="email-field">
+        <img ngSrc="assets/img/icon/mail.png" height="20" width="26">
+        <span>E-Mail-Adresse</span>
+      </div>
+      <div class="input-field">
+        <input
+          type="email"
+          name="email"
+          #email="ngModel"
+          [(ngModel)]="emailData.email"
+          pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+          (ngModelChange)="checkInput($event)"
+          [class.input-has-value]="inputHasValue"
+          placeholder="deineEmail@emial.com"
+          required
+          class="full-width input-field-design"
+        />
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <div class="btn-position">
+      <button mat-stroked-button class="btn-stroked">Abbrechen</button>
+      <button mat-flat-button class="btn-flat" (click)="closeEditProfilCard()">Speichern</button>
+<!--      btn geht nicht!-->
+    </div>
+  </mat-card-actions>
+</mat-card>
