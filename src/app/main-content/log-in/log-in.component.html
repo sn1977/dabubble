@@ -22,12 +22,8 @@
       <!-- auth/invalid-credential -->
       }
 
-      <form
-      (ngSubmit)="onSubmit()"
-      #contactForm="ngForm"
-      ngNativeValidate>
-
-      <div class="form-box">
+      <form (ngSubmit)="onSubmit()" #contactForm="ngForm" ngNativeValidate>
+        <div class="form-box">
           <div class="input-with-icon">
             <input
               type="email"
@@ -47,13 +43,10 @@
               alt="icon"
             />
           </div>
-          @if (!email.valid && email.touched && !email.disabled){
-          <span class="required"
-            >*Diese E-Mail-Adresse ist leider ungültig.</span
-          >
-          } @else {
-          <span class="required"></span>
-          }
+          <span class="required">
+            @if (!email.valid && email.touched && !email.disabled){ *Diese
+            E-Mail-Adresse ist leider ungültig. }
+          </span>
         </div>
 
         <div class="form-box">
@@ -69,13 +62,10 @@
             />
             <img src="./assets/img/log-in/lock.svg" />
           </div>
-          @if (!password.valid && password.touched && !password.disabled){
-          <span class="required"
-            >Falsches Passwort. Bitte noch einmal versuchen.</span
-          >
-          } @else {
-          <span class="required"></span>
-          }
+          <span class="required">
+            @if (!password.valid && password.touched && !password.disabled){
+            Falsches Passwort. Bitte noch einmal versuchen. }
+          </span>
         </div>
 
         <span class="fontThin pointer">Passwort vergessen?</span>
@@ -101,13 +91,12 @@
           <button class="btn-primary pointer" type="submit">Anmelden</button>
           <button class="btn-secondary pointer">Gäste-Login</button>
         </div>
-
       </form>
     </mat-card-content>
   </mat-card>
 
-  <div class="new-user">
-    <span>Neu bei DABubble?</span>
-    <button>Konto erstellen</button>
+  <div class="buttons">
+    <span>Neu bei DABubble?</span>    
+    <button class="btn-secondary pointer">Konto erstellen</button>
   </div>
 </div>

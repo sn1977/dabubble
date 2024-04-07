@@ -100,9 +100,9 @@ mat-card {
         font-weight: 400;
         font-size: 14px;
         line-height: 16.8px;
-        color: #ED1E79;
+        color: #ed1e79;
         height: 17px;
-        font-family: 'Nunito';
+        font-family: "Nunito";
         margin-top: 4px;
       }
 
@@ -136,7 +136,7 @@ mat-card {
         &:valid {
           color: #000;
         }
-      }      
+      }
     }
 
     .fontThin {
@@ -174,7 +174,7 @@ mat-card {
       width: 100%;
       box-sizing: border-box;
       padding-block: 0;
-      padding-inline: 0;      
+      padding-inline: 0;
       background-color: #eceefe;
       height: 50px;
       border: 1px transparent solid;
@@ -186,37 +186,34 @@ mat-card {
       line-height: 21.6px;
       border-radius: 100px;
 
-      span {        
+      span {
         color: #444df2;
         font-weight: 400;
         font-size: 17px;
       }
-      
+
       .google-img {
         height: 38px;
         width: 38px;
       }
 
-      &:hover{
-        border: 1px solid #444DF2;
+      &:hover {
+        border: 1px solid #444df2;
       }
 
-      &:focus{
+      &:focus {
         border: 1px solid #686868;
-      }      
-
-
-    }
-
-    .buttons{
-      @include dFlex($jc: center, $ai: center, $fd: row, $g: 20px);
-      .btn-primary{
-        @include btn($h: 49px, $br: 25px, $ptb: 12px, $plr: 25px, $c: #FFF, $bgc: #444DF2, $bgch: #797EF3);
-      }
-      .btn-secondary{
-        @include btn($h: 49px, $br: 25px, $ptb: 12px, $plr: 25px, $c: #444DF2, $bgc: #FFF, $bgch: #535AF1);
       }
     }
+  }
+}
 
+.buttons {
+  @include dFlex($jc: center, $ai: center, $fd: row, $g: 20px);
+  .btn-primary {
+    @include btn($h: 49px, $br: 25px, $ptb: 12px, $plr: 25px, $c: #FFF, $bgc: #444df2, $bgch: #797ef3, $ch: #FFF, $fbc: #444DF2);
+  }
+  .btn-secondary {
+    @include btn($h: 49px, $br: 25px, $ptb: 12px, $plr: 25px, $c: #444df2, $bgc: #FFF, $bgch: #535af1, $ch: #FFF, $fbc: #444DF2);
   }
 }

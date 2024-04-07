@@ -37,7 +37,7 @@
   background-color: $c;
 }
 
-@mixin btn($h, $br, $ptb, $plr, $c, $bgc, $bgch){
+@mixin btn($h, $br, $ptb, $plr, $c, $bgc, $bgch, $ch, $fbc){
   height: $h;
   border: 1px solid #444DF2;
   border-radius: $br;
@@ -52,6 +52,11 @@
   &:hover{
     border: 1px solid $bgch;
     background-color: $bgch;
+    color: $ch;
+  }
+
+  &:focus{
+    background-color: $fbc;
   }
 
 }
