@@ -47,6 +47,7 @@ mat-card .headline {
   flex-direction: column;
   gap: 15px;
   padding: 0;
+  margin-top: -8px;
 }
 mat-card .mat-mdc-card-header mat-card-title,
 mat-card .headline mat-card-title {
@@ -79,7 +80,7 @@ mat-card .card-content form {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  gap: 30px;
+  gap: 8px;
   width: 100%;
 }
 mat-card .card-content form .form-box {
@@ -89,7 +90,7 @@ mat-card .card-content form .form-box {
   justify-content: space-between;
   align-items: flex-start;
   flex-direction: column;
-  gap: 10px;
+  gap: 0px;
 }
 mat-card .card-content form .form-box .input-with-icon {
   display: flex !important;
@@ -115,7 +116,10 @@ mat-card .card-content form .required {
   font-weight: 400;
   font-size: 14px;
   line-height: 16.8px;
-  color: #e61c40;
+  color: #ED1E79;
+  height: 17px;
+  font-family: "Nunito";
+  margin-top: 4px;
 }
 mat-card .card-content form input[type=text],
 mat-card .card-content form input[type=email],
@@ -124,7 +128,7 @@ mat-card .card-content form input[type=password] {
   padding-block: 0;
   padding-inline: 0;
   padding: 15px 70px;
-  background-color: #ECEEFE;
+  background-color: #eceefe;
   width: 100%;
   height: 50px;
   border: 1px transparent solid;
@@ -145,7 +149,7 @@ mat-card .card-content form input[type=password]:hover {
 mat-card .card-content form input[type=text]:focus,
 mat-card .card-content form input[type=email]:focus,
 mat-card .card-content form input[type=password]:focus {
-  border: 1px #535AF1 solid;
+  border: 1px #535af1 solid;
   color: #000;
 }
 mat-card .card-content form input[type=text]:valid,
@@ -158,8 +162,8 @@ mat-card .card-content .fontThin {
   font-size: 17px;
   line-height: 20.4px;
   text-align: center;
-  color: #797EF3;
-  font-family: "Figree", serif;
+  color: #797ef3;
+  font-family: "Figtree", serif;
 }
 mat-card .card-content .seperator {
   position: relative;
@@ -168,6 +172,7 @@ mat-card .card-content .seperator {
   align-items: center;
   flex-direction: row;
   gap: 0;
+  margin: 20px 0;
 }
 mat-card .card-content .seperator span {
   position: absolute;
@@ -181,6 +186,81 @@ mat-card .card-content .seperator span {
   font-weight: 400;
   font-size: 17px;
   line-height: 23.19px;
+}
+mat-card .card-content .google {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 20px;
+  width: 100%;
+  box-sizing: border-box;
+  padding-block: 0;
+  padding-inline: 0;
+  background-color: #eceefe;
+  height: 50px;
+  border: 1px transparent solid;
+  text-align: left;
+  color: #686868;
+  font-size: 18px;
+  font-family: "Nunito";
+  font-weight: 500;
+  line-height: 21.6px;
+  border-radius: 100px;
+}
+mat-card .card-content .google span {
+  color: #444df2;
+  font-weight: 400;
+  font-size: 17px;
+}
+mat-card .card-content .google .google-img {
+  height: 38px;
+  width: 38px;
+}
+mat-card .card-content .google:hover {
+  border: 1px solid #444DF2;
+}
+mat-card .card-content .google:focus {
+  border: 1px solid #686868;
+}
+mat-card .card-content .buttons {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 20px;
+}
+mat-card .card-content .buttons .btn-primary {
+  height: 49px;
+  border: 1px solid #444DF2;
+  border-radius: 25px;
+  padding: 12px 25px;
+  color: #FFF;
+  background-color: #444DF2;
+  font-family: "Nunito";
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 24.55px;
+}
+mat-card .card-content .buttons .btn-primary:hover {
+  border: 1px solid #797EF3;
+  background-color: #797EF3;
+}
+mat-card .card-content .buttons .btn-secondary {
+  height: 49px;
+  border: 1px solid #444DF2;
+  border-radius: 25px;
+  padding: 12px 25px;
+  color: #444DF2;
+  background-color: #FFF;
+  font-family: "Nunito";
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 24.55px;
+}
+mat-card .card-content .buttons .btn-secondary:hover {
+  border: 1px solid #535AF1;
+  background-color: #535AF1;
 }
 
 /*# sourceMappingURL=log-in.component.css.map */

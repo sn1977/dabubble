@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import {Component, OnInit, inject, ViewEncapsulation} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { LogInComponent } from './main-content/log-in/log-in.component';
@@ -16,7 +16,8 @@ import { AuthService } from './shared/services/auth.service';
     MainContentComponent
   ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class AppComponent implements OnInit{
 

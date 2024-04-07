@@ -1,10 +1,10 @@
 @import "../../../styles/mixins.scss";
 
 .custom-dialog-container {
-  border: 1px solid red;
   border-radius: 30px;
   padding: 45px 20px;
   gap: 38px;
+  border: 10px solid transparent;
 }
 
 .profil-title {
@@ -17,7 +17,6 @@
   .close-icon:hover {
     width: 30px;
     height: 30px;
-    cursor: pointer;
     border-radius: 100%;
     @include bg-c(#ECEEFE);
     @include dFlex( $jc: center, $ai: center);
@@ -27,7 +26,52 @@
     }
 
     .hover-img {
-      display: inline;
+      display: block !important;
     }
   }
+}
+
+.user {
+  @include fontBold($fw: 700, $fs: 32px, $lh: 43.65px, $ta: center, $c: #000000);
+  @include dFlex( $jc: space-between, $ai: center);
+
+  .edit-icon:hover {
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    @include bg-c(#ECEEFE);
+    @include dFlex( $jc: center, $ai: center);
+
+    .default-img {
+      display: none;
+    }
+
+    .hover-img {
+      display: block !important;
+    }
+  }
+}
+
+.status-character {
+  width: 88px;
+  @include dFlex($jc: unset, $ai: center, $g: 15px);
+
+  span {
+    @include fontBold($fw: 400, $fs: 20px, $lh: 27.28px, $ta: center, $c: #92C83E);
+  }
+}
+
+.email-field {
+  @include dFlex($jc: unset, $ai: center, $g: 20px);
+  padding-bottom: 16px;
+
+  span {
+    @include fontBold($fw: 700, $fs: 20px, $lh: 27.28px, $ta: center, $c: #000000);
+  }
+}
+
+.email-user {
+  @include fontBold($fw: 400, $fs: 18px, $lh: 24.55px, $ta: center, $c: #000000);
+  left: 46px;
+  position: relative;
 }

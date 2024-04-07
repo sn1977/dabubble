@@ -1,8 +1,8 @@
 .custom-dialog-container {
-  border: 1px solid red;
   border-radius: 30px;
   padding: 45px 20px;
   gap: 38px;
+  border: 10px solid transparent;
 }
 
 .profil-title {
@@ -23,7 +23,6 @@
 .profil-title .close-icon:hover {
   width: 30px;
   height: 30px;
-  cursor: pointer;
   border-radius: 100%;
   background-color: #ECEEFE;
   display: flex !important;
@@ -36,7 +35,83 @@
   display: none;
 }
 .profil-title .close-icon:hover .hover-img {
-  display: inline;
+  display: block !important;
+}
+
+.user {
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 43.65px;
+  text-align: center;
+  color: #000000;
+  font-family: "Nunito", serif;
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  gap: 0px;
+}
+.user .edit-icon:hover {
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  background-color: #ECEEFE;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 0px;
+}
+.user .edit-icon:hover .default-img {
+  display: none;
+}
+.user .edit-icon:hover .hover-img {
+  display: block !important;
+}
+
+.status-character {
+  width: 88px;
+  display: flex !important;
+  justify-content: unset;
+  align-items: center;
+  flex-direction: row;
+  gap: 15px;
+}
+.status-character span {
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 27.28px;
+  text-align: center;
+  color: #92C83E;
+  font-family: "Nunito", serif;
+}
+
+.email-field {
+  display: flex !important;
+  justify-content: unset;
+  align-items: center;
+  flex-direction: row;
+  gap: 20px;
+  padding-bottom: 16px;
+}
+.email-field span {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 27.28px;
+  text-align: center;
+  color: #000000;
+  font-family: "Nunito", serif;
+}
+
+.email-user {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24.55px;
+  text-align: center;
+  color: #000000;
+  font-family: "Nunito", serif;
+  left: 46px;
+  position: relative;
 }
 
 /*# sourceMappingURL=profil-card.component.css.map */

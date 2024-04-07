@@ -86,4 +86,8 @@ app-root {
   overflow: hidden;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 /*# sourceMappingURL=styles.css.map */
