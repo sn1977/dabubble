@@ -1,11 +1,37 @@
 @import "../../styles/mixins.scss";
+//
+//.mat-mdc-form-field-has-icon-suffix .mat-mdc-text-field-wrapper {
+//  border-radius: 42px;
+//}
+//
+//.br-42 {
+//  border-radius: 42px;
+//}
 
-.mat-mdc-form-field-has-icon-suffix .mat-mdc-text-field-wrapper {
-  border-radius: 42px;
-}
+.input-field {
+  width: 100%;
+  display: flex;
+  align-items: center;
 
-.br-42 {
-  border-radius: 42px;
+  .input-field-design {
+    width: 100%;
+    border: 1px solid #ADB0D9;
+    border-radius: 30px;
+    height: 52px;
+    padding-left: 24px;
+    @include fontBold($fw: 400, $fs: 17px, $lh: 32px, $ta: left, $c: #686868);
+
+    &::placeholder {
+      @include fontBold($fw: 400, $fs: 17px, $lh: 32px, $ta: left, $c: #686868);
+    }
+  }
+
+  .input-background-icon {
+    background-image: url('/assets/img/icon/search.png');
+    background-position: right 10px center;
+    background-repeat: no-repeat;
+    padding-right: 50px;
+  }
 }
 
 .bg-c {
@@ -15,10 +41,10 @@
 .content-main {
   height: 100vh;
   padding: 30px 16px;
-  border: 1px solid red;
+  //border: 1px solid red;
 
   .wrapper-content-main {
-    border: 1px solid red;
+    //border: 1px solid red;
   }
 }
 
@@ -33,6 +59,7 @@
 .channel-menu {
   @include dFlex($ai: center, $fd: row);
   width: 100%;
+  padding-left: 16px;
 
   .plus-icon:hover {
     background-color: #ECEEFE;
@@ -64,7 +91,7 @@
 }
 
 .channel-name {
-  padding-left: 10px;
+  padding-left: 26px;
   padding-top: 16px;
   gap: 16px;
   display: flex;
@@ -87,7 +114,7 @@
 
 .add-channel {
   @include dFlex($jc: start, $ai: center, $fd: row, $g: 12px);
-  padding-left: 4px;
+  padding-left: 20px;
   padding-top: 30px;
 
   span {
@@ -96,7 +123,7 @@
 }
 
 .pl-7 {
-  padding-left: 7px;
+  padding-left: 23px;
 }
 
 .btn-position {

@@ -16,6 +16,7 @@ import {NgForOf} from '@angular/common';
 import {BottomSheetComponent} from './bottom-sheet/bottom-sheet.component';
 import {Router} from '@angular/router';
 import {MatFabButton} from '@angular/material/button';
+import {FormsModule} from '@angular/forms';
 
 
 @Component({
@@ -34,7 +35,8 @@ import {MatFabButton} from '@angular/material/button';
     HeaderMobileComponent,
     NgForOf,
     BottomSheetComponent,
-    MatFabButton
+    MatFabButton,
+    FormsModule
   ],
   templateUrl: './main-content.component.html',
   styleUrl: './main-content.component.scss'
@@ -60,6 +62,12 @@ export class MainContentComponent implements OnInit{
       titleColor: '#000000', // Startfarbe beim Öffnen
     }
   ];
+
+  textData = {
+    text: '',
+  };
+
+  inputHasValue = false;
 
 
   constructor(private firebase: FirebaseService, private router: Router){}
@@ -93,5 +101,9 @@ export class MainContentComponent implements OnInit{
 
   navigateToDirectMessage() {
     this.router.navigate(['/message']);
+  }
+
+  checkInput(value: string): void {
+    this.inputHasValue = !!value.trim();
   }
 }
