@@ -79,8 +79,8 @@ export class AuthService {
     return from(promise);
   }
 
-  resetPassword(){
-    console.log('password reset done');
+  resetPassword(oobCode: string, password: string){
+    console.log('password reset: ', oobCode, password);
     
 //     import { verifyPasswordResetCode, confirmPasswordReset } from "firebase/auth";
 

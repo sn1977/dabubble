@@ -57,43 +57,12 @@ export class ResetPasswordComponent implements OnInit{
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.oobCode = params['oobCode'];
-      console.log('oobCode:', this.oobCode);
     });
   }
-  // ngOnInit() : void {
 
-
-
-  //   this.id = this.route.snapshot.paramMap.get('oobCode');
-
-
-  //   console.log(this.id);    
-    
-
-  //   // this.route.paramMap.subscribe((paramMap) => {
-  //   //   console.log('hey');      
-  //   //   const actionCode = paramMap.get('oobCode');
-  //   //   console.log(paramMap.get('mode'));      
-
-  //   //   console.log(actionCode);
-      
-
-  //   //   // this.userService.getSingleUserData(this.userID, () => {
-  //   //   //   this.user = new User(this.userService.user);
-  //   //   // });
-  //   // });
-  // }
-
-
-  onSubmit(): void {
-    
-
-
-
-    // const actionCode = getParameterByName('oobCode');
-    // verifyPasswordResetCode(this.authService.firebaseAuth, this.actionCode
-    //   actionCode).then((email) => {
-    //   const accountEmail = email;
-    // this.authService.resetPassword(actionCode, this.contactData.password);
+  onSubmit(): void {   
+    if(this.oobCode){
+      this.authService.resetPassword(this.oobCode, this.contactData.password);
+    }
   }
 }
