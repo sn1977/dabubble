@@ -1,7 +1,9 @@
 import {Injectable, inject, signal} from '@angular/core';
 import {
+  ActionCodeSettings,
   Auth,
   createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
@@ -65,5 +67,13 @@ export class AuthService {
     return from(promise);
   }
 
-
+  sendMailToResetPassword(email: string, actionCodeSettings?: ActionCodeSettings | undefined): Observable<void> {
+  const promise = sendPasswordResetEmail(
+    this.firebaseAuth,
+      email,
+  ).then(() => {
+    window.alert('Password reset email sent, check your inbox.');
+  });
+  return from(promise);
+  }
 }
