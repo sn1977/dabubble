@@ -8,6 +8,8 @@ import {
   signOut,
   updateProfile,
   user,
+  verifyPasswordResetCode, 
+  confirmPasswordReset
 } from '@angular/fire/auth';
 import { Observable, from } from 'rxjs';
 import { UserInterface } from '../interfaces/user.interface';
@@ -72,9 +74,6 @@ export class AuthService {
     const promise = sendPasswordResetEmail(this.firebaseAuth, email).then(
       () => {
         window.alert('Password reset email sent, check your inbox.');
-        console.log(
-          'https://da-bubble-ca3ba.firebaseapp.com/__/auth/action?mode=resetPassword&oobCode=DuWyQ3S94qyPMjcOzIkXenr97ZhbkvZSO9dPRO4rLQoAAAGOvyHBqQ&apiKey=AIzaSyB51b2MdG_fyKroGxWt1gaTFFM1PQPQAWM&lang=de'
-        );
       }
     );
     return from(promise);

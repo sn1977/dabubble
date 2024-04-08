@@ -22,6 +22,7 @@ export const routes: Routes = [
   { path: 'login', component: LogInComponent },
   { path: 'send-email', component: SendEmailComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
+  // { path: 'reset-password?:oobCode', component: ResetPasswordComponent },
   { path: 'new-channel', component: NewChannelComponent },
   { path: 'message', component: DirectMessageComponent },
   { path: 'new-message', component: NewMessageComponent},

@@ -27,13 +27,13 @@ import { FormsModule } from '@angular/forms';
     MatFormFieldModule,
     FormsModule,
     MatIconModule,
-    RouterLink
+    RouterLink,
   ],
   templateUrl: './send-email.component.html',
-  styleUrl: './send-email.component.scss'
+  styleUrl: './send-email.component.scss',
 })
 export class SendEmailComponent {
-  contactData = {    
+  contactData = {
     email: '',
   };
 
@@ -44,25 +44,6 @@ export class SendEmailComponent {
   errorMessage: string | null = null;
 
   onSubmit(): void {
-
-    console.log('Kennwort zurücksetzen');
-    
-    this.authService.sendMailToResetPassword('sjaroni@icloud.com');
-
-  //   this.authService
-  //     .register(
-  //       this.contactData.email,
-  //       this.contactData.name,
-  //       this.contactData.password,
-  //       this.contactData.photoURL
-  //     )
-  //     .subscribe({
-  //       next: () => {
-  //         this.router.navigateByUrl('/');
-  //       },
-  //       error: (err) => {
-  //         this.errorMessage = err.code;
-  //       },
-  //     });
+    this.authService.sendMailToResetPassword(this.contactData.email);
   }
 }

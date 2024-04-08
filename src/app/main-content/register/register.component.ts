@@ -57,8 +57,7 @@ export class RegisterComponent {
       .subscribe({
         next: () => {
           // Bestätigung anzeigen
-          this.router.navigateByUrl('/login');
-          // Übergabe Mail und Passwort?
+          this.router.navigateByUrl('/');
         },
         error: (err) => {
           this.errorMessage = err.code;
