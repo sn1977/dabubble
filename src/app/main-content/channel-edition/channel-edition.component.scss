@@ -11,7 +11,8 @@
 
 main {
   height: 100vh;
-  background-color: rgb(255, 255, 255);
+  background-color: white;
+  margin-top: 10px;
 }
 .header-container {
   display: flex;
@@ -22,11 +23,34 @@ main {
   background-color: rgb(236, 238, 254);
 }
 
+.background{
+  background-color: white;
+}
+
+.no-margin{
+    margin: 0;
+}
+
+.channel-name{
+    position: absolute;
+    top: 110px;
+    left: 40px;
+}
+.description{
+  position: absolute;
+    top: 240px;
+    left: 40px;
+
+}
+
 .channel-header {
     width: 100%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     background-color: white;
+    margin-top:  20px;
+    margin-bottom: 10px;
     
   }
 
@@ -43,24 +67,64 @@ main {
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Optional: Schatten für das Textfeld */
   
 
-  .input-field {
+  
+}
+
+.input-field {
     width: 87%;
     margin: 20px;
-    height: 110px;
+    height: 260px;
     border-radius: 20px;
-    border: 1px solid black;
+    border: 1px solid blue;
     vertical-align: bottom; /* Text unten ausrichten */
   }
+
+.edit-icon{
+  position: absolute;
+  top: 110px;
+  right: 40px;
+  cursor: pointer;
 }
+
+.edit-icon-two{
+  position: absolute;
+  top: 250px;
+  right: 40px;
+  cursor: pointer;
+}
+
+.horizontal-line {
+  position: absolute;
+  top: 410px;
+  left: 50px;
+  width: 70%; /* Breite des Strichs */
+  height: 1px; /* Höhe des Strichs */
+  background-color: black; /* Farbe des Strichs */
+}
+
+.color{
+  color: blue;
+}
+
+.made-from{
+  position: absolute;
+  top: 420px;
+  left: 40px;
+  cursor: pointer;
+
+}
+
 
 .input-field-two {
     width: 87%;
+    height: 90px;
     margin-top: 10px;
     margin-left: 20px;
     padding-top: 10px;
     padding-bottom: 10px;
     border-radius: 20px;
     border: 1px solid blue;
+    background-color: white;
 
   }
 
