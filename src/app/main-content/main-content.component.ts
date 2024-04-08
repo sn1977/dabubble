@@ -14,6 +14,8 @@ import {
 } from '@angular/material/expansion';
 import {NgForOf} from '@angular/common';
 import {BottomSheetComponent} from './bottom-sheet/bottom-sheet.component';
+import {Router} from '@angular/router';
+import {MatFabButton} from '@angular/material/button';
 
 
 @Component({
@@ -31,7 +33,8 @@ import {BottomSheetComponent} from './bottom-sheet/bottom-sheet.component';
     MatExpansionModule,
     HeaderMobileComponent,
     NgForOf,
-    BottomSheetComponent
+    BottomSheetComponent,
+    MatFabButton
   ],
   templateUrl: './main-content.component.html',
   styleUrl: './main-content.component.scss'
@@ -59,7 +62,7 @@ export class MainContentComponent implements OnInit{
   ];
 
 
-  constructor(private firebase: FirebaseService){}
+  constructor(private firebase: FirebaseService, private router: Router){}
 
   getUsers(): User[]{
     return this.firebase.userList;
@@ -88,6 +91,7 @@ export class MainContentComponent implements OnInit{
     this.panels[index].titleColor = '#535AF1'; // Farbe, wenn geschlossen
   }
 
-
-
+  navigateToDirectMessage() {
+    this.router.navigate(['/message']);
+  }
 }
