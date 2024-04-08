@@ -1,12 +1,7 @@
-<link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-<link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-
 <div>
     <header class="header-container">
         <div class="header-container">
-            <span class="material-symbols-outlined">arrow_back_ios</span>
+            <img src="./../../assets/img/icon/arrow_back.svg" alt="">
             <img src="./../../assets/img/icon/Property 1=Default (1).svg" alt="">
         </div>
         <div>
@@ -17,49 +12,63 @@
         <div class="mdc-card">
             <div class="channel-box">
                 <p># Office-team</p>
-                <span class="material-symbols-outlined"> expand_more</span>
+                <img src="./../../assets/img/icon/arrow_down.svg" alt="">
             </div>
             <div>
-                <img (click)="toggleOverlay('overlay1')" src="./../../assets/img/icon/44. Add members button.svg" alt="">
+                <img (click)="toggleOverlay('overlay1')" src="./../../assets/img/icon/44. Add members button.svg"
+                    alt="">
             </div>
+        </div>
+        <div class="channel-info">
+            <h1># Office-team</h1>
+            <p>Du hast diesen Channel heute erstellt. Das ist der Anfang des Channels </p>
+
         </div>
 
         <div class="sticky-textbox">
-            <div class="text-container">
-                <h1># Office-team</h1>
-                <p>Du hast diesen Channel heute erstellt. Das ist der Anfang des Channels </p>
-                <label class="mdc-text-field mdc-text-field--outlined">
-                    <span class="mdc-notched-outline">
-                        <span class="mdc-notched-outline__leading"></span>
-                        <span class="mdc-notched-outline__notch">
-                            <span class="mdc-floating-label" id="my-label-id">Nachricht an #Office-team</span>
-                        </span>
-                        <span class="mdc-notched-outline__trailing"></span>
-                    </span>
-                    <input type="text" class="mdc-text-field__input" aria-labelledby="my-label-id">
-                </label>
+            <input type="text" class="input-field" placeholder="">
+            <label class="input-placeholder">Nachricht an #Office-team</label>
+            <div class="icons">
+                <img src="./../../assets/img/icon/add.svg" alt="">
+                <div class="vertical-line"></div>
+                <img src="./../../assets/img/icon/smile.svg" alt="">
+                <img src="./../../assets/img/icon/email.svg" alt="">
+            </div>
+            <div class="send">
+                <img src="./../../assets/img/icon/send.svg" alt="">
             </div>
         </div>
 
-        <div id="overlay1" class="overlay" (click)="closeOverlay('overlay1')">
-            <div class="overlay-content">
-            <h1>Mitglieder:</h1>
-              <h2>Mitglied 1</h2>
-              <h2>Mitglied 2</h2>
-              <h2>Mitglied 3</h2>
-              <div>
-                <img (click)="toggleOverlay('overlay2')" src="../../assets/img/icon/44. Add members button.svg" alt="">
-                <p>Mitglied hinzufügen</p>
-              </div>
-            </div>
-          </div>
 
-        <div id="overlay2" class="overlay" (click)="closeOverlay('overlay2')">
+        <div id="overlay1" class="overlay">
             <div class="overlay-content">
-            <h1>Leute hinzufügen</h1>
-              <input type="text" placeholder="Suche Mitglied" >
-              <button> Hinzufügen</button>
+                <div class="display-flex">
+                    <h1 class="no-margin">Mitglieder:</h1>
+                    <img src="./../../assets/img/icon/close.svg" alt="" (click)="closeOverlay('overlay1')">
+                </div>
+                <div class="members">
+                    <h2>Mitglied 1</h2>
+                    <h2>Mitglied 2</h2>
+                    <h2>Mitglied 3</h2>
+                </div>
+                <div class="add-member" (click)="toggleOverlay('overlay2')">
+                    <img src="../../assets/img/icon/44. Add members button.svg" alt="">
+                    <p class="no-margin">Mitglied hinzufügen</p>
+                </div>
             </div>
-          </div>
+        </div>
+
+        <div id="overlay2" class="overlay">
+            <div class="overlay-content">
+                <div class="display-flex">
+                    <h1 class="no-margin">Leute hinzufügen</h1>
+                    <img src="./../../assets/img/icon/close.svg" alt="" (click)="closeOverlay('overlay2')">
+                </div>
+                <input class="search-input" type="text" placeholder="Suche Mitglied">
+                <div class="btn-pos">
+                    <button class="add-button"> Hinzufügen</button>
+                </div>
+            </div>
+        </div>
     </main>
 </div>
