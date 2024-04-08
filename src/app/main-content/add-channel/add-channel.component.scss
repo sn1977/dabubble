@@ -1,0 +1,50 @@
+@import "../../../styles/mixins.scss";
+
+.content {
+  position: relative;
+    background-color: white;
+  padding: 0 16px;
+  height: 100vh;
+  @include dFlex($jc: center, $ai: center, $fd: column, $g: 30px);
+}
+
+.channel-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.display-flex{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top:  10px;
+    margin-bottom:  10px;
+}
+
+.cannel-container {
+  width: 100%;
+}
+
+.input-field {
+  width: 90%;
+  padding: 15px;
+  border-radius: 20px;
+  border: 1px solid black;
+}
+
+.add-button {
+  background-color: rgb(68, 77, 242);
+  border: none;
+  border-radius: 20px;
+  color: white;
+  padding: 15px;
+  width: 100px;
+  cursor: pointer;
+}
+
+.btn-pos {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
