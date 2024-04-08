@@ -1,0 +1,195 @@
+@use "@material/card";
+@use "@material/floating-label/mdc-floating-label";
+@use "@material/line-ripple/mdc-line-ripple";
+@use "@material/notched-outline/mdc-notched-outline";
+@use "@material/textfield";
+@use "@material/dialog";
+
+@include dialog.core-styles;
+@include textfield.core-styles;
+@include card.core-styles;
+
+main {
+  height: 100vh;
+  background-color: rgb(255, 255, 255);
+}
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 5px;
+  height: 80px;
+  background-color: rgb(236, 238, 254);
+}
+
+.channel-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mdc-card {
+  padding: 10px;
+}
+
+.sticky-textbox {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 150px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Optional: Schatten für das Textfeld */
+  
+
+  .input-field {
+    width: 87%;
+    margin: 20px;
+    height: 110px;
+    border-radius: 20px;
+    border: 1px solid black;
+    vertical-align: bottom; /* Text unten ausrichten */
+  }
+}
+
+.input-field-two {
+    width: 87%;
+    margin-top: 10px;
+    margin-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 20px;
+    border: 1px solid blue;
+
+  }
+
+  .input-field-two::placeholder {
+    padding-left: 10px;
+    
+
+  }
+
+
+.input-placeholder {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 10px;
+}
+
+.text-container {
+  padding: 15px;
+}
+
+.channel-info {
+  position: fixed;
+  bottom: 130px;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.profil{
+    height: 50px;
+    border-radius: 60px;
+}
+
+.profil-box{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.icons {
+  position: absolute;
+  top: 100px;
+  left: 40px;
+  cursor: pointer;
+  display: flex;
+  gap: 10px;
+}
+
+.vertical-line {
+    width: 1px;
+    height: 25px; 
+    background-color: blue; 
+  }
+
+.send {
+  position: absolute;
+  top: 100px;
+  left: 310px;
+  cursor: pointer;
+  
+}
+
+.display-flex{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+}
+
+.no-margin{
+  margin: 0;
+}
+
+.members{
+  margin: 20px;
+}
+
+.add-member{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); 
+  z-index: 9999; 
+}
+
+
+.overlay-content {
+  background-color: white;
+  width: 75%;
+  max-width: 600px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.search-input{
+  border: 1px solid blue;
+    border-radius: 20px;
+    padding: 8px;
+    margin-top: 10px;
+    width: 94%;
+    margin-bottom: 10px;
+}
+
+.add-button {
+  background-color: rgb(104, 104, 104); 
+  border: none; 
+  border-radius: 20px;
+  color: white; 
+  padding: 10px; 
+  width: 100px; 
+  cursor: pointer; 
+}
+
+.btn-pos{
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
