@@ -13,6 +13,11 @@ main {
   height: 100vh;
   background-color: white;
   margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.space{
+  height: 10px;
 }
 .header-container {
   display: flex;
@@ -25,6 +30,8 @@ main {
 
 .background{
   background-color: white;
+  overflow: scroll;
+  height: 100vh;
 }
 
 .no-margin{
@@ -32,9 +39,8 @@ main {
 }
 
 .channel-name{
-    position: absolute;
-    top: 110px;
-    left: 40px;
+  padding: 10px;
+    
 }
 .description{
   position: absolute;
@@ -56,6 +62,8 @@ main {
 
 .mdc-card {
   padding: 10px;
+  position: sticky;
+  top: 0; 
 }
 
 .sticky-textbox {
@@ -70,20 +78,9 @@ main {
   
 }
 
-.input-field {
-    width: 87%;
-    margin: 20px;
-    height: 260px;
-    border-radius: 20px;
-    border: 1px solid blue;
-    vertical-align: bottom; /* Text unten ausrichten */
-  }
-
 .edit-icon{
-  position: absolute;
-  top: 110px;
-  right: 40px;
-  cursor: pointer;
+  padding-right: 10px;
+  padding-top: 10px;
 }
 
 .edit-icon-two{
@@ -94,10 +91,8 @@ main {
 }
 
 .horizontal-line {
-  position: absolute;
-  top: 410px;
-  left: 50px;
-  width: 70%; /* Breite des Strichs */
+  margin-bottom: 10px;
+  width: 100%; /* Breite des Strichs */
   height: 1px; /* Höhe des Strichs */
   background-color: black; /* Farbe des Strichs */
 }
@@ -115,9 +110,8 @@ main {
 }
 
 
-.input-field-two {
+.input-field {
     width: 87%;
-    height: 90px;
     margin-top: 10px;
     margin-left: 20px;
     padding-top: 10px;
@@ -125,6 +119,8 @@ main {
     border-radius: 20px;
     border: 1px solid blue;
     background-color: white;
+    display: flex;
+    justify-content: space-between;
 
   }
 
@@ -155,8 +151,11 @@ main {
 }
 
 .profil{
-    height: 50px;
-    border-radius: 60px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 20px;
+
 }
 
 .profil-box{
