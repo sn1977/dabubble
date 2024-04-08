@@ -47,6 +47,7 @@ export class SendEmailComponent {
 
     console.log('Kennwort zurücksetzen');
     
+    this.authService.sendMailToResetPassword('sjaroni@icloud.com');
 
   //   this.authService
   //     .register(

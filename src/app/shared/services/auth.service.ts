@@ -1,4 +1,4 @@
-import {Injectable, inject, signal} from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import {
   ActionCodeSettings,
   Auth,
@@ -9,11 +9,11 @@ import {
   updateProfile,
   user,
 } from '@angular/fire/auth';
-import {Observable, from} from 'rxjs';
-import {UserInterface} from '../interfaces/user.interface';
-import {Router} from '@angular/router';
-import {FirebaseService} from './firebase.service';
-import {User} from '../../../models/user.class';
+import { Observable, from } from 'rxjs';
+import { UserInterface } from '../interfaces/user.interface';
+import { Router } from '@angular/router';
+import { FirebaseService } from './firebase.service';
+import { User } from '../../../models/user.class';
 
 @Injectable({
   providedIn: 'root',
@@ -24,21 +24,20 @@ export class AuthService {
   currentUserSig = signal<UserInterface | null | undefined>(undefined);
   user: User = new User();
 
-  constructor(private router: Router, private firebase: FirebaseService) {
-  }
+  constructor(private router: Router, private firebase: FirebaseService) {}
 
   register(
     email: string,
     username: string,
     password: string,
-    photoURL: string,
+    photoURL: string
   ): Observable<void> {
     const promise = createUserWithEmailAndPassword(
       this.firebaseAuth,
       email,
       password
     ).then((response) => {
-      updateProfile(response.user, {displayName: username});
+      updateProfile(response.user, { displayName: username });
       const currentUser = this.firebaseAuth.currentUser;
       if (currentUser) {
         this.user.id = currentUser.uid ?? this.user.id;
@@ -56,8 +55,7 @@ export class AuthService {
       this.firebaseAuth,
       email,
       password
-    ).then(() => {
-    });
+    ).then(() => {});
     return from(promise);
   }
 
@@ -67,13 +65,58 @@ export class AuthService {
     return from(promise);
   }
 
-  sendMailToResetPassword(email: string, actionCodeSettings?: ActionCodeSettings | undefined): Observable<void> {
-  const promise = sendPasswordResetEmail(
-    this.firebaseAuth,
-      email,
-  ).then(() => {
-    window.alert('Password reset email sent, check your inbox.');
-  });
-  return from(promise);
+  sendMailToResetPassword(
+    email: string,
+    actionCodeSettings?: ActionCodeSettings | undefined
+  ): Observable<void> {
+    const promise = sendPasswordResetEmail(this.firebaseAuth, email).then(
+      () => {
+        window.alert('Password reset email sent, check your inbox.');
+        console.log(
+          'https://da-bubble-ca3ba.firebaseapp.com/__/auth/action?mode=resetPassword&oobCode=DuWyQ3S94qyPMjcOzIkXenr97ZhbkvZSO9dPRO4rLQoAAAGOvyHBqQ&apiKey=AIzaSyB51b2MdG_fyKroGxWt1gaTFFM1PQPQAWM&lang=de'
+        );
+      }
+    );
+    return from(promise);
   }
+
+  resetPassword(){
+    console.log('password reset done');
+    
+//     import { verifyPasswordResetCode, confirmPasswordReset } from "firebase/auth";
+
+// function handleResetPassword(auth, actionCode, continueUrl, lang) {
+//   // Localize the UI to the selected language as determined by the lang
+//   // parameter.
+
+//   // Verify the password reset code is valid.
+//   verifyPasswordResetCode(auth, actionCode).then((email) => {
+//     const accountEmail = email;
+
+//     // TODO: Show the reset screen with the user's email and ask the user for
+//     // the new password.
+//     const newPassword = "...";
+
+//     // Save the new password.
+//     confirmPasswordReset(auth, actionCode, newPassword).then((resp) => {
+//       // Password reset has been confirmed and new password updated.
+
+//       // TODO: Display a link back to the app, or sign-in the user directly
+//       // if the page belongs to the same domain as the app:
+//       // auth.signInWithEmailAndPassword(accountEmail, newPassword);
+
+//       // TODO: If a continue URL is available, display a button which on
+//       // click redirects the user back to the app via continueUrl with
+//       // additional state determined from that URL's parameters.
+//     }).catch((error) => {
+//       // Error occurred during confirmation. The code might have expired or the
+//       // password is too weak.
+//     });
+//   }).catch((error) => {
+//     // Invalid or expired action code. Ask user to try to reset the password
+//     // again.
+//   });
+// }
+  }
+
 }
