@@ -11,6 +11,7 @@ import { SendEmailComponent } from './main-content/send-email/send-email.compone
 import { ResetPasswordComponent } from './main-content/reset-password/reset-password.component';
 import { DirectMessageComponent } from './main-content/direct-message/direct-message.component';
 import { NewMessageComponent } from './main-content/new-message/new-message.component';
+import { ChannelEditionComponent } from './main-content/channel-edition/channel-edition.component';
 
 export const routes: Routes = [
   { path: '', component: MainContentComponent },
@@ -21,9 +22,10 @@ export const routes: Routes = [
   { path: 'login', component: LogInComponent },
   { path: 'send-email', component: SendEmailComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
-  { path: 'newchannel', component: NewChannelComponent },
+  { path: 'new-channel', component: NewChannelComponent },
   { path: 'message', component: DirectMessageComponent },
-  { path: 'newmessage', component: NewMessageComponent},
+  { path: 'new-message', component: NewMessageComponent},
+  { path: 'channel-edition', component: ChannelEditionComponent},
 
   // { path: 'newchannel', component: NewChannelComponent, canActivate:[IsAdminGuard]},
   // { path: '', component: ComponentName },
