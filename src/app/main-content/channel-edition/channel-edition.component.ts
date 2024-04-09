@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FirebaseService } from '../../shared/services/firebase.service';
@@ -14,11 +14,7 @@ import { User } from '../../../models/user.class';
 })
 export class ChannelEditionComponent {
 
-  constructor(private firebase: FirebaseService){
-
-  }
-  user = new User();
-  userList: any = [];
+  firestore = inject(FirebaseService);
 
   isEditingChannelName: boolean = false;
   isEditingDescription: boolean = false;
@@ -42,19 +38,6 @@ export class ChannelEditionComponent {
         this.descriptionDescriptionText = this.editedDescriptionDescription;
       }
     }
-  }
-
-  getUsers(): User[]{
-    return this.firebase.userList;
-  }
-
-  ngOnInit(): void {
-    this.firebase.userList;
-   // this.firebase.channelList;
-  }
-
-
-
-  
+  } 
 
 }

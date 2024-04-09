@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FirebaseService } from '../shared/services/firebase.service';
 import { User } from '../../models/user.class';
 import {HeaderMobileComponent} from '../shared/components/header-mobile/header-mobile.component';
@@ -38,9 +38,8 @@ import { NavigationService} from '../shared/services/navigation.service';
   templateUrl: './main-content.component.html',
   styleUrl: './main-content.component.scss'
 })
-export class MainContentComponent implements OnInit{
-  user = new User();
-  userList: any = [];
+export class MainContentComponent{
+  firestore = inject(FirebaseService);
   channelList: any = [];
 
   panels = [
@@ -67,20 +66,20 @@ export class MainContentComponent implements OnInit{
   inputHasValue = false;
 
 
-  constructor(private firebase: FirebaseService, public navigationService: NavigationService){}
+  constructor(public navigationService: NavigationService){}
 
-  getUsers(): User[]{
-    return this.firebase.userList;
-  }
+  // getUsers(): User[]{
+  //   return this.firebase.userList;
+  // }
 
   // getChannels(): Channel[]{
   //   return this.firebase.channelList;
   // }
 
-  ngOnInit(): void {
-    this.firebase.userList;
-   // this.firebase.channelList;
-  }
+  // ngOnInit(): void {
+  //   this.firebase.userList;
+  //  // this.firebase.channelList;
+  // }
 
   onPanelOpened(index: number) {
     this.panels[index].expanded = true;

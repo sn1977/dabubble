@@ -105,7 +105,7 @@
     </div>
   </div>
 </div>
-@for (user of this.getUsers(); track $index) {
+@for (user of this.firestore.getUsers(); track $index) {
   <div>
     {{ user.avatar }} <br/>
 <!--    {{ user.badPasswordCount }} <br/>-->

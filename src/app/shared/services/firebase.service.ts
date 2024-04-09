@@ -59,6 +59,10 @@ export class FirebaseService {
     };
   }
   
+  getUsers(): User[]{
+    return this.userList;
+  }
+
   async addUser(item: User, id: string) {
     await setDoc(doc(this.getUsersRef(), id), item.toJSON());
   }

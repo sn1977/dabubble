@@ -48,7 +48,7 @@
                 </div>
                
                 
-              @for (user of this.getUsers(); track $index) {
+              @for (user of this.firestore.getUsers(); track $index) {
                 <div class="profil">
                   <img src="./assets/img/characters/{{user.avatar}}" alt="">
                   <img class="position_absolute"
