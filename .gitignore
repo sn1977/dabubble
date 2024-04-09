@@ -3,6 +3,7 @@
 # DA-BUBBLE
 src/app/environment.ts
 /git
+*.css
 
 # Compiled output
 /dist
