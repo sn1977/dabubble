@@ -44,7 +44,7 @@ mat-card {
     }
 
     mat-card-subtitle {
-      font-family: "Nunito";
+      font-family: "Nunito", serif;
       font-weight: 400;
       font-size: 1rem;
       line-height: 20.4px;
@@ -157,7 +157,7 @@ mat-card {
       font-weight: 400;
       font-size: 17px;
       line-height: 23.19px;
-    }    
+    }
   }
 }
 
@@ -193,8 +193,8 @@ mat-card {
         border: 1px solid #444df2;
       }
 
-      &:active {        
-        border: 1px solid #686868;        
+      &:active {
+        border: 1px solid #686868;
       }
     }
 
@@ -217,7 +217,7 @@ mat-card {
 }
 
 
-// @media (max-width: 400px){  
+// @media (max-width: 400px){
 //   .form-box,
 //   .seperator{
 //     width: 90% !important;
