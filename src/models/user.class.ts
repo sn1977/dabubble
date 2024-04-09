@@ -9,7 +9,7 @@ export class User {
     this.avatar = obj ? obj.avatar : '';    
     this.email = obj ? obj.email : '';    
     this.name = obj ? obj.name : '';
-    this.isOnline = obj ? obj.isOnline : '';
+    this.isOnline = obj ? obj.isOnline : true;
   }
 
   public toJSON() {

@@ -44,8 +44,7 @@ export class FirebaseService {
       this.userList = [];
       list.forEach((element) => {
         this.userList.push(this.setUserObject(element.data(), element.id));
-      });
-      console.log(this.userList)
+      });      
     });
   }
 
@@ -59,6 +58,13 @@ export class FirebaseService {
     };
   }
   
+  setStatus(email: string | undefined | null, isOnline: boolean){
+    console.log(email, isOnline);
+
+    
+
+  }
+
   getUsers(): User[]{
     return this.userList;
   }

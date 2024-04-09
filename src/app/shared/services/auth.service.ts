@@ -58,11 +58,17 @@ export class AuthService {
       email,
       password
     ).then(() => {});
+    this.firebase.setStatus(email, true);
     return from(promise);
   }
 
   logout(): Observable<void> {
     const promise = signOut(this.firebaseAuth);
+    if(this.firebaseAuth.currentUser){
+      console.log(this.firebaseAuth.currentUser.email);
+      this.firebase.setStatus(this.firebaseAuth.currentUser.email, false);
+    }
+
     this.router.navigate(['/login']);
     return from(promise);
   }
