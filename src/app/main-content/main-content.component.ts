@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FirebaseService } from '../shared/services/firebase.service';
 import { User } from '../../models/user.class';
-import { log } from 'console';
 import {HeaderMobileComponent} from '../shared/components/header-mobile/header-mobile.component';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
@@ -14,15 +13,14 @@ import {
 } from '@angular/material/expansion';
 import {NgForOf} from '@angular/common';
 import {BottomSheetComponent} from './bottom-sheet/bottom-sheet.component';
-import {Router} from '@angular/router';
 import {MatFabButton} from '@angular/material/button';
 import {FormsModule} from '@angular/forms';
+import { NavigationService} from '../shared/services/navigation.service';
 
 @Component({
   selector: 'app-main-content',
   standalone: true,
   imports: [
-    // HeaderMobileComponent,
     MatIconModule,
     MatInputModule,
     MatFormFieldModule,
@@ -69,7 +67,7 @@ export class MainContentComponent implements OnInit{
   inputHasValue = false;
 
 
-  constructor(private firebase: FirebaseService, private router: Router){}
+  constructor(private firebase: FirebaseService, private navigationService: NavigationService){}
 
   getUsers(): User[]{
     return this.firebase.userList;
@@ -104,11 +102,11 @@ export class MainContentComponent implements OnInit{
   }
 
   navigateToDirectMessage() {
-    this.router.navigate(['/message']);
+    this.navigationService.navigate(['/message']);
   }
 
   navigateToAddChannel() {
-    this.router.navigate(['/add-channel']);
+    this.navigationService.navigate(['/add-channel']);
   }
 
   checkInput(value: string): void {
