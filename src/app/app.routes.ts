@@ -17,7 +17,7 @@ export const routes: Routes = [
   { path: '', component: MainContentComponent },
   { path: 'imprint', component: ImprintComponent },
   { path: 'privacy-policy', component: PrivacyPolicyComponent },
-  { path: 'addchannel', component: AddChannelComponent },
+  { path: 'add-channel', component: AddChannelComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LogInComponent },
   { path: 'send-email', component: SendEmailComponent },
