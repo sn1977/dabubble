@@ -12,7 +12,7 @@ export class NavigationService {
     this.location.back();
   }
 
-  navigate(path: string[]): void {
-    this.router.navigate([path]);
+  navigate(path: string | string[]): void {
+    this.router.navigate(Array.isArray(path) ? path : [path]);
   }
 }

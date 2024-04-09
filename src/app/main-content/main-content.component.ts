@@ -67,7 +67,7 @@ export class MainContentComponent implements OnInit{
   inputHasValue = false;
 
 
-  constructor(private firebase: FirebaseService, private navigationService: NavigationService){}
+  constructor(private firebase: FirebaseService, public navigationService: NavigationService){}
 
   getUsers(): User[]{
     return this.firebase.userList;
