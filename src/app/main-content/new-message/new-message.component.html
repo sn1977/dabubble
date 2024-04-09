@@ -5,7 +5,7 @@
             <img src="./../../assets/img/icon/Property 1=Default (1).svg" alt="">
         </div>
         <div>
-            <img src="./../../assets/img/characters/character_FrederikBeck.svg" alt="">
+            <img src="./../../assets/img/characters/character_FrederikBeck.svg" alt="" (click)="toggleOverlay('overlay3')">
         </div>
     </header>
     <main>
@@ -27,6 +27,19 @@
             </div>
             <div class="send">
                 <img src="./../../assets/img/icon/send.svg" alt="">
+            </div>
+        </div>
+
+        <div id="overlay3" class="overlay" (click)="closeOverlay('overlay3')">
+            <div class="overlay-profil">
+                <div class="profile-icon">
+                    <img src="./../../../assets/img/icon/account_circle.svg" alt="">
+                    <p class="no-margin">Profil</p>
+                </div>
+                <div class="profile-icon">
+                    <img  src="./../../../assets/img/icon/logout.svg" alt="">
+                    <p class="no-margin">Log out</p>
+                </div>
             </div>
         </div>
     </main>

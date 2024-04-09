@@ -5,7 +5,7 @@
             <img src="./../../assets/img/icon/Property 1=Default (1).svg" alt="">
         </div>
         <div>
-            <img src="./../../assets/img/characters/character_FrederikBeck.svg" alt="">
+            <img src="./../../assets/img/characters/character_FrederikBeck.svg" alt="" (click)="toggleOverlay('overlay3')">
         </div>
     </header>
     <main>
@@ -47,14 +47,24 @@
                     <img src="./../../assets/img/icon/close.svg" alt="" (click)="closeOverlay('overlay1')">
                 </div>
                 <div class="members">
-                    <h2>Mitglied 1</h2>
-                    <h2>Mitglied 2</h2>
-                    <h2>Mitglied 3</h2>
+                    <div class="profil">
+                        <img class="height" src="./../../../assets/img/characters/character_FrederikBeck_online.svg" alt="">
+                        <p class="no-margin">Frederik Beck (DU‚)</p>
+                    </div>
+                    <div class="profil">
+                        <img class="height" src="./../../../assets/img/characters/character_SofiaMueller_online.svg" alt="">
+                        <p class="no-margin">Sofia Müller</p>
+                    </div>
+                    <div class="profil">
+                        <img class="height" src="./../../../assets/img/characters/character_NoahBraun_online.svg" alt="">
+                        <p class="no-margin">Noah Braun</p>
+                    </div>
+                    <div class="profil" (click)="toggleOverlay('overlay2')">
+                        <img class="height" src="../../assets/img/icon/44. Add members button.svg" alt="">
+                        <p class="no-margin">Mitglied hinzufügen</p>
+                    </div>
                 </div>
-                <div class="add-member" (click)="toggleOverlay('overlay2')">
-                    <img src="../../assets/img/icon/44. Add members button.svg" alt="">
-                    <p class="no-margin">Mitglied hinzufügen</p>
-                </div>
+                
             </div>
         </div>
 
@@ -67,6 +77,19 @@
                 <input class="search-input" type="text" placeholder="Suche Mitglied">
                 <div class="btn-pos">
                     <button class="add-button"> Hinzufügen</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="overlay3" class="overlay" (click)="closeOverlay('overlay3')">
+            <div class="overlay-profil">
+                <div class="profile-icon">
+                    <img src="./../../../assets/img/icon/account_circle.svg" alt="">
+                    <p class="no-margin">Profil</p>
+                </div>
+                <div class="profile-icon">
+                    <img  src="./../../../assets/img/icon/logout.svg" alt="">
+                    <p class="no-margin">Log out</p>
                 </div>
             </div>
         </div>
