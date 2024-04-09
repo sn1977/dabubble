@@ -57,21 +57,14 @@ export class FirebaseService {
       isOnline: obj.isOnline,
     };
   }
-  
-  setStatus(email: string | undefined | null, isOnline: boolean){
-    console.log(email, isOnline);
-
     
-
+  async updateUser(item: User, id: string) {    
+    await setDoc(doc(this.getUsersRef(), id), item.toJSON());
   }
 
   getUsers(): User[]{
     return this.userList;
-  }
-
-  async addUser(item: User, id: string) {
-    await setDoc(doc(this.getUsersRef(), id), item.toJSON());
-  }
+  }  
 
   async addChannel(item: Channel) {    
     await addDoc(this.getChannelsRef(), item)

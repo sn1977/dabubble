@@ -55,7 +55,7 @@ mat-card {
 
   .card-content {
     padding: 0;
-    @include dFlex($jc: center, $ai: center, $fd: column, $g: 30px);
+    @include dFlex($jc: center, $ai: center, $fd: column, $g: 8px);
 
     form {
       @include dFlex($jc: center, $ai: center, $fd: column, $g: 8px);

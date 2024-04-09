@@ -15,12 +15,12 @@
       </div>
     </mat-card-header>
     <mat-card-content class="card-content">
-      @if(errorMessage){
-      <div class="required">{{ errorMessage }}</div>
-      <!-- auth/email-already-in-use -->
-      <!-- auth/user-disabled -->
-      <!-- auth/invalid-credential -->
-      }
+      <div class="required">
+        @if(errorMessage){ @switch (errorMessage) { @case
+        ("auth/email-already-in-use") { auth/email-already-in-use } @case
+        ("auth/user-disabled") { Konto inaktiv } @default {
+        Ungültige Anmeldedaten } } }
+      </div>
 
       <form (ngSubmit)="onSubmit()" #contactForm="ngForm" ngNativeValidate>
         <div class="form-box">
@@ -31,7 +31,7 @@
               #email="ngModel"
               [(ngModel)]="contactData.email"
               pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
-              placeholder="beispielname@email.com"              
+              placeholder="beispielname@email.com"
               required
             />
             <img
@@ -68,7 +68,12 @@
           </span>
         </div>
 
-        <span class="fontThin pointer" routerLink="/send-email" routerLinkActive="router-link-active">Passwort vergessen?</span>
+        <span
+          class="fontThin pointer"
+          routerLink="/send-email"
+          routerLinkActive="router-link-active"
+          >Passwort vergessen?</span
+        >
 
         <div class="seperator">
           <img src="./assets/img/auth/line.svg" alt="" />
@@ -96,8 +101,14 @@
     </mat-card-content>
   </mat-card>
 
-  <div class="buttons" style="flex-direction: column;">
-    <span>Neu bei DABubble?</span>    
-    <button class="btn-secondary pointer" routerLink="/register" routerLinkActive="router-link-active">Konto erstellen</button>
+  <div class="buttons" style="flex-direction: column">
+    <span>Neu bei DABubble?</span>
+    <button
+      class="btn-secondary pointer"
+      routerLink="/register"
+      routerLinkActive="router-link-active"
+    >
+      Konto erstellen
+    </button>
   </div>
 </div>

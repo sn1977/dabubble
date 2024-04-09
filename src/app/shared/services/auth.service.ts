@@ -8,8 +8,8 @@ import {
   signOut,
   updateProfile,
   user,
-  verifyPasswordResetCode, 
-  confirmPasswordReset
+  verifyPasswordResetCode,
+  confirmPasswordReset,
 } from '@angular/fire/auth';
 import { Observable, from } from 'rxjs';
 import { UserInterface } from '../interfaces/user.interface';
@@ -46,7 +46,7 @@ export class AuthService {
         this.user.avatar = currentUser.photoURL ?? this.user.avatar;
         this.user.email = currentUser.email ?? this.user.email;
         this.user.name = username ?? this.user.name;
-        this.firebase.addUser(this.user, this.user.id);
+        this.firebase.updateUser(this.user, this.user.id);
       }
     });
     return from(promise);
@@ -57,18 +57,31 @@ export class AuthService {
       this.firebaseAuth,
       email,
       password
-    ).then(() => {});
-    this.firebase.setStatus(email, true);
+    ).then(() => {
+      const currentUser = this.firebaseAuth.currentUser;
+      if (currentUser) {
+        this.user.id = currentUser.uid ?? this.user.id;
+        this.user.avatar = currentUser.photoURL ?? this.user.avatar;
+        this.user.email = currentUser.email ?? this.user.email;
+        this.user.name = currentUser.displayName ?? this.user.name;
+        this.user.isOnline = true;
+        this.firebase.updateUser(this.user, this.user.id);
+      }
+    });
     return from(promise);
   }
 
   logout(): Observable<void> {
-    const promise = signOut(this.firebaseAuth);
-    if(this.firebaseAuth.currentUser){
-      console.log(this.firebaseAuth.currentUser.email);
-      this.firebase.setStatus(this.firebaseAuth.currentUser.email, false);
+    const currentUser = this.firebaseAuth.currentUser;
+    if (currentUser) {
+      this.user.id = currentUser.uid ?? this.user.id;
+      this.user.avatar = currentUser.photoURL ?? this.user.avatar;
+      this.user.email = currentUser.email ?? this.user.email;
+      this.user.name = currentUser.displayName ?? this.user.name;
+      this.user.isOnline = false;
+      this.firebase.updateUser(this.user, this.user.id);
     }
-
+    const promise = signOut(this.firebaseAuth);
     this.router.navigate(['/login']);
     return from(promise);
   }
@@ -85,43 +98,42 @@ export class AuthService {
     return from(promise);
   }
 
-  resetPassword(oobCode: string, password: string){
+  resetPassword(oobCode: string, password: string) {
     console.log('password reset: ', oobCode, password);
-    
-//     import { verifyPasswordResetCode, confirmPasswordReset } from "firebase/auth";
 
-// function handleResetPassword(auth, actionCode, continueUrl, lang) {
-//   // Localize the UI to the selected language as determined by the lang
-//   // parameter.
+    //     import { verifyPasswordResetCode, confirmPasswordReset } from "firebase/auth";
 
-//   // Verify the password reset code is valid.
-//   verifyPasswordResetCode(auth, actionCode).then((email) => {
-//     const accountEmail = email;
+    // function handleResetPassword(auth, actionCode, continueUrl, lang) {
+    //   // Localize the UI to the selected language as determined by the lang
+    //   // parameter.
 
-//     // TODO: Show the reset screen with the user's email and ask the user for
-//     // the new password.
-//     const newPassword = "...";
+    //   // Verify the password reset code is valid.
+    //   verifyPasswordResetCode(auth, actionCode).then((email) => {
+    //     const accountEmail = email;
 
-//     // Save the new password.
-//     confirmPasswordReset(auth, actionCode, newPassword).then((resp) => {
-//       // Password reset has been confirmed and new password updated.
+    //     // TODO: Show the reset screen with the user's email and ask the user for
+    //     // the new password.
+    //     const newPassword = "...";
 
-//       // TODO: Display a link back to the app, or sign-in the user directly
-//       // if the page belongs to the same domain as the app:
-//       // auth.signInWithEmailAndPassword(accountEmail, newPassword);
+    //     // Save the new password.
+    //     confirmPasswordReset(auth, actionCode, newPassword).then((resp) => {
+    //       // Password reset has been confirmed and new password updated.
 
-//       // TODO: If a continue URL is available, display a button which on
-//       // click redirects the user back to the app via continueUrl with
-//       // additional state determined from that URL's parameters.
-//     }).catch((error) => {
-//       // Error occurred during confirmation. The code might have expired or the
-//       // password is too weak.
-//     });
-//   }).catch((error) => {
-//     // Invalid or expired action code. Ask user to try to reset the password
-//     // again.
-//   });
-// }
+    //       // TODO: Display a link back to the app, or sign-in the user directly
+    //       // if the page belongs to the same domain as the app:
+    //       // auth.signInWithEmailAndPassword(accountEmail, newPassword);
+
+    //       // TODO: If a continue URL is available, display a button which on
+    //       // click redirects the user back to the app via continueUrl with
+    //       // additional state determined from that URL's parameters.
+    //     }).catch((error) => {
+    //       // Error occurred during confirmation. The code might have expired or the
+    //       // password is too weak.
+    //     });
+    //   }).catch((error) => {
+    //     // Invalid or expired action code. Ask user to try to reset the password
+    //     // again.
+    //   });
+    // }
   }
-
 }
