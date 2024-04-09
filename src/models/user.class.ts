@@ -3,11 +3,13 @@ export class User {
   avatar: string;  
   email: string;  
   name: string;
+  isOnline: boolean;
 
   constructor(obj?: any) {
     this.avatar = obj ? obj.avatar : '';    
     this.email = obj ? obj.email : '';    
     this.name = obj ? obj.name : '';
+    this.isOnline = obj ? obj.isOnline : '';
   }
 
   public toJSON() {
@@ -15,6 +17,7 @@ export class User {
       avatar: this.avatar,      
       email: this.email,      
       name: this.name,
+      isOnline: this.isOnline,
     };
   }
 }

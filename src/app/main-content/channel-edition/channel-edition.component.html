@@ -46,14 +46,33 @@
                     <img src="./../../../assets/img/characters/character_FrederikBeck_online.svg" alt="">
                     <p class="no-margin">Frederik Beck (DU‚)</p>
                 </div>
+               
+                
+              @for (user of this.getUsers(); track $index) {
                 <div class="profil">
+                  <img src="./assets/img/characters/{{user.avatar}}" alt="">
+                  <img class="position_absolute"
+                [src]="
+                  user.isOnline
+                    ? './assets/img/characters/online.svg'
+                    : './assets/img/characters/offline.svg'
+                "
+                alt="icon"
+              />
+             
+                  <p class="no-margin">{{user.name}}</p>
+              </div>
+              }
+               
+               
+                <!-- <div class="profil">
                     <img src="./../../../assets/img/characters/character_SofiaMueller_online.svg" alt="">
                     <p class="no-margin">Sofia Müller</p>
                 </div>
                 <div class="profil">
                     <img src="./../../../assets/img/characters/character_NoahBraun_online.svg" alt="">
                     <p class="no-margin">Noah Braun</p>
-                </div>
+                </div> -->
                 <div class="profil">
                     <img src="./../../../assets/img/icon/44. Add members button.svg" alt="">
                     <p class="no-margin">Mitglieder Hinzufügen</p>
