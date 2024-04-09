@@ -28,6 +28,14 @@ main {
   background-color: rgb(236, 238, 254);
 }
 
+.input-edit{
+  padding: 20px;
+  width: 220px;
+  border-radius: 10px;
+  border: 1px solid blue;
+
+}
+
 .background{
   background-color: white;
   overflow: scroll;
@@ -91,6 +99,7 @@ main {
 }
 
 .horizontal-line {
+  margin-top: 10px;
   margin-bottom: 10px;
   width: 100%; /* Breite des Strichs */
   height: 1px; /* Höhe des Strichs */
