@@ -43,12 +43,13 @@ export class ResetPasswordComponent implements OnInit{
   errorMessage: string | null = null;
   oobCode: string | undefined;
   isDisabled: boolean = true;
+  passwordMinLength: number = 6;
 
   constructor(private route: ActivatedRoute){ }
 
   checkPasswords() {
     this.isDisabled =
-      this.contactData.password.length >= 6 &&
+      this.contactData.password.length >= this.passwordMinLength &&
       this.contactData.password === this.contactData.confirm_password
         ? false
         : true;
