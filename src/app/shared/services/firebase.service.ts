@@ -43,13 +43,13 @@ export class FirebaseService {
     return onSnapshot(this.getUsersRef(), (list) => {
       this.userList = [];
       list.forEach((element) => {
-        this.userList.push(this.setNoteObject(element.data(), element.id));
+        this.userList.push(this.setUserObject(element.data(), element.id));
       });
       console.log(this.userList)
     });
   }
 
-  setNoteObject(obj: any, id: string): any {
+  setUserObject(obj: any, id: string): any {
     return {
       id: id,
       avatar: obj.avatar,
