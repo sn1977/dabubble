@@ -45,6 +45,7 @@ export class FirebaseService {
       list.forEach((element) => {
         this.userList.push(this.setNoteObject(element.data(), element.id));
       });
+      console.log(this.userList)
     });
   }
 
