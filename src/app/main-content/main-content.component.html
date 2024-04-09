@@ -38,7 +38,7 @@
                   <span [style.color]="panels[0].titleColor">{{ panels[0].title }}</span>
                 </div>
               </div>
-              <img class="plus-icon" src="assets/img/icon/add.png">
+              <img class="plus-icon" src="assets/img/icon/add.png" (click)="onAddClick($event)">
             </div>
           </mat-panel-title>
         </mat-expansion-panel-header>
@@ -46,7 +46,7 @@
           <span class="channel-tag">#</span>
           <span>Entwicklerteam</span>
         </div>
-        <div class="add-channel">
+        <div class="add-channel" (click)="navigateToAddChannel()">
           <img src="assets/img/icon/add_circle.png">
           <span>Channel hinzufügen</span>
         </div>

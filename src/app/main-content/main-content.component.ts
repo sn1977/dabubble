@@ -18,7 +18,6 @@ import {Router} from '@angular/router';
 import {MatFabButton} from '@angular/material/button';
 import {FormsModule} from '@angular/forms';
 
-
 @Component({
   selector: 'app-main-content',
   standalone: true,
@@ -99,8 +98,17 @@ export class MainContentComponent implements OnInit{
     this.panels[index].titleColor = '#535AF1'; // Farbe, wenn geschlossen
   }
 
+  onAddClick(event: MouseEvent): void {
+    event.stopPropagation(); // Verhindert, dass das Click-Event weiter zum mat-expansion-panel propagiert wird.
+    this.navigateToAddChannel()
+  }
+
   navigateToDirectMessage() {
     this.router.navigate(['/message']);
+  }
+
+  navigateToAddChannel() {
+    this.router.navigate(['/add-channel']);
   }
 
   checkInput(value: string): void {
