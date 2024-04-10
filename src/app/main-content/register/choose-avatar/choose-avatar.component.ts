@@ -73,7 +73,7 @@ export class ChooseAvatarComponent {
   setAvatar(event: MouseEvent) {
       const imgElement = event.target as HTMLImageElement;
       this.currentAvatar = imgElement.src;
-      this.contactData.photoURL = this.currentAvatar;
+      this.contactData.photoURL = this.currentAvatar;      
   }
 
 }

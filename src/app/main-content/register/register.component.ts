@@ -13,6 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
+import { ChooseAvatarComponent } from './choose-avatar/choose-avatar.component';
 
 @Component({
   selector: 'app-register',
@@ -27,13 +28,16 @@ import { FormsModule } from '@angular/forms';
     MatFormFieldModule,
     FormsModule,
     MatIconModule,
-    RouterLink
+    RouterLink,
+    ChooseAvatarComponent
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })
 export class RegisterComponent {
- 
+  
+  showAvatarComponent:boolean = false;
+
   contactData = {
     name: '',
     email: '',
@@ -48,36 +52,8 @@ export class RegisterComponent {
 
   onSubmit(): void {
     
-    if (this.contactData.name && this.contactData.email && this.contactData.password) {
-      console.log(this.contactData);
-      // Übergebe die contactData-Variable an die Kindkomponente
-      // Das Kindkomponente kann jetzt auf die Daten über die Input-Eigenschaft zugreifen
-      // Triggere ein Ereignis und übergebe die Daten
-      this.updateContactData.emit(this.contactData);
-      this.router.navigateByUrl('/choose-avatar');
+    if (this.contactData.name && this.contactData.email && this.contactData.password) {      
+      this.showAvatarComponent = true
     }
-
-    // this.authService
-    //   .register(
-    //     this.contactData.email,
-    //     this.contactData.name,
-    //     this.contactData.password,
-    //     this.contactData.photoURL
-    //   )
-    //   .subscribe({
-    //     next: () => {
-    //       // Bestätigung anzeigen
-    //       this.router.navigateByUrl('/');
-    //     },
-    //     error: (err) => {
-    //       this.errorMessage = err.code;
-    //     },
-    //   });
-    // const dialog = this.dialog.open(ChooseAvatarComponent, {});
-    // dialog.componentInstance.user = new User(this.user.toJSON());
-    // dialog.componentInstance.userID = this.userID;
-
-
-
   }
 }
