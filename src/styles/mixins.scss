@@ -31,6 +31,15 @@
   text-align: $ta;
   color: $c;
   font-family: 'Figtree', serif;
+  padding: 5px 15px;
+
+  &:hover{
+    background-color: #ECEEFE;
+    color: #444DF2;
+    font-weight: 500;
+    border-radius: 30px;
+  }
+
 }
 
 @mixin bg-c($c) {

@@ -1,4 +1,4 @@
-@import "../../../styles/mixins.scss";
+@import "../../../../styles/mixins.scss";
 
 .content {
   position: relative;
@@ -56,6 +56,8 @@ mat-card {
         $ta: center,
         $c: #444df2
       );
+      white-space: pre-wrap;
+      width: 80%;
     }
 
     mat-card-subtitle {
@@ -72,28 +74,51 @@ mat-card {
     padding: 0;
     @include dFlex($jc: center, $ai: center, $fd: column, $g: 30px);
     width: 100%;
-    
+
     form {
-      @include dFlex($jc: center, $ai: center, $fd: column, $g: 8px);
-      width: 100%;
+      @include dFlex($jc: center, $ai: center, $fd: column, $g: 24px);
+      width: 100%;      
 
       .form-box {
         position: relative;
         width: 100%;
-        @include dFlex($jc: space-between, $ai: flex-start, $fd: column, $g: 0);
+        @include dFlex($jc: space-between, $ai: center, $fd: column, $g: 0);
 
-        .input-with-icon {
-          @include dFlex($jc: space-between, $ai: flex-start, $fd: row, $g: 30px);
+        .username{
+          font-family: 'Nunito';
+          font-weight: 700;
+          font-size: 32px;
+          line-height: 43.65px;
+          color: #000;
+        }
+
+        .infotext{
+          @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 24px);
           width: 100%;
-          position: relative;
+          span{
+            font-family: 'Nunito';
+            font-weight: 400;
+            font-size: 20px;
+            line-height: 27.28px;
+            color: #000;
+          }
+        }
 
-          img {
-            position: absolute;
-            left: 25px;
-            top: 25px;
-            transform: translateY(-50%);
-            width: 25px;
-            height: 25px;
+        .avatar-list{          
+          width: 100%;
+          height: 56px;
+          @include dFlex($jc: space-between, $ai: flex-start, $fd: row, $g: 4px);
+
+          .selection {            
+            width: 56px;
+            height: 56px;
+            padding: 4px;
+  
+            img {
+              width: 48px; 
+              height: 48px;
+              border-radius: 41px;
+            }
           }
         }
 
@@ -142,5 +167,8 @@ mat-card {
   @include dFlex($jc: flex-end, $ai: center, $fd: row, $g: 20px);
   .btn-primary {
     @include btn($h: 49px, $br: 25px, $ptb: 12px, $plr: 25px, $c: #FFF, $bgc: #444df2, $bgch: #797ef3, $ch: #FFF, $fbc: #444DF2);
-  }  
+  }
 }
+.btn-secondary {
+  @include btn($h: 49px, $br: 25px, $ptb: 12px, $plr: 25px, $c: #444df2, $bgc: transparent, $bgch: #535af1, $ch: #FFF, $fbc: #444DF2);
+} 

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../shared/services/auth.service';
+import { AuthService } from '../../../shared/services/auth.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import {
@@ -15,7 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-register',
+  selector: 'app-choose-avatar',
   standalone: true,
   imports: [
     MatCardModule,
@@ -29,22 +29,23 @@ import { FormsModule } from '@angular/forms';
     MatIconModule,
     RouterLink
   ],
-  templateUrl: './register.component.html',
-  styleUrl: './register.component.scss',
+  templateUrl: './choose-avatar.component.html',
+  styleUrl: './choose-avatar.component.scss'
 })
-export class RegisterComponent {
+export class ChooseAvatarComponent {
   contactData = {
     name: '',
     email: '',
     password: '',
     photoURL: ''
   };
-
+  
   http = inject(HttpClient);
   authService = inject(AuthService);
   router = inject(Router);
 
   errorMessage: string | null = null;
+  templateIndex: number = 0;
 
   onSubmit(): void {
     this.authService
@@ -63,10 +64,6 @@ export class RegisterComponent {
           this.errorMessage = err.code;
         },
       });
-  }
-
-  openAvatarCard(){
-    console.log('passt');    
   }
 
 }

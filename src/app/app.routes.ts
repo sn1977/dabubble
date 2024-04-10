@@ -12,6 +12,7 @@ import { ResetPasswordComponent } from './main-content/reset-password/reset-pass
 import { DirectMessageComponent } from './main-content/direct-message/direct-message.component';
 import { NewMessageComponent } from './main-content/new-message/new-message.component';
 import { ChannelEditionComponent } from './main-content/channel-edition/channel-edition.component';
+import { ChooseAvatarComponent } from './main-content/register/choose-avatar/choose-avatar.component';
 
 export const routes: Routes = [
   { path: '', component: MainContentComponent },
@@ -19,6 +20,7 @@ export const routes: Routes = [
   { path: 'privacy-policy', component: PrivacyPolicyComponent },
   { path: 'add-channel', component: AddChannelComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'choose-avatar', component: ChooseAvatarComponent },
   { path: 'login', component: LogInComponent },
   { path: 'send-email', component: SendEmailComponent },
   { path: 'reset-password', component: ResetPasswordComponent },  

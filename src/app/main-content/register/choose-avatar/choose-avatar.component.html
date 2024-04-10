@@ -1,0 +1,66 @@
+<div class="content">
+  <div class="logo">
+    <img src="./assets/img/auth/logo.svg" />
+    <span class="logo-name">DABubble</span>
+  </div>
+
+  <mat-card>
+    <mat-card-header>
+      <div class="headline">
+        <div class="headline-icon">
+          <mat-icon
+            class="pointer"
+            fontIcon="arrow_back"
+            routerLink="/register"
+            routerLinkActive="router-link-active"
+          ></mat-icon>
+        </div>
+
+        <mat-card-title>Wähle deinen Avatar</mat-card-title>
+      </div>
+    </mat-card-header>
+    <mat-card-content class="card-content">
+      @if(errorMessage){
+      <div class="required">{{ errorMessage }}</div>
+      <!-- auth/email-already-in-use -->
+      <!-- auth/user-disabled -->
+      }
+
+      <form (ngSubmit)="onSubmit()" #contactForm="ngForm" ngNativeValidate>
+        <div class="form-box">
+          <img src="./assets/img/characters/profile.svg" alt="" />
+        </div>
+
+        <div class="form-box">
+          <span class="username">Frederik Beck</span>
+        </div>
+
+        <div class="form-box">
+          <div class="infotext">
+            <span>Choose your avatar....</span>
+          </div>
+        </div>
+
+        <div class="form-box">
+          <div class="avatar-list">
+
+            @for(count of [1,2,3,4,5,6]; track templateIndex){
+                <div class="selection">
+                  <img class="pointer" src="./assets/img/characters/template{{count}}.svg" alt="">
+                </div>
+              }
+            </div>
+        </div>
+
+        <div class="form-box"><div class="infotext">
+          <span>Or you can</span>
+          <button class="btn-secondary pointer">Upload foto</button>
+        </div></div>
+
+        <div class="buttons">
+          <button class="btn-primary pointer">Weiter</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
