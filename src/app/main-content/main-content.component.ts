@@ -114,4 +114,9 @@ export class MainContentComponent{
   checkInput(value: string): void {
     this.inputHasValue = !!value.trim();
   }
+
+  openChannel(event:MouseEvent){
+    const channelId = (event.target as HTMLElement).id;
+    console.log('Öffne Kanal mit ID:', channelId);
+  }
 }
