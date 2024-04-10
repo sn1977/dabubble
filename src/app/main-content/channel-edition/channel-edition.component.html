@@ -6,7 +6,7 @@
         </div>
     </div>
     <main>
-        <div class="input-field" [style.border]="!isEditingChannelName ? '1px solid blue' : 'none'">
+        <div class="container" [style.border]="!isEditingChannelName ? '1px solid blue' : 'none'">
             <div class="channel-name">
               <h1>Channel-Name</h1>
               <!-- Platzhaltertext wird nur angezeigt, wenn nicht bearbeitet wird -->
@@ -20,12 +20,10 @@
             </div>
           </div>
           
-          <div class="input-field" [style.border]="!isEditingDescription ? '1px solid blue' : 'none'">
+          <div class="container" [style.border]="!isEditingDescription ? '1px solid blue' : 'none'">
             <div class="channel-name">
               <h1>Beschreibung</h1>
-              <!-- Platzhaltertext wird nur angezeigt, wenn nicht bearbeitet wird -->
               <p *ngIf="!isEditingDescription" id="description" placeholder="# Entwicklerteam">{{ descriptionDescriptionText }}</p>
-              <!-- Eingabefeld wird nur angezeigt, wenn bearbeitet wird -->
               <input *ngIf="isEditingDescription" id="input-edit-description" class="input-edit" type="text" [(ngModel)]="editedDescriptionDescription" placeholder="# Entwicklerteam">
               <div class="horizontal-line"></div>
               <div>
@@ -38,41 +36,27 @@
               <img *ngIf="isEditingDescription" id="check-icon-description" src="./../../../assets/img/icon/check_circle.svg" alt="" (click)="toggleEdit('description')">
             </div>
           </div>
-          
-        <div class="input-field">
+          <!-- Mitglieder von Firebase -->
+        <div class="container">
             <div class="channel-name">
                 <h1>Mitglieder</h1>
+              <!-- Du von Firebase -->
                 <div class="profil">
                     <img src="./../../../assets/img/characters/character_FrederikBeck_online.svg" alt="">
                     <p class="no-margin">Frederik Beck (DU‚)</p>
                 </div>
+              <!-- Alle Mitglieder von Firebase -->
                
-                
               @for (user of this.firestore.getUsers(); track $index) {
                 <div class="profil">
                   <img src="./assets/img/characters/{{user.avatar}}" alt="">
-                  <img class="position_absolute"
-                [src]="
-                  user.isOnline
-                    ? './assets/img/characters/online.svg'
-                    : './assets/img/characters/offline.svg'
-                "
-                alt="icon"
-              />
-             
+                  <img class="position_absolute"[src]="user.isOnline? './assets/img/characters/online.svg': './assets/img/characters/offline.svg'" alt="icon"/>
                   <p class="no-margin">{{user.name}}</p>
-              </div>
-              }
-               
-               
-                <!-- <div class="profil">
-                    <img src="./../../../assets/img/characters/character_SofiaMueller_online.svg" alt="">
-                    <p class="no-margin">Sofia Müller</p>
                 </div>
-                <div class="profil">
-                    <img src="./../../../assets/img/characters/character_NoahBraun_online.svg" alt="">
-                    <p class="no-margin">Noah Braun</p>
-                </div> -->
+              }
+              <!-- Alle Mitglieder von Firebase -->
+               
+    
                 <div class="profil">
                     <img src="./../../../assets/img/icon/44. Add members button.svg" alt="">
                     <p (click)="toggleOverlay('overlay2')" class="no-margin">Mitglieder Hinzufügen</p>
