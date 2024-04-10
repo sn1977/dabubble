@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, inject } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../shared/services/auth.service';
 import { MatCardModule } from '@angular/material/card';
@@ -13,6 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
+import { User } from '../../../../models/user.class';
 
 @Component({
   selector: 'app-choose-avatar',
@@ -33,13 +34,15 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './choose-avatar.component.scss'
 })
 export class ChooseAvatarComponent {
-  contactData = {
-    name: '',
-    email: '',
-    password: '',
-    photoURL: ''
-  };
-  
+  // contactData = {
+  //   name: '',
+  //   email: '',
+  //   password: '',
+  //   photoURL: ''
+  // };
+
+  @Input() contactData: any;
+
   http = inject(HttpClient);
   authService = inject(AuthService);
   router = inject(Router);

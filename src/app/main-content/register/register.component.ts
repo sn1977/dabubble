@@ -33,40 +33,51 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './register.component.scss',
 })
 export class RegisterComponent {
+ 
   contactData = {
     name: '',
     email: '',
     password: '',
     photoURL: ''
   };
-
-  http = inject(HttpClient);
-  authService = inject(AuthService);
+  
   router = inject(Router);
 
   errorMessage: string | null = null;
+  updateContactData: any;
 
   onSubmit(): void {
-    this.authService
-      .register(
-        this.contactData.email,
-        this.contactData.name,
-        this.contactData.password,
-        this.contactData.photoURL
-      )
-      .subscribe({
-        next: () => {
-          // Bestätigung anzeigen
-          this.router.navigateByUrl('/');
-        },
-        error: (err) => {
-          this.errorMessage = err.code;
-        },
-      });
-  }
+    
+    if (this.contactData.name && this.contactData.email && this.contactData.password) {
+      console.log(this.contactData);
+      // Übergebe die contactData-Variable an die Kindkomponente
+      // Das Kindkomponente kann jetzt auf die Daten über die Input-Eigenschaft zugreifen
+      // Triggere ein Ereignis und übergebe die Daten
+      this.updateContactData.emit(this.contactData);
+      this.router.navigateByUrl('/choose-avatar');
+    }
 
-  openAvatarCard(){
-    console.log('passt');    
-  }
+    // this.authService
+    //   .register(
+    //     this.contactData.email,
+    //     this.contactData.name,
+    //     this.contactData.password,
+    //     this.contactData.photoURL
+    //   )
+    //   .subscribe({
+    //     next: () => {
+    //       // Bestätigung anzeigen
+    //       this.router.navigateByUrl('/');
+    //     },
+    //     error: (err) => {
+    //       this.errorMessage = err.code;
+    //     },
+    //   });
+    // const dialog = this.dialog.open(ChooseAvatarComponent, {});
+    // dialog.componentInstance.user = new User(this.user.toJSON());
+    // dialog.componentInstance.userID = this.userID;
 
+
+
+  }
 }

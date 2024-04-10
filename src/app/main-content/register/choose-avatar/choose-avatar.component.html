@@ -20,19 +20,14 @@
       </div>
     </mat-card-header>
     <mat-card-content class="card-content">
-      @if(errorMessage){
-      <div class="required">{{ errorMessage }}</div>
-      <!-- auth/email-already-in-use -->
-      <!-- auth/user-disabled -->
-      }
-
+      
       <form (ngSubmit)="onSubmit()" #contactForm="ngForm" ngNativeValidate>
         <div class="form-box">
-          <img src="{{currentAvatar}}" alt="" />
+          <img class="avatar"  [src]="currentAvatar" alt="" />
         </div>
 
         <div class="form-box">
-          <span class="username">Frederik Beck</span>
+          <span class="username">Frederik Beck {{contactData.name}}</span>
         </div>
 
         <div class="form-box">
@@ -46,8 +41,7 @@
 
             @for(count of [1,2,3,4,5,6]; track templateIndex){
                 <div class="selection">
-                  <img name="photoURL" #photoURL="ngModel"
-                  [(ngModel)]="contactData.photoURL" (click)="setAvatar($event)" class="pointer" src="./assets/img/characters/template{{count}}.svg" alt="">
+                  <img (click)="setAvatar($event)" class="pointer" src="./assets/img/characters/template{{count}}.svg" alt="">
                 </div>
               }
             </div>
