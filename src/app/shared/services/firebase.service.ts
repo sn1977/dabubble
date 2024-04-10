@@ -19,12 +19,16 @@ import { Channel } from '../../../models/channel.class';
 export class FirebaseService {
   firestore: Firestore = inject(Firestore);
   user: User = new User();
+  channel: Channel = new Channel();
   userList: any = [];
+  channelList: any = [];
 
   unsubUsers;
+  unsubChannel;
 
   constructor() {
     this.unsubUsers = this.subUserList();
+    this.unsubChannel = this.subChannelList();
   }
 
   getUsersRef() {
@@ -48,6 +52,15 @@ export class FirebaseService {
     });
   }
 
+  subChannelList() {
+    return onSnapshot(this.getChannelsRef(), (list) => {
+      this.channelList = [];
+      list.forEach((element) => {
+        this.channelList.push(this.setChannelObject(element.data(), element.id));
+      });      
+    });
+  }
+
   setUserObject(obj: any, id: string): any {
     return {
       id: id,
@@ -55,6 +68,16 @@ export class FirebaseService {
       email: obj.email,
       name: obj.name,
       isOnline: obj.isOnline,
+    };
+  }
+
+  setChannelObject(obj: any, id: string): any {
+    return {
+      creator: obj.creator,
+      description: obj.description,
+      member: obj.member,
+      id: id,
+      name: obj.name,
     };
   }
     
@@ -65,6 +88,13 @@ export class FirebaseService {
   getUsers(): User[]{
     return this.userList;
   }  
+
+
+
+  getChannel(): Channel[]{
+  return this.channelList;
+    
+  } 
 
   async addChannel(item: Channel) {    
     await addDoc(this.getChannelsRef(), item)
@@ -78,5 +108,6 @@ export class FirebaseService {
 
   ngonDestroyy() {
     this.unsubUsers();
+    this.unsubChannel();
   }
 }

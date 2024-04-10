@@ -29,6 +29,16 @@
               <div>
                   <p>Erstellt von</p>
                   <p class="color">Noah Braun</p>
+
+                  @for (channel of this.firestore.getChannel(); track $index) {
+                      <p>{{channel.name}}</p>
+                      <p>{{channel.creator}}</p>
+                  }
+
+
+
+
+
               </div>
             </div>
             <div class="edit-icon">

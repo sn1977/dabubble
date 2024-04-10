@@ -18,7 +18,8 @@
         />
 <!--        <mat-icon matSuffix>search</mat-icon>-->
       </div>
-      <!--      <input matInput class="br-42" placeholder="Gehe zu...">-->
+      <!--      <input matInput class="b
+        r-42" placeholder="Gehe zu...">-->
 
 <!--    </mat-form-field>-->
 
@@ -42,10 +43,23 @@
             </div>
           </mat-panel-title>
         </mat-expansion-panel-header>
+        
+          <!-- Für Firebase -->
+        @for (channel of this.firestore.getChannel(); track $index) {
         <div class="channel-name">
           <span class="channel-tag">#</span>
-          <span>Entwicklerteam</span>
+          <span>{{channel.name}}</span>
         </div>
+      }
+        
+
+        
+
+
+
+
+
+
         <div class="add-channel" (click)="navigateToAddChannel()">
           <img src="assets/img/icon/add_circle.png">
           <span>Channel hinzufügen</span>
