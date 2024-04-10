@@ -49,7 +49,7 @@
                
               @for (user of this.firestore.getUsers(); track $index) {
                 <div class="profil">
-                  <img src="./assets/img/characters/{{user.avatar}}" alt="">
+                  <img class="img-profil" src="./assets/img/characters/{{user.avatar}}" alt="">
                   <img class="position_absolute"[src]="user.isOnline? './assets/img/characters/online.svg': './assets/img/characters/offline.svg'" alt="icon"/>
                   <p class="no-margin">{{user.name}}</p>
                 </div>
