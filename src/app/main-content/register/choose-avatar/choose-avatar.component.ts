@@ -46,6 +46,7 @@ export class ChooseAvatarComponent {
 
   errorMessage: string | null = null;
   templateIndex: number = 0;
+  currentAvatar: string = './assets/img/characters/profile.svg';
 
   onSubmit(): void {
     this.authService
@@ -64,6 +65,12 @@ export class ChooseAvatarComponent {
           this.errorMessage = err.code;
         },
       });
+  }
+  
+  setAvatar(event: MouseEvent) {
+      const imgElement = event.target as HTMLImageElement;
+      this.currentAvatar = imgElement.src;
+      this.contactData.photoURL = this.currentAvatar;
   }
 
 }

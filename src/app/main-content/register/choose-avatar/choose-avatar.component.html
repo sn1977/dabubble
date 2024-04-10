@@ -28,7 +28,7 @@
 
       <form (ngSubmit)="onSubmit()" #contactForm="ngForm" ngNativeValidate>
         <div class="form-box">
-          <img src="./assets/img/characters/profile.svg" alt="" />
+          <img src="{{currentAvatar}}" alt="" />
         </div>
 
         <div class="form-box">
@@ -46,7 +46,8 @@
 
             @for(count of [1,2,3,4,5,6]; track templateIndex){
                 <div class="selection">
-                  <img class="pointer" src="./assets/img/characters/template{{count}}.svg" alt="">
+                  <img name="photoURL" #photoURL="ngModel"
+                  [(ngModel)]="contactData.photoURL" (click)="setAvatar($event)" class="pointer" src="./assets/img/characters/template{{count}}.svg" alt="">
                 </div>
               }
             </div>
