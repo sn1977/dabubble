@@ -11,7 +11,7 @@ import {
   MatExpansionPanelDescription,
   MatExpansionPanelTitle
 } from '@angular/material/expansion';
-import {NgForOf} from '@angular/common';
+import {NgForOf, NgIf} from '@angular/common';
 import {BottomSheetComponent} from './bottom-sheet/bottom-sheet.component';
 import {MatFabButton} from '@angular/material/button';
 import {FormsModule} from '@angular/forms';
@@ -35,7 +35,8 @@ import { Router, RouterLink } from '@angular/router';
     BottomSheetComponent,
     MatFabButton,
     FormsModule,
-    RouterLink
+    RouterLink,
+    NgIf
   ],
   templateUrl: './main-content.component.html',
   styleUrl: './main-content.component.scss'
