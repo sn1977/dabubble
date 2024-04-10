@@ -2,6 +2,8 @@ import {Component} from '@angular/core';
 import {DirectMessageOverlayComponent} from '../direct-message-overlay/direct-message-overlay.component';
 import {MatDialog} from '@angular/material/dialog';
 import {NavigationService} from '../../shared/services/navigation.service';
+import { BottomSheetComponent } from '../bottom-sheet/bottom-sheet.component';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
 @Component({
   selector: 'app-direct-message',
@@ -33,7 +35,7 @@ export class DirectMessageComponent {
     }
   }
 
-  constructor(public dialog: MatDialog, private navigationService: NavigationService) {
+  constructor(public dialog: MatDialog, private navigationService: NavigationService, private _bottomSheet: MatBottomSheet) {
   }
 
   openDirectMessageOverlay(): void {
@@ -46,5 +48,9 @@ export class DirectMessageComponent {
 
   goBack(): void {
     this.navigationService.goBack();
+  }
+
+  openBottomSheet(): void {
+    this._bottomSheet.open(BottomSheetComponent);
   }
 }

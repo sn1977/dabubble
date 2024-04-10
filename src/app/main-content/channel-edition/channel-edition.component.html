@@ -2,7 +2,7 @@
     <div class="mdc-card">
         <div class="channel-header">
             <h1 class="no-margin"># Entwicklerteam</h1>
-            <img src="./../../../assets/img/icon/close.svg" alt="">
+            <img src="./../../../assets/img/icon/close.svg" alt="" routerLink="/new-channel">
         </div>
     </div>
     <main>
@@ -75,12 +75,24 @@
                 </div> -->
                 <div class="profil">
                     <img src="./../../../assets/img/icon/44. Add members button.svg" alt="">
-                    <p class="no-margin">Mitglieder Hinzufügen</p>
+                    <p (click)="toggleOverlay('overlay2')" class="no-margin">Mitglieder Hinzufügen</p>
                 </div>
             </div>
         </div>
         <div class="space">
         </div>
+        <div id="overlay2" class="overlay">
+          <div class="overlay-content">
+              <div class="display-flex">
+                  <h1 class="no-margin">Leute hinzufügen</h1>
+                  <img src="./../../assets/img/icon/close.svg" alt="" (click)="closeOverlay('overlay2')">
+              </div>
+              <input class="search-input" type="text" placeholder="Suche Mitglied">
+              <div class="btn-pos">
+                  <button class="add-button" (click)="closeOverlay('overlay2')"> Hinzufügen</button>
+              </div>
+          </div>
+      </div>
 
         <!--@for (user of this.getUsers(); track $index) {-->
 <!--  <div>-->

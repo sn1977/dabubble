@@ -1,7 +1,7 @@
 <main class="content">
     <div class="channel-header">
         <h1>Channel erstellen</h1>
-        <img src="./../../../assets/img/icon/close.svg" alt="">
+        <img src="./../../../assets/img/icon/close.svg" alt="" routerLink="">
     </div>
     <p>Channels dienen deinem Team zur Kommunikation. Am besten sollten sie themenbezogen sein #marketing zum Beispiel.
     </p>
@@ -39,7 +39,7 @@
                     <input type="text" class="input-field" placeholder="Leute suchen">
                 </div>
                 <div class="btn-pos">
-                    <button class="add-button" (click)="toggleOverlay()">Erstellen</button>
+                    <button class="add-button" routerLink="/new-channel">Erstellen</button>
                 </div>
 
             </div>

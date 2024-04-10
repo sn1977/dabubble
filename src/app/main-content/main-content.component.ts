@@ -16,6 +16,7 @@ import {BottomSheetComponent} from './bottom-sheet/bottom-sheet.component';
 import {MatFabButton} from '@angular/material/button';
 import {FormsModule} from '@angular/forms';
 import { NavigationService} from '../shared/services/navigation.service';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-main-content',
@@ -33,13 +34,15 @@ import { NavigationService} from '../shared/services/navigation.service';
     NgForOf,
     BottomSheetComponent,
     MatFabButton,
-    FormsModule
+    FormsModule,
+    RouterLink
   ],
   templateUrl: './main-content.component.html',
   styleUrl: './main-content.component.scss'
 })
 export class MainContentComponent{
   firestore = inject(FirebaseService);
+  router = inject(Router);
   channelList: any = [];
 
   panels = [

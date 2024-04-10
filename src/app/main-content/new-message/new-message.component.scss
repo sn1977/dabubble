@@ -37,18 +37,19 @@ main {
   bottom: 0;
   width: 100%;
   height: 150px;
-  background-color: rgb(255, 255, 255);
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Optional: Schatten für das Textfeld */
-  
 
-  .input-field {
-    width: 87%;
-    margin: 20px;
-    height: 110px;
-    border-radius: 20px;
-    border: 1px solid black;
-    vertical-align: bottom; /* Text unten ausrichten */
-  }
+}
+
+.sticky-textbox .input-field {
+  width: 87%;
+  margin: 20px;
+  height: 110px;
+  border-radius: 20px;
+  border: 1px solid black;
+  outline: none;
+  padding: 20px; /* Hier die gleichen Padding-Werte wie für den Placeholder setzen */
+  box-sizing: border-box; /* Wichtig für die Berechnung von Padding und Border */
 }
 
 .input-field-two {

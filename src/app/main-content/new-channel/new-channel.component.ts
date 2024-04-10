@@ -1,13 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { BottomSheetComponent } from '../bottom-sheet/bottom-sheet.component';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+
 
 @Component({
   selector: 'app-new-channel',
   standalone: true,
-  imports: [],
+  imports: [RouterLink, BottomSheetComponent],
   templateUrl: './new-channel.component.html',
   styleUrl: './new-channel.component.scss'
 })
 export class NewChannelComponent {
+
+  constructor(private _bottomSheet: MatBottomSheet){
+    
+  }
+
+  router = inject(Router);
 
     toggleOverlay(overlayId: string): void {
         const currentOverlay = document.querySelector('.overlay[style="display: block;"]') as HTMLElement;
@@ -28,6 +38,10 @@ export class NewChannelComponent {
         if (overlay) {
           overlay.style.display = "none";
         }
+      }
+
+      openBottomSheet(): void {
+        this._bottomSheet.open(BottomSheetComponent);
       }
 }
 

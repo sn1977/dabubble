@@ -1,17 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 
 
 
 @Component({
   selector: 'app-add-channel',
   standalone: true,
-  imports: [NgIf, FormsModule],
+  imports: [NgIf, FormsModule, RouterLink],
   templateUrl: './add-channel.component.html',
   styleUrl: './add-channel.component.scss'
 })
 export class AddChannelComponent {
+
+    router = inject(Router);
   
     overlayVisible: boolean = false;
     showInputField: boolean = false;

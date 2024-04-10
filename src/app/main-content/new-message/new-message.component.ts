@@ -1,13 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { BottomSheetComponent } from '../bottom-sheet/bottom-sheet.component';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-new-message',
   standalone: true,
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './new-message.component.html',
   styleUrl: './new-message.component.scss'
 })
 export class NewMessageComponent {
+
+
+  constructor(private _bottomSheet: MatBottomSheet){
+    
+  }
+
+  router = inject(Router);
   
   toggleOverlay(overlayId: string): void {
     const currentOverlay = document.querySelector('.overlay[style="display: block;"]') as HTMLElement;
@@ -28,6 +38,10 @@ export class NewMessageComponent {
     if (overlay) {
       overlay.style.display = "none";
     }
+  }
+
+  openBottomSheet(): void {
+    this._bottomSheet.open(BottomSheetComponent);
   }
 
 }
