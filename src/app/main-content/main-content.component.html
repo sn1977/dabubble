@@ -43,7 +43,7 @@
             </div>
           </mat-panel-title>
         </mat-expansion-panel-header>
-        
+
           <!-- Für Firebase -->
         @for (channel of this.firestore.getChannel(); track $index) {
         <div class="channel-name" [id]="channel.id" (click)="openChannel($event)">
@@ -51,7 +51,7 @@
           <span>{{channel.name}}</span>
         </div>
       }
-        
+
         <div class="add-channel" (click)="navigateToAddChannel()">
           <img src="assets/img/icon/add_circle.png">
           <span>Channel hinzufügen</span>

@@ -116,7 +116,7 @@ export class MainContentComponent{
   }
 
   openChannel(event:MouseEvent){
-    const channelId = (event.target as HTMLElement).id;
+    const channelId = (event.currentTarget as HTMLElement).id;
     console.log('Öffne Kanal mit ID:', channelId);
   }
 }
