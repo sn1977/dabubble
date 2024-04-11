@@ -105,6 +105,23 @@ export class FirebaseService {
       });
   }
 
+  private singleUserUnsubscribe: Unsubscribe | undefined;
+  unsubscribeSingleUserData() {
+    if (this.singleUserUnsubscribe) {
+      this.singleUserUnsubscribe();
+    }
+  }
+
+  getSingleUserData(docId: string, callback: () => void) {    
+    this.singleUserUnsubscribe = onSnapshot(
+      this.getSingleDocRef('users', docId),
+      (element) => {        
+        this.user = new User(this.setUserObject(element.data(), element.id));
+        callback();
+      }      
+    );
+  }  
+
   ngonDestroyy() {
     this.unsubUsers();
     this.unsubChannel();
