@@ -4,22 +4,7 @@
   position: relative;
   padding: 0 16px;
   height: 100vh;
-  @include dFlex($jc: center, $ai: center, $fd: column, $g: 30px);
-
-  .logo {
-    height: 56px;
-    @include dFlex($jc: center, $ai: center, $fd: row, $g: 12.8px);
-
-    img {
-      height: 56px;
-      width: 56px;
-    }
-
-    .logo-name {
-      font-size: 1.6rem;
-      font-weight: 700;
-    }
-  }
+  @include dFlex($jc: center, $ai: center, $fd: column, $g: 30px);  
 }
 
 mat-card {
@@ -110,7 +95,8 @@ mat-card {
         border: 1px transparent solid;
         text-align: left;
         color: #686868;
-        font-size: 18px;
+        // font-size: 18px;
+        font-size: .9rem;
         font-family: "Nunito";
         font-weight: 500;
         line-height: 21.6px;
@@ -156,9 +142,15 @@ mat-card {
       width: 80px;
       font-family: "Nunito";
       font-weight: 400;
-      font-size: 17px;
+      // font-size: 17px;
+      font-size: .9rem;
       line-height: 23.19px;
     }
+
+    .line{
+      width: 100%;
+    }
+
   }
 }
 
@@ -173,7 +165,8 @@ mat-card {
       border: 1px transparent solid;
       text-align: left;
       color: #686868;
-      font-size: 18px;
+      // font-size: 18px;
+      font-size: .9rem;
       font-family: "Nunito";
       font-weight: 500;
       line-height: 21.6px;
@@ -182,7 +175,8 @@ mat-card {
       span {
         color: #444df2;
         font-weight: 400;
-        font-size: 17px;
+        // font-size: 17px;
+        font-size: .9rem;
       }
 
       .google-img {
@@ -211,7 +205,8 @@ mat-card {
   span{
     font-family: 'Nunito';
     font-weight: 400;
-    font-size: 18px;
+    // font-size: 18px;
+    font-size: .9rem;
     list-style: 24.55px;
   }
 
