@@ -76,10 +76,6 @@ mat-card {
             height: 25px;
           }
         }
-
-        .hidden {
-          display: none;
-        }
       }
 
       input[type="text"],
@@ -95,7 +91,6 @@ mat-card {
         border: 1px transparent solid;
         text-align: left;
         color: #686868;
-        // font-size: 18px;
         font-size: .9rem;
         font-family: "Nunito";
         font-weight: 500;
@@ -142,7 +137,6 @@ mat-card {
       width: 80px;
       font-family: "Nunito";
       font-weight: 400;
-      // font-size: 17px;
       font-size: .9rem;
       line-height: 23.19px;
     }
@@ -165,7 +159,6 @@ mat-card {
       border: 1px transparent solid;
       text-align: left;
       color: #686868;
-      // font-size: 18px;
       font-size: .9rem;
       font-family: "Nunito";
       font-weight: 500;
@@ -174,8 +167,7 @@ mat-card {
 
       span {
         color: #444df2;
-        font-weight: 400;
-        // font-size: 17px;
+        font-weight: 400;        
         font-size: .9rem;
       }
 
@@ -204,18 +196,20 @@ mat-card {
 
   span{
     font-family: 'Nunito';
-    font-weight: 400;
-    // font-size: 18px;
+    font-weight: 400;    
     font-size: .9rem;
     list-style: 24.55px;
   }
 
 }
 
+.hidden {
+  display: none !important;
+}
 
-// @media (max-width: 400px){
-//   .form-box,
-//   .seperator{
-//     width: 90% !important;
-//   }
-// }
+.intro{
+  @include dFlex($jc: center, $ai: center, $fd: row, $g: 0);
+  height: 100vh;
+  width: 100%;
+  background: linear-gradient(#797EF3, #313AE5);
+}
