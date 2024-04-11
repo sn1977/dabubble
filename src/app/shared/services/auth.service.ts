@@ -91,9 +91,7 @@ export class AuthService {
     actionCodeSettings?: ActionCodeSettings | undefined
   ): Observable<void> {
     const promise = sendPasswordResetEmail(this.firebaseAuth, email).then(
-      () => {
-        window.alert('Password reset email sent, check your inbox.');
-      }
+      () => {}
     );
     return from(promise);
   }

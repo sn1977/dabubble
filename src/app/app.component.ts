@@ -1,7 +1,7 @@
 import {Component, OnInit, inject, ViewEncapsulation} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { LogInComponent } from './main-content/log-in/log-in.component';
+import { LogInComponent } from './main-content/auth/log-in/log-in.component';
 import {HeaderMobileComponent} from './shared/components/header-mobile/header-mobile.component';
 import {MainContentComponent} from './main-content/main-content.component';
 import { AuthService } from './shared/services/auth.service';

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../shared/services/auth.service';
+import { AuthService } from '../../../shared/services/auth.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import {
@@ -13,10 +13,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
-import { ChooseAvatarComponent } from './choose-avatar/choose-avatar.component';
 
 @Component({
-  selector: 'app-register',
+  selector: 'app-send-email',
   standalone: true,
   imports: [
     MatCardModule,
@@ -29,31 +28,27 @@ import { ChooseAvatarComponent } from './choose-avatar/choose-avatar.component';
     FormsModule,
     MatIconModule,
     RouterLink,
-    ChooseAvatarComponent
   ],
-  templateUrl: './register.component.html',
-  styleUrl: './register.component.scss',
+  templateUrl: './send-email.component.html',
+  styleUrl: './send-email.component.scss',
 })
-export class RegisterComponent {
-  
-  showAvatarComponent:boolean = false;
-
+export class SendEmailComponent {
   contactData = {
-    name: '',
     email: '',
-    password: '',
-    photoURL: ''
   };
-  
-  router = inject(Router);
 
-  errorMessage: string | null = null;
-  updateContactData: any;
+  http = inject(HttpClient);
+  authService = inject(AuthService);
+  router = inject(Router);
+  confirm: boolean = false;
 
   onSubmit(): void {
-    
-    if (this.contactData.name && this.contactData.email && this.contactData.password) {      
-      this.showAvatarComponent = true
-    }
+    this.confirm = true;    
+    this.authService.sendMailToResetPassword(this.contactData.email);
+
+    setTimeout(() => {
+      this.router.navigate(['/login']);
+    }, 3500);
+
   }
 }
