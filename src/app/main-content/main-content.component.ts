@@ -1,6 +1,6 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { FirebaseService } from '../shared/services/firebase.service';
-import { User } from '../../models/user.class';
+import {Component, OnInit, inject} from '@angular/core';
+import {FirebaseService} from '../shared/services/firebase.service';
+import {User} from '../../models/user.class';
 import {HeaderMobileComponent} from '../shared/components/header-mobile/header-mobile.component';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
@@ -15,8 +15,8 @@ import {NgForOf, NgIf} from '@angular/common';
 import {BottomSheetComponent} from './bottom-sheet/bottom-sheet.component';
 import {MatFabButton} from '@angular/material/button';
 import {FormsModule} from '@angular/forms';
-import { NavigationService} from '../shared/services/navigation.service';
-import { Router, RouterLink } from '@angular/router';
+import {NavigationService} from '../shared/services/navigation.service';
+import {Router, RouterLink} from '@angular/router';
 import {Auth} from '@angular/fire/auth';
 
 @Component({
@@ -42,7 +42,7 @@ import {Auth} from '@angular/fire/auth';
   templateUrl: './main-content.component.html',
   styleUrl: './main-content.component.scss'
 })
-export class MainContentComponent{
+export class MainContentComponent {
   firestore = inject(FirebaseService);
   router = inject(Router);
   channelList: any = [];
@@ -72,7 +72,8 @@ export class MainContentComponent{
   inputHasValue = false;
 
 
-  constructor(public navigationService: NavigationService){}
+  constructor(public navigationService: NavigationService) {
+  }
 
   // getUsers(): User[]{
   //   return this.firebase.userList;
@@ -120,8 +121,9 @@ export class MainContentComponent{
     this.inputHasValue = !!value.trim();
   }
 
-  openChannel(event:MouseEvent){
+  openChannel(event: MouseEvent, path: string) {
     const channelId = (event.currentTarget as HTMLElement).id;
-    console.log('Öffne Kanal mit ID:', channelId);
+    console.log('Öffne Kanal ' + path + 'mit ID:' + channelId);
+    this.router.navigate(['/' + path + '/' + channelId]);
   }
 }

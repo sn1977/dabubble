@@ -29,7 +29,9 @@ export const routes: Routes = [
   { path: 'message', component: DirectMessageComponent },
   { path: 'new-message', component: NewMessageComponent},
   { path: 'channel-edition', component: ChannelEditionComponent},
+  { path: 'channel-edition/:id', component: ChannelEditionComponent},
   { path: 'example', component: ExampleComponent},
+  { path: 'message/:id', component: DirectMessageComponent },
 
   // { path: 'newchannel', component: NewChannelComponent, canActivate:[IsAdminGuard]},
   // { path: '', component: ComponentName },
