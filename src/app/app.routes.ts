@@ -13,6 +13,7 @@ import { DirectMessageComponent } from './main-content/direct-message/direct-mes
 import { NewMessageComponent } from './main-content/new-message/new-message.component';
 import { ChannelEditionComponent } from './main-content/channel-edition/channel-edition.component';
 import { ChooseAvatarComponent } from './main-content/register/choose-avatar/choose-avatar.component';
+import { ExampleComponent } from './shared/components/example/example.component';
 
 export const routes: Routes = [
   { path: '', component: MainContentComponent },
@@ -28,6 +29,7 @@ export const routes: Routes = [
   { path: 'message', component: DirectMessageComponent },
   { path: 'new-message', component: NewMessageComponent},
   { path: 'channel-edition', component: ChannelEditionComponent},
+  { path: 'example', component: ExampleComponent},
 
   // { path: 'newchannel', component: NewChannelComponent, canActivate:[IsAdminGuard]},
   // { path: '', component: ComponentName },
