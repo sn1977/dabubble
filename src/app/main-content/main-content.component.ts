@@ -17,6 +17,7 @@ import {MatFabButton} from '@angular/material/button';
 import {FormsModule} from '@angular/forms';
 import { NavigationService} from '../shared/services/navigation.service';
 import { Router, RouterLink } from '@angular/router';
+import {Auth} from '@angular/fire/auth';
 
 @Component({
   selector: 'app-main-content',
@@ -45,6 +46,7 @@ export class MainContentComponent{
   firestore = inject(FirebaseService);
   router = inject(Router);
   channelList: any = [];
+  firebaseAuth = inject(Auth);
 
   panels = [
     {
@@ -106,6 +108,8 @@ export class MainContentComponent{
 
   navigateToDirectMessage() {
     this.navigationService.navigate(['/message']);
+    console.log(this.firebaseAuth.currentUser?.displayName);
+    console.log(this.firebaseAuth.currentUser?.uid);
   }
 
   navigateToAddChannel() {

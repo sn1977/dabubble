@@ -34,7 +34,7 @@ export class FirebaseService {
   getUsersRef() {
     return collection(this.firestore, 'users');
   }
-  
+
   getChannelsRef() {
     return collection(this.firestore, 'channels');
   }
@@ -48,7 +48,7 @@ export class FirebaseService {
       this.userList = [];
       list.forEach((element) => {
         this.userList.push(this.setUserObject(element.data(), element.id));
-      });      
+      });
     });
   }
 
@@ -57,7 +57,7 @@ export class FirebaseService {
       this.channelList = [];
       list.forEach((element) => {
         this.channelList.push(this.setChannelObject(element.data(), element.id));
-      });      
+      });
     });
   }
 
@@ -80,23 +80,22 @@ export class FirebaseService {
       name: obj.name,
     };
   }
-    
-  async updateUser(item: User, id: string) {    
+
+  async updateUser(item: User, id: string) {
     await setDoc(doc(this.getUsersRef(), id), item.toJSON());
   }
 
   getUsers(): User[]{
     return this.userList;
-  }  
+  }
 
 
 
   getChannel(): Channel[]{
   return this.channelList;
-    
-  } 
+  }
 
-  async addChannel(item: Channel) {    
+  async addChannel(item: Channel) {
     await addDoc(this.getChannelsRef(), item)
       .catch((err) => {
         console.error(err);

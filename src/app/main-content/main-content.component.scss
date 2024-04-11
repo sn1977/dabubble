@@ -165,3 +165,8 @@
   color: white;
 }
 
+.scrollable-panel-content {
+  max-height: 330px;
+  overflow-y: auto;
+  scrollbar-color: #FFFFFF #FFFFFF;
+}

@@ -76,6 +76,7 @@
             </div>
           </mat-panel-title>
         </mat-expansion-panel-header>
+        <div class="scrollable-panel-content">
         @for (user of this.firestore.getUsers(); track $index) {
         <div class="channel-name pl-7"  [id]="user.id" (click)="navigateToDirectMessage()">
           <img src="{{ user.avatar }}">
@@ -84,26 +85,7 @@
           <span>{{ user.name }}</span>
         </div>
         }
-<!--        <div class="channel-name pl-7" (click)="navigateToDirectMessage()">-->
-<!--          <img src="assets/img/characters/character_SofiaMueller_online.svg">-->
-<!--          <span>Sofia Müller</span>-->
-<!--        </div>-->
-<!--        <div class="channel-name pl-7" (click)="navigateToDirectMessage()">-->
-<!--          <img src="assets/img/characters/character_NoahBraun_online.svg">-->
-<!--          <span>Noah Braun</span>-->
-<!--        </div>-->
-<!--        <div class="channel-name pl-7" (click)="navigateToDirectMessage()">-->
-<!--          <img src="assets/img/characters/character_EliseRoth_offline.svg">-->
-<!--          <span>Elise Roth</span>-->
-<!--        </div>-->
-<!--        <div class="channel-name pl-7" (click)="navigateToDirectMessage()">-->
-<!--          <img src="assets/img/characters/character_EliasNeumann_online.svg">-->
-<!--          <span>Elias Neumann</span>-->
-<!--        </div>-->
-<!--        <div class="channel-name pl-7" (click)="navigateToDirectMessage()">-->
-<!--          <img src="assets/img/characters/character_SteffenHoffmann_online.svg">-->
-<!--          <span>Steffen Hoffmann</span>-->
-<!--        </div>-->
+        </div>
       </mat-expansion-panel>
     </mat-accordion>
     <div class="btn-position">
@@ -115,15 +97,4 @@
     </div>
   </div>
 </div>
-<!--@for (user of this.firestore.getUsers(); track $index) {-->
-<!--  <div>-->
-<!--    {{ user.avatar }} <br/>-->
-<!--&lt;!&ndash;    {{ user.badPasswordCount }} <br/>&ndash;&gt;-->
-<!--    {{ user.email }} <br/>-->
-<!--&lt;!&ndash;    {{ user.isActive }} <br/>&ndash;&gt;-->
-<!--&lt;!&ndash;    {{ user.isBlocked }} <br/>&ndash;&gt;-->
-<!--&lt;!&ndash;    {{ user.isOnline }} <br/>&ndash;&gt;-->
-<!--    {{ user.name }} <br/>-->
-<!--&lt;!&ndash;    {{ user.password }} <br/>&ndash;&gt;-->
-<!--  </div>-->
-<!--}-->
+
