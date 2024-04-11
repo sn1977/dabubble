@@ -117,7 +117,8 @@ app-root{
   margin-top: 4px;
 }
 
-.bottom-right{  
+.bottom-right{
+  margin-top: 8px;
   @include dFlex($jc: flex-end, $ai: center, $fd: row, $g: 0px);
   width: 100%;
 }

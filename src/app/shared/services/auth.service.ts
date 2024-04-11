@@ -46,9 +46,10 @@ export class AuthService {
         this.user.avatar = photoURL ?? this.user.avatar;
         this.user.email = currentUser.email ?? this.user.email;
         this.user.name = username ?? this.user.name;
-        this.firebase.updateUser(this.user, this.user.id);
+        this.user.isOnline = false;
+        this.firebase.updateUser(this.user, this.user.id);        
       }
-    });
+    });    
     return from(promise);
   }
 
@@ -91,9 +92,7 @@ export class AuthService {
     actionCodeSettings?: ActionCodeSettings | undefined
   ): Observable<void> {
     const promise = sendPasswordResetEmail(this.firebaseAuth, email).then(
-      () => {        
-        console.log('Password reset email sent, check your inbox.');        
-      }
+      () => {}
     );
     return from(promise);
   }

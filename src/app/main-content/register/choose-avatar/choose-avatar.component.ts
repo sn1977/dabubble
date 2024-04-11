@@ -28,13 +28,12 @@ import { User } from '../../../../models/user.class';
     MatFormFieldModule,
     FormsModule,
     MatIconModule,
-    RouterLink
+    RouterLink,
   ],
   templateUrl: './choose-avatar.component.html',
-  styleUrl: './choose-avatar.component.scss'
+  styleUrl: './choose-avatar.component.scss',
 })
 export class ChooseAvatarComponent {
-  
   @Input() contactData: any;
 
   http = inject(HttpClient);
@@ -45,10 +44,10 @@ export class ChooseAvatarComponent {
   templateIndex: number = 0;
   currentAvatar: string = './assets/img/characters/profile.svg';
   chooseAvatar: boolean | undefined;
+  confirm: boolean = false;
 
   onSubmit(): void {
-    
-    if(this.contactData.photoURL){
+    if (this.contactData.photoURL) {
       this.authService
         .register(
           this.contactData.email,
@@ -58,24 +57,26 @@ export class ChooseAvatarComponent {
         )
         .subscribe({
           next: () => {
-            // Bestätigung anzeigen
-            this.router.navigateByUrl('/');
+            this.confirm = true;
+
+            setTimeout(() => {
+              this.authService.logout();
+              this.router.navigateByUrl('/login');
+            }, 3500);
           },
           error: (err) => {
             this.errorMessage = err.code;
           },
-        });      
+        });
     } else {
       this.chooseAvatar = true;
-    }
-
+    }    
   }
-  
+
   setAvatar(event: MouseEvent) {
-      const imgElement = event.target as HTMLImageElement;
-      this.currentAvatar = imgElement.src;
-      this.contactData.photoURL = this.currentAvatar;
-      this.chooseAvatar = false;
+    const imgElement = event.target as HTMLImageElement;
+    this.currentAvatar = imgElement.src;
+    this.contactData.photoURL = this.currentAvatar;
+    this.chooseAvatar = false;
   }
-
 }

@@ -144,3 +144,7 @@ mat-card {
     @include btn($h: 49px, $br: 25px, $ptb: 12px, $plr: 25px, $c: #FFF, $bgc: #444df2, $bgch: #797ef3, $ch: #FFF, $fbc: #444DF2);
   }  
 }
+
+app-choose-avatar{
+  width: 100%;
+}
