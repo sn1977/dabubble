@@ -1,5 +1,5 @@
-@if(!showAvatarComponent){
 <div class="content">
+  @if(!showAvatarComponent){
   <div class="logo">
     <img src="./assets/img/auth/logo.svg" />
     <span class="logo-name">DABubble</span>
@@ -111,8 +111,9 @@
       </form>
     </mat-card-content>
   </mat-card>
+    
+  
+  }@else {
+    <app-choose-avatar [contactData]="contactData"></app-choose-avatar>
+  }
 </div>
-
-}@else {
-  <app-choose-avatar [contactData]="contactData"></app-choose-avatar>
-}

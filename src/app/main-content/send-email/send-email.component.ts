@@ -40,10 +40,15 @@ export class SendEmailComponent {
   http = inject(HttpClient);
   authService = inject(AuthService);
   router = inject(Router);
-
-  errorMessage: string | null = null;
+  mailSend: boolean = false;
 
   onSubmit(): void {
+    this.mailSend = true;    
     this.authService.sendMailToResetPassword(this.contactData.email);
+
+    setTimeout(() => {
+      this.router.navigate(['/login']);
+    }, 3500);
+
   }
 }

@@ -11,8 +11,7 @@
           <mat-icon
             class="pointer"
             fontIcon="arrow_back"
-            routerLink="/register"
-            routerLinkActive="router-link-active"
+            routerLink="/login" routerLinkActive="router-link-active"
           ></mat-icon>
         </div>
 
@@ -45,6 +44,12 @@
                 </div>
               }
             </div>
+
+            <span class="required">
+              @if (chooseAvatar){
+              Bitte Avatar auswählen. }
+            </span>
+
         </div>
 
         <div class="form-box"><div class="infotext">
@@ -53,6 +58,12 @@
         </div></div>
 
         <div class="buttons">
+          <div class="required">
+            @if(errorMessage){ @switch (errorMessage) { @case
+            ("auth/email-already-in-use") { E-Mail wird bereits verwendet } @case
+            ("auth/user-disabled") { Konto inaktiv } @default {
+            Ungültige Anmeldedaten } } }
+          </div>
           <button class="btn-primary pointer">Weiter</button>
         </div>
       </form>

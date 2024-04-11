@@ -19,12 +19,6 @@
       </div>
     </mat-card-header>
     <mat-card-content class="card-content">
-      @if(errorMessage){
-      <div class="required">{{ errorMessage }}</div>
-      <!-- auth/email-already-in-use -->
-      <!-- auth/user-disabled -->
-      }
-
       <form (ngSubmit)="onSubmit()" #contactForm="ngForm" ngNativeValidate>
 
         <div class="form-box">
@@ -63,4 +57,12 @@
       </form>
     </mat-card-content>
   </mat-card>
+  @if(mailSend){
+    <div class="bottom-right">
+      <div class="overlay-animation">
+        <img src="./assets/img/auth/send.svg" alt="">
+        <span>E-Mail gesendet</span>
+      </div>
+    </div>
+  }
 </div>

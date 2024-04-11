@@ -15,12 +15,14 @@
       </div>
     </mat-card-header>
     <mat-card-content class="card-content">
-      <div class="required">
-        @if(errorMessage){ @switch (errorMessage) { @case
+      @if(errorMessage){ 
+        <div class="required">
+        @switch (errorMessage) { @case
         ("auth/email-already-in-use") { auth/email-already-in-use } @case
         ("auth/user-disabled") { Konto inaktiv } @default {
-        Ungültige Anmeldedaten } } }
+        Ungültige Anmeldedaten } } 
       </div>
+    }
 
       <form (ngSubmit)="onSubmit()" #contactForm="ngForm" ngNativeValidate>
         <div class="form-box">
