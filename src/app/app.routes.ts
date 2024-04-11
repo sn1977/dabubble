@@ -31,6 +31,7 @@ export const routes: Routes = [
   { path: 'channel-edition', component: ChannelEditionComponent},
   { path: 'channel-edition/:id', component: ChannelEditionComponent},
   { path: 'example', component: ExampleComponent},
+  { path: 'example/:id', component: ExampleComponent},
   { path: 'message/:id', component: DirectMessageComponent },
 
   // { path: 'newchannel', component: NewChannelComponent, canActivate:[IsAdminGuard]},
