@@ -43,7 +43,7 @@ export class AuthService {
       const currentUser = this.firebaseAuth.currentUser;
       if (currentUser) {
         this.user.id = currentUser.uid ?? this.user.id;
-        this.user.avatar = currentUser.photoURL ?? this.user.avatar;
+        this.user.avatar = photoURL ?? this.user.avatar;
         this.user.email = currentUser.email ?? this.user.email;
         this.user.name = username ?? this.user.name;
         this.firebase.updateUser(this.user, this.user.id);
