@@ -1,5 +1,19 @@
 <p>example works!</p>
 
-{{user.avatar}}
-{{user.email}}
-{{user.name}}
+
+<p>Wenn collection = user ist</p>
+docID: {{itemID}} <br>
+avatar: {{user.avatar}} <br>
+email: {{user.email}} <br>
+name: {{user.name}} <br>
+isOnline: {{user.isOnline}}
+
+<br>
+<br>
+
+<p>Wenn collection = channels ist</p>
+docID: {{itemID}} <br>
+creator: {{channel.creator}} <br>
+description: {{channel.description}} <br>
+member: {{channel.member}} <br>
+name: {{channel.name}}

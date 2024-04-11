@@ -105,18 +105,27 @@ export class FirebaseService {
       });
   }
 
-  private singleUserUnsubscribe: Unsubscribe | undefined;
+  private singleItemUnsubscribe: Unsubscribe | undefined;
   unsubscribeSingleUserData() {
-    if (this.singleUserUnsubscribe) {
-      this.singleUserUnsubscribe();
+    if (this.singleItemUnsubscribe) {
+      this.singleItemUnsubscribe();
     }
   }
 
-  getSingleUserData(docId: string, callback: () => void) {    
-    this.singleUserUnsubscribe = onSnapshot(
-      this.getSingleDocRef('users', docId),
-      (element) => {        
-        this.user = new User(this.setUserObject(element.data(), element.id));
+  getSingleItemData(colId: string, docId: string, callback: () => void) {    
+  let collection = colId === 'channels' ? 'channels' : 'users';
+
+    this.singleItemUnsubscribe = onSnapshot(
+      this.getSingleDocRef(collection, docId),
+      (element) => {
+
+        if(collection === 'users'){
+          this.user = new User(this.setUserObject(element.data(), element.id));
+        }
+        if(collection === 'channels'){
+          this.channel = new Channel(this.setChannelObject(element.data(), element.id));
+        }
+
         callback();
       }      
     );

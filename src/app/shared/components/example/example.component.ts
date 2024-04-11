@@ -2,6 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FirebaseService } from '../../services/firebase.service';
 import { User } from '../../../../models/user.class';
 import { ActivatedRoute } from '@angular/router';
+import { Channel } from '../../../../models/channel.class';
 
 @Component({
   selector: 'app-example',
@@ -13,6 +14,7 @@ import { ActivatedRoute } from '@angular/router';
 export class ExampleComponent implements OnInit {
   itemID: any = '';
   user: User = new User();
+  channel: Channel = new Channel();
   firestore = inject(FirebaseService);
 
   constructor(private route: ActivatedRoute) {}
@@ -20,21 +22,38 @@ export class ExampleComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe((paramMap) => {
       this.itemID = paramMap.get('id');
-      
+
       // Es kann immer nur eins aktiv sein
-      
       // Beispielhafter Aufruf (wenn in URL angegeben)
       // http://localhost:4200/example/iQmmKETxbihQVI6EtKZ8
       // this.getActiveUser(this.itemID);
 
       // Beispielhafter Aufruf (hard gecoded)
-      this.getActiveUser('iQmmKETxbihQVI6EtKZ8');
+      // this.getActiveUser('9MacQRd4i2TX9J42mVLBGgVCsPp1');
+
+      if (this.itemID) {
+        // test user
+        //this.getItemValues('users', this.itemID);
+        // test channel
+        this.getItemValues('channels', this.itemID);
+      } else {
+        // test user
+        //this.getItemValues('users', '9MacQRd4i2TX9J42mVLBGgVCsPp1');
+        // test channel
+        this.getItemValues('channels', 'vXRTxUTQxznUmQyIqqZK');
+      }
     });
   }
 
-  getActiveUser(itemID: string) {
-    this.firestore.getSingleUserData(itemID, () => {
-      this.user = new User(this.firestore.user);
+  getItemValues(collection: string, itemID: string) {
+    this.firestore.getSingleItemData(collection, itemID, () => {
+      
+      if(collection === 'users'){
+        this.user = new User(this.firestore.user);
+      }
+      if(collection === 'channels'){        
+        this.channel = new Channel(this.firestore.channel);
+      }
     });
-  }  
+  }
 }
