@@ -10,6 +10,7 @@ import {
   user,
   verifyPasswordResetCode,
   confirmPasswordReset,
+  GoogleAuthProvider
 } from '@angular/fire/auth';
 import { Observable, from } from 'rxjs';
 import { UserInterface } from '../interfaces/user.interface';
@@ -134,4 +135,29 @@ export class AuthService {
     //   });
     // }
   }
+
+  // GoogleAuth(){
+  //   console.log('Google-Authentification');
+  //   return this.AuthLogin(new GoogleAuthProvider()).then((res: any) => {
+  //     this.router.navigate(['/']);
+  //   })
+  // }
+
+  // AuthLogin(provider: any){
+  //   return this.firebaseAuth
+  //   .signInWithPopup(provider)
+  //   .then((result) => {
+  //     this.router.navigate(['/']);
+  //     this.SetUserData(result.user);
+  //   })
+  //   .catch((error) => {
+  //     window.alert(error);
+  //   })
+  // }
+
+  SetUserData(user: any){
+    // min 4:33
+    // https://www.youtube.com/watch?v=MS_8qPFScCE
+  }
+
 }
