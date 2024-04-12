@@ -10,13 +10,18 @@ import {
   user,
   verifyPasswordResetCode,
   confirmPasswordReset,
-  GoogleAuthProvider
+  GoogleAuthProvider,
+  signInWithPopup,
+  signInWithRedirect,
+  getAuth,
+  OAuthCredential,
 } from '@angular/fire/auth';
 import { Observable, from } from 'rxjs';
 import { UserInterface } from '../interfaces/user.interface';
 import { Router } from '@angular/router';
 import { FirebaseService } from './firebase.service';
 import { User } from '../../../models/user.class';
+import { getRedirectResult } from '@firebase/auth';
 
 @Injectable({
   providedIn: 'root',
@@ -26,8 +31,36 @@ export class AuthService {
   user$ = user(this.firebaseAuth);
   currentUserSig = signal<UserInterface | null | undefined>(undefined);
   user: User = new User();
+  provider = new GoogleAuthProvider();  
 
-  constructor(private router: Router, private firebase: FirebaseService) {}
+  constructor(private router: Router, private firebase: FirebaseService) {
+    this.resultGoogleAuth();
+  }
+
+  googleAuth() {
+    const auth = getAuth();
+    signInWithRedirect(auth, this.provider);
+  }
+  
+  resultGoogleAuth(){
+    const auth = getAuth();
+    getRedirectResult(auth)
+      .then((result) => {
+        if(result){          
+          const user = result.user;          
+          this.user.id = user.uid ?? this.user.id;
+          this.user.avatar = user.photoURL ?? this.user.avatar;
+          this.user.email = user.email ?? this.user.email;
+          this.user.name = user.displayName ?? this.user.name;
+          this.firebase.updateUser(this.user, this.user.id);          
+          this.router.navigateByUrl('/');
+        }
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+      });
+  }
 
   register(
     email: string,
@@ -83,7 +116,7 @@ export class AuthService {
       this.firebase.updateUser(this.user, this.user.id);
     }
     const promise = signOut(this.firebaseAuth);
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login']);    
     return from(promise);
   }
 
@@ -135,29 +168,4 @@ export class AuthService {
     //   });
     // }
   }
-
-  // GoogleAuth(){
-  //   console.log('Google-Authentification');
-  //   return this.AuthLogin(new GoogleAuthProvider()).then((res: any) => {
-  //     this.router.navigate(['/']);
-  //   })
-  // }
-
-  // AuthLogin(provider: any){
-  //   return this.firebaseAuth
-  //   .signInWithPopup(provider)
-  //   .then((result) => {
-  //     this.router.navigate(['/']);
-  //     this.SetUserData(result.user);
-  //   })
-  //   .catch((error) => {
-  //     window.alert(error);
-  //   })
-  // }
-
-  SetUserData(user: any){
-    // min 4:33
-    // https://www.youtube.com/watch?v=MS_8qPFScCE
-  }
-
 }

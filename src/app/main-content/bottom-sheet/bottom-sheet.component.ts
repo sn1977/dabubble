@@ -45,6 +45,12 @@ export class BottomSheetComponent {
     });
   }
 
+  logout(){
+    this._bottomSheetRef.dismiss();
+    this.authService.logout();
+  }
+
+
   openLink(event: MouseEvent): void {
     this._bottomSheetRef.dismiss();
     event.preventDefault();

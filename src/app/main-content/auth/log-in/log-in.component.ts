@@ -66,4 +66,9 @@ export class LogInComponent {
   logout(): void {    
     this.authService.logout();
   }
+
+  signInWithGoogleRedirect(){
+    this.authService.googleAuth();
+  }
+
 }
