@@ -99,13 +99,13 @@ export class AuthService {
         this.user.email = currentUser.email ?? this.user.email;
         this.user.name = currentUser.displayName ?? this.user.name;
         this.user.isOnline = true;
-        this.firebase.updateUser(this.user, this.user.id);
+        this.firebase.updateUser(this.user, this.user.id);        
       }
     });
     return from(promise);
   }
 
-  logout(): Observable<void> {
+  logout(): Observable<void> {        
     const currentUser = this.firebaseAuth.currentUser;
     if (currentUser) {
       this.user.id = currentUser.uid ?? this.user.id;

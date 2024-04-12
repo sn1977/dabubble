@@ -56,7 +56,9 @@ export class FirebaseService {
     return onSnapshot(this.getChannelsRef(), (list) => {
       this.channelList = [];
       list.forEach((element) => {
-        this.channelList.push(this.setChannelObject(element.data(), element.id));
+        this.channelList.push(
+          this.setChannelObject(element.data(), element.id)
+        );
       });
     });
   }
@@ -85,14 +87,12 @@ export class FirebaseService {
     await setDoc(doc(this.getUsersRef(), id), item.toJSON());
   }
 
-  getUsers(): User[]{
+  getUsers(): User[] {
     return this.userList;
   }
 
-
-
-  getChannel(): Channel[]{
-  return this.channelList;
+  getChannel(): Channel[] {
+    return this.channelList;
   }
 
   async addChannel(item: Channel) {
@@ -112,24 +112,25 @@ export class FirebaseService {
     }
   }
 
-  getSingleItemData(colId: string, docId: string, callback: () => void) {    
-  let collection = colId === 'channels' ? 'channels' : 'users';
+  getSingleItemData(colId: string, docId: string, callback: () => void) {
+    let collection = colId === 'channels' ? 'channels' : 'users';
 
     this.singleItemUnsubscribe = onSnapshot(
       this.getSingleDocRef(collection, docId),
       (element) => {
-
-        if(collection === 'users'){
+        if (collection === 'users') {
           this.user = new User(this.setUserObject(element.data(), element.id));
         }
-        if(collection === 'channels'){
-          this.channel = new Channel(this.setChannelObject(element.data(), element.id));
+        if (collection === 'channels') {
+          this.channel = new Channel(
+            this.setChannelObject(element.data(), element.id)
+          );
         }
 
         callback();
-      }      
+      }
     );
-  }  
+  }
 
   ngonDestroyy() {
     this.unsubUsers();
