@@ -5,6 +5,7 @@ import { LogInComponent } from './main-content/auth/log-in/log-in.component';
 import {HeaderMobileComponent} from './shared/components/header-mobile/header-mobile.component';
 import {MainContentComponent} from './main-content/main-content.component';
 import { AuthService } from './shared/services/auth.service';
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -13,7 +14,7 @@ import { AuthService } from './shared/services/auth.service';
     RouterOutlet,
     LogInComponent,
     HeaderMobileComponent,
-    MainContentComponent
+    MainContentComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

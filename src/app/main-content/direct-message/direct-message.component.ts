@@ -5,7 +5,7 @@ import {NavigationService} from '../../shared/services/navigation.service';
 import {BottomSheetComponent} from '../bottom-sheet/bottom-sheet.component';
 import {MatBottomSheet} from '@angular/material/bottom-sheet';
 import {FirebaseService} from '../../shared/services/firebase.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {User} from '../../../models/user.class';
 
 @Component({
@@ -17,6 +17,7 @@ import {User} from '../../../models/user.class';
 })
 export class DirectMessageComponent implements OnInit {
   firestore = inject(FirebaseService);
+  router = inject(Router);
   itemID: any = '';
   user: User = new User();
 
@@ -53,6 +54,7 @@ export class DirectMessageComponent implements OnInit {
       minWidth: '398px',
       minHeight: '600px',
       panelClass: 'custom-dialog-container',
+      data: { user: this.user } // Übergeben des User-Objekts an den Dialog
     });
   }
 

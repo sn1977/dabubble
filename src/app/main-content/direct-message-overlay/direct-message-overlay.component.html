@@ -7,12 +7,12 @@
     </div>
   </div>
   <div class="img-container">
-    <img mat-card-image ngSrc="assets/img/characters/profile_SofiaMueller.png" height="200" width="200">
+    <img mat-card-image [src]="data.user.avatar" alt="{{ data.user.name }}">
   </div>
   <mat-card-content>
     <div>
       <div class="user">
-        <span>Sofia Müller</span>
+        <span>{{ data.user.name }}</span>
         <div class="edit-icon" (click)="openEditProfileCard()">
           <img ngSrc="assets/img/icon/edit.png" class="default-img" height="24" width="24">
           <img ngSrc="assets/img/icon/edit_color.png" class="hover-img" style="display: none" height="24" width="24">
@@ -20,7 +20,7 @@
       </div>
       <div class="status-character">
         <img ngSrc="assets/img/icon/online.png" height="17" width="16">
-        <span>Aktiv</span>
+        <span>{{ data.user.isOnline | onlineStatus }}</span>
       </div>
     </div>
   </mat-card-content>
@@ -30,7 +30,7 @@
         <img ngSrc="assets/img/icon/mail.png" height="20" width="26">
         <span>E-Mail-Adresse</span>
       </div>
-      <span class="email-user cb">sofia.muel&#64;beispiel.com</span>
+      <span class="email-user cb">{{ data.user.email }}</span>
     </div>
   </mat-card-content>
   <mat-card-actions>

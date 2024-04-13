@@ -33,6 +33,11 @@
 
 .img-container {
   @include dFlex( $jc: center, $ai: center);
+
+  img {
+    border-radius: 100%;
+    height: 200px;
+  }
 }
 
 .user {
