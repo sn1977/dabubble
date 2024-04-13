@@ -147,8 +147,15 @@ app-root{
     width: 56px;
   }
 
-  .logo-name {
-    font-size: 2rem;
+  .logo-name,
+  .logo-name-animated {
+    font-size: 2.2rem;
     font-weight: 700;
+    font-family: 'Nunito';
   }
+
+  .logo-name-animated {
+    color: #FFF;
+  }
+
 }
