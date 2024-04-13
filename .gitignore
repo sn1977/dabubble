@@ -4,6 +4,7 @@
 src/app/environment.ts
 /git
 *.css
+*.css.map
 
 # Compiled output
 /dist

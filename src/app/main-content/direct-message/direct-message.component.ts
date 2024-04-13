@@ -1,9 +1,11 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {DirectMessageOverlayComponent} from '../direct-message-overlay/direct-message-overlay.component';
 import {MatDialog} from '@angular/material/dialog';
 import {NavigationService} from '../../shared/services/navigation.service';
-import { BottomSheetComponent } from '../bottom-sheet/bottom-sheet.component';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import {BottomSheetComponent} from '../bottom-sheet/bottom-sheet.component';
+import {MatBottomSheet} from '@angular/material/bottom-sheet';
+import {FirebaseService} from '../../shared/services/firebase.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-direct-message',
@@ -13,6 +15,7 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
   styleUrl: './direct-message.component.scss'
 })
 export class DirectMessageComponent {
+  firestore = inject(FirebaseService);
 
   toggleOverlay(overlayId: string): void {
     const currentOverlay = document.querySelector('.overlay[style="display: block;"]') as HTMLElement;
@@ -35,7 +38,7 @@ export class DirectMessageComponent {
     }
   }
 
-  constructor(public dialog: MatDialog, private navigationService: NavigationService, private _bottomSheet: MatBottomSheet) {
+  constructor(public dialog: MatDialog, private navigationService: NavigationService, private _bottomSheet: MatBottomSheet, private route: ActivatedRoute) {
   }
 
   openDirectMessageOverlay(): void {

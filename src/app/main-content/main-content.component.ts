@@ -121,9 +121,9 @@ export class MainContentComponent {
     this.inputHasValue = !!value.trim();
   }
 
-  openChannel(event: MouseEvent, path: string) {
-    const channelId = (event.currentTarget as HTMLElement).id;
-    console.log('Öffne Kanal ' + path + 'mit ID:' + channelId);
-    this.router.navigate(['/' + path + '/' + channelId]);
+  openChannel (event: MouseEvent, path: string) {
+    const docRefId = (event.currentTarget as HTMLElement).id;
+    console.log('Öffne Collection ' + path + ' mit ID: ' + docRefId);
+    this.router.navigate(['/' + path + '/' + docRefId]);
   }
 }
