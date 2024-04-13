@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {DirectMessageOverlayComponent} from '../direct-message-overlay/direct-message-overlay.component';
 import {MatDialog} from '@angular/material/dialog';
 import {NavigationService} from '../../shared/services/navigation.service';
@@ -6,6 +6,8 @@ import {BottomSheetComponent} from '../bottom-sheet/bottom-sheet.component';
 import {MatBottomSheet} from '@angular/material/bottom-sheet';
 import {FirebaseService} from '../../shared/services/firebase.service';
 import {ActivatedRoute} from '@angular/router';
+import {User} from '../../../models/user.class';
+import {Channel} from '../../../models/channel.class';
 
 @Component({
   selector: 'app-direct-message',
@@ -14,8 +16,18 @@ import {ActivatedRoute} from '@angular/router';
   templateUrl: './direct-message.component.html',
   styleUrl: './direct-message.component.scss'
 })
-export class DirectMessageComponent {
+export class DirectMessageComponent implements OnInit {
   firestore = inject(FirebaseService);
+  itemID: any = '';
+  user: User = new User();
+  channel: Channel = new Channel();
+
+  constructor(
+    public dialog: MatDialog,
+    private navigationService: NavigationService,
+    private _bottomSheet: MatBottomSheet,
+    private route: ActivatedRoute) {
+  }
 
   toggleOverlay(overlayId: string): void {
     const currentOverlay = document.querySelector('.overlay[style="display: block;"]') as HTMLElement;
@@ -38,9 +50,6 @@ export class DirectMessageComponent {
     }
   }
 
-  constructor(public dialog: MatDialog, private navigationService: NavigationService, private _bottomSheet: MatBottomSheet, private route: ActivatedRoute) {
-  }
-
   openDirectMessageOverlay(): void {
     const dialogRef = this.dialog.open(DirectMessageOverlayComponent, {
       minWidth: '398px',
@@ -55,5 +64,18 @@ export class DirectMessageComponent {
 
   openBottomSheet(): void {
     this._bottomSheet.open(BottomSheetComponent);
+  }
+
+  ngOnInit() {
+    this.route.paramMap.subscribe((paramMap) => {
+      this.itemID = paramMap.get('id');
+      this.getItemValues('users', this.itemID);
+    });
+  }
+
+  getItemValues(collection: string, itemID: string) {
+    this.firestore.getSingleItemData(collection, itemID, () => {
+      this.user = new User(this.firestore.user);
+    });
   }
 }
