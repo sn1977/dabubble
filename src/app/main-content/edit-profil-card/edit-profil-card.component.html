@@ -6,7 +6,9 @@
       <img ngSrc="assets/img/icon/close_color.png" class="hover-img" style="display: none" height="16" width="16">
     </div>
   </div>
-  <img mat-card-image src="assets/img/characters/profile_menu.png">
+  <div class="profile-img-container">
+  <img class="profile-img" mat-card-image [src]="data.user.avatar">
+  </div>
   <mat-card-content>
     <div class="email-field">
       <img ngSrc="assets/img/icon/account_circle_big.png" height="26" width="26">
@@ -21,7 +23,7 @@
         [minLength]="5"
         (ngModelChange)="checkInput($event)"
         [class.input-has-value]="inputHasValue"
-        placeholder="Bitte gib Deinen Namen ein"
+        placeholder="{{data.user.name}}"
         required
         class="full-width input-field-design"
       />
@@ -43,7 +45,7 @@
           pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
           (ngModelChange)="checkInput($event)"
           [class.input-has-value]="inputHasValue"
-          placeholder="deineEmail@emial.com"
+          placeholder="{{data.user.email}}"
           required
           class="full-width input-field-design"
         />

@@ -24,6 +24,8 @@ import {OnlineStatusPipe} from '../../pipes/online-status.pipe';
   styleUrl: './direct-message-overlay.component.scss'
 })
 export class DirectMessageOverlayComponent {
+
+  user: User = new User();
   constructor(
     public dialogRef: MatDialogRef<DirectMessageOverlayComponent>,
     public dialog: MatDialog,
@@ -43,10 +45,8 @@ export class DirectMessageOverlayComponent {
       minWidth: '398px',
       minHeight: '600px',
       panelClass: 'custom-dialog-container',
-      // Weitere Konfigurationen nach Bedarf
+      data: { user: this.data.user }
     });
     // this.closeProfilCard();
   }
-
-
 }

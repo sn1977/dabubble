@@ -31,6 +31,16 @@
   }
 }
 
+.profile-img-container {
+  display: flex;
+  justify-content: center;
+}
+
+.profile-img {
+  border-radius: 100%;
+width: 200px;
+}
+
 .user {
   @include fontBold($fw: 700, $fs: 32px, $lh: 43.65px, $ta: center, $c: #000000);
   @include dFlex( $jc: space-between, $ai: center);
@@ -91,20 +101,6 @@
     }
   }
 }
-//
-///* Stil, wenn der Input gültig ist */
-//.input-field-design:valid {
-//  border: 2px solid green;
-//}
-//
-///* Stil, wenn der Input ungültig ist */
-//.input-field-design:invalid {
-//  border: 2px solid red;
-//}
-//
-//.input-has-value {
-//  border: 2px solid blue; /* Oder jeder andere gewünschte Stil */
-//}
 
 .btn-position {
   @include dFlex($jc: center, $ai: center, $g: 32px);

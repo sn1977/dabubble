@@ -4,6 +4,7 @@ import {NgOptimizedImage} from '@angular/common';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatButton} from '@angular/material/button';
+import {User} from '../../../models/user.class';
 
 @Component({
   selector: 'app-edit-profil-card',
@@ -22,7 +23,7 @@ import {MatButton} from '@angular/material/button';
   styleUrl: './edit-profil-card.component.scss'
 })
 export class EditProfilCardComponent {
-
+  user: User = new User();
 
   nameData = {
     email: '',
@@ -34,9 +35,11 @@ export class EditProfilCardComponent {
 
   inputHasValue = false;
 
-  constructor(public dialogRef: MatDialogRef<EditProfilCardComponent>) {}
-
-  @Inject(MAT_DIALOG_DATA) public data: any
+  constructor(
+    public dialogRef: MatDialogRef<EditProfilCardComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { user: User }) {
+    // console.log('Übergebene Benutzerdaten:', this.data.user);
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
