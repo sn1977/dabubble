@@ -14,9 +14,9 @@ import {
   signInWithPopup,
   signInWithRedirect,
   getAuth,
-  OAuthCredential,
+  OAuthCredential, authState,
 } from '@angular/fire/auth';
-import { Observable, from } from 'rxjs';
+import {Observable, from, BehaviorSubject} from 'rxjs';
 import { UserInterface } from '../interfaces/user.interface';
 import { Router } from '@angular/router';
 import { FirebaseService } from './firebase.service';
@@ -31,28 +31,41 @@ export class AuthService {
   user$ = user(this.firebaseAuth);
   currentUserSig = signal<UserInterface | null | undefined>(undefined);
   user: User = new User();
-  provider = new GoogleAuthProvider();  
+  provider = new GoogleAuthProvider();
+
+  private auth = inject(Auth);
+  private currentUserSubject = new BehaviorSubject<User | null>(null);
+  public currentUser$ = this.currentUserSubject.asObservable();
 
   constructor(private router: Router, private firebase: FirebaseService) {
     this.resultGoogleAuth();
+
+    authState(this.auth).subscribe((user) => {
+      if (user) {
+        // Hier könntest du zusätzliche Daten laden und im currentUserSubject speichern
+        this.currentUserSubject.next(this.user);
+      } else {
+        this.currentUserSubject.next(null);
+      }
+    });
   }
 
   googleAuth() {
     const auth = getAuth();
     signInWithRedirect(auth, this.provider);
   }
-  
+
   resultGoogleAuth(){
     const auth = getAuth();
     getRedirectResult(auth)
       .then((result) => {
-        if(result){          
-          const user = result.user;          
+        if(result){
+          const user = result.user;
           this.user.id = user.uid ?? this.user.id;
           this.user.avatar = user.photoURL ?? this.user.avatar;
           this.user.email = user.email ?? this.user.email;
           this.user.name = user.displayName ?? this.user.name;
-          this.firebase.updateUser(this.user, this.user.id);          
+          this.firebase.updateUser(this.user, this.user.id);
           this.router.navigateByUrl('/');
         }
       })
@@ -99,13 +112,13 @@ export class AuthService {
         this.user.email = currentUser.email ?? this.user.email;
         this.user.name = currentUser.displayName ?? this.user.name;
         this.user.isOnline = true;
-        this.firebase.updateUser(this.user, this.user.id);        
+        this.firebase.updateUser(this.user, this.user.id);
       }
     });
     return from(promise);
   }
 
-  logout(): Observable<void> {        
+  logout(): Observable<void> {
     const currentUser = this.firebaseAuth.currentUser;
     if (currentUser) {
       this.user.id = currentUser.uid ?? this.user.id;
@@ -116,7 +129,7 @@ export class AuthService {
       this.firebase.updateUser(this.user, this.user.id);
     }
     const promise = signOut(this.firebaseAuth);
-    this.router.navigate(['/login']);    
+    this.router.navigate(['/login']);
     return from(promise);
   }
 

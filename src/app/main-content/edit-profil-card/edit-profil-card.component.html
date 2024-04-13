@@ -19,7 +19,7 @@
         type="text"
         name="name"
         #name="ngModel"
-        [(ngModel)]="nameData.email"
+        [(ngModel)]="nameData.name"
         [minLength]="5"
         (ngModelChange)="checkInput($event)"
         [class.input-has-value]="inputHasValue"
@@ -55,7 +55,7 @@
   <mat-card-actions>
     <div class="btn-position">
       <button mat-stroked-button class="btn-stroked" (click)="closeEditProfilCard()">Abbrechen</button>
-      <button mat-flat-button class="btn-flat">Speichern</button>
+      <button mat-flat-button class="btn-flat" (click)="saveProfile()">Speichern</button>
     </div>
   </mat-card-actions>
 </mat-card>

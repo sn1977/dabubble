@@ -85,6 +85,17 @@ export class FirebaseService {
     await setDoc(doc(this.getUsersRef(), id), item.toJSON());
   }
 
+  // Aktualisiere diese Methode, um partielle Updates zu ermöglichen
+  // async updateUser(userId: string, data: any) {
+  //   const userRef = doc(this.firestore, `users/${userId}`);
+  //   try {
+  //     await updateDoc(userRef, data);
+  //     console.log("Benutzer erfolgreich aktualisiert");
+  //   } catch (error) {
+  //     console.error("Fehler beim Aktualisieren des Benutzers:", error);
+  //   }
+  // }
+
   getUsers(): User[]{
     return this.userList;
   }
