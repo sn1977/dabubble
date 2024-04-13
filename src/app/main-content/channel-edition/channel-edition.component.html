@@ -8,7 +8,7 @@
     <main>
         <div class="container" [style.border]="!isEditingChannelName ? '1px solid blue' : 'none'">
             <div class="channel-name">
-              <h1>Channel-Name</h1>
+              <h1>{{channel.name}}</h1>
               <!-- Platzhaltertext wird nur angezeigt, wenn nicht bearbeitet wird -->
               <p *ngIf="!isEditingChannelName" id="description" placeholder="# Entwicklerteam">{{ channelNameDescriptionText }}</p>
               <!-- Eingabefeld wird nur angezeigt, wenn bearbeitet wird -->
@@ -19,7 +19,7 @@
               <img *ngIf="isEditingChannelName" id="check-icon-channel-name" src="./assets/img/icon/check_circle.svg" alt="" (click)="toggleEdit('channelName')">
             </div>
           </div>
-          
+
           <div class="container" [style.border]="!isEditingDescription ? '1px solid blue' : 'none'">
             <div class="channel-name">
               <h1>Beschreibung</h1>
@@ -56,7 +56,7 @@
                     <p class="no-margin">Frederik Beck (DU‚)</p>
                 </div>
               <!-- Alle Mitglieder von Firebase -->
-               
+
               @for (user of this.firestore.getUsers(); track $index) {
                 <div class="profil">
                   <img class="img-profil" src="{{user.avatar}}" alt="">
@@ -68,8 +68,8 @@
 
               }
               <!-- Alle Mitglieder von Firebase -->
-               
-    
+
+
                 <div class="profil">
                     <img src="./assets/img/icon/44. Add members button.svg" alt="">
                     <p (click)="toggleOverlay('overlay2')" class="no-margin">Mitglieder Hinzufügen</p>

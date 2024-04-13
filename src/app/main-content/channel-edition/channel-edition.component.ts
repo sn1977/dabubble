@@ -1,9 +1,10 @@
-import { Component, inject } from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import { NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FirebaseService } from '../../shared/services/firebase.service';
 import { User } from '../../../models/user.class';
-import { Router, RouterLink } from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
+import {Channel} from '../../../models/channel.class';
 
 
 @Component({
@@ -13,10 +14,12 @@ import { Router, RouterLink } from '@angular/router';
   templateUrl: './channel-edition.component.html',
   styleUrl: './channel-edition.component.scss'
 })
-export class ChannelEditionComponent {
+export class ChannelEditionComponent implements OnInit {
 
   firestore = inject(FirebaseService);
   router = inject(Router);
+  itemID: any = '';
+  channel: Channel = new Channel();
 
   isEditingChannelName: boolean = false;
   isEditingDescription: boolean = false;
@@ -25,6 +28,8 @@ export class ChannelEditionComponent {
 
   editedChannelName: string = "";
   editedDescriptionDescription: string = "";
+
+  constructor(private route: ActivatedRoute) {}
 
   toggleEdit(field: string) {
     if (field === 'channelName') {
@@ -40,27 +45,40 @@ export class ChannelEditionComponent {
         this.descriptionDescriptionText = this.editedDescriptionDescription;
       }
     }
-  } 
+  }
 
   toggleOverlay(overlayId: string): void {
     const currentOverlay = document.querySelector('.overlay[style="display: block;"]') as HTMLElement;
     const newOverlay = document.getElementById(overlayId);
-  
+
     if (currentOverlay && currentOverlay.id !== overlayId) {
       // Schließe das aktuelle Overlay, wenn ein anderes Overlay geöffnet ist
       currentOverlay.style.display = "none";
     }
-  
+
     if (newOverlay) {
       newOverlay.style.display = newOverlay.style.display === "none" ? "block" : "none";
     }
   }
-  
+
   closeOverlay(overlayId: string): void {
     const overlay = document.getElementById(overlayId) as HTMLElement;
     if (overlay) {
       overlay.style.display = "none";
     }
+  }
+
+  ngOnInit() {
+    this.route.paramMap.subscribe((paramMap) => {
+      this.itemID = paramMap.get('id');
+      this.getItemValues('users', this.itemID);
+    });
+  }
+
+  getItemValues(collection: string, itemID: string) {
+    this.firestore.getSingleItemData(collection, itemID, () => {
+      this.channel = new Channel(this.firestore.channel);
+    });
   }
 
 }
