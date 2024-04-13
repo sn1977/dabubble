@@ -66,7 +66,15 @@
   @include dFlex($jc: unset, $ai: center, $g: 15px);
 
   span {
-    @include fontBold($fw: 400, $fs: 20px, $lh: 27.28px, $ta: center, $c: #92C83E);
+    @include fontBold($fw: 400, $fs: 20px, $lh: 27.28px, $ta: center);
+
+    &.online {
+      color: #92C83E;
+    }
+
+    &.offline {
+      color: #686868;
+    }
   }
 }
 

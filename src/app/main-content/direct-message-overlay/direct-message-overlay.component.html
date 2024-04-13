@@ -19,8 +19,11 @@
         </div>
       </div>
       <div class="status-character">
-        <img ngSrc="assets/img/icon/online.png" height="17" width="16">
-        <span>{{ data.user.isOnline | onlineStatus }}</span>
+        <img [src]="data.user.isOnline ? 'assets/img/icon/online.png' : 'assets/img/icon/offline.png'" height="17"
+             width="16">
+        <span [class.online]="data.user.isOnline" [class.offline]="!data.user.isOnline">
+          {{ data.user.isOnline | onlineStatus }}
+        </span>
       </div>
     </div>
   </mat-card-content>
