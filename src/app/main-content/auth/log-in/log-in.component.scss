@@ -5,6 +5,7 @@
   padding: 0 16px;
   height: 100vh;
   @include dFlex($jc: center, $ai: center, $fd: column, $g: 30px);  
+  animation: contentAnimation 1s ease-in-out 1s forwards;
 }
 
 mat-card {
@@ -200,7 +201,6 @@ mat-card {
     font-size: .9rem;
     list-style: 24.55px;
   }
-
 }
 
 .hidden {
@@ -208,13 +208,109 @@ mat-card {
 }
 
 .intro{
-  @include dFlex($jc: center, $ai: center, $fd: row, $g: 0);
+  background: linear-gradient(#797EF3, #313AE5);
   height: 100vh;
   width: 100%;
-  background: linear-gradient(#797EF3, #313AE5);
   position: absolute;
-  z-index: 10;
-  opacity: 1;
-  animation: opacity 0.5s ease-out 2.5s forwards;
-  animation-delay: 2s;
+  z-index: 1;
+  opacity: 0;
+  animation: introAnimation 4.3s ease-out 0s forwards;
+}
+
+@keyframes introAnimation{
+  0% {
+    opacity: 1;    
+  }
+  90%{
+    opacity: 1;
+  }
+  100%{
+    opacity: 0;
+  }
+}
+
+.logo-animated{
+  height: 100vh;
+  width: 100%;
+  @include dFlex($jc: center, $ai: center, $fd: row, $g: 12.8px);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 5;  
+  animation: logoAnimation 0.8s ease-out 3.5s forwards;
+
+  img {    
+    position: absolute;    
+    z-index: 5;
+    height: 70px;
+    width: 70px;
+    animation: imgAnimation 0.8s ease-out 1.5s forwards;
+  }
+
+  .logo-name-animated{
+    position: absolute;
+    right: 40%;
+    font-size: 2.2rem;
+    font-weight: 700;
+    font-family: 'Nunito';
+    // animation: textAnimation 0.8s ease-out 2.2s forwards;
+    animation: textAnimation 2.2s ease-out 1.8s forwards;
+    color: #FFF;
+    opacity: 0;
+  }
+}
+
+@keyframes logoAnimation{
+  0%{
+    height: 100vh;
+    width: 100%;    
+    position: absolute;
+    top: 0;
+    bottom: 0;
+  }
+  100%{
+    width: 100%;
+    position: relative;
+    height: 56px;
+    @include dFlex($jc: center, $ai: center, $fd: row, $g: 12.8px);
+  }
+}
+
+@keyframes imgAnimation{
+  0%{
+    transform: translateX(0);
+  }  
+  100%{
+    transform: translateX(-150%);   
+  }
+}
+
+@keyframes textAnimation{
+  0%{
+    opacity: 0;
+    transform: translateX(0);
+    color: #FFF;
+  }
+  
+  60%{
+    opacity: 0.9;
+    transform: translateX(+50%);
+    color: #FFF;
+  }
+
+  99%{
+    opacity: 1;
+    transform: translateX(+50%);
+    color: #FFF;
+  }
+
+  100%{
+    opacity: 1;
+    transform: translateX(+50%);
+    color: #000;
+  }
+
+
+
+
 }
