@@ -33,6 +33,7 @@ export const routes: Routes = [
   { path: 'example', component: ExampleComponent},
   { path: 'example/:id', component: ExampleComponent},
   { path: 'message/:id', component: DirectMessageComponent },
+  { path: 'new-channel/:id', component: NewChannelComponent },
 
   // { path: 'newchannel', component: NewChannelComponent, canActivate:[IsAdminGuard]},
   // { path: '', component: ComponentName },

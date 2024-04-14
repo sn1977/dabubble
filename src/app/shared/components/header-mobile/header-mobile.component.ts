@@ -1,8 +1,10 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {MatBottomSheet} from '@angular/material/bottom-sheet';
 import {BottomSheetComponent} from '../../../main-content/bottom-sheet/bottom-sheet.component';
 import {Subscription} from 'rxjs';
 import {AuthService} from '../../services/auth.service';
+import {FirebaseService} from '../../services/firebase.service';
+import {Auth} from '@angular/fire/auth';
 
 @Component({
   selector: 'app-header-mobile',
@@ -24,10 +26,16 @@ import {AuthService} from '../../services/auth.service';
 export class HeaderMobileComponent implements OnInit, OnDestroy {
   private authSubscription: Subscription | undefined;
   userAvatarUrl: string = 'assets/img/characters/character_FrederikBeck.svg'; // Standardavatar
+  firestore = inject(FirebaseService);
+  firebaseAuth = inject(Auth);
 
   constructor(private authService: AuthService, private _bottomSheet: MatBottomSheet) {}
 
   ngOnInit(): void {
+    // console.log(this.authService.currentUserSig()?.email);
+    console.log(this.firebaseAuth.currentUser?.displayName);
+    console.log(this.firebaseAuth.currentUser?.uid);
+
     this.authSubscription = this.authService.currentUser$.subscribe(user => {
       if (user) {
         this.userAvatarUrl = user.avatar || this.userAvatarUrl; // Verwende den Benutzeravatar, wenn vorhanden

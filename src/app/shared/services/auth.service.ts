@@ -33,14 +33,13 @@ export class AuthService {
   user: User = new User();
   provider = new GoogleAuthProvider();
 
-  private auth = inject(Auth);
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
 
   constructor(private router: Router, private firebase: FirebaseService) {
     this.resultGoogleAuth();
 
-    authState(this.auth).subscribe((user) => {
+    authState(this.firebaseAuth).subscribe((user) => {
       if (user) {
         // Hier könntest du zusätzliche Daten laden und im currentUserSubject speichern
         this.currentUserSubject.next(this.user);

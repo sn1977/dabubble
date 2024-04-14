@@ -46,7 +46,7 @@
 
         <!-- Für Firebase -->
         @for (channel of this.firestore.getChannel(); track $index) {
-          <div class="channel-name" [id]="channel.id" (click)="openChannel($event, 'channel-edition')">
+          <div class="channel-name" [id]="channel.id" (click)="openChannel($event, 'new-channel')">
             <span class="channel-tag">#</span>
             <span>{{ channel.name }}</span>
           </div>
