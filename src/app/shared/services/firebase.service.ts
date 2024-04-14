@@ -16,6 +16,7 @@ import { Channel } from '../../../models/channel.class';
 })
 export class FirebaseService {
   firestore: Firestore = inject(Firestore);
+  activeUserID: string = '';
   user: User = new User();
   channel: Channel = new Channel();
   userList: any = [];
@@ -59,7 +60,6 @@ export class FirebaseService {
     });
   }
 
-
   setUserObject(obj: any, id: string): any {
     return {
       id: id,
@@ -100,10 +100,8 @@ export class FirebaseService {
     return this.userList;
   }
 
-
-
   getChannel(): Channel[]{
-  return this.channelList;
+    return this.channelList;
   }
 
   async addChannel(item: Channel) {
@@ -142,6 +140,16 @@ export class FirebaseService {
         callback();
       }
     );
+  }
+
+  getActiveUser(collection: string, itemID: string) {
+
+    console.log(this.activeUserID);
+
+    // this.getSingleItemData(collection, itemID, () => {      
+    //   this.activeUser = new User(this.user);
+    //   console.log(this.activeUserID);
+    // });
   }
 
   ngonDestroyy() {
