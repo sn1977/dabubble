@@ -219,13 +219,16 @@ mat-card {
 
 @keyframes introAnimation{
   0% {
-    opacity: 1;    
+    opacity: 1;   
+    z-index: 1;
   }
   90%{
     opacity: 1;
+    z-index: 1;
   }
   100%{
     opacity: 0;
+    z-index: -1;
   }
 }
 
@@ -244,7 +247,7 @@ mat-card {
     z-index: 5;
     height: 70px;
     width: 70px;
-    animation: imgAnimation 0.8s ease-out 1.5s forwards;
+    animation: imgAnimation 3.2s ease-out 0.6s forwards;
   }
 
   .logo-name-animated{
@@ -253,8 +256,7 @@ mat-card {
     font-size: 2.2rem;
     font-weight: 700;
     font-family: 'Nunito';
-    // animation: textAnimation 0.8s ease-out 2.2s forwards;
-    animation: textAnimation 2.2s ease-out 1.8s forwards;
+    animation: textAnimation 3s ease-out 1s forwards;
     color: #FFF;
     opacity: 0;
   }
@@ -279,9 +281,19 @@ mat-card {
 @keyframes imgAnimation{
   0%{
     transform: translateX(0);
-  }  
+  }
+  30%{
+    transform: translateX(-120%);
+  }
+  99%{
+    transform: translateX(-150%);
+    height: 70px;
+    width: 70px;
+  }
   100%{
-    transform: translateX(-150%);   
+    transform: translateX(-150%);
+    height: 56px;
+    width: 56px;
   }
 }
 
@@ -292,6 +304,10 @@ mat-card {
     color: #FFF;
   }
   
+  20%{
+    transform: translateX(+40%);
+  }
+
   60%{
     opacity: 0.9;
     transform: translateX(+50%);
