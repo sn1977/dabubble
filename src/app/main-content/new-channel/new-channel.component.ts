@@ -2,6 +2,8 @@ import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { BottomSheetComponent } from '../bottom-sheet/bottom-sheet.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { Channel } from '../../../models/channel.class';
+import { FirebaseService } from '../../shared/services/firebase.service';
 
 
 @Component({
@@ -17,7 +19,10 @@ export class NewChannelComponent {
     
   }
 
+  firestore = inject(FirebaseService);
   router = inject(Router);
+  itemID: any = '';
+  channel: Channel = new Channel();
 
     toggleOverlay(overlayId: string): void {
         const currentOverlay = document.querySelector('.overlay[style="display: block;"]') as HTMLElement;

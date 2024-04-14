@@ -46,18 +46,13 @@
                     <img src="./../../assets/img/icon/close.svg" alt="" (click)="closeOverlay('overlay1')">
                 </div>
                 <div class="members">
-                    <div class="profil">
-                        <img class="height" src="./../../../assets/img/characters/character_FrederikBeck_online.svg" alt="">
-                        <p class="no-margin">Frederik Beck (DU‚)</p>
-                    </div>
-                    <div class="profil">
-                        <img class="height" src="./../../../assets/img/characters/character_SofiaMueller_online.svg" alt="">
-                        <p class="no-margin">Sofia Müller</p>
-                    </div>
-                    <div class="profil">
-                        <img class="height" src="./../../../assets/img/characters/character_NoahBraun_online.svg" alt="">
-                        <p class="no-margin">Noah Braun</p>
-                    </div>
+                    @for (user of this.firestore.getUsers(); track $index) {
+                        <div class="profil">
+                          <img class="img-profil" src="{{user.avatar}}" alt="">
+                          <img class="position_absolute"[src]="user.isOnline? './assets/img/characters/online.svg': './assets/img/characters/offline.svg'" alt="icon"/>
+                          <p class="no-margin">{{user.name}}</p>
+                        </div>
+                    }
                     <div class="profil">
                         <img class="height" src="../../assets/img/icon/44. Add members button.svg" alt="">
                         <p (click)="toggleOverlay('overlay2')" class="no-margin">Mitglied hinzufügen</p>

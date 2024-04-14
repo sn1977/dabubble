@@ -53,6 +53,12 @@ main {
   box-sizing: border-box; /* Wichtig für die Berechnung von Padding und Border */
 }
 
+.img-profil{
+  height: 60px;
+  border-radius: 30px;
+
+}
+
 .text-container {
   padding: 15px;
 }
