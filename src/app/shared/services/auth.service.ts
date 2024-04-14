@@ -14,9 +14,10 @@ import {
   signInWithPopup,
   signInWithRedirect,
   getAuth,
-  OAuthCredential, authState,
+  OAuthCredential,
+  authState,
 } from '@angular/fire/auth';
-import {Observable, from, BehaviorSubject} from 'rxjs';
+import { Observable, from, BehaviorSubject } from 'rxjs';
 import { UserInterface } from '../interfaces/user.interface';
 import { Router } from '@angular/router';
 import { FirebaseService } from './firebase.service';
@@ -54,16 +55,17 @@ export class AuthService {
     signInWithRedirect(auth, this.provider);
   }
 
-  resultGoogleAuth(){
+  resultGoogleAuth() {
     const auth = getAuth();
     getRedirectResult(auth)
       .then((result) => {
-        if(result){
+        if (result) {
           const user = result.user;
           this.user.id = user.uid ?? this.user.id;
           this.user.avatar = user.photoURL ?? this.user.avatar;
           this.user.email = user.email ?? this.user.email;
           this.user.name = user.displayName ?? this.user.name;
+          this.user.provider = 'google';
           this.firebase.updateUser(this.user, this.user.id);
           this.router.navigateByUrl('/');
         }
@@ -92,6 +94,7 @@ export class AuthService {
         this.user.avatar = photoURL ?? this.user.avatar;
         this.user.email = currentUser.email ?? this.user.email;
         this.user.name = username ?? this.user.name;
+        this.user.provider = 'email';
         this.firebase.updateUser(this.user, this.user.id);
       }
     });
@@ -111,6 +114,7 @@ export class AuthService {
         this.user.email = currentUser.email ?? this.user.email;
         this.user.name = currentUser.displayName ?? this.user.name;
         this.user.isOnline = true;
+        this.user.provider = 'email';
         this.firebase.updateUser(this.user, this.user.id);
       }
     });
@@ -179,5 +183,19 @@ export class AuthService {
     //     // again.
     //   });
     // }
+  }
+
+  whoAmI(): Observable<void> {
+    const currentUser = this.firebaseAuth.currentUser;
+    if (currentUser) {
+      this.user.id = currentUser.uid ?? this.user.id;
+      this.user.avatar = currentUser.photoURL ?? this.user.avatar;
+      this.user.email = currentUser.email ?? this.user.email;
+      this.user.name = currentUser.displayName ?? this.user.name;
+      this.user.isOnline = false;
+    }
+    const promise = signOut(this.firebaseAuth);
+    this.router.navigate(['/login']);
+    return from(promise);
   }
 }

@@ -4,12 +4,14 @@ export class User {
   email: string;  
   name: string;
   isOnline: boolean;
+  provider: string;
 
   constructor(obj?: any) {
     this.avatar = obj ? obj.avatar : '';    
     this.email = obj ? obj.email : '';    
     this.name = obj ? obj.name : '';
     this.isOnline = obj ? obj.isOnline : true;
+    this.provider = obj ? obj.provider : '';
   }
 
   public toJSON() {
@@ -18,6 +20,7 @@ export class User {
       email: this.email,      
       name: this.name,
       isOnline: this.isOnline,
+      provider: this.provider,
     };
   }
 }

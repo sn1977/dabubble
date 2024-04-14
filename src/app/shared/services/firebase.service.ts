@@ -5,9 +5,7 @@ import {
   doc,
   onSnapshot,
   addDoc,
-  getDoc,
   Unsubscribe,
-  updateDoc,
   setDoc,
 } from '@angular/fire/firestore';
 import { User } from '../../../models/user.class';
@@ -69,6 +67,7 @@ export class FirebaseService {
       email: obj.email,
       name: obj.name,
       isOnline: obj.isOnline,
+      provider: obj.provider,
     };
   }
 

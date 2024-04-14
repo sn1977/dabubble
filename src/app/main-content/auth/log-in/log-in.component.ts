@@ -43,9 +43,19 @@ export class LogInComponent {
   };
   http = inject(HttpClient);
   authService = inject(AuthService);
-  router = inject(Router);
-  
+  router = inject(Router);  
   errorMessage: string | null = null;
+  playIntroAnimation: boolean = true;
+
+  constructor(){    
+    this.checkForIntroAnimation();
+  }
+
+  checkForIntroAnimation(){
+    // let now: number = new Date().getTime();
+    // let lastAnimation: number = new Date().getTime();
+    // if()
+  }
 
   onSubmit(): void {
     this.authService
@@ -60,10 +70,11 @@ export class LogInComponent {
         error: (err) => {
           this.errorMessage = err.code;
         },
-      });
+    });
   }
 
-  logout(): void {    
+  logout(): void {
+    this.playIntroAnimation = true;
     this.authService.logout();
   }
 
