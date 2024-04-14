@@ -62,7 +62,7 @@ export class AuthService {
         if (result) {
           const user = result.user;
           this.user.id = user.uid ?? this.user.id;
-          this.user.avatar = user.photoURL ?? this.user.avatar;
+          this.user.avatar = user.photoURL ?? this.user.avatar; // google
           this.user.email = user.email ?? this.user.email;
           this.user.name = user.displayName ?? this.user.name;
           this.user.provider = 'google';
@@ -89,8 +89,8 @@ export class AuthService {
     ).then((response) => {
       updateProfile(response.user, { displayName: username });
       const currentUser = this.firebaseAuth.currentUser;
-      if (currentUser) {
-        this.user.id = currentUser.uid ?? this.user.id;
+      if (currentUser) {        
+        this.user.id = currentUser.uid ?? this.user.id;        
         this.user.avatar = photoURL ?? this.user.avatar;
         this.user.email = currentUser.email ?? this.user.email;
         this.user.name = username ?? this.user.name;
@@ -105,16 +105,20 @@ export class AuthService {
     const promise = signInWithEmailAndPassword(
       this.firebaseAuth,
       email,
-      password
+      password,
     ).then(() => {
       const currentUser = this.firebaseAuth.currentUser;
       if (currentUser) {
         this.user.id = currentUser.uid ?? this.user.id;
-        this.user.avatar = currentUser.photoURL ?? this.user.avatar;
+
+        // Todo - Wert erst aus DB holen! anhand currentUser.uid
+        //this.user.avatar = currentUser.photoURL ?? this.user.avatar;
+
         this.user.email = currentUser.email ?? this.user.email;
         this.user.name = currentUser.displayName ?? this.user.name;
         this.user.isOnline = true;
         this.user.provider = 'email';
+        this.firebase.updateUser(this.user, this.user.id);
         this.firebase.updateUser(this.user, this.user.id);
       }
     });
@@ -125,9 +129,9 @@ export class AuthService {
     const currentUser = this.firebaseAuth.currentUser;
     if (currentUser) {
       this.user.id = currentUser.uid ?? this.user.id;
-      this.user.avatar = currentUser.photoURL ?? this.user.avatar;
-      this.user.email = currentUser.email ?? this.user.email;
-      this.user.name = currentUser.displayName ?? this.user.name;
+      // this.user.avatar = currentUser.photoURL ?? this.user.avatar;
+      // this.user.email = currentUser.email ?? this.user.email;
+      // this.user.name = currentUser.displayName ?? this.user.name;
       this.user.isOnline = false;
       this.firebase.updateUser(this.user, this.user.id);
     }
@@ -183,19 +187,5 @@ export class AuthService {
     //     // again.
     //   });
     // }
-  }
-
-  whoAmI(): Observable<void> {
-    const currentUser = this.firebaseAuth.currentUser;
-    if (currentUser) {
-      this.user.id = currentUser.uid ?? this.user.id;
-      this.user.avatar = currentUser.photoURL ?? this.user.avatar;
-      this.user.email = currentUser.email ?? this.user.email;
-      this.user.name = currentUser.displayName ?? this.user.name;
-      this.user.isOnline = false;
-    }
-    const promise = signOut(this.firebaseAuth);
-    this.router.navigate(['/login']);
-    return from(promise);
   }
 }

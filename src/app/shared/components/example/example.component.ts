@@ -43,9 +43,6 @@ export class ExampleComponent implements OnInit {
         this.getItemValues('channels', 'vXRTxUTQxznUmQyIqqZK');
       }
     });
-    console.log();
-    
-    //this.firestore.getActiveUser();
   }
 
   getItemValues(collection: string, itemID: string) {

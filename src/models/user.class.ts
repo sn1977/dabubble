@@ -16,7 +16,7 @@ export class User {
 
   public toJSON() {
     return {
-      avatar: this.avatar,      
+      avatar: this.avatar,
       email: this.email,      
       name: this.name,
       isOnline: this.isOnline,
