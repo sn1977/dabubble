@@ -46,7 +46,7 @@ export class FirebaseService {
   subUserList() {
     return onSnapshot(this.getUsersRef(), (list) => {
       this.userList = [];
-      list.forEach((element) => {
+      list.forEach((element) => {        
         this.userList.push(this.setUserObject(element.data(), element.id));
       });
     });
@@ -60,6 +60,7 @@ export class FirebaseService {
       });
     });
   }
+
 
   setUserObject(obj: any, id: string): any {
     return {
@@ -123,6 +124,8 @@ export class FirebaseService {
     }
   }
 
+
+  // this.firestore.getSingleItemData('users', '9MacQRd4i2TX9J42mVLBGgVCsPp1');
   getSingleItemData(colId: string, docId: string, callback: () => void) {
   let collection = colId === 'channels' ? 'channels' : 'users';
 
