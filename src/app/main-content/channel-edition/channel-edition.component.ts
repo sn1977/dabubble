@@ -2,9 +2,9 @@ import {Component, inject, OnInit} from '@angular/core';
 import { NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FirebaseService } from '../../shared/services/firebase.service';
-import { User } from '../../../models/user.class';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {Channel} from '../../../models/channel.class';
+import { User } from '../../../models/user.class';
 
 
 @Component({
@@ -20,6 +20,7 @@ export class ChannelEditionComponent implements OnInit {
   router = inject(Router);
   itemID: any = '';
   channel: Channel = new Channel();
+  user: User = new User();
 
   isEditingChannelName: boolean = false;
   isEditingDescription: boolean = false;
@@ -71,7 +72,7 @@ export class ChannelEditionComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe((paramMap) => {
       this.itemID = paramMap.get('id');
-      this.getItemValues('users', this.itemID);
+      this.getItemValues('channels', this.itemID);
     });
   }
 

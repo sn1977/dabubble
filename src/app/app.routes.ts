@@ -28,7 +28,6 @@ export const routes: Routes = [
   { path: 'new-channel', component: NewChannelComponent },
   { path: 'message', component: DirectMessageComponent },
   { path: 'new-message', component: NewMessageComponent},
-  { path: 'channel-edition', component: ChannelEditionComponent},
   { path: 'channel-edition/:id', component: ChannelEditionComponent},
   { path: 'example', component: ExampleComponent},
   { path: 'example/:id', component: ExampleComponent},

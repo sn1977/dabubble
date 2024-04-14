@@ -1,7 +1,7 @@
 <div class="background">
     <div class="mdc-card">
         <div class="channel-header">
-            <h1 class="no-margin"># Entwicklerteam</h1>
+            <h1 class="no-margin">{{ channel.name }}</h1>
             <img src="./assets/img/icon/close.svg" alt="" routerLink="/new-channel">
         </div>
     </div>
@@ -9,10 +9,8 @@
         <div class="container" [style.border]="!isEditingChannelName ? '1px solid blue' : 'none'">
             <div class="channel-name">
               <h1>{{channel.name}}</h1>
-              <!-- Platzhaltertext wird nur angezeigt, wenn nicht bearbeitet wird -->
-              <p *ngIf="!isEditingChannelName" id="description" placeholder="# Entwicklerteam">{{ channelNameDescriptionText }}</p>
-              <!-- Eingabefeld wird nur angezeigt, wenn bearbeitet wird -->
-              <input *ngIf="isEditingChannelName" id="input-edit-channel-name" class="input-edit" type="text" [(ngModel)]="editedChannelName" placeholder="# Entwicklerteam">
+              <p *ngIf="!isEditingChannelName" id="description">{{channel.name}}</p>
+              <input *ngIf="isEditingChannelName" placeholder="{{channel.name}}" id="input-edit-channel-name" class="input-edit" type="text" [(ngModel)]="editedChannelName" placeholder="# Entwicklerteam">
             </div>
             <div class="edit-icon">
               <img *ngIf="!isEditingChannelName" id="edit-icon-channel-name" src="./assets/img/icon/edit.svg" alt="" (click)="toggleEdit('channelName')">
@@ -24,21 +22,11 @@
             <div class="channel-name">
               <h1>Beschreibung</h1>
               <p *ngIf="!isEditingDescription" id="description" placeholder="# Entwicklerteam">{{ descriptionDescriptionText }}</p>
-              <input *ngIf="isEditingDescription" id="input-edit-description" class="input-edit" type="text" [(ngModel)]="editedDescriptionDescription" placeholder="# Entwicklerteam">
+              <input *ngIf="isEditingDescription" id="input-edit-description" class="input-edit" type="text" [(ngModel)]="editedDescriptionDescription" placeholder="{{channel.name}}">
               <div class="horizontal-line"></div>
               <div>
                   <p>Erstellt von</p>
-                  <p class="color">Noah Braun</p>
-
-                  @for (channel of this.firestore.getChannel(); track $index) {
-                      <p>{{channel.name}}</p>
-                      <p>{{channel.creator}}</p>
-                  }
-
-
-
-
-
+                  <p class="color">{{channel.creator}}</p>
               </div>
             </div>
             <div class="edit-icon">

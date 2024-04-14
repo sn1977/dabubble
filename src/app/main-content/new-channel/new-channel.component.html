@@ -10,9 +10,9 @@
     </header>
     <main>
         <div class="mdc-card">
-            <div class="channel-box">
-                <p class="no-margin"># Office-team</p>
-                <img src="./../../assets/img/icon/arrow_down.svg" alt="" routerLink="/channel-edition">
+            <div class="channel-box" [id]="this.firestore.getChannel()[0].id" (click)="openChannel($event, 'channel-edition')">
+                <h1 class="no-margin">{{ channel.name }}</h1>
+                <img src="./../../assets/img/icon/arrow_down.svg" alt="">
             </div>
             <div>
                 <img (click)="toggleOverlay('overlay1')" src="./../../assets/img/icon/44. Add members button.svg"
@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="channel-info">
-            <h1># Office-team</h1>
+            <h1 class="no-margin">{{ channel.name }}</h1>
             <p>Du hast diesen Channel heute erstellt. Das ist der Anfang des Channels </p>
 
         </div>
