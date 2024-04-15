@@ -3,7 +3,6 @@ import { FirebaseService } from '../../services/firebase.service';
 import { User } from '../../../../models/user.class';
 import { ActivatedRoute } from '@angular/router';
 import { Channel } from '../../../../models/channel.class';
-import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-example',
@@ -17,15 +16,14 @@ export class ExampleComponent implements OnInit {
   user: User = new User();
   channel: Channel = new Channel();
   firestore = inject(FirebaseService);
-
-  message: string | undefined;
-
-  constructor(private route: ActivatedRoute, private data: DataService) {}
+  activeUser: any;
+  
+  constructor(private route: ActivatedRoute) {    
+  }
 
   ngOnInit() {
 
-    this.data.currentMessage.subscribe(message => this.message = message);
-
+    this.getAllUserInfos();
 
     this.route.paramMap.subscribe((paramMap) => {
       this.itemID = paramMap.get('id');
@@ -64,8 +62,8 @@ export class ExampleComponent implements OnInit {
     });
   }
 
-  newMessage(){
-    this.data.changeMessage("Hello from Sibling");
+  getAllUserInfos(){
+    this.activeUser = this.firestore.getActiveUser();
   }
 
 }

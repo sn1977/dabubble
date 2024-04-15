@@ -7,7 +7,7 @@ export class User {
   provider: string;
 
   constructor(obj?: any) {
-    // this.avatar = obj ? obj.avatar : '';
+    this.avatar = obj ? obj.avatar : '';
     this.email = obj ? obj.email : '';
     this.name = obj ? obj.name : '';
     this.isOnline = obj ? obj.isOnline : true;
@@ -17,6 +17,15 @@ export class User {
   public toJSON() {
     return {
       avatar: this.avatar,
+      email: this.email,
+      name: this.name,
+      isOnline: this.isOnline,
+      provider: this.provider,
+    };
+  }
+
+  public noAvatarToJSON() {
+    return {      
       email: this.email,
       name: this.name,
       isOnline: this.isOnline,

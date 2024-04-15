@@ -37,9 +37,9 @@ export class HeaderMobileComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // console.log(this.authService.currentUserSig());
-    console.log(this.firebaseAuth.currentUser?.displayName);
-    console.log(this.firebaseAuth.currentUser?.uid);
-    console.log(this.loggedInUser);
+    // console.log(this.firebaseAuth.currentUser?.displayName);
+    // console.log(this.firebaseAuth.currentUser?.uid);
+    // console.log(this.loggedInUser);
 
     if (this.loggedInUser) {
       this.getItemValues('users', this.loggedInUser);
@@ -64,7 +64,7 @@ export class HeaderMobileComponent implements OnInit, OnDestroy {
     this.firestore.getSingleItemData(collection, itemID, () => {
       // return
       this.user = new User(this.firestore.user);
-      console.log('Avatar: ' + this.user.avatar);
+      // console.log('Avatar: ' + this.user.avatar);
     });
   }
 }

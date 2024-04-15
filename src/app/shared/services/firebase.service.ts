@@ -16,7 +16,7 @@ import { Channel } from '../../../models/channel.class';
 })
 export class FirebaseService {
   firestore: Firestore = inject(Firestore);
-  activeUserID: string = '';
+  activeUser: any = [];
   user: User = new User();
   channel: Channel = new Channel();
   userList: any = [];
@@ -81,20 +81,24 @@ export class FirebaseService {
     };
   }
 
-  async updateUser(item: User, id: string) {
-    await setDoc(doc(this.getUsersRef(), id), item.toJSON());
-  }
+  async updateUser(item: User, id: string, process: string) {
+    this.activeUser = [];
+    this.activeUser.push(this.setUserObject(item, id));
+    
+    console.log(this.activeUser[0]);    
 
-  // Aktualisiere diese Methode, um partielle Updates zu ermöglichen
-  // async updateUser(userId: string, data: any) {
-  //   const userRef = doc(this.firestore, `users/${userId}`);
-  //   try {
-  //     await updateDoc(userRef, data);
-  //     console.log("Benutzer erfolgreich aktualisiert");
-  //   } catch (error) {
-  //     console.error("Fehler beim Aktualisieren des Benutzers:", error);
-  //   }
-  // }
+    await setDoc(doc(this.getUsersRef(), id), item.toJSON());
+
+    //console.log(this.activeUser[0]);
+    // if(process === 'email' || process === 'logout'){
+    // if(process === 'email'){
+    //   console.log('yo');      
+    //   // delete item.avatar;
+    //   await setDoc(doc(this.getUsersRef(), id), item.noAvatarToJSON());
+    // } else {
+    //   await setDoc(doc(this.getUsersRef(), id), item.toJSON());
+    // }
+  } 
 
   getUsers(): User[]{
     return this.userList;
@@ -120,9 +124,7 @@ export class FirebaseService {
       this.singleItemUnsubscribe();
     }
   }
-
-
-  // this.firestore.getSingleItemData('users', '9MacQRd4i2TX9J42mVLBGgVCsPp1');
+  
   getSingleItemData(colId: string, docId: string, callback: () => void) {
   let collection = colId === 'channels' ? 'channels' : 'users';
 
@@ -142,14 +144,8 @@ export class FirebaseService {
     );
   }
 
-  getActiveUser(collection: string, itemID: string) {
-
-    console.log(this.activeUserID);
-
-    // this.getSingleItemData(collection, itemID, () => {      
-    //   this.activeUser = new User(this.user);
-    //   console.log(this.activeUserID);
-    // });
+  getActiveUser(){
+    return this.activeUser;
   }
 
   ngonDestroyy() {
