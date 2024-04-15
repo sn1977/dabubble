@@ -40,14 +40,8 @@ export class AuthService {
   constructor(private router: Router, private firebase: FirebaseService) {
     this.resultGoogleAuth();
 
-    authState(this.firebaseAuth).subscribe((firebaseUser) => {
-      if (firebaseUser) {
-        const user = new User({
-          id: firebaseUser.uid,
-          avatar: firebaseUser.photoURL,
-          email: firebaseUser.email,
-          name: firebaseUser.displayName
-        });
+    authState(this.firebaseAuth).subscribe((user) => {
+      if (user) {
         // Hier könntest du zusätzliche Daten laden und im currentUserSubject speichern
         this.currentUserSubject.next(this.user);
       } else {
