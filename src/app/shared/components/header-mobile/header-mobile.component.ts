@@ -5,6 +5,7 @@ import {Subscription} from 'rxjs';
 import {AuthService} from '../../services/auth.service';
 import {FirebaseService} from '../../services/firebase.service';
 import {Auth} from '@angular/fire/auth';
+import {User} from '../../../../models/user.class';
 
 @Component({
   selector: 'app-header-mobile',
@@ -28,20 +29,28 @@ export class HeaderMobileComponent implements OnInit, OnDestroy {
   userAvatarUrl: string = 'assets/img/characters/character_FrederikBeck.svg'; // Standardavatar
   firestore = inject(FirebaseService);
   firebaseAuth = inject(Auth);
+  loggedInUser = this.firebaseAuth.currentUser?.uid;
+  user: User = new User();
 
-  constructor(private authService: AuthService, private _bottomSheet: MatBottomSheet) {}
+  constructor(private authService: AuthService, private _bottomSheet: MatBottomSheet) {
+  }
 
   ngOnInit(): void {
-    // console.log(this.authService.currentUserSig()?.email);
+    // console.log(this.authService.currentUserSig());
     console.log(this.firebaseAuth.currentUser?.displayName);
     console.log(this.firebaseAuth.currentUser?.uid);
+    console.log(this.loggedInUser);
+
+    if (this.loggedInUser) {
+      this.getItemValues('users', this.loggedInUser);
+    }
 
     this.authSubscription = this.authService.currentUser$.subscribe(user => {
       if (user) {
-        this.userAvatarUrl = user.avatar || this.userAvatarUrl; // Verwende den Benutzeravatar, wenn vorhanden
+        this.userAvatarUrl = this.user.avatar || this.userAvatarUrl; // Verwende den Benutzeravatar, wenn vorhanden
       }
     });
-  }
+}
 
   ngOnDestroy(): void {
     this.authSubscription!.unsubscribe(); // Verhindere Memory Leaks
@@ -49,5 +58,13 @@ export class HeaderMobileComponent implements OnInit, OnDestroy {
 
   openBottomSheet(): void {
     this._bottomSheet.open(BottomSheetComponent);
+  }
+
+  getItemValues(collection: string, itemID: string) {
+    this.firestore.getSingleItemData(collection, itemID, () => {
+      // return
+      this.user = new User(this.firestore.user);
+      console.log('Avatar: ' + this.user.avatar);
+    });
   }
 }

@@ -41,6 +41,7 @@ export class DirectMessageOverlayComponent {
   }
 
   openEditProfileCard(): void {
+    if (this.data.user.provider == 'email') {
     const dialogRef = this.dialog.open(EditProfilCardComponent, {
       minWidth: '398px',
       minHeight: '600px',
@@ -48,5 +49,6 @@ export class DirectMessageOverlayComponent {
       data: { user: this.data.user }
     });
     // this.closeProfilCard();
+  }
   }
 }
