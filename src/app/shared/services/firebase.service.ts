@@ -85,7 +85,7 @@ export class FirebaseService {
     this.activeUser = [];
     this.activeUser.push(this.setUserObject(item, id));
     
-    console.log(this.activeUser[0]);    
+    console.log(this.activeUser);
 
     await setDoc(doc(this.getUsersRef(), id), item.toJSON());
 
