@@ -23,6 +23,7 @@ import { Router } from '@angular/router';
 import { FirebaseService } from './firebase.service';
 import { User } from '../../../models/user.class';
 import { getRedirectResult } from '@firebase/auth';
+import { DataService } from './data.service';
 
 @Injectable({
   providedIn: 'root',
@@ -37,7 +38,7 @@ export class AuthService {
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
 
-  constructor(private router: Router, private firebase: FirebaseService) {
+  constructor(private router: Router, private firebase: FirebaseService, private data: DataService) {
     this.resultGoogleAuth();
 
     authState(this.firebaseAuth).subscribe((user) => {
@@ -66,6 +67,7 @@ export class AuthService {
           this.user.email = user.email ?? this.user.email;
           this.user.name = user.displayName ?? this.user.name;
           this.user.provider = 'google';
+          this.data.changeMessage(this.user.name);
           this.firebase.updateUser(this.user, this.user.id);
           this.router.navigateByUrl('/');
         }
@@ -118,8 +120,9 @@ export class AuthService {
         this.user.name = currentUser.displayName ?? this.user.name;
         this.user.isOnline = true;
         this.user.provider = 'email';
+        this.data.changeMessage(this.user.name);
         this.firebase.updateUser(this.user, this.user.id);
-        this.firebase.updateUser(this.user, this.user.id);
+        
       }
     });
     return from(promise);

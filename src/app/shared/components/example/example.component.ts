@@ -3,6 +3,7 @@ import { FirebaseService } from '../../services/firebase.service';
 import { User } from '../../../../models/user.class';
 import { ActivatedRoute } from '@angular/router';
 import { Channel } from '../../../../models/channel.class';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-example',
@@ -17,9 +18,15 @@ export class ExampleComponent implements OnInit {
   channel: Channel = new Channel();
   firestore = inject(FirebaseService);
 
-  constructor(private route: ActivatedRoute) {}
+  message: string | undefined;
+
+  constructor(private route: ActivatedRoute, private data: DataService) {}
 
   ngOnInit() {
+
+    this.data.currentMessage.subscribe(message => this.message = message);
+
+
     this.route.paramMap.subscribe((paramMap) => {
       this.itemID = paramMap.get('id');
 
@@ -45,7 +52,7 @@ export class ExampleComponent implements OnInit {
     });
   }
 
-  getItemValues(collection: string, itemID: string) {
+  getItemValues(collection: string, itemID: string) {    
     this.firestore.getSingleItemData(collection, itemID, () => {
       
       if(collection === 'users'){
@@ -56,4 +63,9 @@ export class ExampleComponent implements OnInit {
       }
     });
   }
+
+  newMessage(){
+    this.data.changeMessage("Hello from Sibling");
+  }
+
 }
