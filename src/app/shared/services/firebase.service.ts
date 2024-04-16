@@ -66,7 +66,7 @@ export class FirebaseService {
 
   subSingleUser(){
     // ID muss noch aus dem localeStorage übergeben werden
-    const docId = 'dZLRvBpoVffJtRGDeQULycxC8p83'; // Die gewünschte Dokumenten-ID
+    const docId = '9MacQRd4i2TX9J42mVLBGgVCsPp1'; // Die gewünschte Dokumenten-ID
     const docRef = doc(this.getUsersRef(), docId);
     this.activeUser = [];
     return onSnapshot(docRef, (doc) => {
