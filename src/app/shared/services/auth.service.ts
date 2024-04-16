@@ -65,7 +65,7 @@ export class AuthService {
           this.user.avatar = user.photoURL ?? this.user.avatar;
           this.user.email = user.email ?? this.user.email;
           this.user.name = user.displayName ?? this.user.name;
-          this.user.provider = 'google';          
+          this.user.provider = 'google';
           this.firebase.updateUser(this.user, this.user.id, 'google');
           this.router.navigateByUrl('/');
         }

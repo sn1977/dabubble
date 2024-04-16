@@ -8,7 +8,7 @@ import {
   Unsubscribe,
   setDoc,
   where,
-  query,
+  query, getDoc,
 } from '@angular/fire/firestore';
 import { User } from '../../../models/user.class';
 import { Channel } from '../../../models/channel.class';
@@ -24,7 +24,7 @@ export class FirebaseService {
   userList: any = [];
   channelList: any = [];
 
-  unsubUsers;  
+  unsubUsers;
   unsubChannel;
   unsubSingleUser;
 
@@ -49,7 +49,7 @@ export class FirebaseService {
   subUserList() {
     return onSnapshot(this.getUsersRef(), (list) => {
       this.userList = [];
-      list.forEach((element) => {        
+      list.forEach((element) => {
         this.userList.push(this.setUserObject(element.data(), element.id));
       });
     });
@@ -71,9 +71,9 @@ export class FirebaseService {
     this.activeUser = [];
     return onSnapshot(docRef, (doc) => {
       if (doc.exists()) {
-        this.activeUser = [];    
+        this.activeUser = [];
         const userData = doc.data();
-        this.activeUser.push(userData);        
+        this.activeUser.push(userData);
       } else {
         // Das Dokument existiert nicht
         console.log("Das Dokument mit der ID", docId, "existiert nicht.");
@@ -103,16 +103,16 @@ export class FirebaseService {
   }
 
   async updateUser(item: User, id: string, process: string) {
-    
+
     //this.activeUser = [];
-    //this.activeUser.push(this.setUserObject(item, id));        
+    //this.activeUser.push(this.setUserObject(item, id));
 
     // TODO
     // - write uid to localeStorage
     // - get avatar-img from database and write into item.avatar
 
     await setDoc(doc(this.getUsersRef(), id), item.toJSON());
-  } 
+  }
 
   getUsers(): User[]{
     return this.userList;
@@ -142,7 +142,7 @@ export class FirebaseService {
       this.singleItemUnsubscribe();
     }
   }
-  
+
   getSingleItemData(colId: string, docId: string, callback: () => void) {
   let collection = colId === 'channels' ? 'channels' : 'users';
 
@@ -167,4 +167,15 @@ export class FirebaseService {
     this.unsubChannel();
     this.unsubSingleUser();
   }
+
+  // getUserDetails(uid: string): Promise<User> {
+  //   const docRef = doc(this.firestore, 'users', uid);
+  //   return getDoc(docRef).then(docSnapshot => {
+  //     if (docSnapshot.exists()) {
+  //       return new User(docSnapshot.data() as User);
+  //     } else {
+  //       throw new Error('No user found with ID ' + uid);
+  //     }
+  //   });
+  // }
 }
