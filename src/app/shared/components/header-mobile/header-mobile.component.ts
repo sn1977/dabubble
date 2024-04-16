@@ -6,6 +6,8 @@ import {AuthService} from '../../services/auth.service';
 import {FirebaseService} from '../../services/firebase.service';
 import {Auth} from '@angular/fire/auth';
 import {User} from '../../../../models/user.class';
+// import {collection, doc} from '@angular/fire/firestore';
+// import {DataService} from '../../services/data.service';
 
 @Component({
   selector: 'app-header-mobile',
@@ -31,15 +33,18 @@ export class HeaderMobileComponent implements OnInit, OnDestroy {
   firebaseAuth = inject(Auth);
   loggedInUser = this.firebaseAuth.currentUser?.uid;
   user: User = new User();
+  // message: string | undefined;
 
-  constructor(private authService: AuthService, private _bottomSheet: MatBottomSheet) {
+  constructor(private authService: AuthService, private _bottomSheet: MatBottomSheet) { //, private data: DataService
   }
 
   ngOnInit(): void {
     // console.log(this.authService.currentUserSig());
-    // console.log(this.firebaseAuth.currentUser?.displayName);
-    // console.log(this.firebaseAuth.currentUser?.uid);
-    // console.log(this.loggedInUser);
+    console.log(this.firebaseAuth.currentUser?.displayName);
+    console.log(this.firebaseAuth.currentUser?.uid);
+    console.log(this.loggedInUser);
+
+    // this.data.currentMessage.subscribe(message => this.message = message);
 
     if (this.loggedInUser) {
       this.getItemValues('users', this.loggedInUser);
@@ -50,6 +55,9 @@ export class HeaderMobileComponent implements OnInit, OnDestroy {
         this.userAvatarUrl = this.user.avatar || this.userAvatarUrl; // Verwende den Benutzeravatar, wenn vorhanden
       }
     });
+
+    this.firestore.subSingleUser();
+    console.log(this.firestore.user);
 }
 
   ngOnDestroy(): void {
@@ -63,7 +71,7 @@ export class HeaderMobileComponent implements OnInit, OnDestroy {
   getItemValues(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {
       // return
-      this.user = new User(this.firestore.user);
+      // this.user = new User(this.firestore.user);
       // console.log('Avatar: ' + this.user.avatar);
     });
   }
