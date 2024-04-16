@@ -22,12 +22,14 @@ export class FirebaseService {
   userList: any = [];
   channelList: any = [];
 
-  unsubUsers;
+  unsubUsers;  
   unsubChannel;
+  unsubSingleUser;
 
   constructor() {
     this.unsubUsers = this.subUserList();
     this.unsubChannel = this.subChannelList();
+    this.unsubSingleUser = this.subSingelUserList();
   }
 
   getUsersRef() {
@@ -60,6 +62,15 @@ export class FirebaseService {
     });
   }
 
+  subSingelUserList() {
+    return onSnapshot(this.getUsersRef(), (list) => {
+      this.activeUser = [];
+      list.forEach((element) => {        
+        this.activeUser.push(this.setUserObject(element.data(), element.id));
+      });
+    });
+  }
+
   setUserObject(obj: any, id: string): any {
     return {
       id: id,
@@ -82,22 +93,15 @@ export class FirebaseService {
   }
 
   async updateUser(item: User, id: string, process: string) {
-    this.activeUser = [];
-    this.activeUser.push(this.setUserObject(item, id));
     
-    console.log(this.activeUser);
+    //this.activeUser = [];
+    //this.activeUser.push(this.setUserObject(item, id));        
+
+    // TODO
+    // - write uid to localeStorage
+    // - get avatar-img from database and write into item.avatar
 
     await setDoc(doc(this.getUsersRef(), id), item.toJSON());
-
-    //console.log(this.activeUser[0]);
-    // if(process === 'email' || process === 'logout'){
-    // if(process === 'email'){
-    //   console.log('yo');      
-    //   // delete item.avatar;
-    //   await setDoc(doc(this.getUsersRef(), id), item.noAvatarToJSON());
-    // } else {
-    //   await setDoc(doc(this.getUsersRef(), id), item.toJSON());
-    // }
   } 
 
   getUsers(): User[]{
@@ -106,6 +110,10 @@ export class FirebaseService {
 
   getChannel(): Channel[]{
     return this.channelList;
+  }
+
+  getSingleUser(): User[]{
+    return this.activeUser;
   }
 
   async addChannel(item: Channel) {
@@ -144,12 +152,9 @@ export class FirebaseService {
     );
   }
 
-  getActiveUser(){
-    return this.activeUser;
-  }
-
   ngonDestroyy() {
     this.unsubUsers();
     this.unsubChannel();
+    this.unsubSingleUser();
   }
 }

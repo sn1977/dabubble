@@ -22,14 +22,5 @@ export class User {
       isOnline: this.isOnline,
       provider: this.provider,
     };
-  }
-
-  public noAvatarToJSON() {
-    return {      
-      email: this.email,
-      name: this.name,
-      isOnline: this.isOnline,
-      provider: this.provider,
-    };
-  }
+  }  
 }
