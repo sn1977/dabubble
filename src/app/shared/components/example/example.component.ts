@@ -21,9 +21,7 @@ export class ExampleComponent implements OnInit {
   constructor(private route: ActivatedRoute) {    
   }
 
-  ngOnInit() {
-
-    this.getAllUserInfos();
+  ngOnInit() {    
 
     this.route.paramMap.subscribe((paramMap) => {
       this.itemID = paramMap.get('id');
@@ -61,9 +59,4 @@ export class ExampleComponent implements OnInit {
       }
     });
   }
-
-  getAllUserInfos(){
-    this.activeUser = this.firestore.getActiveUser();
-  }
-
 }

@@ -44,9 +44,11 @@ docID: {{this.firestore.activeUser.id}} <br>
   docID: {{activeUser.id}} <br>
 } -->
 
-avatar: {{activeUser.avatar}} <br>
-email: {{activeUser.email}} <br>
-isOnline: {{activeUser.isOnline}} <br>
-name: {{activeUser.name}} <br>
-provider: {{activeUser.provider}} <br>
-docID: {{activeUser.id}} <br>
+@for (activeUser of this.firestore.getSingleUser(); track $index) {
+  avatar: {{activeUser.avatar}} <br>
+  email: {{activeUser.email}} <br>
+  isOnline: {{activeUser.isOnline}} <br>
+  name: {{activeUser.name}} <br>
+  provider: {{activeUser.provider}} <br>
+  docID: {{activeUser.id}} <br>
+}

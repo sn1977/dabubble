@@ -7,6 +7,8 @@ import {
   addDoc,
   Unsubscribe,
   setDoc,
+  where,
+  query,
 } from '@angular/fire/firestore';
 import { User } from '../../../models/user.class';
 import { Channel } from '../../../models/channel.class';
@@ -29,7 +31,7 @@ export class FirebaseService {
   constructor() {
     this.unsubUsers = this.subUserList();
     this.unsubChannel = this.subChannelList();
-    this.unsubSingleUser = this.subSingelUserList();
+    this.unsubSingleUser = this.subSingleUser();
   }
 
   getUsersRef() {
@@ -62,12 +64,20 @@ export class FirebaseService {
     });
   }
 
-  subSingelUserList() {
-    return onSnapshot(this.getUsersRef(), (list) => {
-      this.activeUser = [];
-      list.forEach((element) => {        
-        this.activeUser.push(this.setUserObject(element.data(), element.id));
-      });
+  subSingleUser(){
+    // ID muss noch aus dem localeStorage übergeben werden
+    const docId = 'dZLRvBpoVffJtRGDeQULycxC8p83'; // Die gewünschte Dokumenten-ID
+    const docRef = doc(this.getUsersRef(), docId);
+    this.activeUser = [];
+    return onSnapshot(docRef, (doc) => {
+      if (doc.exists()) {
+        this.activeUser = [];    
+        const userData = doc.data();
+        this.activeUser.push(userData);        
+      } else {
+        // Das Dokument existiert nicht
+        console.log("Das Dokument mit der ID", docId, "existiert nicht.");
+      }
     });
   }
 
