@@ -166,12 +166,34 @@ main {
 }
 
 .profil{
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 20px;
+  padding-left: 26px;
+  padding-top: 16px;
+  gap: 16px;
+  display: flex;
+  align-items: center;
+  position: relative;
+
+
+  img {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    object-fit: cover;
+  }
+
+  .online-avatar, .offline-avatar {
+    position: absolute;
+    bottom: 0;
+    left: 56px;
+    width: 14px;
+    height: 14px;
+  };
+
+    
 
 }
+
+
 
 .profil-box{
     display: flex;
