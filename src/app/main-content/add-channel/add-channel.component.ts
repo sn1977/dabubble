@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { FirebaseService } from '../../shared/services/firebase.service';
 
 
 
@@ -14,6 +15,10 @@ import { Router, RouterLink } from '@angular/router';
 })
 export class AddChannelComponent {
 
+    
+
+    showDropdown: boolean = false;
+    firestore = inject(FirebaseService);
     router = inject(Router);
   
     overlayVisible: boolean = false;
@@ -27,6 +32,10 @@ export class AddChannelComponent {
         // Überprüfen Sie, welche Checkbox ausgewählt ist und aktualisieren Sie entsprechend die Sichtbarkeit des Input-Felds
         this.showInputField = event.target.id === 'addSpecificMembers' && event.target.checked;
     }
+
+    toggleDropdown() {
+        this.showDropdown = !this.showDropdown;
+      }
 
 
 

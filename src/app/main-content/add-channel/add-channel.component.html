@@ -36,7 +36,13 @@
                     <label for="addSpecificMembers">Bestimmte Leute hinzufügen</label>
                 </div>
                 <div *ngIf="showInputField" class="input-container">
-                    <input type="text" class="input-field" placeholder="Leute suchen">
+                        <input type="text" class="input-field" placeholder="Leute suchen" (click)="toggleDropdown()">
+                        @for (user of this.firestore.getUsers(); track $index) {
+                        <ul *ngIf="showDropdown" class="dropdown-list">
+                            <li>{{user.name}}</li>
+                          </ul>
+                        }
+                
                 </div>
                 <div class="btn-pos">
                     <button class="add-button" routerLink="/new-channel">Erstellen</button>

@@ -48,6 +48,30 @@
   transition: opacity 0.5s ease-in-out; /* Animation für die Sichtbarkeit */
 }
 
+.dropdown-list {
+  
+  z-index: 1000;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  max-height: 50px; /* Maximale Höhe der Dropdown-Liste */
+  overflow-y: auto; /* Scrollleiste anzeigen, wenn Inhalt überläuft */
+}
+
+.dropdown-list li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.dropdown-list li:hover {
+  background-color: #f5f5f5;
+}
+
 .checkbox-container {
   margin-top: 20px;
 }
