@@ -53,7 +53,6 @@
   z-index: 1000;
   background-color: #fff;
   border: 1px solid #ccc;
-  border-top: none;
   border-radius: 0 0 4px 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   list-style-type: none;
@@ -61,6 +60,14 @@
   padding: 0;
   max-height: 50px; /* Maximale Höhe der Dropdown-Liste */
   overflow-y: auto; /* Scrollleiste anzeigen, wenn Inhalt überläuft */
+}
+
+.dropdown{
+  height: 100px;
+  overflow: scroll;
+  margin: 20px;
+  margin-top: unset;
+
 }
 
 .dropdown-list li {
