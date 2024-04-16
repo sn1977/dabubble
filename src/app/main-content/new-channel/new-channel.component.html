@@ -10,7 +10,7 @@
     </header>
     <main>
         <div class="mdc-card">
-            <div class="channel-box" [id]="this.firestore.getChannel()[0].id" (click)="openChannel($event, 'channel-edition')">
+            <div class="channel-box" [id]="itemID" (click)="openChannel($event, 'channel-edition')">
                 <h1 class="no-margin">{{ channel.name }}</h1>
                 <img src="./../../assets/img/icon/arrow_down.svg" alt="">
             </div>
