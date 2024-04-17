@@ -1,81 +1,49 @@
-import {Component, inject, OnDestroy, OnInit} from '@angular/core';
-import {MatBottomSheet} from '@angular/material/bottom-sheet';
-import {BottomSheetComponent} from '../../../main-content/bottom-sheet/bottom-sheet.component';
-import {Subscription} from 'rxjs';
-import {AuthService} from '../../services/auth.service';
-import {FirebaseService} from '../../services/firebase.service';
-import {Auth} from '@angular/fire/auth';
-import {User} from '../../../../models/user.class';
-// import {collection, doc} from '@angular/fire/firestore';
-// import {DataService} from '../../services/data.service';
+import { Component, inject, OnInit } from '@angular/core';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { BottomSheetComponent } from '../../../main-content/bottom-sheet/bottom-sheet.component';
+import { Subscription } from 'rxjs';
+import { AuthService } from '../../services/auth.service';
+import { FirebaseService } from '../../services/firebase.service';
+import { Auth } from '@angular/fire/auth';
+import { User } from '../../../../models/user.class';
 
 @Component({
   selector: 'app-header-mobile',
   standalone: true,
-  imports: [
-    BottomSheetComponent
-  ],
+  imports: [BottomSheetComponent],
   templateUrl: './header-mobile.component.html',
-  styleUrl: './header-mobile.component.scss'
+  styleUrl: './header-mobile.component.scss',
 })
-// export class HeaderMobileComponent {
-//   constructor(private _bottomSheet: MatBottomSheet) {}
-//
-//   openBottomSheet(): void {
-//     this._bottomSheet.open(BottomSheetComponent);
-//   }
-// }
-
-export class HeaderMobileComponent implements OnInit, OnDestroy {
-  private authSubscription: Subscription | undefined;
-  userAvatarUrl: string = 'assets/img/characters/character_FrederikBeck.svg'; // Standardavatar
+export class HeaderMobileComponent implements OnInit {
+  userAvatarUrl: string = 'assets/img/characters/character_FrederikBeck.svg';
   firestore = inject(FirebaseService);
   firebaseAuth = inject(Auth);
   authService = inject(AuthService);
-  loggedInUser = this.firebaseAuth.currentUser?.uid;
   user: User = new User();
-  // message: string | undefined;
-  activeUser = this.firestore.getSingleUser()
 
-  constructor(private _bottomSheet: MatBottomSheet) { //, private data: DataService
-  }
+  constructor(private _bottomSheet: MatBottomSheet) {}
 
   ngOnInit(): void {
-    console.log(this.authService.currentUserSig());
-    console.log(this.firebaseAuth.currentUser?.displayName);
-    console.log(this.firebaseAuth.currentUser?.uid);
-    console.log(this.loggedInUser);
 
-    // this.data.currentMessage.subscribe(message => this.message = message);
+    console.log(this.authService.user.email);
 
-    if (this.loggedInUser) {
-      this.getItemValues('users', this.loggedInUser);
-    }
 
-    this.authSubscription = this.authService.currentUser$.subscribe(user => {
-      if (user) {
-        this.userAvatarUrl = this.user.avatar || this.userAvatarUrl; // Verwende den Benutzeravatar, wenn vorhanden
-      }
-    });
 
-    // this.firestore.subSingleUser();
-    // console.log(this.firestore.user);
-
-    console.log(this.firestore.activeUser[0]);
-    this.authSubscription = this.authService.currentUser$.subscribe(user => {
-      if (user && user.avatar) {
-        this.userAvatarUrl = user.avatar; // Avatar des Benutzers aktualisieren
-      } else {
-        this.userAvatarUrl = 'assets/img/characters/character_FrederikBeck.svg'; // Standardavatar setzen
-      }
-    });
-
-    console.log(this.activeUser);
+    // this.test();
+    // if (this.authService.activeUserAccount) {
+    //   let id = this.authService.activeUserAccount.uid;
+    //   this.getItemValues('users', id);
+    //   console.log(id);
+    // }
   }
 
-
-  ngOnDestroy(): void {
-    this.authSubscription!.unsubscribe(); // Verhindere Memory Leaks
+  async test() {
+    await this.authService.activeUserAccount; // Warte auf das Ergebnis, falls asynchron
+    if (this.authService.activeUserAccount) {
+      let id = this.authService.activeUserAccount.uid;
+      this.getItemValues('users', id);
+      console.log(id);
+    }
   }
 
   openBottomSheet(): void {
@@ -83,10 +51,13 @@ export class HeaderMobileComponent implements OnInit, OnDestroy {
   }
 
   getItemValues(collection: string, itemID: string) {
+    console.log('1');
+
     this.firestore.getSingleItemData(collection, itemID, () => {
       // return
-      // this.user = new User(this.firestore.user);
-      // console.log('Avatar: ' + this.user.avatar);
+      console.log('2');
+      this.user = new User(this.firestore.user);
+      console.log('Avatar: ' + this.user.avatar);
     });
   }
 }
