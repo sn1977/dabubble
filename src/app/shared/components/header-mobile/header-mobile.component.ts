@@ -41,34 +41,34 @@ export class HeaderMobileComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // console.log(this.authService.currentUserSig());
-    // console.log(this.firebaseAuth.currentUser?.displayName);
-    // console.log(this.firebaseAuth.currentUser?.uid);
-    // console.log(this.loggedInUser);
-    //
-    // // this.data.currentMessage.subscribe(message => this.message = message);
-    //
-    // if (this.loggedInUser) {
-    //   this.getItemValues('users', this.loggedInUser);
-    // }
-    //
-    // this.authSubscription = this.authService.currentUser$.subscribe(user => {
-    //   if (user) {
-    //     this.userAvatarUrl = this.user.avatar || this.userAvatarUrl; // Verwende den Benutzeravatar, wenn vorhanden
-    //   }
-    // });
+    console.log(this.authService.currentUserSig());
+    console.log(this.firebaseAuth.currentUser?.displayName);
+    console.log(this.firebaseAuth.currentUser?.uid);
+    console.log(this.loggedInUser);
+
+    // this.data.currentMessage.subscribe(message => this.message = message);
+
+    if (this.loggedInUser) {
+      this.getItemValues('users', this.loggedInUser);
+    }
+
+    this.authSubscription = this.authService.currentUser$.subscribe(user => {
+      if (user) {
+        this.userAvatarUrl = this.user.avatar || this.userAvatarUrl; // Verwende den Benutzeravatar, wenn vorhanden
+      }
+    });
 
     // this.firestore.subSingleUser();
     // console.log(this.firestore.user);
 
-    // console.log(this.firestore.activeUser[0]);
-    // this.authSubscription = this.authService.currentUser$.subscribe(user => {
-    //   if (user && user.avatar) {
-    //     this.userAvatarUrl = user.avatar; // Avatar des Benutzers aktualisieren
-    //   } else {
-    //     this.userAvatarUrl = 'assets/img/characters/character_FrederikBeck.svg'; // Standardavatar setzen
-    //   }
-    // });
+    console.log(this.firestore.activeUser[0]);
+    this.authSubscription = this.authService.currentUser$.subscribe(user => {
+      if (user && user.avatar) {
+        this.userAvatarUrl = user.avatar; // Avatar des Benutzers aktualisieren
+      } else {
+        this.userAvatarUrl = 'assets/img/characters/character_FrederikBeck.svg'; // Standardavatar setzen
+      }
+    });
 
     console.log(this.activeUser);
   }
