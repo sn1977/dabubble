@@ -1,9 +1,15 @@
-<div class="intro"></div>
+<div class="intro"
+[ngClass]="{'intro-start': playIntroAnimation}"
+></div>
 
 <div class="content">
-  <div class="logo-animated">
+  <div class="logo-animated"
+  [ngClass]="{'logo-animated-start': playIntroAnimation}"
+  >
     <img src="./assets/img/auth/logo.svg" />
-    <span class="logo-name-animated">DABubble</span>
+    <span class="logo-name-animated"
+    [ngClass]="{'logo-name-animated-start': playIntroAnimation}"
+    >DABubble</span>
   </div>
   <mat-card>
     <mat-card-header>

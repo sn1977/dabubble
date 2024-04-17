@@ -29,6 +29,7 @@ import { Router, RouterLink } from '@angular/router';
     FormsModule,
     MatIconModule,
     RouterLink,
+    CommonModule
   ],
   templateUrl: './log-in.component.html',
   styleUrl: './log-in.component.scss',
@@ -53,7 +54,6 @@ export class LogInComponent implements OnInit{
   }
 
   checkForIntroAnimation() {
-
     // kann noch in einen Service für register/send-email/choose-avatar etc.
     setInterval(() => {
       if (this.authService.activeUserAccount) {
