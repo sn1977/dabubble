@@ -53,11 +53,13 @@ export class LogInComponent implements OnInit{
   }
 
   checkForIntroAnimation() {
+
+    // kann noch in einen Service für register/send-email/choose-avatar etc.
     setInterval(() => {
-      if (this.authService.activeUserAccount !== 'null') {      
+      if (this.authService.activeUserAccount) {
         this.router.navigateByUrl('');
       }
-    }, 10);
+    }, 1000);
 
 
     // let now: number = new Date().getTime();

@@ -22,7 +22,7 @@ class AuthGuardService {
     state: RouterStateSnapshot
   ): boolean {    
       
-    if (this.authService.activeUserAccount !== null) {      
+    if (this.authService.activeUserAccount) {
       return true;
     } else {
       this.router.navigateByUrl('/login');
