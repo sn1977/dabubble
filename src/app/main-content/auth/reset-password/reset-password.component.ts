@@ -31,7 +31,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './reset-password.component.html',
   styleUrl: './reset-password.component.scss',
 })
-export class ResetPasswordComponent implements OnInit{
+export class ResetPasswordComponent implements OnInit {
   contactData = {
     password: '',
     confirm_password: '',
@@ -44,8 +44,9 @@ export class ResetPasswordComponent implements OnInit{
   oobCode: string | undefined;
   isDisabled: boolean = true;
   passwordMinLength: number = 6;
+  confirm: boolean = false;
 
-  constructor(private route: ActivatedRoute){ }
+  constructor(private route: ActivatedRoute) {}
 
   checkPasswords() {
     this.isDisabled =
@@ -56,14 +57,17 @@ export class ResetPasswordComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       this.oobCode = params['oobCode'];
     });
   }
 
-  onSubmit(): void {   
-    if(this.oobCode){
-      this.authService.resetPassword(this.oobCode, this.contactData.password);
-    }
+  onSubmit(): void {
+    this.confirm = true;
+    setTimeout(() => {
+      if (this.oobCode) {
+        this.authService.resetPassword(this.oobCode, this.contactData.password);
+      }
+    }, 3500);
   }
 }

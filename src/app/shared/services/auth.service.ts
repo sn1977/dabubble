@@ -184,19 +184,19 @@ export class AuthService {
   resetPassword(actionCode: string, newPassword: string) {
     const auth = getAuth();
     verifyPasswordResetCode(auth, actionCode)
-      .then((email) => {
-        const accountEmail = email;
-
+      .then(() => {
         confirmPasswordReset(auth, actionCode, newPassword)
           .then((resp) => {
-            // show confirmation and go to login-page
+            this.router.navigate(['/login']);
           })
           .catch((error) => {
             console.log('error during confirmation');
+            return error;
           });
       })
       .catch((error) => {
         console.log('invalid code or email');
+        return error;
       });
   }
 }
