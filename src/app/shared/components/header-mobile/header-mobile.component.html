@@ -3,6 +3,15 @@
   <img src="assets/img/mobile-logo.svg" />
   <span class="logo-name">DABubble</span>
 </div>
+
+@for (user of this.firestore.activeUser; track $index) {
+ {{ user.name}}
+ <!-- <br>
+ {{ user.email }}
+ <br>
+ {{ user.avatar }} -->
+}
+
 <!--  {{ firestore.user.avatar }}-->
   <img (click)="openBottomSheet()" [src]="userAvatarUrl">
 </div>

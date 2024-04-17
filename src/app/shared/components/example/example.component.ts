@@ -3,11 +3,15 @@ import { FirebaseService } from '../../services/firebase.service';
 import { User } from '../../../../models/user.class';
 import { ActivatedRoute } from '@angular/router';
 import { Channel } from '../../../../models/channel.class';
+import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
+import { Auth } from '@angular/fire/auth';
+
 
 @Component({
   selector: 'app-example',
   standalone: true,
-  imports: [],
+  imports: [ CommonModule],
   templateUrl: './example.component.html',
   styleUrl: './example.component.scss',
 })
@@ -16,9 +20,10 @@ export class ExampleComponent implements OnInit {
   user: User = new User();
   channel: Channel = new Channel();
   firestore = inject(FirebaseService);
+  firebaseAuth = inject(Auth);
   activeUser: any;
   
-  constructor(private route: ActivatedRoute) {    
+  constructor(private route: ActivatedRoute,private authService: AuthService,) {    
   }
 
   ngOnInit() {    

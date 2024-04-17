@@ -1,14 +1,9 @@
-<p>example works!</p>
-
-
 <p>Wenn collection = user ist</p>
 docID: {{itemID}} <br>
 avatar: {{user.avatar}} <br>
 email: {{user.email}} <br>
 name: {{user.name}} <br>
 isOnline: {{user.isOnline}}
-
-<br>
 <br>
 
 <p>Wenn collection = channels ist</p>
@@ -17,9 +12,6 @@ creator: {{channel.creator}} <br>
 description: {{channel.description}} <br>
 member: {{channel.member}} <br>
 name: {{channel.name}}
-
-
-<br>
 <br>
 
 <p>Aktiver User</p>
@@ -29,21 +21,9 @@ isOnline: {{this.firestore.activeUser.isOnline}} <br>
 name: {{this.firestore.activeUser.name}} <br>
 provider: {{this.firestore.activeUser.provider}} <br>
 docID: {{this.firestore.activeUser.id}} <br>
-
-<br>
 <br>
 
 <p>Aktiver User</p>
-
-<!-- @for (activeUser of this.getAllUserInfos(); track $index) {
-  avatar: {{activeUser.avatar}} <br>
-  email: {{activeUser.email}} <br>
-  isOnline: {{activeUser.isOnline}} <br>
-  name: {{activeUser.name}} <br>
-  provider: {{activeUser.provider}} <br>
-  docID: {{activeUser.id}} <br>
-} -->
-
 @for (activeUser of this.firestore.getSingleUser(); track $index) {
   avatar: {{activeUser.avatar}} <br>
   email: {{activeUser.email}} <br>
@@ -52,3 +32,12 @@ docID: {{this.firestore.activeUser.id}} <br>
   provider: {{activeUser.provider}} <br>
   docID: {{activeUser.id}} <br>
 }
+<br>
+
+<div>{{this.firestore.activeUser | json}}</div>
+<div>{{this.firestore.activeUser[0] | json}}</div>
+<div>{{this.firestore.activeUser[0]}}</div>
+<br>
+
+{{this.firebaseAuth.currentUser?.displayName}}
+{{this.firebaseAuth.currentUser?.uid}}

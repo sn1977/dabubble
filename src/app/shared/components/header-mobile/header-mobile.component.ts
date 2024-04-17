@@ -56,9 +56,10 @@ export class HeaderMobileComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.firestore.subSingleUser();
-    console.log(this.firestore.user);
+    // this.firestore.subSingleUser();
+    // console.log(this.firestore.user);
 
+    // console.log(this.firestore.activeUser[0]);
     // this.authSubscription = this.authService.currentUser$.subscribe(user => {
     //   if (user && user.avatar) {
     //     this.userAvatarUrl = user.avatar; // Avatar des Benutzers aktualisieren
