@@ -11,18 +11,19 @@ import {
   verifyPasswordResetCode,
   confirmPasswordReset,
   GoogleAuthProvider,
-  signInWithPopup,
   signInWithRedirect,
   getAuth,
-  OAuthCredential,
+  setPersistence,
+  browserSessionPersistence,
   authState,
+  getRedirectResult
 } from '@angular/fire/auth';
 import { Observable, from, BehaviorSubject } from 'rxjs';
 import { UserInterface } from '../interfaces/user.interface';
 import { Router } from '@angular/router';
 import { FirebaseService } from './firebase.service';
 import { User } from '../../../models/user.class';
-import { getRedirectResult } from '@firebase/auth';
+// import { getRedirectResult } from '@firebase/auth';
 
 @Injectable({
   providedIn: 'root',
@@ -33,6 +34,7 @@ export class AuthService {
   currentUserSig = signal<UserInterface | null | undefined>(undefined);
   user: User = new User();
   provider = new GoogleAuthProvider();
+  activeUserAccount: any = null;  
 
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
@@ -48,11 +50,18 @@ export class AuthService {
         this.currentUserSubject.next(null);
       }
     });
+
+    this.firebaseAuth.onAuthStateChanged((user) => (this.activeUserAccount = user));
+
   }
 
   googleAuth() {
     const auth = getAuth();
     signInWithRedirect(auth, this.provider);
+  }
+
+  logInUser():void{
+    const auth = getAuth();
   }
 
   resultGoogleAuth() {
@@ -101,7 +110,10 @@ export class AuthService {
     return from(promise);
   }
 
+
+
   login(email: string, password: string): Observable<void> {
+    const auth = getAuth();
     const promise = signInWithEmailAndPassword(
       this.firebaseAuth,
       email,
@@ -120,6 +132,20 @@ export class AuthService {
         this.firebase.updateUser(this.user, this.user.id, 'email');
       }
     });
+    setPersistence(auth, browserSessionPersistence)
+  .then(() => {
+    // Existing and future Auth states are now persisted in the current
+    // session only. Closing the window would clear any existing state even
+    // if a user forgets to sign out.
+    // ...
+    // New sign-in will be persisted with session persistence.
+    return signInWithEmailAndPassword(auth, email, password);
+  })
+  .catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+  });
     return from(promise);
   }
 

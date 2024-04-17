@@ -23,10 +23,11 @@ export class ExampleComponent implements OnInit {
   firebaseAuth = inject(Auth);
   activeUser: any;
   
-  constructor(private route: ActivatedRoute,private authService: AuthService,) {    
-  }
+  constructor(private route: ActivatedRoute,private authService: AuthService,) {}  
 
   ngOnInit() {    
+
+    console.log(this.authService.activeUserAccount.displayName);
 
     this.route.paramMap.subscribe((paramMap) => {
       this.itemID = paramMap.get('id');

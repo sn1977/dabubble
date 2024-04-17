@@ -211,6 +211,7 @@ mat-card {
   background: linear-gradient(#797EF3, #313AE5);
   height: 100vh;
   width: 100%;
+  max-width: 1440px;
   position: absolute;
   z-index: 1;
   opacity: 0;
@@ -246,3 +247,8 @@ mat-card {
     opacity: 0;
   }
 }
+
+// @media 
+// .logo-animated{
+//   max-width: 1440px;
+// }

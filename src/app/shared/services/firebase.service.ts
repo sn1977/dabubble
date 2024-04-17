@@ -25,13 +25,11 @@ export class FirebaseService {
   channelList: any = [];
 
   unsubUsers;
-  unsubChannel;
-  unsubSingleUser;
+  unsubChannel;  
 
   constructor() {
     this.unsubUsers = this.subUserList();
-    this.unsubChannel = this.subChannelList();
-    this.unsubSingleUser = this.subSingleUser();
+    this.unsubChannel = this.subChannelList();    
   }
 
   getUsersRef() {
@@ -64,22 +62,22 @@ export class FirebaseService {
     });
   }
 
-  subSingleUser(){
-    // ID muss noch aus dem localeStorage übergeben werden
-    const docId = '9MacQRd4i2TX9J42mVLBGgVCsPp1'; // Die gewünschte Dokumenten-ID
-    const docRef = doc(this.getUsersRef(), docId);
-    this.activeUser = [];
-    return onSnapshot(docRef, (doc) => {
-      if (doc.exists()) {
-        this.activeUser = [];
-        const userData = doc.data();
-        this.activeUser.push(userData);
-      } else {
-        // Das Dokument existiert nicht
-        console.log("Das Dokument mit der ID", docId, "existiert nicht.");
-      }
-    });
-  }
+  // subSingleUser(){
+  //   // ID muss noch aus dem localeStorage übergeben werden
+  //   const docId = '9MacQRd4i2TX9J42mVLBGgVCsPp1'; // Die gewünschte Dokumenten-ID
+  //   const docRef = doc(this.getUsersRef(), docId);
+  //   this.activeUser = [];
+  //   return onSnapshot(docRef, (doc) => {
+  //     if (doc.exists()) {
+  //       this.activeUser = [];
+  //       const userData = doc.data();
+  //       this.activeUser.push(userData);
+  //     } else {
+  //       // Das Dokument existiert nicht
+  //       console.log("Das Dokument mit der ID", docId, "existiert nicht.");
+  //     }
+  //   });
+  // }
 
   setUserObject(obj: any, id: string): any {
     return {
@@ -164,18 +162,6 @@ export class FirebaseService {
 
   ngonDestroyy() {
     this.unsubUsers();
-    this.unsubChannel();
-    this.unsubSingleUser();
+    this.unsubChannel();    
   }
-
-  // getUserDetails(uid: string): Promise<User> {
-  //   const docRef = doc(this.firestore, 'users', uid);
-  //   return getDoc(docRef).then(docSnapshot => {
-  //     if (docSnapshot.exists()) {
-  //       return new User(docSnapshot.data() as User);
-  //     } else {
-  //       throw new Error('No user found with ID ' + uid);
-  //     }
-  //   });
-  // }
 }
