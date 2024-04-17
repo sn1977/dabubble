@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -15,11 +15,10 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../../shared/services/auth.service';
 import { Router, RouterLink } from '@angular/router';
 
-
 @Component({
   selector: 'app-log-in',
   standalone: true,
-  imports: [    
+  imports: [
     MatCardModule,
     MatDialogModule,
     MatDialogContent,
@@ -29,13 +28,12 @@ import { Router, RouterLink } from '@angular/router';
     MatFormFieldModule,
     FormsModule,
     MatIconModule,
-    RouterLink
+    RouterLink,
   ],
   templateUrl: './log-in.component.html',
-  styleUrl: './log-in.component.scss'
+  styleUrl: './log-in.component.scss',
 })
-export class LogInComponent {  
-
+export class LogInComponent implements OnInit{
   contactData = {
     name: '',
     email: '',
@@ -43,15 +41,25 @@ export class LogInComponent {
   };
   http = inject(HttpClient);
   authService = inject(AuthService);
-  router = inject(Router);  
+  router = inject(Router);
   errorMessage: string | null = null;
   playIntroAnimation: boolean = true;
 
-  constructor(){    
+  constructor() {
     this.checkForIntroAnimation();
+  }  
+  
+  ngOnInit(): void {
   }
 
-  checkForIntroAnimation(){
+  checkForIntroAnimation() {
+    setInterval(() => {
+      if (this.authService.activeUserAccount !== 'null') {      
+        this.router.navigateByUrl('');
+      }
+    }, 10);
+
+
     // let now: number = new Date().getTime();
     // let lastAnimation: number = new Date().getTime();
     // if()
@@ -59,10 +67,7 @@ export class LogInComponent {
 
   onSubmit(): void {
     this.authService
-      .login(
-        this.contactData.email,
-        this.contactData.password
-      )
+      .login(this.contactData.email, this.contactData.password)
       .subscribe({
         next: () => {
           this.router.navigateByUrl('/');
@@ -70,7 +75,7 @@ export class LogInComponent {
         error: (err) => {
           this.errorMessage = err.code;
         },
-    });
+      });
   }
 
   logout(): void {
@@ -78,8 +83,7 @@ export class LogInComponent {
     this.authService.logout();
   }
 
-  signInWithGoogleRedirect(){
+  signInWithGoogleRedirect() {
     this.authService.googleAuth();
   }
-
 }

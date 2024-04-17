@@ -6,42 +6,28 @@ import {
   CanActivateFn,
 } from '@angular/router';
 import { AuthService } from './auth.service';
-import { getAuth } from '@angular/fire/auth';
 
 export
 @Injectable({
   providedIn: 'root',
 })
 class AuthGuardService {
-  //authService = inject(AuthService);
+  authService = inject(AuthService);
   //router = inject(Router);
   
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private router: Router) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean {    
-    
-    //https://stackoverflow.com/questions/77844746/angular-how-to-resolve-canactivate-deprecated-in-angular-15-using-auth-guard
-
-    const auth = getAuth();
-    const user = auth.currentUser;
-
-    if (user) {
+      
+    if (this.authService.activeUserAccount !== null) {      
       return true;
     } else {
+      this.router.navigateByUrl('/login');
       return false;
     }
-    
-    // if (this.authService.currentUserSig()?.username != null) {
-    //   console.log(this.authService.currentUserSig()?.username);      
-    //   return true;
-    // } else {      
-    //   console.log(this.authService.currentUserSig()?.username);
-    //   this.router.navigateByUrl('/login');
-    //   return false;
-    // }
   }
 }
 export const IsAdminGuard: CanActivateFn = (
