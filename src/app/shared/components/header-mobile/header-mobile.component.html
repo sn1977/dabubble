@@ -5,7 +5,11 @@
 </div>
 
 {{this.authService.activeUserAccount?.displayName}}
+<<<<<<< HEAD
 
 <!--  {{ firestore.user.avatar }}-->
   <img (click)="openBottomSheet()" [src]="userAvatarUrl">
+=======
+  <img class="header-img" (click)="openBottomSheet()" src="{{user.avatar}}">
+>>>>>>> 4dfbaecde041f74776e9be61376fabb125977feb
 </div>

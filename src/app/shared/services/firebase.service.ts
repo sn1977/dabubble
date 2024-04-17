@@ -25,11 +25,11 @@ export class FirebaseService {
   channelList: any = [];
 
   unsubUsers;
-  unsubChannel;  
+  unsubChannel;
 
   constructor() {
     this.unsubUsers = this.subUserList();
-    this.unsubChannel = this.subChannelList();    
+    this.unsubChannel = this.subChannelList();
   }
 
   getUsersRef() {
@@ -160,8 +160,9 @@ export class FirebaseService {
     );
   }
 
+
   ngonDestroyy() {
     this.unsubUsers();
-    this.unsubChannel();    
+    this.unsubChannel();
   }
 }

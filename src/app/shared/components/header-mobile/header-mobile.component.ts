@@ -24,27 +24,26 @@ export class HeaderMobileComponent implements OnInit {
   constructor(private _bottomSheet: MatBottomSheet) {}
 
   async ngOnInit(): Promise<void> {
-    console.log(this.authService.user.email);
     await this.waitForUserData();
     this.test();
   }
-  
+
   async waitForUserData(): Promise<void> {
     while (!this.authService.activeUserAccount) {
       await this.delay(100); // Wartezeit in Millisekunden, bevor erneut überprüft wird
     }
   }
-  
+
   delay(ms: number): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
-  
+
   test() {
     let id = this.authService.activeUserAccount.uid;
     console.log(id); // Stelle sicher, dass id definiert ist, bevor du darauf zugreifst
     this.getItemValues('users', id);
   }
-  
+
 
   openBottomSheet(): void {
     this._bottomSheet.open(BottomSheetComponent);
