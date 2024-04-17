@@ -87,12 +87,16 @@ mat-card {
           .selection {            
             width: 56px;
             height: 56px;
-            padding: 4px;
   
             img {
               width: 48px; 
               height: 48px;
               border-radius: 41px;
+              border: 4px solid transparent;
+
+              &:hover{
+                border: 4px solid #eceefe;
+              }
             }
           }
         }
