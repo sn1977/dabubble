@@ -31,11 +31,12 @@ export class HeaderMobileComponent implements OnInit, OnDestroy {
   userAvatarUrl: string = 'assets/img/characters/character_FrederikBeck.svg'; // Standardavatar
   firestore = inject(FirebaseService);
   firebaseAuth = inject(Auth);
+  authService = inject(AuthService);
   loggedInUser = this.firebaseAuth.currentUser?.uid;
   user: User = new User();
   // message: string | undefined;
 
-  constructor(private authService: AuthService, private _bottomSheet: MatBottomSheet) { //, private data: DataService
+  constructor(private _bottomSheet: MatBottomSheet) { //, private data: DataService
   }
 
   ngOnInit(): void {
