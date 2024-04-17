@@ -70,7 +70,7 @@ export class AuthService {
           this.user.email = user.email ?? this.user.email;
           this.user.displayName = user.displayName ?? this.user.displayName;
           this.user.provider = 'google';
-          this.firebase.updateUser(this.user, this.user.id, 'google');          
+          this.firebase.updateUser(this.user, this.user.id, 'google');
         }
       })
       .catch((error) => {
@@ -92,33 +92,32 @@ export class AuthService {
     email: string,
     username: string,
     password: string,
-    photoURL: string,
+    photoURL: string
   ): Observable<void> {
     const promise = createUserWithEmailAndPassword(
       this.firebaseAuth,
       email,
       password
     ).then((response) => {
-      updateProfile(response.user, { displayName: username, photoURL: photoURL });
+      updateProfile(response.user, {
+        displayName: username,
+        photoURL: photoURL,
+      });
       const currentUser = this.firebaseAuth.currentUser;
 
-      console.log(currentUser);
-      
-
-      // if (currentUser) {
-      //   this.user.id = currentUser.uid ?? this.user.id;
-      //   this.user.avatar = currentUser.photoURL ?? this.user.avatar;
-      //   this.user.email = currentUser.email ?? this.user.email;
-      //   this.user.displayName = username ?? this.user.displayName;
-      //   this.user.provider = 'email';
-      //   this.firebase.updateUser(this.user, this.user.id, 'register');
-      // }
+      if (currentUser) {
+        this.user.id = currentUser.uid ?? this.user.id;
+        this.user.avatar = photoURL ?? this.user.avatar;
+        this.user.email = currentUser.email ?? this.user.email;
+        this.user.displayName = username ?? this.user.displayName;
+        this.user.provider = 'email';
+        this.firebase.updateUser(this.user, this.user.id, 'register');
+      }
     });
     return from(promise);
   }
 
   login(email: string, password: string): Observable<void> {
-    const auth = getAuth();
     const promise = signInWithEmailAndPassword(
       this.firebaseAuth,
       email,
@@ -127,13 +126,9 @@ export class AuthService {
       const currentUser = this.firebaseAuth.currentUser;
       if (currentUser) {
         this.user.id = currentUser.uid ?? this.user.id;
-
-        // Todo - Wert erst aus DB holen! anhand currentUser.uid
-   //     this.user.avatar = currentUser.photoURL ?? this.user.avatar;
-        // Überprüfe, ob currentUser.photoURL vorhanden ist und ob der avatar-Wert des Benutzers bereits gesetzt ist
-  if (currentUser.photoURL && !this.user.avatar) {
-    this.user.avatar = currentUser.photoURL;
-  }
+        if (currentUser.photoURL) {
+          this.user.avatar = currentUser.photoURL;
+        }
         this.user.email = currentUser.email ?? this.user.email;
         this.user.displayName =
           currentUser.displayName ?? this.user.displayName;
