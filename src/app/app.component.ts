@@ -34,7 +34,13 @@ export class AppComponent implements OnInit{
   showInfos(){
 
     setInterval(() => {
-      console.log(this.authService.activeUserAccount);      
+
+      if(this.authService.activeUserAccount){
+        console.log(this.authService.activeUserAccount);
+      } else {
+        console.log('no active user');        
+      }
+
     }, 20000);
 
   }

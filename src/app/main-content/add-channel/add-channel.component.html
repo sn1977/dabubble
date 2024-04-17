@@ -40,7 +40,7 @@
                         <div class="dropdown">
                             @for (user of this.firestore.getUsers(); track $index) {
                                 <ul *ngIf="showDropdown" class="dropdown-list">
-                                    <li>{{user.name}}</li>
+                                    <li>{{user.displayName}}</li>
                                   </ul>
                                 }
                         </div>
