@@ -23,8 +23,6 @@
     <mat-card-content class="card-content">
       @if(errorMessage){
       <div class="required">{{ errorMessage }}</div>
-      <!-- auth/email-already-in-use -->
-      <!-- auth/user-disabled -->
       }
 
       <form (ngSubmit)="onSubmit()" #contactForm="ngForm" ngNativeValidate>

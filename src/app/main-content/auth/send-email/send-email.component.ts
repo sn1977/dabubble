@@ -49,6 +49,5 @@ export class SendEmailComponent {
     setTimeout(() => {
       this.router.navigate(['/login']);
     }, 3500);
-
   }
 }

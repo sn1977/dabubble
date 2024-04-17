@@ -46,6 +46,7 @@ export class ChooseAvatarComponent {
   confirm: boolean = false;
 
   onSubmit(): void {
+
     if (this.contactData.photoURL) {
       this.authService
         .register(
@@ -56,11 +57,9 @@ export class ChooseAvatarComponent {
         )
         .subscribe({
           next: () => {
-            this.confirm = true;
-
+            this.confirm = true;            
             setTimeout(() => {
               this.authService.logout();
-              this.router.navigateByUrl('/login');
             }, 3500);
           },
           error: (err) => {

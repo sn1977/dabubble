@@ -15,14 +15,14 @@ import {
   getAuth,
   setPersistence,
   browserSessionPersistence,
-  authState,  
+  authState,
+  getRedirectResult,
 } from '@angular/fire/auth';
 import { Observable, from, BehaviorSubject } from 'rxjs';
 import { UserInterface } from '../interfaces/user.interface';
 import { Router } from '@angular/router';
 import { FirebaseService } from './firebase.service';
 import { User } from '../../../models/user.class';
-import { getRedirectResult } from '@firebase/auth';
 @Injectable({
   providedIn: 'root',
 })
@@ -78,15 +78,15 @@ export class AuthService {
         const errorCode = error.code;
         const errorMessage = error.message;
       });
-      // setPersistence(auth, browserSessionPersistence)
-      // .then(() => {        
-      //   return signInWithRedirect(auth, this.provider);
-      // })
-      // .catch((error) => {        
-      //   const errorCode = error.code;
-      //   const errorMessage = error.message;
-      // });
-      // this.showInformations();
+    // setPersistence(auth, browserSessionPersistence)
+    // .then(() => {
+    //   return signInWithRedirect(auth, this.provider);
+    // })
+    // .catch((error) => {
+    //   const errorCode = error.code;
+    //   const errorMessage = error.message;
+    // });
+    // this.showInformations();
   }
 
   register(
@@ -128,28 +128,29 @@ export class AuthService {
         // Todo - Wert erst aus DB holen! anhand currentUser.uid
         this.user.avatar = currentUser.photoURL ?? this.user.avatar;
         this.user.email = currentUser.email ?? this.user.email;
-        this.user.displayName = currentUser.displayName ?? this.user.displayName;
+        this.user.displayName =
+          currentUser.displayName ?? this.user.displayName;
         this.user.isOnline = true;
         this.user.provider = 'email';
         this.firebase.updateUser(this.user, this.user.id, 'email');
       }
     });
-    
-// setPersistence(auth, browserSessionPersistence)
-//   .then(() => {
-//     // Existing and future Auth states are now persisted in the current
-//     // session only. Closing the window would clear any existing state even
-//     // if a user forgets to sign out.
-//     // ...
-//     // New sign-in will be persisted with session persistence.
-//     return signInWithEmailAndPassword(auth, email, password);
-//   })
-//   .catch((error) => {
-//     // Handle Errors here.
-//     const errorCode = error.code;
-//     const errorMessage = error.message;
-//   });
-      
+
+    // setPersistence(auth, browserSessionPersistence)
+    //   .then(() => {
+    //     // Existing and future Auth states are now persisted in the current
+    //     // session only. Closing the window would clear any existing state even
+    //     // if a user forgets to sign out.
+    //     // ...
+    //     // New sign-in will be persisted with session persistence.
+    //     return signInWithEmailAndPassword(auth, email, password);
+    //   })
+    //   .catch((error) => {
+    //     // Handle Errors here.
+    //     const errorCode = error.code;
+    //     const errorMessage = error.message;
+    //   });
+
     return from(promise);
   }
 
@@ -178,42 +179,22 @@ export class AuthService {
     return from(promise);
   }
 
-  resetPassword(oobCode: string, password: string) {
-    console.log('password reset: ', oobCode, password);
+  resetPassword(actionCode: string, newPassword: string) {
+    const auth = getAuth();
+    verifyPasswordResetCode(auth, actionCode)
+      .then((email) => {
+        const accountEmail = email;
 
-    //     import { verifyPasswordResetCode, confirmPasswordReset } from "firebase/auth";
-
-    // function handleResetPassword(auth, actionCode, continueUrl, lang) {
-    //   // Localize the UI to the selected language as determined by the lang
-    //   // parameter.
-
-    //   // Verify the password reset code is valid.
-    //   verifyPasswordResetCode(auth, actionCode).then((email) => {
-    //     const accountEmail = email;
-
-    //     // TODO: Show the reset screen with the user's email and ask the user for
-    //     // the new password.
-    //     const newPassword = "...";
-
-    //     // Save the new password.
-    //     confirmPasswordReset(auth, actionCode, newPassword).then((resp) => {
-    //       // Password reset has been confirmed and new password updated.
-
-    //       // TODO: Display a link back to the app, or sign-in the user directly
-    //       // if the page belongs to the same domain as the app:
-    //       // auth.signInWithEmailAndPassword(accountEmail, newPassword);
-
-    //       // TODO: If a continue URL is available, display a button which on
-    //       // click redirects the user back to the app via continueUrl with
-    //       // additional state determined from that URL's parameters.
-    //     }).catch((error) => {
-    //       // Error occurred during confirmation. The code might have expired or the
-    //       // password is too weak.
-    //     });
-    //   }).catch((error) => {
-    //     // Invalid or expired action code. Ask user to try to reset the password
-    //     // again.
-    //   });
-    // }
+        confirmPasswordReset(auth, actionCode, newPassword)
+          .then((resp) => {
+            // show confirmation and go to login-page
+          })
+          .catch((error) => {
+            console.log('error during confirmation');
+          });
+      })
+      .catch((error) => {
+        console.log('invalid code or email');
+      });
   }
 }

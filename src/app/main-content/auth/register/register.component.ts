@@ -46,12 +46,10 @@ export class RegisterComponent {
   };
   
   router = inject(Router);
-
   errorMessage: string | null = null;
   updateContactData: any;
 
-  onSubmit(): void {
-    
+  onSubmit(): void {    
     if (this.contactData.name && this.contactData.email && this.contactData.password) {      
       this.showAvatarComponent = true
     }
