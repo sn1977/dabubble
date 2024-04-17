@@ -24,26 +24,26 @@ export class HeaderMobileComponent implements OnInit {
   constructor(private _bottomSheet: MatBottomSheet) {}
 
   ngOnInit(): void {
-
     console.log(this.authService.user.email);
-
-
-
-    // this.test();
-    // if (this.authService.activeUserAccount) {
-    //   let id = this.authService.activeUserAccount.uid;
-    //   this.getItemValues('users', id);
-    //   console.log(id);
-    // }
+    this.test();
   }
+  
+   test() {
+   
 
-  async test() {
-    await this.authService.activeUserAccount; // Warte auf das Ergebnis, falls asynchron
-    if (this.authService.activeUserAccount) {
-      let id = this.authService.activeUserAccount.uid;
+    setInterval(() => {
+
+      if(this.authService.activeUserAccount){
+        let id = this.authService.activeUserAccount.uid;
+      console.log(id); // Stelle sicher, dass id definiert ist, bevor du darauf zugreifst
       this.getItemValues('users', id);
-      console.log(id);
-    }
+        
+      } else {
+        console.log('no active user');        
+      }
+
+    }, 2000);
+
   }
 
   openBottomSheet(): void {
