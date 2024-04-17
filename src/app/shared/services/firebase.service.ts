@@ -84,7 +84,7 @@ export class FirebaseService {
       id: id,
       avatar: obj.avatar,
       email: obj.email,
-      name: obj.name,
+      displayName: obj.displayName,
       isOnline: obj.isOnline,
       provider: obj.provider,
     };

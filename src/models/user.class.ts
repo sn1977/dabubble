@@ -2,14 +2,14 @@ export class User {
   id?: string;
   avatar?: string;
   email: string;
-  name: string;
+  displayName: string;
   isOnline: boolean;
   provider: string;
 
   constructor(obj?: any) {
     this.avatar = obj ? obj.avatar : '';
     this.email = obj ? obj.email : '';
-    this.name = obj ? obj.name : '';
+    this.displayName = obj ? obj.displayName : '';
     this.isOnline = obj ? obj.isOnline : true;
     this.provider = obj ? obj.provider : '';
   }
@@ -18,7 +18,7 @@ export class User {
     return {
       avatar: this.avatar,
       email: this.email,
-      name: this.name,
+      displayName: this.displayName,
       isOnline: this.isOnline,
       provider: this.provider,
     };

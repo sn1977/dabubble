@@ -7,12 +7,12 @@
     </div>
   </div>
   <div class="img-container">
-    <img mat-card-image [src]="data.user.avatar" alt="{{ data.user.name }}">
+    <img mat-card-image [src]="data.user.avatar" alt="{{ data.user.displayName }}">
   </div>
   <mat-card-content>
     <div>
       <div class="user">
-        <span>{{ data.user.name }}</span>
+        <span>{{ data.user.displayName }}</span>
         <div class="edit-icon" (click)="openEditProfileCard()">
           <img ngSrc="assets/img/icon/edit.png" class="default-img" height="24" width="24">
           <img ngSrc="assets/img/icon/edit_color.png" class="hover-img" style="display: none" height="24" width="24">

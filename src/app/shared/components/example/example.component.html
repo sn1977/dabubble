@@ -2,7 +2,7 @@
 docID: {{itemID}} <br>
 avatar: {{user.avatar}} <br>
 email: {{user.email}} <br>
-name: {{user.name}} <br>
+name: {{user.displayName}} <br>
 isOnline: {{user.isOnline}}
 <br>
 
@@ -18,7 +18,7 @@ name: {{channel.name}}
 avatar: {{this.firestore.activeUser.avatar}} <br>
 email: {{this.firestore.activeUser.email}} <br>
 isOnline: {{this.firestore.activeUser.isOnline}} <br>
-name: {{this.firestore.activeUser.name}} <br>
+name: {{this.firestore.activeUser.displayName}} <br>
 provider: {{this.firestore.activeUser.provider}} <br>
 docID: {{this.firestore.activeUser.id}} <br>
 <br>
@@ -28,7 +28,7 @@ docID: {{this.firestore.activeUser.id}} <br>
   avatar: {{activeUser.avatar}} <br>
   email: {{activeUser.email}} <br>
   isOnline: {{activeUser.isOnline}} <br>
-  name: {{activeUser.name}} <br>
+  name: {{activeUser.displayName}} <br>
   provider: {{activeUser.provider}} <br>
   docID: {{activeUser.id}} <br>
 }

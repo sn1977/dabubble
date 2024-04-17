@@ -25,10 +25,7 @@ export class ExampleComponent implements OnInit {
   
   constructor(private route: ActivatedRoute,private authService: AuthService,) {}  
 
-  ngOnInit() {    
-
-    console.log(this.authService.activeUserAccount.displayName);
-
+  ngOnInit() {
     this.route.paramMap.subscribe((paramMap) => {
       this.itemID = paramMap.get('id');
 

@@ -28,6 +28,7 @@ export class AppComponent implements OnInit{
   firestore = inject(FirebaseService);
 
   ngOnInit(): void {
+
     this.authService.user$.subscribe(user => {
       if(user){
         this.authService.currentUserSig.set({

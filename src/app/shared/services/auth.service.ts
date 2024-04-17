@@ -15,16 +15,14 @@ import {
   getAuth,
   setPersistence,
   browserSessionPersistence,
-  authState,
-  getRedirectResult
+  authState,  
 } from '@angular/fire/auth';
 import { Observable, from, BehaviorSubject } from 'rxjs';
 import { UserInterface } from '../interfaces/user.interface';
 import { Router } from '@angular/router';
 import { FirebaseService } from './firebase.service';
 import { User } from '../../../models/user.class';
-// import { getRedirectResult } from '@firebase/auth';
-
+import { getRedirectResult } from '@firebase/auth';
 @Injectable({
   providedIn: 'root',
 })
@@ -34,7 +32,7 @@ export class AuthService {
   currentUserSig = signal<UserInterface | null | undefined>(undefined);
   user: User = new User();
   provider = new GoogleAuthProvider();
-  activeUserAccount: any = null;  
+  activeUserAccount: any = null;
 
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
@@ -51,17 +49,15 @@ export class AuthService {
       }
     });
 
-    this.firebaseAuth.onAuthStateChanged((user) => (this.activeUserAccount = user));
-
+    this.firebaseAuth.onAuthStateChanged(
+      (user) => (this.activeUserAccount = user, console.log(this.activeUserAccount)
+      )
+    );
   }
 
   googleAuth() {
     const auth = getAuth();
     signInWithRedirect(auth, this.provider);
-  }
-
-  logInUser():void{
-    const auth = getAuth();
   }
 
   resultGoogleAuth() {
@@ -73,7 +69,7 @@ export class AuthService {
           this.user.id = user.uid ?? this.user.id;
           this.user.avatar = user.photoURL ?? this.user.avatar;
           this.user.email = user.email ?? this.user.email;
-          this.user.name = user.displayName ?? this.user.name;
+          this.user.displayName = user.displayName ?? this.user.displayName;
           this.user.provider = 'google';
           this.firebase.updateUser(this.user, this.user.id, 'google');
           this.router.navigateByUrl('/');
@@ -83,6 +79,15 @@ export class AuthService {
         const errorCode = error.code;
         const errorMessage = error.message;
       });
+      // setPersistence(auth, browserSessionPersistence)
+      // .then(() => {        
+      //   return signInWithRedirect(auth, this.provider);
+      // })
+      // .catch((error) => {        
+      //   const errorCode = error.code;
+      //   const errorMessage = error.message;
+      // });
+      // this.showInformations();
   }
 
   register(
@@ -102,7 +107,7 @@ export class AuthService {
         this.user.id = currentUser.uid ?? this.user.id;
         this.user.avatar = photoURL ?? this.user.avatar;
         this.user.email = currentUser.email ?? this.user.email;
-        this.user.name = username ?? this.user.name;
+        this.user.displayName = username ?? this.user.displayName;
         this.user.provider = 'email';
         this.firebase.updateUser(this.user, this.user.id, 'register');
       }
@@ -110,14 +115,12 @@ export class AuthService {
     return from(promise);
   }
 
-
-
   login(email: string, password: string): Observable<void> {
     const auth = getAuth();
     const promise = signInWithEmailAndPassword(
       this.firebaseAuth,
       email,
-      password,
+      password
     ).then(() => {
       const currentUser = this.firebaseAuth.currentUser;
       if (currentUser) {
@@ -126,13 +129,14 @@ export class AuthService {
         // Todo - Wert erst aus DB holen! anhand currentUser.uid
         this.user.avatar = currentUser.photoURL ?? this.user.avatar;
         this.user.email = currentUser.email ?? this.user.email;
-        this.user.name = currentUser.displayName ?? this.user.name;
+        this.user.displayName = currentUser.displayName ?? this.user.displayName;
         this.user.isOnline = true;
         this.user.provider = 'email';
         this.firebase.updateUser(this.user, this.user.id, 'email');
       }
     });
-    setPersistence(auth, browserSessionPersistence)
+    
+setPersistence(auth, browserSessionPersistence)
   .then(() => {
     // Existing and future Auth states are now persisted in the current
     // session only. Closing the window would clear any existing state even
@@ -146,6 +150,7 @@ export class AuthService {
     const errorCode = error.code;
     const errorMessage = error.message;
   });
+      
     return from(promise);
   }
 
@@ -155,7 +160,7 @@ export class AuthService {
       this.user.id = currentUser.uid ?? this.user.id;
       // this.user.avatar = currentUser.photoURL ?? this.user.avatar;
       // this.user.email = currentUser.email ?? this.user.email;
-      // this.user.name = currentUser.displayName ?? this.user.name;
+      // this.user.displayName = currentUser.displayName ?? this.user.displayName;
       this.user.isOnline = false;
       this.firebase.updateUser(this.user, this.user.id, 'logout');
     }
