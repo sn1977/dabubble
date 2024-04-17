@@ -82,4 +82,10 @@ export class ChannelEditionComponent implements OnInit {
     });
   }
 
+  openChannel (event: MouseEvent, path: string) {
+    const docRefId = (event.currentTarget as HTMLElement).id;
+    console.log('Öffne Collection ' + path + ' mit ID: ' + docRefId);
+    this.router.navigate(['/' + path + '/' + docRefId]);
+  }
+
 }
