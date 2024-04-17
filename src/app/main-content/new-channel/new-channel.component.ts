@@ -8,6 +8,8 @@ import {ActivatedRoute} from '@angular/router';
 import { User } from '../../../models/user.class';
 import { NavigationService } from '../../shared/services/navigation.service';
 import {NgForOf, NgIf} from '@angular/common';
+import { AuthService } from '../../shared/services/auth.service';
+import { Auth } from '@angular/fire/auth';
 
 
 @Component({
@@ -24,12 +26,40 @@ export class NewChannelComponent implements OnInit  {
   user: User = new User();
   channel: Channel = new Channel();
   channelList: any = [];
+  firebaseAuth = inject(Auth);
+  authService = inject(AuthService);
 
   constructor(
     private _bottomSheet: MatBottomSheet, 
     private route: ActivatedRoute,
     public navigationService: NavigationService){
     
+  }
+
+  async ngOnInit(): Promise<void> {
+    await this.waitForUserData();
+    this.test();
+
+    this.route.paramMap.subscribe((paramMap) => {
+      this.itemID = paramMap.get('id');
+      this.getItemValues('channels', this.itemID);
+    });
+  }
+
+  async waitForUserData(): Promise<void> {
+    while (!this.authService.activeUserAccount) {
+      await this.delay(100); // Wartezeit in Millisekunden, bevor erneut überprüft wird
+    }
+  }
+
+  delay(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  test() {
+    let id = this.authService.activeUserAccount.uid;
+    console.log(id); // Stelle sicher, dass id definiert ist, bevor du darauf zugreifst
+    this.getItemValuesProfile('users', id);
   }
 
   
@@ -59,12 +89,6 @@ export class NewChannelComponent implements OnInit  {
         this._bottomSheet.open(BottomSheetComponent);
       }
 
-      ngOnInit() {
-        this.route.paramMap.subscribe((paramMap) => {
-          this.itemID = paramMap.get('id');
-          this.getItemValues('channels', this.itemID);
-        });
-      }
     
       getItemValues(collection: string, itemID: string) {
         this.firestore.getSingleItemData(collection, itemID, () => {
@@ -76,6 +100,13 @@ export class NewChannelComponent implements OnInit  {
         const docRefId = (event.currentTarget as HTMLElement).id;
         console.log('Öffne Collection ' + path + ' mit ID: ' + docRefId);
         this.router.navigate(['/' + path + '/' + docRefId]);
+      }
+
+      getItemValuesProfile(collection: string, itemID: string) {
+        this.firestore.getSingleItemData(collection, itemID, () => {
+          this.user = new User(this.firestore.user);
+          console.log('Avatar: ' + this.user.avatar);
+        });
       }
 }
 

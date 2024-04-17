@@ -5,7 +5,8 @@
             <img src="./../../assets/img/icon/Property 1=Default (1).svg" alt="">
         </div>
         <div>
-            <img src="./../../assets/img/characters/character_FrederikBeck.svg" alt="" (click)="openBottomSheet()">
+            {{this.authService.activeUserAccount?.displayName}}
+            <img class="header-img" (click)="openBottomSheet()" src="{{user.avatar}}">
         </div>
     </header>
     <main>
