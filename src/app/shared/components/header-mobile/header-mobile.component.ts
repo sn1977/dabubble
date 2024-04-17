@@ -35,27 +35,28 @@ export class HeaderMobileComponent implements OnInit, OnDestroy {
   loggedInUser = this.firebaseAuth.currentUser?.uid;
   user: User = new User();
   // message: string | undefined;
+  activeUser = this.firestore.getSingleUser()
 
   constructor(private _bottomSheet: MatBottomSheet) { //, private data: DataService
   }
 
   ngOnInit(): void {
     // console.log(this.authService.currentUserSig());
-    console.log(this.firebaseAuth.currentUser?.displayName);
-    console.log(this.firebaseAuth.currentUser?.uid);
-    console.log(this.loggedInUser);
-
-    // this.data.currentMessage.subscribe(message => this.message = message);
-
-    if (this.loggedInUser) {
-      this.getItemValues('users', this.loggedInUser);
-    }
-
-    this.authSubscription = this.authService.currentUser$.subscribe(user => {
-      if (user) {
-        this.userAvatarUrl = this.user.avatar || this.userAvatarUrl; // Verwende den Benutzeravatar, wenn vorhanden
-      }
-    });
+    // console.log(this.firebaseAuth.currentUser?.displayName);
+    // console.log(this.firebaseAuth.currentUser?.uid);
+    // console.log(this.loggedInUser);
+    //
+    // // this.data.currentMessage.subscribe(message => this.message = message);
+    //
+    // if (this.loggedInUser) {
+    //   this.getItemValues('users', this.loggedInUser);
+    // }
+    //
+    // this.authSubscription = this.authService.currentUser$.subscribe(user => {
+    //   if (user) {
+    //     this.userAvatarUrl = this.user.avatar || this.userAvatarUrl; // Verwende den Benutzeravatar, wenn vorhanden
+    //   }
+    // });
 
     // this.firestore.subSingleUser();
     // console.log(this.firestore.user);
@@ -69,6 +70,7 @@ export class HeaderMobileComponent implements OnInit, OnDestroy {
     //   }
     // });
 
+    console.log(this.activeUser);
   }
 
 
