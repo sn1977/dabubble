@@ -27,6 +27,18 @@ export class AppComponent implements OnInit{
   authService = inject(AuthService);
   firestore = inject(FirebaseService);
 
+  constructor(){
+    this.showInfos();
+  }
+  
+  showInfos(){
+
+    setInterval(() => {
+      console.log(this.authService.activeUserAccount);      
+    }, 20000);
+
+  }
+
   ngOnInit(): void {
 
     this.authService.user$.subscribe(user => {
