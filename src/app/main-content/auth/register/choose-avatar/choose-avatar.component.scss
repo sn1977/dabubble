@@ -80,6 +80,7 @@ mat-card {
           }
 
           label {
+            @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 0);
             @include btn($h: 49px, $br: 25px, $ptb: 0, $plr: 25px, $c: #444df2, $bgc: transparent, $bgch: #535af1, $ch: #FFF, $fbc: #444DF2);
           }
           input[type="file"]{
