@@ -14,11 +14,12 @@ import { User } from '../../../models/user.class';
   styleUrl: './add-channel.component.scss',
 })
 export class AddChannelComponent  {
-  user: User[] = [];
+  
   filteredUsers: User[] = [];
   showDropdown: boolean = false;
   firestore = inject(FirebaseService);
   router = inject(Router);
+  users: User[] = [];
 
 
 
@@ -31,9 +32,20 @@ export class AddChannelComponent  {
 
   
   loadUsers() {
-    this.user = this.firestore.getUsers(); // Annahme: getUsers gibt ein Array von Benutzerdaten zurück
-    console.log(this.firestore.user.displayName);
-  
+
+    
+    let users = this.firestore.getUsers();
+    for (const user of users) {
+      console.log('ID:', user.id);
+      console.log('Avatar:', user.avatar);
+      console.log('Email:', user.email);
+      console.log('Display Name:', user.displayName);
+      console.log('Is Online:', user.isOnline);
+      console.log('Provider:', user.provider);
+      console.log('-----------------------------------');
+    }
+
+    
   }
 
 
@@ -44,7 +56,7 @@ export class AddChannelComponent  {
       this.filteredUsers = [];
       return;
     }
-    this.filteredUsers = this.user.filter(user =>
+    this.filteredUsers = this.users.filter(user =>
       user.displayName.toLowerCase().includes(searchText.toLowerCase())
     );
   }
