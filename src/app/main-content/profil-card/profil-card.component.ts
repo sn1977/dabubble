@@ -4,6 +4,8 @@ import {MatButtonModule} from '@angular/material/button';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {NgOptimizedImage} from '@angular/common';
 import {EditProfilCardComponent} from '../edit-profil-card/edit-profil-card.component';
+import {user} from '@angular/fire/auth';
+import {User} from '../../../models/user.class';
 
 @Component({
   selector: 'app-profil-card',
@@ -13,9 +15,11 @@ import {EditProfilCardComponent} from '../edit-profil-card/edit-profil-card.comp
   styleUrl: './profil-card.component.scss',
 })
 export class ProfilCardComponent {
-  constructor(public dialogRef: MatDialogRef<ProfilCardComponent>, public dialog: MatDialog) {}
+  constructor(public dialogRef: MatDialogRef<ProfilCardComponent>,
+              public dialog: MatDialog,
+              @Inject(MAT_DIALOG_DATA) public data: { user: User }) {}
 
-  @Inject(MAT_DIALOG_DATA) public data: any
+  // @Inject(MAT_DIALOG_DATA) public data: any
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -34,4 +38,6 @@ export class ProfilCardComponent {
     });
     this.closeProfilCard();
   }
+
+  protected readonly user = user;
 }

@@ -1,6 +1,6 @@
-import {Component, inject, Injectable} from '@angular/core';
+import {Component, Inject, inject, Injectable} from '@angular/core';
 import {MatNavList} from '@angular/material/list';
-import {MatBottomSheetModule, MatBottomSheetRef} from '@angular/material/bottom-sheet';
+import {MAT_BOTTOM_SHEET_DATA, MatBottomSheetModule, MatBottomSheetRef} from '@angular/material/bottom-sheet';
 import {MatListModule} from '@angular/material/list';
 import {MatButtonModule} from '@angular/material/button';
 import {MatLine} from '@angular/material/core';
@@ -11,6 +11,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {AuthService} from '../../shared/services/auth.service';
 import {from, Observable} from 'rxjs';
 import {signOut} from '@angular/fire/auth';
+import {User} from '../../../models/user.class';
 
 @Component({
   selector: 'app-bottom-sheet',
@@ -29,13 +30,17 @@ import {signOut} from '@angular/fire/auth';
 
 export class BottomSheetComponent {
   authService = inject(AuthService);
-  constructor(private _bottomSheetRef: MatBottomSheetRef<BottomSheetComponent>, private dialog: MatDialog) {}
+  user: User = new User();
+  constructor(private _bottomSheetRef: MatBottomSheetRef<BottomSheetComponent>,
+              private dialog: MatDialog,
+              @Inject(MAT_BOTTOM_SHEET_DATA) public data: { user: User }) {}
 
   openProfileCard(): void {
     const dialogRef = this.dialog.open(ProfilCardComponent, {
       minWidth: '398px',
       minHeight: '600px',
       panelClass: 'custom-dialog-container',
+      data: { user: this.data.user }
       // Weitere Konfigurationen nach Bedarf
     });
 

@@ -68,8 +68,12 @@ main {
 }
 
 .profil{
-    height: 50px;
-    border-radius: 60px;
+  /*height: 50px;
+  border-radius: 60px;*/
+  height: 50px;
+  width: 50px;
+  object-fit: cover;
+  border-radius: 100%;
 }
 
 .profil-box{
@@ -89,8 +93,8 @@ main {
 
 .vertical-line {
     width: 1px;
-    height: 25px; 
-    background-color: blue; 
+    height: 25px;
+    background-color: blue;
   }
 
 .send {
@@ -98,7 +102,7 @@ main {
   top: 100px;
   left: 310px;
   cursor: pointer;
-  
+
 }
 
 .display-flex{
@@ -130,8 +134,8 @@ main {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); 
-  z-index: 9999; 
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
 }
 
 
@@ -158,13 +162,13 @@ main {
 }
 
 .add-button {
-  background-color: rgb(104, 104, 104); 
-  border: none; 
+  background-color: rgb(104, 104, 104);
+  border: none;
   border-radius: 20px;
-  color: white; 
-  padding: 10px; 
-  width: 100px; 
-  cursor: pointer; 
+  color: white;
+  padding: 10px;
+  width: 100px;
+  cursor: pointer;
 }
 
 .btn-pos{

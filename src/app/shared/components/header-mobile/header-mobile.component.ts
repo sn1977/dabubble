@@ -46,17 +46,26 @@ export class HeaderMobileComponent implements OnInit {
 
 
   openBottomSheet(): void {
-    this._bottomSheet.open(BottomSheetComponent);
+    // this._bottomSheet.open(BottomSheetComponent);
+
+    const bottomSheetRef = this._bottomSheet.open(BottomSheetComponent, {
+      data: { user: this.user } // Übergabe des Benutzerobjekts an die BottomSheet
+    });
+
+    bottomSheetRef.afterDismissed().subscribe(result => {
+      console.log('Bottom Sheet closed', result);
+      // Hier kannst du weitere Aktionen ausführen, nachdem die Bottom Sheet geschlossen wurde
+    });
   }
 
   getItemValues(collection: string, itemID: string) {
-    console.log('1');
+    // console.log('1');
 
     this.firestore.getSingleItemData(collection, itemID, () => {
       // return
-      console.log('2');
+      // console.log('2');
       this.user = new User(this.firestore.user);
-      console.log('Avatar: ' + this.user.avatar);
+      // console.log('Avatar: ' + this.user.avatar);
     });
   }
 }
