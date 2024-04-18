@@ -34,18 +34,13 @@
                     <br>
                     <input type="checkbox" id="addSpecificMembers" (change)="toggleInputField($event)">
                     <label for="addSpecificMembers">Bestimmte Leute hinzufügen</label>
-                </div>
-                <div *ngIf="showInputField" class="input-container">
-                        <input type="text" class="input-field" placeholder="Leute suchen" (click)="toggleDropdown()">
-                        <div class="dropdown">
-                            @for (user of this.firestore.getUsers(); track $index) {
-                                <ul *ngIf="showDropdown" class="dropdown-list">
-                                    <li>{{user.displayName}}</li>
-                                  </ul>
-                                }
-                        </div>
-                       
-                
+
+                    <!-- Zeige das Inputfeld nur, wenn showInputField true ist -->
+                    <input *ngIf="showInputField" type="text" class="input-field" placeholder="Leute suchen"
+                        (input)="filterUsers($event)">
+                    <ul *ngIf="showInputField">
+                        <li *ngFor="let user of filteredUsers">{{ user }}</li>
+                    </ul>
                 </div>
                 <div class="btn-pos">
                     <button class="add-button" routerLink="/new-channel">Erstellen</button>
