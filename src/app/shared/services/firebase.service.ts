@@ -100,15 +100,7 @@ export class FirebaseService {
     };
   }
 
-  async updateUser(item: User, id: string, process: string) {
-
-    //this.activeUser = [];
-    //this.activeUser.push(this.setUserObject(item, id));
-
-    // TODO
-    // - write uid to localeStorage
-    // - get avatar-img from database and write into item.avatar
-
+  async updateUser(item: User, id: string) {
     await setDoc(doc(this.getUsersRef(), id), item.toJSON());
   }
 

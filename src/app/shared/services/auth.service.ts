@@ -72,7 +72,7 @@ export class AuthService {
           this.user.email = user.email ?? this.user.email;
           this.user.displayName = user.displayName ?? this.user.displayName;
           this.user.provider = 'google';
-          this.firebase.updateUser(this.user, this.user.id, 'google');
+          this.firebase.updateUser(this.user, this.user.id);
         }
       })
       .catch((error) => {
@@ -113,7 +113,7 @@ export class AuthService {
         this.user.email = currentUser.email ?? this.user.email;
         this.user.displayName = username ?? this.user.displayName;
         this.user.provider = 'email';
-        this.firebase.updateUser(this.user, this.user.id, 'register');
+        this.firebase.updateUser(this.user, this.user.id);
       }
     });
     return from(promise);
@@ -136,7 +136,7 @@ export class AuthService {
           currentUser.displayName ?? this.user.displayName;
         this.user.isOnline = true;
         this.user.provider = 'email';
-        this.firebase.updateUser(this.user, this.user.id, 'email');
+        this.firebase.updateUser(this.user, this.user.id);
       }
     });
 
@@ -163,7 +163,7 @@ export class AuthService {
     if (currentUser) {
       this.user.id = currentUser.uid ?? this.user.id;
       this.user.isOnline = false;
-      this.firebase.updateUser(this.user, this.user.id, 'logout');
+      this.firebase.updateUser(this.user, this.user.id);
     }
     const promise = signOut(this.firebaseAuth);
     this.router.navigate(['/login']);
@@ -199,34 +199,27 @@ export class AuthService {
       });
   }
 
-  signInAnonymous() {
+  async signInAnonymous() {
     const auth = getAuth();
     signInAnonymously(auth)
-        .then((response) => {
-          updateProfile(response.user, {
-            displayName: 'Anonym',
-            photoURL: 'http://localhost:4200/assets/img/characters/template4.svg',
-          });
+      .then((response) => {
+        updateProfile(response.user, {
+          displayName: 'Anonym',
+          photoURL: 'http://localhost:4200/assets/img/characters/template4.svg',
+        });
 
-        // Signed in..
-        // console.log('sign in');
-
-        //updateUser displayName, email
-
-        const currentUser = this.firebaseAuth.currentUser;
-        console.log(currentUser);
-        
-
-        // if(user){
-        //   console.log(user.id);
-        // }
-        // const user = result.user;
-        //   this.user.id = user.uid ?? this.user.id;
-        //   this.user.avatar = user.photoURL ?? this.user.avatar;
-        //   this.user.email = user.email ?? this.user.email;
-        //   this.user.displayName = user.displayName ?? this.user.displayName;
-        //   this.user.provider = 'google';
-        //   //this.firebase.updateUser(this.user, this.user.id, 'anonym');        
+        setTimeout(() => {          
+          const currentUser = this.firebaseAuth.currentUser;
+          if (currentUser) {
+            this.user.id = currentUser.uid ?? this.user.id;
+            this.user.avatar = response.user.photoURL ?? this.user.avatar;          
+            this.user.email = 'noreply@dabubble-152.com';
+            this.user.displayName = response.user.displayName ?? this.user.displayName;
+            this.user.provider = 'anonym';
+            this.user.isOnline = true;
+            this.firebase.updateUser(this.user, this.user.id);
+          }
+        }, 1000);        
       })
       .catch((error) => {
         const errorCode = error.code;
