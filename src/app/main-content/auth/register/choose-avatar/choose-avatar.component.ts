@@ -13,6 +13,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
+import { Upload } from '../../../../../models/upload.class';
+import { UploadService } from '../../../../shared/services/upload.service';
 
 @Component({
   selector: 'app-choose-avatar',
@@ -41,11 +43,17 @@ export class ChooseAvatarComponent {
 
   errorMessage: string | null = null;
   templateIndex: number = 0;
-  currentAvatar: string = './assets/img/characters/profile.svg';
+  currentAvatar: any = './assets/img/characters/profile.svg';
   chooseAvatar: boolean | undefined;
   confirm: boolean = false;
 
+  selectedFiles: FileList | undefined;
+  currentUpload: Upload | undefined;
+
+  constructor(private uploadService: UploadService){ }
+
   onSubmit(): void {
+
     if (this.contactData.photoURL) {
       this.authService
         .register(
@@ -74,8 +82,42 @@ export class ChooseAvatarComponent {
 
   setAvatar(event: MouseEvent) {
     const imgElement = event.target as HTMLImageElement;
-    this.currentAvatar = imgElement.src;
+    
+    
+    //this.currentAvatar = imgElement.src;
+    this.currentAvatar = 'https://firebasestorage.googleapis.com/v0/b/da-bubble-ca3ba.appspot.com/o/character%2Fstefan.jpg';
+    //this.currentAvatar.setAttribute('src', imgElement);
+
     this.contactData.photoURL = this.currentAvatar;
     this.chooseAvatar = false;
+  }
+
+  detectFiles(event: any){
+    this.selectedFiles = event.target.files;
+    this.uploadSingle();
+  }
+
+  uploadSingle(){
+    if(this.selectedFiles){
+      let file = this.selectedFiles.item(0);
+      if(file){
+        this.currentUpload = new Upload(file);        
+        this.uploadService.uploadCharacter(this.currentUpload, file.name);
+        this.getInfo(file.name);
+      }      
+    }
+  }
+
+  getInfo(file: string){    
+  //  this.uploadService.downloadCharacter(file); 
+
+  //console.log(this.uploadService.downloadCharacter(file));
+  
+  
+  
+
+//    this.currentAvatar = 
+
+    // klappt console.log('stefan', file);
   }
 }

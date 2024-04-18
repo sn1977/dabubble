@@ -51,8 +51,8 @@
       <div class="form-box">
         <div class="infotext">
           <span>Or you can</span>          
-          <label for="inputField" class="pointer">Upload foto</label>
-          <input type="file" accept="image/png, image/gif, image/jpeg" name="inputField" id="inputField">
+          <label for="inputField" class="pointer">Upload foto</label>          
+          <input type="file" (change)="detectFiles($event)" accept="image/*" name="inputField" id="inputField">
         </div>
       </div>
 
