@@ -124,6 +124,7 @@ export class FirebaseService {
     return this.activeUser;
   }
 
+
   async addChannel(item: Channel) {
     await addDoc(this.getChannelsRef(), item)
       .catch((err) => {

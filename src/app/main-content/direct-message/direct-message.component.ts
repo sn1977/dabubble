@@ -67,19 +67,14 @@ export class DirectMessageComponent implements OnInit {
   }
 
   ngOnInit() {
-    //http://localhost:4200/message/9MacQRd4i2TX9J42mVLBGgVCsPp1
     this.route.paramMap.subscribe((paramMap) => {
-      //{ path: 'message/:id', component: DirectMessageComponent },
       this.itemID = paramMap.get('id');
-      // 9MacQRd4i2TX9J42mVLBGgVCsPp1
       this.getItemValues('users', this.itemID);
-      //this.getItemValues('users', '9MacQRd4i2TX9J42mVLBGgVCsPp1');
     });
   }
 
   getItemValues(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {      
-      //return
       this.user = new User(this.firestore.user);
     });
   }
