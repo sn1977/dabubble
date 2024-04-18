@@ -199,32 +199,29 @@ export class AuthService {
       });
   }
 
-  async signInAnonymous() {
+  signInAnonymous() {
+    const randomInt = Math.floor(Math.random() * 6) + 1;
     const auth = getAuth();
     signInAnonymously(auth)
-      .then((response) => {
-        updateProfile(response.user, {
+      .then(async (response) => {
+        await updateProfile(response.user, {
           displayName: 'Anonym',
-          photoURL: 'http://localhost:4200/assets/img/characters/template4.svg',
+          photoURL: 'http://localhost:4200/assets/img/characters/template' + randomInt + '.svg',
         });
-
-        setTimeout(() => {          
-          const currentUser = this.firebaseAuth.currentUser;
-          if (currentUser) {
-            this.user.id = currentUser.uid ?? this.user.id;
-            this.user.avatar = response.user.photoURL ?? this.user.avatar;          
-            this.user.email = 'noreply@dabubble-152.com';
-            this.user.displayName = response.user.displayName ?? this.user.displayName;
-            this.user.provider = 'anonym';
-            this.user.isOnline = true;
-            this.firebase.updateUser(this.user, this.user.id);
-          }
-        }, 1000);        
+        const currentUser = this.firebaseAuth.currentUser;
+        if (currentUser) {
+          this.user.id = currentUser.uid ?? this.user.id;
+          this.user.avatar = response.user.photoURL ?? this.user.avatar;
+          this.user.email = '';
+          this.user.displayName = response.user.displayName ?? this.user.displayName;
+          this.user.provider = 'anonym';
+          this.user.isOnline = true;
+          return this.firebase.updateUser(this.user, this.user.id);
+        }
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        // ...
       });
   }
 }
