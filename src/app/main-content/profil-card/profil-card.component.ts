@@ -6,11 +6,12 @@ import {NgOptimizedImage} from '@angular/common';
 import {EditProfilCardComponent} from '../edit-profil-card/edit-profil-card.component';
 import {user} from '@angular/fire/auth';
 import {User} from '../../../models/user.class';
+import {OnlineStatusPipe} from '../../pipes/online-status.pipe';
 
 @Component({
   selector: 'app-profil-card',
   standalone: true,
-  imports: [MatCardModule, MatButtonModule, NgOptimizedImage],
+  imports: [MatCardModule, MatButtonModule, NgOptimizedImage, OnlineStatusPipe],
   templateUrl: './profil-card.component.html',
   styleUrl: './profil-card.component.scss',
 })
@@ -34,6 +35,7 @@ export class ProfilCardComponent {
       minWidth: '398px',
       minHeight: '600px',
       panelClass: 'custom-dialog-container',
+      data: { user: this.data.user }
       // Weitere Konfigurationen nach Bedarf
     });
     this.closeProfilCard();

@@ -40,7 +40,7 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
     private firebaseService: FirebaseService,
     public dialogRef: MatDialogRef<EditProfilCardComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { user: User }) {
-    // console.log('Übergebene Benutzerdaten:', this.data.user);
+    console.log('Übergebene Benutzerdaten:', this.data.user);
   }
 
   onNoClick(): void {
@@ -66,22 +66,16 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
   }
 
   saveProfile(): void {
-    console.log('Speichern');
-    // if (this.data.user.id === undefined) {
-    //   console.error('Benutzer-ID ist undefined');
-    //   return;
-    // }
+    // Aktualisiere das User-Objekt mit neuen Daten aus den Formularfeldern
+    this.data.user.displayName = this.nameData.name;
+    this.data.user.email = this.emailData.email;
 
-  //   const updatedData = {
-  //     name: this.nameData.name,  // Vermutlich solltest du den Variablennamen anpassen, da es verwirrend ist, dass `nameData.email` für den Namen verwendet wird.
-  //     email: this.emailData.email
-  //   };
-  //
-  //   this.firebaseService.updateUser(this.data.user.id!, updatedData).then(() => {
-  //     console.log('Profil aktualisiert');
-  //     this.dialogRef.close();  // Schließe den Dialog nach erfolgreicher Aktualisierung
-  //   }).catch(error => {
-  //     console.error('Fehler beim Aktualisieren des Profils:', error);
-  //   });
+    this.firebaseService.updateUser(this.data.user, '9MacQRd4i2TX9J42mVLBGgVCsPp1').then(() => {
+      console.log('Profil aktualisiert');
+      console.log(this.data.user);
+      this.dialogRef.close();
+    }).catch(error => {
+      console.error('Fehler beim Aktualisieren des Profils:', error);
+    });
   }
 }

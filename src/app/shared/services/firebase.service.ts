@@ -8,7 +8,7 @@ import {
   Unsubscribe,
   setDoc,
   where,
-  query, getDoc,
+  query, getDoc, updateDoc,
 } from '@angular/fire/firestore';
 import { User } from '../../../models/user.class';
 import { Channel } from '../../../models/channel.class';
@@ -103,6 +103,11 @@ export class FirebaseService {
   async updateUser(item: User, id: string) {
     await setDoc(doc(this.getUsersRef(), id), item.toJSON());
   }
+
+  // async updateUser(item: User, id: string) {
+  //   const userRef = doc(this.getUsersRef(), id);
+  //   await updateDoc(userRef, item.toJSON());
+  // }
 
   getUsers(): User[]{
     return this.userList;

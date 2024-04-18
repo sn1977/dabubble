@@ -6,7 +6,9 @@
       <img ngSrc="assets/img/icon/close_color.png" class="hover-img" style="display: none" height="16" width="16">
     </div>
   </div>
+  <div class="profile-img">
   <img mat-card-image src="{{ data.user.avatar }}">
+  </div>
   <mat-card-content>
     <div>
       <div class="user">
@@ -18,7 +20,7 @@
       </div>
       <div class="status-character">
         <img ngSrc="assets/img/icon/online.png" height="17" width="16">
-        <span>Aktiv</span>
+        <span>{{ data.user.isOnline | onlineStatus }}</span>
       </div>
     </div>
   </mat-card-content>

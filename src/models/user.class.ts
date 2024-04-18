@@ -22,5 +22,5 @@ export class User {
       isOnline: this.isOnline,
       provider: this.provider,
     };
-  }  
+  }
 }
