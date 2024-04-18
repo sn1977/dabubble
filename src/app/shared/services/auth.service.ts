@@ -17,6 +17,7 @@ import {
   browserSessionPersistence,
   authState,
   getRedirectResult,
+  signInAnonymously,
 } from '@angular/fire/auth';
 import { Observable, from, BehaviorSubject } from 'rxjs';
 import { UserInterface } from '../interfaces/user.interface';
@@ -31,6 +32,7 @@ export class AuthService {
   user$ = user(this.firebaseAuth);
   currentUserSig = signal<UserInterface | null | undefined>(undefined);
   user: User = new User();
+
   provider = new GoogleAuthProvider();
   activeUserAccount: any = null;
 
@@ -160,9 +162,6 @@ export class AuthService {
     const currentUser = this.firebaseAuth.currentUser;
     if (currentUser) {
       this.user.id = currentUser.uid ?? this.user.id;
-      // this.user.avatar = currentUser.photoURL ?? this.user.avatar;
-      // this.user.email = currentUser.email ?? this.user.email;
-      // this.user.displayName = currentUser.displayName ?? this.user.displayName;
       this.user.isOnline = false;
       this.firebase.updateUser(this.user, this.user.id, 'logout');
     }
@@ -197,6 +196,42 @@ export class AuthService {
       .catch((error) => {
         console.log('invalid code or email');
         return error;
+      });
+  }
+
+  signInAnonymous() {
+    const auth = getAuth();
+    signInAnonymously(auth)
+        .then((response) => {
+          updateProfile(response.user, {
+            displayName: 'Anonym',
+            photoURL: 'http://localhost:4200/assets/img/characters/template4.svg',
+          });
+
+        // Signed in..
+        // console.log('sign in');
+
+        //updateUser displayName, email
+
+        const currentUser = this.firebaseAuth.currentUser;
+        console.log(currentUser);
+        
+
+        // if(user){
+        //   console.log(user.id);
+        // }
+        // const user = result.user;
+        //   this.user.id = user.uid ?? this.user.id;
+        //   this.user.avatar = user.photoURL ?? this.user.avatar;
+        //   this.user.email = user.email ?? this.user.email;
+        //   this.user.displayName = user.displayName ?? this.user.displayName;
+        //   this.user.provider = 'google';
+        //   //this.firebase.updateUser(this.user, this.user.id, 'anonym');        
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ...
       });
   }
 }

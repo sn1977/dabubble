@@ -88,4 +88,9 @@ export class LogInComponent implements OnInit{
   signInWithGoogleRedirect() {
     this.authService.googleAuth();
   }
+
+  anonymousLogin(){        
+    this.authService.signInAnonymous();
+  }
+
 }
