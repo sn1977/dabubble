@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, inject, Inject} from '@angular/core';
 import {MatCard, MatCardActions, MatCardContent, MatCardImage} from '@angular/material/card';
 import {NgOptimizedImage} from '@angular/common';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
@@ -6,6 +6,7 @@ import {EditProfilCardComponent} from '../edit-profil-card/edit-profil-card.comp
 import {MatButton} from '@angular/material/button';
 import {User} from '../../../models/user.class';
 import {OnlineStatusPipe} from '../../pipes/online-status.pipe';
+import {AuthService} from '../../shared/services/auth.service';
 
 
 @Component({
@@ -26,6 +27,8 @@ import {OnlineStatusPipe} from '../../pipes/online-status.pipe';
 export class DirectMessageOverlayComponent {
 
   user: User = new User();
+  authService = inject(AuthService);
+
   constructor(
     public dialogRef: MatDialogRef<DirectMessageOverlayComponent>,
     public dialog: MatDialog,
@@ -41,7 +44,7 @@ export class DirectMessageOverlayComponent {
   }
 
   openEditProfileCard(): void {
-    if (this.data.user.provider == 'email') {
+    if (this.data.user.provider == 'email' && this.authService.activeUserAccount.uid) {
     const dialogRef = this.dialog.open(EditProfilCardComponent, {
       minWidth: '398px',
       minHeight: '600px',
