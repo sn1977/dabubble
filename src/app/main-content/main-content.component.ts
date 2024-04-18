@@ -18,6 +18,7 @@ import {FormsModule} from '@angular/forms';
 import {NavigationService} from '../shared/services/navigation.service';
 import {Router, RouterLink} from '@angular/router';
 import {Auth} from '@angular/fire/auth';
+import {AuthService} from '../shared/services/auth.service';
 
 @Component({
   selector: 'app-main-content',
@@ -45,8 +46,8 @@ import {Auth} from '@angular/fire/auth';
 export class MainContentComponent {
   firestore = inject(FirebaseService);
   router = inject(Router);
-  channelList: any = [];
   firebaseAuth = inject(Auth);
+  authService = inject(AuthService);
 
   panels = [
     {
@@ -74,19 +75,6 @@ export class MainContentComponent {
 
   constructor(public navigationService: NavigationService) {
   }
-
-  // getUsers(): User[]{
-  //   return this.firebase.userList;
-  // }
-
-  // getChannels(): Channel[]{
-  //   return this.firebase.channelList;
-  // }
-
-  // ngOnInit(): void {
-  //   this.firebase.userList;
-  //  // this.firebase.channelList;
-  // }
 
   onPanelOpened(index: number) {
     this.panels[index].expanded = true;

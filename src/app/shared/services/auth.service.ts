@@ -224,4 +224,8 @@ export class AuthService {
         const errorMessage = error.message;
       });
   }
+
+  get activeUserId(): string {
+    return this.activeUserAccount ? this.activeUserAccount.uid : null;
+  }
 }
