@@ -104,10 +104,6 @@ export class FirebaseService {
     await setDoc(doc(this.getUsersRef(), id), item.toJSON());
   }
 
-  // async updateUser(item: User, id: string) {
-  //   const userRef = doc(this.getUsersRef(), id);
-  //   await updateDoc(userRef, item.toJSON());
-  // }
 
   getUsers(): User[]{
     return this.userList;
