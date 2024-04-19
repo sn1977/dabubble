@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { FirebaseService } from './firebase.service';
 import {
+  deleteObject,
   getDownloadURL,
   getMetadata,
   getStorage,
   ref,
   updateMetadata,
   uploadBytes,
+  uploadBytesResumable,
 } from '@angular/fire/storage';
-import { Upload } from '../../../models/upload.class';
 import { Observable, from } from 'rxjs';
 
 @Injectable({
@@ -17,69 +18,57 @@ import { Observable, from } from 'rxjs';
 export class UploadService {
   constructor(private firebase: FirebaseService) {}
 
-  uploadCharacter(file: any, filename: string) {
-    const storage = getStorage();
-    const storageRef = ref(storage, `character/${filename}`);
+  uploadFile(file: File, filedate: number, folder: string): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+      const storage = getStorage();
+      const metadata = {
+        contentType: file.type,
+      };
 
-    uploadBytes(storageRef, file)
-      .then(() => {
-        console.log('Uploaded a file!', filename);
-        this.updateMeta(filename);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-      });      
-  }
+      const newFileName = filedate + '_' + file.name;
+      const storageRef = ref(storage, folder + '/' + newFileName);
+      const uploadTask = uploadBytesResumable(storageRef, file, metadata);
 
-  updateMeta(filename: string){
-    const storage = getStorage();
-    const storageRef = ref(storage, `character/${filename}`);
-    getMetadata(storageRef)
-    .then((metadata: any) => {
-      this.finalize(filename, metadata);
-      // console.log('Metadata: ', filename, metadata);
-      
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorCode, errorMessage);
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          // const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          // console.log('Upload is ' + progress + '% done');
+          // switch (snapshot.state) {
+          //   case 'paused':
+          //     console.log('Upload is paused');
+          //     break;
+          //   case 'running':
+          //     console.log('Upload is running');
+          //     break;
+          // }
+        },
+        (error) => {
+          switch (error.code) {
+            case 'storage/unauthorized':
+              reject(error);
+              break;
+            case 'storage/canceled':
+              reject(error);
+              break;
+            case 'storage/unknown':
+              reject(error);
+              break;
+            default:
+              reject(error);
+              break;
+          }
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref)
+            .then((downloadURL) => {
+              resolve(downloadURL);
+            })
+            .catch((error) => {
+              reject(error);
+            });
+        }
+      );
     });
-  }
-
-  finalize(filename: any, metadata: any){
-    const storage = getStorage();
-    const storageRef = ref(storage, `character/${filename}`);
-    
-    const newMetadata = {      
-      contentType: 'image/jpeg'
-    };
-
-    updateMetadata(storageRef, newMetadata)
-    .then(() => {})
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorCode, errorMessage);
-    });
-  }
-    
-
-  downloadCharacter(file: any): Observable<void> {
-    const storage = getStorage();
-    const promise = getDownloadURL(ref(storage, `character/${file.name}`))
-      .then((url) => {
-        // const img = document.getElementById('myimg');
-        // img.setAttribute('src', url);
-        console.log('hallo', url);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-      });
-    return from(promise);
-  }
+  }   
 }

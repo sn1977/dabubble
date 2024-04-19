@@ -52,15 +52,17 @@
         <div class="infotext">
           <span>Or you can</span>          
           <label for="inputField" class="pointer">Upload foto</label>          
-          <input type="file" (change)="detectFiles($event)" accept="image/*" name="inputField" id="inputField">
+          <input type="file" (change)="detectFile($event)" accept="image/*" name="inputField" id="inputField">
         </div>
       </div>
 
       <div class="buttons">
         <div class="required">
-          @if(errorMessage){ @switch (errorMessage) { @case
-          ("auth/email-already-in-use") { E-Mail wird bereits verwendet } @case
-          ("auth/user-disabled") { Konto inaktiv } @default { Ungültige
+          @if(errorMessage){ @switch (errorMessage) { 
+            @case ("auth/email-already-in-use") { E-Mail wird bereits verwendet } 
+            @case ("auth/user-disabled") { Konto inaktiv } 
+            @case ("storage/unauthorized") { Upload fehlgeschlagen }
+          @default { Ungültige
           Anmeldedaten } } }
         </div>
         <button class="btn-primary pointer">Weiter</button>

@@ -13,8 +13,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
-import { Upload } from '../../../../../models/upload.class';
 import { UploadService } from '../../../../shared/services/upload.service';
+import { timestamp } from 'rxjs';
 
 @Component({
   selector: 'app-choose-avatar',
@@ -40,20 +40,17 @@ export class ChooseAvatarComponent {
   http = inject(HttpClient);
   authService = inject(AuthService);
   router = inject(Router);
-
   errorMessage: string | null = null;
   templateIndex: number = 0;
   currentAvatar: any = './assets/img/characters/profile.svg';
   chooseAvatar: boolean | undefined;
   confirm: boolean = false;
-
   selectedFiles: FileList | undefined;
-  currentUpload: Upload | undefined;
+  filedate: number | undefined;
 
-  constructor(private uploadService: UploadService){ }
+  constructor(private uploadService: UploadService) {}
 
   onSubmit(): void {
-
     if (this.contactData.photoURL) {
       this.authService
         .register(
@@ -63,9 +60,9 @@ export class ChooseAvatarComponent {
           this.contactData.photoURL
         )
         .subscribe({
-          complete: () => {            
+          complete: () => {
             setTimeout(() => {
-              this.authService.logout();
+              this.router.navigate(['/']);
             }, 3500);
           },
           next: () => {
@@ -77,47 +74,38 @@ export class ChooseAvatarComponent {
         });
     } else {
       this.chooseAvatar = true;
-    }    
+    }
   }
 
   setAvatar(event: MouseEvent) {
     const imgElement = event.target as HTMLImageElement;
-    
-    
-    //this.currentAvatar = imgElement.src;
-    this.currentAvatar = 'https://firebasestorage.googleapis.com/v0/b/da-bubble-ca3ba.appspot.com/o/character%2Fstefan.jpg';
-    //this.currentAvatar.setAttribute('src', imgElement);
-
+    this.currentAvatar = imgElement.src;
     this.contactData.photoURL = this.currentAvatar;
     this.chooseAvatar = false;
   }
 
-  detectFiles(event: any){
+  detectFile(event: any) {
     this.selectedFiles = event.target.files;
-    this.uploadSingle();
+    this.uploadSingleFile();
   }
 
-  uploadSingle(){
-    if(this.selectedFiles){
+  uploadSingleFile() {
+    if (this.selectedFiles) {
       let file = this.selectedFiles.item(0);
-      if(file){
-        this.currentUpload = new Upload(file);        
-        this.uploadService.uploadCharacter(this.currentUpload, file.name);
-        this.getInfo(file.name);
-      }      
+      if (file) {
+
+        this.filedate = new Date().getTime();
+        this.uploadService
+          .uploadFile(file, this.filedate, 'character')
+          .then((url: string) => {
+            this.currentAvatar = url;
+            this.contactData.photoURL = this.currentAvatar;
+            this.chooseAvatar = false;            
+          })
+          .catch((error) => {
+            this.errorMessage = error.code;
+          });
+      }
     }
-  }
-
-  getInfo(file: string){    
-  //  this.uploadService.downloadCharacter(file); 
-
-  //console.log(this.uploadService.downloadCharacter(file));
-  
-  
-  
-
-//    this.currentAvatar = 
-
-    // klappt console.log('stefan', file);
   }
 }

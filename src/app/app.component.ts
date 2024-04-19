@@ -28,7 +28,7 @@ export class AppComponent implements OnInit{
   firestore = inject(FirebaseService);
 
   constructor(){
-    this.showInfos();
+    //this.showInfos();
   }
   
   showInfos(){
