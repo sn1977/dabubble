@@ -7,6 +7,8 @@ import {MatButton} from '@angular/material/button';
 import {User} from '../../../models/user.class';
 import {OnlineStatusPipe} from '../../pipes/online-status.pipe';
 import {AuthService} from '../../shared/services/auth.service';
+import {user} from '@angular/fire/auth';
+import {FirebaseService} from '../../shared/services/firebase.service';
 
 
 @Component({
@@ -28,6 +30,7 @@ export class DirectMessageOverlayComponent {
 
   user: User = new User();
   authService = inject(AuthService);
+  firestore = inject(FirebaseService);
 
   constructor(
     public dialogRef: MatDialogRef<DirectMessageOverlayComponent>,
@@ -44,14 +47,18 @@ export class DirectMessageOverlayComponent {
   }
 
   openEditProfileCard(): void {
-    if (this.data.user.provider == 'email' && this.authService.activeUserAccount.uid) {
+
+    console.log("User Provider:", this.data.user.provider);
+    console.log("User ID:", this.data.user.id);
+    console.log("Active User ID:", this.authService.activeUserId);
+    if (this.data.user.provider == 'email' && this.data.user.id === this.authService.activeUserId) {
     const dialogRef = this.dialog.open(EditProfilCardComponent, {
       minWidth: '398px',
       minHeight: '600px',
       panelClass: 'custom-dialog-container',
-      data: { user: this.data.user }
+      data: { user: this.data.user}
     });
-    // this.closeProfilCard();
+    // this.closeProfilCard(); this.authService.activeUserAccount.uid
   }
   }
 }

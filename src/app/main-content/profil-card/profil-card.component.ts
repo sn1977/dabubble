@@ -20,8 +20,6 @@ export class ProfilCardComponent {
               public dialog: MatDialog,
               @Inject(MAT_DIALOG_DATA) public data: { user: User }) {}
 
-  // @Inject(MAT_DIALOG_DATA) public data: any
-
   onNoClick(): void {
     this.dialogRef.close();
   }
