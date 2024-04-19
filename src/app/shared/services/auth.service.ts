@@ -158,16 +158,22 @@ export class AuthService {
     return from(promise);
   }
 
-  logout(): Observable<void> {
+  logout(): Promise<void> {
     const currentUser = this.firebaseAuth.currentUser;
     if (currentUser) {
       this.user.id = currentUser.uid ?? this.user.id;
       this.user.isOnline = false;
       this.firebase.updateUser(this.user, this.user.id);
     }
-    const promise = signOut(this.firebaseAuth);
-    this.router.navigate(['/login']);
-    return from(promise);
+    
+    return new Promise<void>((resolve, reject) => {
+      signOut(this.firebaseAuth).then(() => {
+        this.router.navigate(['/login']);
+        resolve();
+      }).catch(error => {
+        reject(error);
+      });
+    });
   }
 
   sendMailToResetPassword(
