@@ -24,17 +24,15 @@ import {AuthService} from '../../shared/services/auth.service';
   templateUrl: './edit-profil-card.component.html',
   styleUrl: './edit-profil-card.component.scss'
 })
+
 export class EditProfilCardComponent implements OnInit, OnDestroy {
   authService = inject(AuthService);
   user: User = new User();
 
-  nameData = {
-    name: '',
-  };
-
-  emailData = {
-    email: '',
-  };
+  nameData = { name: '' };
+  emailData = { email: '' };
+  namePlaceholder?: string;
+  emailPlaceholder?: string;
 
   inputHasValue = false;
 
@@ -55,6 +53,11 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
 
   closeEditProfilCard() {
     this.dialogRef.close()
+  }
+
+  onFocus() {
+    this.namePlaceholder = '';
+    this.emailPlaceholder = '';
   }
 
   ngOnInit() {

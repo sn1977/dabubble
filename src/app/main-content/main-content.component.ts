@@ -1,4 +1,4 @@
-import {Component, OnInit, inject} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {FirebaseService} from '../shared/services/firebase.service';
 import {HeaderMobileComponent} from '../shared/components/header-mobile/header-mobile.component';
 import {MatIconModule} from '@angular/material/icon';
@@ -15,7 +15,6 @@ import {MatFabButton} from '@angular/material/button';
 import {FormsModule} from '@angular/forms';
 import {NavigationService} from '../shared/services/navigation.service';
 import {Router, RouterLink} from '@angular/router';
-import {Auth} from '@angular/fire/auth';
 import {AuthService} from '../shared/services/auth.service';
 import {ItemStateService} from '../shared/services/item-state.service';
 
@@ -43,7 +42,6 @@ import {ItemStateService} from '../shared/services/item-state.service';
 export class MainContentComponent {
   firestore = inject(FirebaseService);
   router = inject(Router);
-  firebaseAuth = inject(Auth);
   authService = inject(AuthService);
 
   panels = [
@@ -93,12 +91,6 @@ export class MainContentComponent {
     this.navigateToAddChannel()
   }
 
-  navigateToDirectMessage() {
-    this.navigationService.navigate(['/message']);
-    console.log(this.firebaseAuth.currentUser?.displayName);
-    console.log(this.firebaseAuth.currentUser?.uid);
-  }
-
   navigateToAddChannel() {
     this.navigationService.navigate(['/add-channel']);
   }
@@ -109,7 +101,6 @@ export class MainContentComponent {
 
   openChannel (event: MouseEvent, path: string) {
     const docRefId = (event.currentTarget as HTMLElement).id;
-    console.log('Öffne Collection ' + path + ' mit ID: ' + docRefId);
     this.itemStateService.setItemId(docRefId);
     this.router.navigate([path, docRefId]);
   }

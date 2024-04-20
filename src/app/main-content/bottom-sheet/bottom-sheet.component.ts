@@ -6,11 +6,8 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatLine} from '@angular/material/core';
 import {MatIcon} from '@angular/material/icon';
 import {ProfilCardComponent} from '../profil-card/profil-card.component';
-import {MatCardModule} from '@angular/material/card';
 import {MatDialog} from '@angular/material/dialog';
 import {AuthService} from '../../shared/services/auth.service';
-import {from, Observable} from 'rxjs';
-import {signOut} from '@angular/fire/auth';
 import {User} from '../../../models/user.class';
 
 @Component({
@@ -41,12 +38,10 @@ export class BottomSheetComponent {
       minHeight: '600px',
       panelClass: 'custom-dialog-container',
       data: { user: this.data.user }
-      // Weitere Konfigurationen nach Bedarf
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('Der Dialog wurde geschlossen');
-      // Weitere Aktionen nach dem Schließen des Dialogs
     });
   }
 
@@ -56,8 +51,8 @@ export class BottomSheetComponent {
   }
 
 
-  openLink(event: MouseEvent): void {
-    this._bottomSheetRef.dismiss();
-    event.preventDefault();
-  }
+  // openLink(event: MouseEvent): void {
+  //   this._bottomSheetRef.dismiss();
+  //   event.preventDefault();
+  // }
 }

@@ -25,7 +25,7 @@ export class ProfilCardComponent {
   }
 
   closeProfilCard() {
-    this.dialogRef.close()
+    this.dialogRef.close();
   }
 
   openEditProfileCard(): void {
@@ -34,7 +34,6 @@ export class ProfilCardComponent {
       minHeight: '600px',
       panelClass: 'custom-dialog-container',
       data: { user: this.data.user }
-      // Weitere Konfigurationen nach Bedarf
     });
     this.closeProfilCard();
   }

@@ -18,10 +18,10 @@
       <input
         type="text"
         name="name"
-        #name="ngModel"
         [(ngModel)]="nameData.name"
         [minLength]="5"
         (ngModelChange)="checkInput($event)"
+        (focus)="onFocus()"
         [class.input-has-value]="inputHasValue"
         placeholder="{{data.user.displayName}}"
         required
@@ -40,10 +40,10 @@
         <input
           type="email"
           name="email"
-          #email="ngModel"
           [(ngModel)]="emailData.email"
           pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
           (ngModelChange)="checkInput($event)"
+          (focus)="onFocus()"
           [class.input-has-value]="inputHasValue"
           placeholder="{{data.user.email}}"
           required
