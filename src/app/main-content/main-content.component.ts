@@ -1,6 +1,5 @@
 import {Component, OnInit, inject} from '@angular/core';
 import {FirebaseService} from '../shared/services/firebase.service';
-import {User} from '../../models/user.class';
 import {HeaderMobileComponent} from '../shared/components/header-mobile/header-mobile.component';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
@@ -112,7 +111,6 @@ export class MainContentComponent {
     const docRefId = (event.currentTarget as HTMLElement).id;
     console.log('Öffne Collection ' + path + ' mit ID: ' + docRefId);
     this.itemStateService.setItemId(docRefId);
-    // this.router.navigate(['/' + path + '/' + docRefId]);
     this.router.navigate([path, docRefId]);
   }
 }
