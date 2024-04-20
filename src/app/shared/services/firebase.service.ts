@@ -12,6 +12,7 @@ import {
 } from '@angular/fire/firestore';
 import { User } from '../../../models/user.class';
 import { Channel } from '../../../models/channel.class';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -103,6 +104,34 @@ export class FirebaseService {
   async updateUser(item: User, id: string) {
     await setDoc(doc(this.getUsersRef(), id), item.toJSON());
   }
+
+  // Im FirebaseService
+  // getChannels(): Observable<Channel[]> {
+  //   return new Observable(observer => {
+  //     const unsubscribe = onSnapshot(this.getChannelsRef(), snapshot => {
+  //       let channels: Channel[] = [];
+  //       snapshot.forEach(doc => channels.push(this.setChannelObject(doc.data(), doc.id)));
+  //       observer.next(channels);
+  //     }, err => observer.error(err));
+  //
+  //     // Cleanup on unsubscribe
+  //     return { unsubscribe };
+  //   });
+  // }
+  //
+  // getUsers2(): Observable<User[]> {
+  //   return new Observable(observer => {
+  //     const unsubscribe = onSnapshot(this.getUsersRef(), snapshot => {
+  //       let users: User[] = [];
+  //       snapshot.forEach(doc => users.push(this.setUserObject(doc.data(), doc.id)));
+  //       observer.next(users);
+  //     }, err => observer.error(err));
+  //
+  //     // Cleanup on unsubscribe
+  //     return { unsubscribe };
+  //   });
+  // }
+
 
 
   getUsers(): User[]{

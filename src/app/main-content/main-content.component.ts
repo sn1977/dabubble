@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {FirebaseService} from '../shared/services/firebase.service';
 import {HeaderMobileComponent} from '../shared/components/header-mobile/header-mobile.component';
 import {MatIconModule} from '@angular/material/icon';
@@ -39,7 +39,8 @@ import {ItemStateService} from '../shared/services/item-state.service';
   templateUrl: './main-content.component.html',
   styleUrl: './main-content.component.scss'
 })
-export class MainContentComponent {
+
+export class MainContentComponent implements OnInit {
   firestore = inject(FirebaseService);
   router = inject(Router);
   authService = inject(AuthService);
@@ -61,15 +62,52 @@ export class MainContentComponent {
     }
   ];
 
-  textData = {
-    text: '',
-  };
-
+  textData = { text: '' };
   inputHasValue = false;
+  allChannels: any[] = [];
+  allUsers: any[] = [];
+  filteredResults: any[] = [];
 
 
   constructor(public navigationService: NavigationService,
               private itemStateService: ItemStateService) {
+  }
+
+  ngOnInit() {
+    this.firestore.subChannelList();
+    this.firestore.subUserList();
+    // this.listenForDataChanges();
+    this.allChannels = this.firestore.getChannel();
+    this.allUsers = this.firestore.getUsers();
+    console.log(this.allChannels);
+  }
+
+  // listenForDataChanges() {
+  //   this.firestore.getChannels().subscribe(channels => {
+  //     this.allChannels = channels;
+  //   });
+  //   this.firestore.getUsers2().subscribe(users => {
+  //     this.allUsers = users;
+  //   });
+  // }
+
+  searchWorkspace(query: string) {
+    if (!query) {
+      this.filteredResults = [];
+      return;
+    }
+    query = query.toLowerCase();
+
+    let channelMatches = this.allChannels.filter(channel =>
+      channel.name.toLowerCase().includes(query)
+    );
+
+    let userMatches = this.allUsers.filter(user =>
+      user.displayName.toLowerCase().includes(query) ||
+      user.email.toLowerCase().includes(query)
+    );
+
+    this.filteredResults = [...channelMatches, ...userMatches];
   }
 
   onPanelOpened(index: number) {

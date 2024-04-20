@@ -3,25 +3,18 @@
 <div class="content-main bg-c">
   <div class="wrapper-content-main">
 
-    <!--    <mat-form-field class="full-width">-->
     <div class="input-field">
       <input
         type="text"
         name="text"
-        #text="ngModel"
         [(ngModel)]="textData.text"
-        (ngModelChange)="checkInput($event)"
+        (ngModelChange)=" searchWorkspace(textData.text)"
         [class.input-has-value]="inputHasValue"
         placeholder="Gehe zu..."
         required
         class="full-width input-field-design input-background-icon"
       />
-      <!--        <mat-icon matSuffix>search</mat-icon>-->
     </div>
-    <!--      <input matInput class="b
-      r-42" placeholder="Gehe zu...">-->
-
-    <!--    </mat-form-field>-->
 
     <mat-accordion [multi]="true">
       <mat-expansion-panel hideToggle class="bs-none" [expanded]="panels[0].expanded"
