@@ -10,12 +10,17 @@ import { NavigationService } from '../../shared/services/navigation.service';
 import {NgForOf, NgIf} from '@angular/common';
 import { AuthService } from '../../shared/services/auth.service';
 import { Auth } from '@angular/fire/auth';
-
+import { ChannelMessageComponent } from './channel-message/channel-message.component';
 
 @Component({
   selector: 'app-new-channel',
   standalone: true,
-  imports: [RouterLink, BottomSheetComponent,  NgIf],
+  imports: [
+    RouterLink, 
+    BottomSheetComponent,  
+    NgIf,
+    ChannelMessageComponent 
+  ],
   templateUrl: './new-channel.component.html',
   styleUrl: './new-channel.component.scss'
 })
