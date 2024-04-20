@@ -18,6 +18,7 @@ import {NavigationService} from '../shared/services/navigation.service';
 import {Router, RouterLink} from '@angular/router';
 import {Auth} from '@angular/fire/auth';
 import {AuthService} from '../shared/services/auth.service';
+import {ItemStateService} from '../shared/services/item-state.service';
 
 @Component({
   selector: 'app-main-content',
@@ -31,7 +32,7 @@ import {AuthService} from '../shared/services/auth.service';
     MatExpansionPanelTitle,
     MatExpansionPanelDescription,
     MatExpansionModule,
-    HeaderMobileComponent,    
+    HeaderMobileComponent,
     BottomSheetComponent,
     MatFabButton,
     FormsModule,
@@ -70,7 +71,8 @@ export class MainContentComponent {
   inputHasValue = false;
 
 
-  constructor(public navigationService: NavigationService) {
+  constructor(public navigationService: NavigationService,
+              private itemStateService: ItemStateService) {
   }
 
   onPanelOpened(index: number) {
@@ -109,6 +111,8 @@ export class MainContentComponent {
   openChannel (event: MouseEvent, path: string) {
     const docRefId = (event.currentTarget as HTMLElement).id;
     console.log('Öffne Collection ' + path + ' mit ID: ' + docRefId);
-    this.router.navigate(['/' + path + '/' + docRefId]);
+    this.itemStateService.setItemId(docRefId);
+    // this.router.navigate(['/' + path + '/' + docRefId]);
+    this.router.navigate([path, docRefId]);
   }
 }

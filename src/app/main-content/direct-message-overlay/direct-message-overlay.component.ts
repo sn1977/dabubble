@@ -1,4 +1,4 @@
-import {Component, inject, Inject} from '@angular/core';
+import {Component, inject, Inject, OnInit} from '@angular/core';
 import {MatCard, MatCardActions, MatCardContent, MatCardImage} from '@angular/material/card';
 import {NgOptimizedImage} from '@angular/common';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
@@ -7,8 +7,8 @@ import {MatButton} from '@angular/material/button';
 import {User} from '../../../models/user.class';
 import {OnlineStatusPipe} from '../../pipes/online-status.pipe';
 import {AuthService} from '../../shared/services/auth.service';
-import {user} from '@angular/fire/auth';
 import {FirebaseService} from '../../shared/services/firebase.service';
+import {ItemStateService} from '../../shared/services/item-state.service';
 
 
 @Component({
@@ -26,39 +26,43 @@ import {FirebaseService} from '../../shared/services/firebase.service';
   templateUrl: './direct-message-overlay.component.html',
   styleUrl: './direct-message-overlay.component.scss'
 })
-export class DirectMessageOverlayComponent {
+export class DirectMessageOverlayComponent implements OnInit {
 
   user: User = new User();
   authService = inject(AuthService);
   firestore = inject(FirebaseService);
+  itemId: string | null = '';
 
   constructor(
     public dialogRef: MatDialogRef<DirectMessageOverlayComponent>,
     public dialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) public data: { user: User }
+    private itemStateService: ItemStateService,
+    @Inject(MAT_DIALOG_DATA) public data: { user: User, itemId: string }
   ) {}
+
+  ngOnInit() {
+    this.itemStateService.itemId$.subscribe(itemId => {
+      this.itemId = itemId;
+      console.log('ItemId im Overlay:', itemId);
+    });
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
   closeDirectMessageOverlay() {
-    this.dialogRef.close()
+    this.dialogRef.close();
   }
 
   openEditProfileCard(): void {
-
-    console.log("User Provider:", this.data.user.provider);
-    console.log("User ID:", this.data.user.id);
-    console.log("Active User ID:", this.authService.activeUserId);
-    if (this.data.user.provider == 'email' && this.data.user.id === this.authService.activeUserId) {
-    const dialogRef = this.dialog.open(EditProfilCardComponent, {
-      minWidth: '398px',
-      minHeight: '600px',
-      panelClass: 'custom-dialog-container',
-      data: { user: this.data.user}
-    });
-    // this.closeProfilCard(); this.authService.activeUserAccount.uid
-  }
+    if (this.data.user.provider == 'email' && this.itemId === this.authService.activeUserId) {
+      const dialogRef = this.dialog.open(EditProfilCardComponent, {
+        minWidth: '398px',
+        minHeight: '600px',
+        panelClass: 'custom-dialog-container',
+        data: {user: this.data.user}
+      });
+    }
   }
 }

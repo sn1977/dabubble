@@ -54,7 +54,8 @@ export class DirectMessageComponent implements OnInit {
       minWidth: '398px',
       minHeight: '600px',
       panelClass: 'custom-dialog-container',
-      data: { user: this.user } // Übergeben des User-Objekts an den Dialog
+      data: { user: this.user,
+        itemId: this.itemID } // Übergeben des User-Objekts an den Dialog
     });
   }
 
@@ -74,7 +75,7 @@ export class DirectMessageComponent implements OnInit {
   }
 
   getItemValues(collection: string, itemID: string) {
-    this.firestore.getSingleItemData(collection, itemID, () => {      
+    this.firestore.getSingleItemData(collection, itemID, () => {
       this.user = new User(this.firestore.user);
     });
   }

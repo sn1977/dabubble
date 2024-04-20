@@ -62,8 +62,6 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // Dies ist ein Beispiel, wenn `subUserList` das Abonnement direkt zurückgeben würde.
-    // Wenn nicht, musst du eine andere Art von Verwaltung implementieren.
     this.firebaseService.unsubUsers();  // Beende das Abonnement
   }
 
@@ -73,9 +71,6 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
     this.data.user.email = this.emailData.email;
 
     this.firebaseService.updateUser(this.data.user, this.authService.activeUserAccount.uid).then(() => {
-      // console.log('Profil aktualisiert');
-      // console.log(this.authService.activeUserAccount.uid);
-      // console.log(this.data.user);
       this.dialogRef.close();
     }).catch(error => {
       console.error('Fehler beim Aktualisieren des Profils:', error);
