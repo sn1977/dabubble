@@ -112,6 +112,7 @@ export class AuthService {
         this.user.avatar = photoURL ?? this.user.avatar;
         this.user.email = currentUser.email ?? this.user.email;
         this.user.displayName = username ?? this.user.displayName;
+        this.user.isOnline = true;
         this.user.provider = 'email';
         this.firebase.updateUser(this.user, this.user.id);
       }
