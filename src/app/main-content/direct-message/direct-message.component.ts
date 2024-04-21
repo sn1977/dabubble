@@ -7,6 +7,7 @@ import {MatBottomSheet} from '@angular/material/bottom-sheet';
 import {FirebaseService} from '../../shared/services/firebase.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {User} from '../../../models/user.class';
+import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
   selector: 'app-direct-message',
@@ -20,6 +21,7 @@ export class DirectMessageComponent implements OnInit {
   router = inject(Router);
   itemID: any = '';
   user: User = new User();
+  authService = inject(AuthService);
 
   constructor(
     public dialog: MatDialog,
