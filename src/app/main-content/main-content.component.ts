@@ -17,6 +17,8 @@ import {NavigationService} from '../shared/services/navigation.service';
 import {Router, RouterLink} from '@angular/router';
 import {AuthService} from '../shared/services/auth.service';
 import {ItemStateService} from '../shared/services/item-state.service';
+import {Observable} from 'rxjs';
+import {Channel} from '../../models/channel.class';
 
 @Component({
   selector: 'app-main-content',
@@ -64,7 +66,7 @@ export class MainContentComponent implements OnInit {
 
   textData = { text: '' };
   inputHasValue = false;
-  allChannels: any[] = [];
+  allChannels: Channel[] = [];
   allUsers: any[] = [];
   filteredResults: any[] = [];
 
@@ -74,24 +76,29 @@ export class MainContentComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.firestore.subChannelList();
-    this.firestore.subUserList();
-    // this.listenForDataChanges();
-    this.allChannels = this.firestore.getChannel();
-    this.allUsers = this.firestore.getUsers();
-    console.log(this.allChannels);
+    // this.firestore.subChannelList();
+    // this.firestore.subUserList();
+    this.listenForDataChanges();
+    // this.allChannels = this.firestore.getChannels();
+    // this.allUsers = this.firestore.getUsers();
+    // console.log('das sind die gefilterten Resultate: ', this.filteredResults);
+    // console.log('Channels geladen: ', this.allChannels);
+    // console.log('Users geladen: ', this.allUsers);
   }
 
-  // listenForDataChanges() {
-  //   this.firestore.getChannels().subscribe(channels => {
-  //     this.allChannels = channels;
-  //   });
-  //   this.firestore.getUsers2().subscribe(users => {
-  //     this.allUsers = users;
-  //   });
-  // }
+  listenForDataChanges() {
+    this.firestore.getChannels().subscribe(channels => {
+      this.allChannels = channels;
+      console.log('Channels geladen: ', this.allChannels);
+    });
+    this.firestore.getUsers2().subscribe(users => {
+      this.allUsers = users;
+      console.log('Users geladen: ', this.allUsers);
+    });
+  }
 
   searchWorkspace(query: string) {
+    console.log('Suchanfrage: ', query);
     if (!query) {
       this.filteredResults = [];
       return;
@@ -108,6 +115,7 @@ export class MainContentComponent implements OnInit {
     );
 
     this.filteredResults = [...channelMatches, ...userMatches];
+    console.log('Gefilterte Resultate: ', this.filteredResults);
   }
 
   onPanelOpened(index: number) {
