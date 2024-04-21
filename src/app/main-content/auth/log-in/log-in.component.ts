@@ -46,26 +46,11 @@ export class LogInComponent implements OnInit{
   errorMessage: string | null = null;
   playIntroAnimation: boolean = true;
 
-  constructor() {
-    this.checkForIntroAnimation();
-  }  
+
   
   ngOnInit(): void {
   }
 
-  checkForIntroAnimation() {
-    // kann noch in einen Service für register/send-email/choose-avatar etc.
-    setInterval(() => {
-      if (this.authService.activeUserAccount) {
-        this.router.navigateByUrl('');
-      }
-    }, 1000);
-
-
-    // let now: number = new Date().getTime();
-    // let lastAnimation: number = new Date().getTime();
-    // if()
-  }
 
   onSubmit(): void {
     this.authService

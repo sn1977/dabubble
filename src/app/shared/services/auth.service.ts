@@ -72,6 +72,7 @@ export class AuthService {
           this.user.email = user.email ?? this.user.email;
           this.user.displayName = user.displayName ?? this.user.displayName;
           this.user.provider = 'google';
+          this.router.navigateByUrl('');
           this.firebase.updateUser(this.user, this.user.id);
         }
       })
@@ -224,6 +225,7 @@ export class AuthService {
           this.user.displayName = response.user.displayName ?? this.user.displayName;
           this.user.provider = 'anonym';
           this.user.isOnline = true;
+          this.router.navigateByUrl('');
           return this.firebase.updateUser(this.user, this.user.id);
         }
       })
