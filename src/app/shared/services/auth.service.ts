@@ -166,10 +166,11 @@ export class AuthService {
       this.user.isOnline = false;
       this.firebase.updateUser(this.user, this.user.id);
     }
-    
+
     return new Promise<void>((resolve, reject) => {
       signOut(this.firebaseAuth).then(() => {
         this.router.navigate(['/login']);
+        this.user.isOnline = false;
         resolve();
       }).catch(error => {
         reject(error);
