@@ -26,6 +26,8 @@ export class ExampleComponent implements OnInit {
   constructor(private route: ActivatedRoute,private authService: AuthService,) {}  
 
   ngOnInit() {
+
+
     this.route.paramMap.subscribe((paramMap) => {
       this.itemID = paramMap.get('id');
 
@@ -50,6 +52,16 @@ export class ExampleComponent implements OnInit {
       }
     });
   }
+
+
+// channel-messages
+// 9KJYLfxx07Wn5rbEupdA/channelmessages/cMWBoncDqfH93llCG5xs
+// testFunction(){
+//   console.log('testFunction fired');
+//   this.firestore.getAllChannelMessages();
+// }
+
+
 
   getItemValues(collection: string, itemID: string) {    
     this.firestore.getSingleItemData(collection, itemID, () => {

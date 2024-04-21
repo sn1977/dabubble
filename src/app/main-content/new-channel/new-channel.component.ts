@@ -48,6 +48,7 @@ export class NewChannelComponent implements OnInit  {
     this.route.paramMap.subscribe((paramMap) => {
       this.itemID = paramMap.get('id');
       this.getItemValues('channels', this.itemID);
+      this.firestore.getAllChannelMessages(this.itemID);
     });
   }
 

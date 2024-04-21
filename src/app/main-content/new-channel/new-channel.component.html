@@ -21,7 +21,10 @@
             </div>
         </div>
 
-        <app-channel-message></app-channel-message>
+        @for (channelMessage of this.firestore.channelMessages; track $index) {
+            <app-channel-message></app-channel-message>
+        }
+        
 
         <div class="channel-info">
             <h1 class="no-margin">{{ channel.name }}</h1>

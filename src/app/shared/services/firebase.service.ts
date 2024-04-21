@@ -8,11 +8,15 @@ import {
   Unsubscribe,
   setDoc,
   where,
-  query, getDoc, updateDoc,
+  query,
+  getDoc,
+  updateDoc,
+  getDocs,
+  orderBy,
 } from '@angular/fire/firestore';
 import { User } from '../../../models/user.class';
 import { Channel } from '../../../models/channel.class';
-import {Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -24,6 +28,7 @@ export class FirebaseService {
   channel: Channel = new Channel();
   userList: any = [];
   channelList: any = [];
+  channelMessages: any = [];
 
   unsubUsers;
   unsubChannel;
@@ -58,7 +63,9 @@ export class FirebaseService {
     return onSnapshot(this.getChannelsRef(), (list) => {
       this.channelList = [];
       list.forEach((element) => {
-        this.channelList.push(this.setChannelObject(element.data(), element.id));
+        this.channelList.push(
+          this.setChannelObject(element.data(), element.id)
+        );
       });
     });
   }
@@ -101,18 +108,35 @@ export class FirebaseService {
     };
   }
 
+  setChannelMessageObject(obj: any, id: string): any {
+    return {
+      messageId: id,
+      channelId: obj.channelId,
+      creator: obj.creator,
+      createdAt: obj.createdAt,
+      text: obj.text,
+      reactions: obj.reactions,
+    };
+  }
+
   async updateUser(item: User, id: string) {
     await setDoc(doc(this.getUsersRef(), id), item.toJSON());
   }
 
   // Im FirebaseService
   getChannels(): Observable<Channel[]> {
-    return new Observable(observer => {
-      const unsubscribe = onSnapshot(this.getChannelsRef(), snapshot => {
-        let channels: Channel[] = [];
-        snapshot.forEach(doc => channels.push(this.setChannelObject(doc.data(), doc.id)));
-        observer.next(channels);
-      }, err => observer.error(err));
+    return new Observable((observer) => {
+      const unsubscribe = onSnapshot(
+        this.getChannelsRef(),
+        (snapshot) => {
+          let channels: Channel[] = [];
+          snapshot.forEach((doc) =>
+            channels.push(this.setChannelObject(doc.data(), doc.id))
+          );
+          observer.next(channels);
+        },
+        (err) => observer.error(err)
+      );
 
       // Cleanup on unsubscribe
       return { unsubscribe };
@@ -120,32 +144,35 @@ export class FirebaseService {
   }
 
   getUsers2(): Observable<User[]> {
-    return new Observable(observer => {
-      const unsubscribe = onSnapshot(this.getUsersRef(), snapshot => {
-        let users: User[] = [];
-        snapshot.forEach(doc => users.push(this.setUserObject(doc.data(), doc.id)));
-        observer.next(users);
-      }, err => observer.error(err));
+    return new Observable((observer) => {
+      const unsubscribe = onSnapshot(
+        this.getUsersRef(),
+        (snapshot) => {
+          let users: User[] = [];
+          snapshot.forEach((doc) =>
+            users.push(this.setUserObject(doc.data(), doc.id))
+          );
+          observer.next(users);
+        },
+        (err) => observer.error(err)
+      );
 
       // Cleanup on unsubscribe
       return { unsubscribe };
     });
   }
 
-
-
-  getUsers(): User[]{
+  getUsers(): User[] {
     return this.userList;
   }
 
-  getChannel(): Channel[]{
+  getChannel(): Channel[] {
     return this.channelList;
   }
 
-  getSingleUser(): User[]{
+  getSingleUser(): User[] {
     return this.activeUser;
   }
-
 
   async addChannel(item: Channel) {
     await addDoc(this.getChannelsRef(), item)
@@ -165,17 +192,18 @@ export class FirebaseService {
   }
 
   getSingleItemData(colId: string, docId: string, callback: () => void) {
-  let collection = colId === 'channels' ? 'channels' : 'users';
+    let collection = colId === 'channels' ? 'channels' : 'users';
 
     this.singleItemUnsubscribe = onSnapshot(
       this.getSingleDocRef(collection, docId),
       (element) => {
-
-        if(collection === 'users'){
+        if (collection === 'users') {
           this.user = new User(this.setUserObject(element.data(), element.id));
         }
-        if(collection === 'channels'){
-          this.channel = new Channel(this.setChannelObject(element.data(), element.id));
+        if (collection === 'channels') {
+          this.channel = new Channel(
+            this.setChannelObject(element.data(), element.id)
+          );
         }
 
         callback();
@@ -183,6 +211,21 @@ export class FirebaseService {
     );
   }
 
+  async getAllChannelMessages(channelId: string) {
+    const ref = collection(
+      this.firestore,
+      `channels/${channelId}/channelmessages`
+    );
+                          
+    const querySnapshot = await getDocs(query(ref, orderBy('createdAt')));
+    this.channelMessages = [];
+    querySnapshot.forEach((doc) => {
+      // console.log(doc.id, ' => ', doc.data());
+      this.channelMessages.push(this.setChannelMessageObject(doc.data(), doc.id));
+    });
+    console.log(this.channelMessages);
+    return this.channelMessages;
+  }
 
   ngonDestroyy() {
     this.unsubUsers();

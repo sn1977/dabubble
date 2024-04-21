@@ -7,7 +7,6 @@ export class ChannelMessage {
   reactions: string [];
 
   constructor(obj?: any) {
-
     this.channelId = obj ? obj.channelId : '';
     this.creator =  obj ? obj.creator : '';
     this.createdAt = obj ? obj.createdAt : '';    
