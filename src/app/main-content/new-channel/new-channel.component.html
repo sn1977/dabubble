@@ -21,8 +21,9 @@
             </div>
         </div>
 
-        @for (channelMessage of this.firestore.channelMessages; track $index) {
-            <app-channel-message></app-channel-message>
+        <!-- @for(project of projectData.projects; track project.id; let index = $index) -->
+        @for (channelMessage of this.firestore.channelMessages; track channelMessage.id; let index= $index) {
+            <app-channel-message [channelMessage]="channelMessage"></app-channel-message>
         }
         
 

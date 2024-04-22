@@ -6,11 +6,15 @@
 
     <div class="message-content pointer">
       <div class="creator-infos">
-        <div class="creator">Noah Braun</div>
-        <div class="time">14:25 Uhr</div>
+        <div class="creator">{{ channelMessage.creator }}</div>
+        <div class="time">
+          {{ channelMessage.createdAt | firestoreTimestamp | date:'HH:mm'}} Uhr
+          <!-- {{ channelMessage.createdAt.seconds | date:'mm:ss' }} -->
+          <!-- {{ channelMessage.createdAt }} -->
+
+        </div>
       </div>
-      <div class="message">
-        Welche Version ist aktuell von Angular?
+      <div class="message">{{ channelMessage.text }}
       </div>
       <!-- hier muss noch eine Prüfung rein auf Threads -->
       <div class="thread-infos">      
