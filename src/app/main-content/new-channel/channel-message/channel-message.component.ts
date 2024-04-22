@@ -16,7 +16,10 @@ export class ChannelMessageComponent implements OnInit {
   
   firestore = inject(FirebaseService);
   @Input() channelMessage!: ChannelMessage;
+  @Input() index!: number;
   user: User = new User();
+  edit = false;
+  hovered = false;
 
   ngOnInit(): void {
     this.getItemValuesProfile('users', this.channelMessage.creator)
@@ -26,6 +29,12 @@ export class ChannelMessageComponent implements OnInit {
     this.firestore.getSingleItemData(collection, itemID, () => {
       this.user = new User(this.firestore.user);      
     });
+  }
+
+  deleteHovered() {    
+    if (!this.edit) {
+      this.hovered = false;
+    }
   }
 
 }

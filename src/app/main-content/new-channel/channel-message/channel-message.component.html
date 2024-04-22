@@ -1,38 +1,78 @@
-<div class="content">
+<div
+  class="content"
+  [ngStyle]="{ 'flex-direction': index % 2 === 0 ? 'row' : 'row-reverse' }"
+  (mouseenter)="hovered = true"
+  (mouseleave)="deleteHovered()"
+>
   <div class="avatar pointer">
-    <img src="{{this.user.avatar}}" alt="">
+    <img src="{{ this.user.avatar }}" alt="" />
   </div>
-  <div class="main">
-
-    <div class="message-content pointer">
-      <div class="creator-infos">
+  <div
+    class="main"
+    [ngStyle]="{ 'align-items': index % 2 === 0 ? 'flex-start' : 'flex-end' }"
+  >
+    <div
+      class="message-content pointer"
+      [ngStyle]="{ 'align-items': index % 2 === 0 ? 'flex-start' : 'flex-end' }"
+    >
+      <div
+        class="creator-infos"
+        [ngStyle]="{
+          'flex-direction': index % 2 === 0 ? 'row' : 'row-reverse'
+        }"
+      >
         <div class="creator">{{ this.user.displayName }}</div>
         <div class="time">
-          {{ channelMessage.createdAt | firestoreTimestamp | date:'HH:mm'}} Uhr
+          {{
+            channelMessage.createdAt | firestoreTimestamp | date : "HH:mm"
+          }}
+          Uhr
         </div>
       </div>
-      <div class="message">{{ channelMessage.text }}
+      <div
+        class="message"
+        [ngStyle]="{
+          'background-color': hovered ? '#FFFFFF' : '#eceefe',
+          'border-radius':
+            index % 2 === 0 ? '0 30px 30px 30px' : '30px 0 30px 30px'
+        }"
+      >
+        {{ channelMessage.text }}
       </div>
       <!-- hier muss noch eine Prüfung rein auf Threads -->
-      <div class="thread-infos">      
-        <a href="http://localhost:4200/new-channel/9KJYLfxx07Wn5rbEupdA">2 Antworten</a>
-        <span class="last-thread">Letzte Antwort 14:56</span>
+      <div
+        class="thread-infos"
+        [ngStyle]="{
+          'flex-direction': index % 2 === 0 ? 'row' : 'row-reverse'
+        }"
+      >
+        <a href="http://localhost:4200/new-channel/9KJYLfxx07Wn5rbEupdA"
+          >2 Antworten</a
+        >
+        <span
+          class="last-thread"
+          [ngStyle]="{ color: hovered ? '#000000' : '#686868' }"
+          >Letzte Antwort 14:56</span
+        >
       </div>
       <!-- Ende Prüfung auf Threads -->
     </div>
     <div class="reaction-infos">
       <div class="reactions">
-        <div class="reaction-group pointer">          
-          <img class="reaction-icon" src="./assets/img/emojis/1.svg" alt="">
+        <div class="reaction-group pointer">
+          <img class="reaction-icon" src="./assets/img/emojis/1.svg" alt="" />
           <div class="reaction-count">2</div>
         </div>
         <div class="reaction-group pointer">
-          <img class="reaction-icon" src="./assets/img/emojis/2.svg" alt="">
+          <img class="reaction-icon" src="./assets/img/emojis/2.svg" alt="" />
           <div class="reaction-count">1</div>
-        </div>        
-      </div>      
-      <img class="new-reaction pointer" src="./assets/img/emojis/add_reaction.svg" alt="">
+        </div>
+      </div>
+      <img
+        class="new-reaction pointer"
+        src="./assets/img/emojis/add_reaction.svg"
+        alt=""
+      />
     </div>
   </div>
 </div>
-  

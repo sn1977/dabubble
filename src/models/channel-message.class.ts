@@ -4,7 +4,7 @@ export class ChannelMessage {
   creator: string;
   createdAt: Date = new Date();
   text: string;
-  reactions: string [];
+  reactions: string [];  
 
   constructor(obj?: any) {
     this.channelId = obj ? obj.channelId : '';

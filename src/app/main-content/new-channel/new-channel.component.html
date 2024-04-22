@@ -34,9 +34,9 @@
     <div class="message-content">
     @if(this.firestore.channelMessages.length !== 0){
       @for (channelMessage of this.firestore.channelMessages; track
-      channelMessage.id; let index= $index) {
+      channelMessage.id; let index = $index) {
       <app-channel-message
-        [channelMessage]="channelMessage"
+        [channelMessage]="channelMessage" [index]="index"
       ></app-channel-message>
       }
     } @else {
