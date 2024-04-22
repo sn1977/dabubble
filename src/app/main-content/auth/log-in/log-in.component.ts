@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -34,7 +34,7 @@ import { Router, RouterLink } from '@angular/router';
   templateUrl: './log-in.component.html',
   styleUrl: './log-in.component.scss',
 })
-export class LogInComponent implements OnInit{
+export class LogInComponent{
   contactData = {
     name: '',
     email: '',
@@ -45,12 +45,6 @@ export class LogInComponent implements OnInit{
   router = inject(Router);
   errorMessage: string | null = null;
   playIntroAnimation: boolean = true;
-
-
-  
-  ngOnInit(): void {
-  }
-
 
   onSubmit(): void {
     this.authService

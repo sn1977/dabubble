@@ -1,17 +1,14 @@
 <div class="content">
   <div class="avatar pointer">
-    <img src="./assets/img/characters/template1.svg" alt="">
+    <img src="{{this.user.avatar}}" alt="">
   </div>
   <div class="main">
 
     <div class="message-content pointer">
       <div class="creator-infos">
-        <div class="creator">{{ channelMessage.creator }}</div>
+        <div class="creator">{{ this.user.displayName }}</div>
         <div class="time">
           {{ channelMessage.createdAt | firestoreTimestamp | date:'HH:mm'}} Uhr
-          <!-- {{ channelMessage.createdAt.seconds | date:'mm:ss' }} -->
-          <!-- {{ channelMessage.createdAt }} -->
-
         </div>
       </div>
       <div class="message">{{ channelMessage.text }}

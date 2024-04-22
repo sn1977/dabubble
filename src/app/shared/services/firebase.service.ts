@@ -223,7 +223,7 @@ export class FirebaseService {
       // console.log(doc.id, ' => ', doc.data());
       this.channelMessages.push(this.setChannelMessageObject(doc.data(), doc.id));
     });
-    console.log(this.channelMessages);
+    // console.log(this.channelMessages);
     return this.channelMessages;
   }
 

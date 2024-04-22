@@ -1,87 +1,133 @@
 <div>
-    <header class="header-container">
-        <div class="header-container">
-            <img src="./../../assets/img/icon/arrow_back.svg" alt="" routerLink="">
-            <img src="./../../assets/img/icon/Property 1=Default (1).svg" alt="">
-        </div>
-        <div>
-            {{this.authService.activeUserAccount?.displayName}}
-            <img class="header-img" (click)="openBottomSheet()" src="{{user.avatar}}">
-        </div>
-    </header>
-    <main>
-        <div class="mdc-card">
-            <div class="channel-box" [id]="itemID" (click)="openChannel($event, 'channel-edition')">
-                <h1 class="no-margin">{{ channel.name }}</h1>
-                <img src="./../../assets/img/icon/arrow_down.svg" alt="">
-            </div>
-            <div>
-                <img (click)="toggleOverlay('overlay1')" src="./../../assets/img/icon/44. Add members button.svg"
-                    alt="">
-            </div>
-        </div>
+  <header class="header-container">
+    <div class="header-container">
+      <img src="./assets/img/icon/arrow_back.svg" alt="" routerLink="" />
+      <img src="./assets/img/icon/Property 1=Default (1).svg" alt="" />
+    </div>
+    <div>
+      <img
+        class="header-img"
+        (click)="openBottomSheet()"
+        src="{{ user.avatar }}"
+      />
+    </div>
+  </header>
+  <main>
+    <div class="mdc-card">
+      <div
+        class="channel-box"
+        [id]="itemID"
+        (click)="openChannel($event, 'channel-edition')"
+      >
+        <h1 class="no-margin">{{ channel.name }}</h1>
+        <img src="./assets/img/icon/arrow_down.svg" alt="" />
+      </div>
+      <div>
+        <img
+          (click)="toggleOverlay('overlay1')"
+          src="./assets/img/icon/44. Add members button.svg"
+          alt=""
+        />
+      </div>
+    </div>
+    
+    <div class="message-content">
+    @if(this.firestore.channelMessages.length !== 0){
+      @for (channelMessage of this.firestore.channelMessages; track
+      channelMessage.id; let index= $index) {
+      <app-channel-message
+        [channelMessage]="channelMessage"
+      ></app-channel-message>
+      }
+    } @else {
+      <div class="channel-info">
+        <h1 class="no-margin">{{ channel.name }}</h1>
+        <p>
+          Du hast diesen Channel heute erstellt. Das ist der Anfang des Channels
+        </p>
+      </div>      
+    }
+  </div>
 
-        <!-- @for(project of projectData.projects; track project.id; let index = $index) -->
-        @for (channelMessage of this.firestore.channelMessages; track channelMessage.id; let index= $index) {
-            <app-channel-message [channelMessage]="channelMessage"></app-channel-message>
-        }
-        
+    <div class="sticky-textbox">
+      <textarea
+        placeholder="Schreibe eine Nachricht"
+        class="input-field"
+      ></textarea>
+      <div class="icons">
+        <img src="./assets/img/icon/add.svg" alt="" />
+        <div class="vertical-line"></div>
+        <img src="./assets/img/icon/smile.svg" alt="" />
+        <img src="./assets/img/icon/email.svg" alt="" />
+      </div>
+      <div class="send">
+        <img src="./assets/img/icon/send.svg" alt="" />
+      </div>
+    </div>
 
-        <div class="channel-info">
-            <h1 class="no-margin">{{ channel.name }}</h1>
-            <p>Du hast diesen Channel heute erstellt. Das ist der Anfang des Channels </p>
-
+    <div id="overlay1" class="overlay">
+      <div class="overlay-content">
+        <div class="display-flex">
+          <h1 class="no-margin">Mitglieder:</h1>
+          <img
+            src="./assets/img/icon/close.svg"
+            alt=""
+            (click)="closeOverlay('overlay1')"
+          />
         </div>
+        <div class="members">
+          @for (user of this.firestore.getUsers(); track $index) {
+          <div class="profil">
+            <img class="img-profil" src="{{ user.avatar }}" alt="" />
 
-        <div class="sticky-textbox">
-            <textarea placeholder="Schreibe eine Nachricht" class="input-field"></textarea>
-            <div class="icons">
-                <img src="./../../assets/img/icon/add.svg" alt="">
-                <div class="vertical-line"></div>
-                <img src="./../../assets/img/icon/smile.svg" alt="">
-                <img src="./../../assets/img/icon/email.svg" alt="">
-            </div>
-            <div class="send">
-                <img src="./../../assets/img/icon/send.svg" alt="">
-            </div>
+            @if(user.isOnline){
+            <img
+              src="./assets/img/characters/online.svg"
+              alt="Online"
+              class="online-avatar"
+            />
+            } @else {
+            <img
+              src="./assets/img/characters/offline.svg"
+              alt="Offline"
+              class="offline-avatar"
+            />
+            }
+
+            <p class="no-margin">{{ user.displayName }}</p>
+          </div>
+          }
+          <div class="profil">
+            <img
+              class="height"
+              src="./assets/img/icon/44. Add members button.svg"
+              alt=""
+            />
+            <p (click)="toggleOverlay('overlay2')" class="no-margin">
+              Mitglied hinzufügen
+            </p>
+          </div>
         </div>
+      </div>
+    </div>
 
-
-        <div id="overlay1" class="overlay">
-            <div class="overlay-content">
-                <div class="display-flex">
-                    <h1 class="no-margin">Mitglieder:</h1>
-                    <img src="./../../assets/img/icon/close.svg" alt="" (click)="closeOverlay('overlay1')">
-                </div>
-                <div class="members">
-                    @for (user of this.firestore.getUsers(); track $index) {
-                        <div class="profil">
-                          <img class="img-profil" src="{{user.avatar}}" alt="">
-                          <img *ngIf="user.isOnline" src="./assets/img/characters/online.svg" alt="Online" class="online-avatar">
-                        <img *ngIf="!user.isOnline" src="./assets/img/characters/offline.svg" alt="Offline" class="offline-avatar">
-                          <p class="no-margin">{{user.displayName}}</p>
-                        </div>
-                    }
-                    <div class="profil">
-                        <img class="height" src="../../assets/img/icon/44. Add members button.svg" alt="">
-                        <p (click)="toggleOverlay('overlay2')" class="no-margin">Mitglied hinzufügen</p>
-                    </div>
-                </div>
-                
-            </div>
+    <div id="overlay2" class="overlay">
+      <div class="overlay-content">
+        <div class="display-flex">
+          <h1 class="no-margin">Leute hinzufügen</h1>
+          <img
+            src="./assets/img/icon/close.svg"
+            alt=""
+            (click)="closeOverlay('overlay2')"
+          />
         </div>
-
-        <div id="overlay2" class="overlay">
-            <div class="overlay-content">
-                <div class="display-flex">
-                    <h1 class="no-margin">Leute hinzufügen</h1>
-                    <img src="./../../assets/img/icon/close.svg" alt="" (click)="closeOverlay('overlay2')">
-                </div>
-                <input class="search-input" type="text" placeholder="Suche Mitglied">
-                <div class="btn-pos">
-                    <button class="add-button" (click)="closeOverlay('overlay2')"> Hinzufügen</button>
-                </div>
-            </div>
+        <input class="search-input" type="text" placeholder="Suche Mitglied" />
+        <div class="btn-pos">
+          <button class="add-button" (click)="closeOverlay('overlay2')">
+            Hinzufügen
+          </button>
         </div>
-    </main>
+      </div>
+    </div>
+  </main>
 </div>
