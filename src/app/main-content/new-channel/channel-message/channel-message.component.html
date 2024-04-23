@@ -1,6 +1,6 @@
 <div
   class="content"
-  [ngStyle]="{ 'flex-direction': index % 2 === 0 ? 'row' : 'row-reverse' }"
+  [ngStyle]="{ 'flex-direction': isMessageFromYou ? 'row' : 'row-reverse' }"
   (mouseenter)="hovered = true"
   (mouseleave)="deleteHovered()"
 >
@@ -9,41 +9,55 @@
   </div>
   <div
     class="main"
-    [ngStyle]="{ 'align-items': index % 2 === 0 ? 'flex-start' : 'flex-end' }"
+    [ngStyle]="{ 'align-items': isMessageFromYou ? 'flex-start' : 'flex-end' }"
   >
     <div
       class="message-content pointer"
-      [ngStyle]="{ 'align-items': index % 2 === 0 ? 'flex-start' : 'flex-end' }"
+      [ngStyle]="{ 'align-items': isMessageFromYou ? 'flex-start' : 'flex-end' }"
     >
       <div
         class="creator-infos"
         [ngStyle]="{
-          'flex-direction': index % 2 === 0 ? 'row' : 'row-reverse'
+          'flex-direction': isMessageFromYou ? 'row' : 'row-reverse'
         }"
       >
         <div class="creator">{{ this.user.displayName }}</div>
         <div class="time">
-          {{
-            channelMessage.createdAt | firestoreTimestamp | date : "HH:mm"
-          }}
+          {{ channelMessage.createdAt | firestoreTimestamp | date : "HH:mm" }}
           Uhr
         </div>
       </div>
-      <div
-        class="message"
+
+
+      @if(isMessageFromYou){
+        <div
+        class="message text-white"
         [ngStyle]="{
-          'background-color': hovered ? '#FFFFFF' : '#eceefe',
+          'background-color': hovered ? '#797EF3' : '#797EF3',
           'border-radius':
-            index % 2 === 0 ? '0 30px 30px 30px' : '30px 0 30px 30px'
+          isMessageFromYou ? '0 30px 30px 30px' : '30px 0 30px 30px'
         }"
       >
         {{ channelMessage.text }}
+      </div>  
+      } @else {
+        <div
+        class="message"
+        [ngStyle]="{
+          'background-color': hovered ? '#FFFFFF' : '#ECEEFE',
+          'border-radius':
+          isMessageFromYou ? '0 30px 30px 30px' : '30px 0 30px 30px'
+        }"
+      >
+        {{ channelMessage.text }}       
       </div>
+      }
+
       <!-- hier muss noch eine Prüfung rein auf Threads -->
       <div
         class="thread-infos"
         [ngStyle]="{
-          'flex-direction': index % 2 === 0 ? 'row' : 'row-reverse'
+          'flex-direction': isMessageFromYou ? 'row' : 'row-reverse'
         }"
       >
         <a href="http://localhost:4200/new-channel/9KJYLfxx07Wn5rbEupdA"
