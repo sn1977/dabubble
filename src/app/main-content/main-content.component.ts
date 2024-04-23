@@ -19,6 +19,7 @@ import {AuthService} from '../shared/services/auth.service';
 import {ItemStateService} from '../shared/services/item-state.service';
 import {Observable} from 'rxjs';
 import {Channel} from '../../models/channel.class';
+import {User} from '../../models/user.class';
 
 @Component({
   selector: 'app-main-content',
@@ -96,8 +97,16 @@ export class MainContentComponent implements OnInit {
       console.log('Channels geladen: ', this.allChannels);
     });
     this.firestore.getUsers2().subscribe(users => {
-      this.allUsers = users;
+      this.allUsers = this.sortUsers(users);
       console.log('Users geladen: ', this.allUsers);
+    });
+  }
+
+  sortUsers(users: User[]): User[] {
+    return users.sort((a, b) => {
+      if (a.id === this.authService.activeUserId) return -1;
+      if (b.id === this.authService.activeUserId) return 1;
+      return 0;
     });
   }
 

@@ -216,7 +216,7 @@ export class FirebaseService {
       this.firestore,
       `channels/${channelId}/channelmessages`
     );
-                          
+
     const querySnapshot = await getDocs(query(ref, orderBy('createdAt')));
     this.channelMessages = [];
     querySnapshot.forEach((doc) => {
