@@ -51,14 +51,18 @@ export class MainContentComponent implements OnInit {
     {
       expanded: true,
       arrowImagePath: 'assets/img/icon/arrow_drop_down.png',
-      iconPath: 'assets/img/icon/workspaces.png',
+      iconPath: '',
+      iconPathOpened: 'assets/img/icon/workspaces.png',
+      iconPathClosed: 'assets/img/icon/workspaces_color.png',
       title: 'Channels',
       titleColor: '#000000', // Startfarbe beim Öffnen
     },
     {
       expanded: true,
       arrowImagePath: 'assets/img/icon/arrow_drop_down.png',
-      iconPath: 'assets/img/icon/account_circle_big.png',
+      iconPath: '',
+      iconPathOpened: 'assets/img/icon/account_circle_big.png',
+      iconPathClosed: 'assets/img/icon/account_circle_color.png',
       title: 'Direktnachrichten',
       titleColor: '#000000', // Startfarbe beim Öffnen
     }
@@ -121,14 +125,14 @@ export class MainContentComponent implements OnInit {
   onPanelOpened(index: number) {
     this.panels[index].expanded = true;
     this.panels[index].arrowImagePath = 'assets/img/icon/arrow_drop_down.png';
-    this.panels[index].iconPath = 'assets/img/icon/account_circle_big.png';
+    this.panels[index].iconPath = this.panels[index].iconPathOpened;
     this.panels[index].titleColor = '#000000'; // Farbe, wenn geöffnet
   }
 
   onPanelClosed(index: number) {
     this.panels[index].expanded = false;
     this.panels[index].arrowImagePath = 'assets/img/icon/arrow_drop_down_color.png';
-    this.panels[index].iconPath = 'assets/img/icon/account_circle_color.png';
+    this.panels[index].iconPath = this.panels[index].iconPathClosed;
     this.panels[index].titleColor = '#535AF1'; // Farbe, wenn geschlossen
   }
 
