@@ -5,6 +5,7 @@ import { Router, RouterLink } from '@angular/router';
 import { FirebaseService } from '../../shared/services/firebase.service';
 import { CommonModule } from '@angular/common';
 import { User } from '../../../models/user.class';
+import { Channel } from '../../../models/channel.class';
 
 @Component({
   selector: 'app-add-channel',
@@ -20,6 +21,8 @@ export class AddChannelComponent  {
   firestore = inject(FirebaseService);
   router = inject(Router);
   users: User[] = [];
+  channel: Channel = new Channel;
+
 
 
 
@@ -28,6 +31,14 @@ export class AddChannelComponent  {
 
    constructor() {
     this.loadUsers();
+
+    this.channel.creator = "Yannick1";
+    this.channel.description = "Yannick2";
+    this.channel.member = ["Yannick3", "Stefan"];
+    this.channel.name = "Yannick4";
+
+    console.log(this.channel);
+    this.firestore.addChannel(this.channel);
   }
 
   
