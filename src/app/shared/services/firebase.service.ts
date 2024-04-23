@@ -175,7 +175,7 @@ export class FirebaseService {
   }
 
   async addChannel(item: Channel) {
-    await addDoc(this.getChannelsRef(), item.toJSON())
+    await addDoc(this.getChannelsRef(), item)
       .catch((err) => {
         console.error(err);
       })
