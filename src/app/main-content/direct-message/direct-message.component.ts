@@ -8,6 +8,7 @@ import {FirebaseService} from '../../shared/services/firebase.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {User} from '../../../models/user.class';
 import { AuthService } from '../../shared/services/auth.service';
+import { Channel } from '../../../models/channel.class';
 
 @Component({
   selector: 'app-direct-message',
@@ -21,6 +22,7 @@ export class DirectMessageComponent implements OnInit {
   router = inject(Router);
   itemID: any = '';
   user: User = new User();
+  channel: Channel = new Channel();
   authService = inject(AuthService);
 
   constructor(
@@ -28,6 +30,37 @@ export class DirectMessageComponent implements OnInit {
     private navigationService: NavigationService,
     private _bottomSheet: MatBottomSheet,
     private route: ActivatedRoute) {
+  }
+
+  async ngOnInit(): Promise<void> {
+    await this.waitForUserData();
+    this.test();
+
+    this.route.paramMap.subscribe((paramMap) => {
+      this.itemID = paramMap.get('id');
+      this.getItemValues('users', this.itemID);
+    });
+
+    this.route.paramMap.subscribe((paramMap) => {
+      this.itemID = paramMap.get('id');
+      this.getItemValues('channels', this.itemID);
+    });
+  }
+
+  async waitForUserData(): Promise<void> {
+    while (!this.authService.activeUserAccount) {
+      await this.delay(100); // Wartezeit in Millisekunden, bevor erneut überprüft wird
+    }
+  }
+
+  delay(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  test() {
+    let id = this.authService.activeUserAccount.uid;
+    console.log(id); // Stelle sicher, dass id definiert ist, bevor du darauf zugreifst
+    this.getItemValuesProfile('users', id);
   }
 
   toggleOverlay(overlayId: string): void {
@@ -69,16 +102,24 @@ export class DirectMessageComponent implements OnInit {
     this._bottomSheet.open(BottomSheetComponent);
   }
 
-  ngOnInit() {
-    this.route.paramMap.subscribe((paramMap) => {
-      this.itemID = paramMap.get('id');
-      this.getItemValues('users', this.itemID);
-    });
-  }
-
   getItemValues(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {
       this.user = new User(this.firestore.user);
+    });
+  }
+
+  getItemValuesChannel(collection: string, itemID: string) {
+    this.firestore.getSingleItemData(collection, itemID, () => {
+      this.channel = new Channel(this.firestore.channel);
+    });
+  }
+
+  getItemValuesProfile(collection: string, itemID: string) {
+    this.firestore.getSingleItemData(collection, itemID, () => {
+      this.user = new User(this.firestore.user);
+      console.log('Avatar: ' + this.user.avatar);
+      console.log(this.user.displayName);
+      
     });
   }
 }
