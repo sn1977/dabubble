@@ -72,7 +72,7 @@ export class MainContentComponent implements OnInit {
   textData = { text: '' };
   inputHasValue = false;
   allChannels: Channel[] = [];
-  allUsers: any[] = [];
+  allUsers: User[] = [];
   filteredResults: any[] = [];
 
 
