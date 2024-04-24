@@ -1,5 +1,34 @@
+<div class="container">
+  <app-header-mobile></app-header-mobile>
+  <div class="mdc-card">
+    <div
+      class="channel-box pointer"
+      [id]="itemID"
+      (click)="openChannel($event, 'channel-edition')"
+    >
+      <h1 class="no-margin">
+        <span>#</span>
+        <span>{{ channel.name }}</span>          
+      </h1>
+      <img src="./assets/img/icon/arrow_down.svg" alt="" />
+    </div>
+    <div>
+      <img class="pointer"
+        (click)="toggleOverlay('overlay1')"
+        src="./assets/img/icon/add_member.svg"
+        alt=""
+      />
+    </div>
+  </div>
+  <div class="content">
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
+  </div>
+  <div class="footer">Footer</div>
+</div>
+
+
 <div>
-  <header class="header-container">
+  <!-- <header class="header-container">
     <div class="header-container">
       <img src="./assets/img/icon/arrow_back.svg" alt="" routerLink="" />
       <img src="./assets/img/icon/Property 1=Default (1).svg" alt="" />
@@ -11,7 +40,7 @@
         src="{{ user.avatar }}"
       />
     </div>
-  </header>
+  </header> -->
   <main>
     <div class="mdc-card">
       <div
@@ -25,7 +54,7 @@
       <div>
         <img
           (click)="toggleOverlay('overlay1')"
-          src="./assets/img/icon/44. Add members button.svg"
+          src="./assets/img/icon/add_member.svg"
           alt=""
         />
       </div>
@@ -100,7 +129,7 @@
           <div class="profil">
             <img
               class="height"
-              src="./assets/img/icon/44. Add members button.svg"
+              src="./assets/img/icon/add_member.svg"
               alt=""
             />
             <p (click)="toggleOverlay('overlay2')" class="no-margin">

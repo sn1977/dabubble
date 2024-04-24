@@ -10,13 +10,19 @@ import { NavigationService } from '../../shared/services/navigation.service';
 import { AuthService } from '../../shared/services/auth.service';
 import { Auth } from '@angular/fire/auth';
 import { ChannelMessageComponent } from './channel-message/channel-message.component';
+import { HeaderMobileComponent } from '../../shared/components/header-mobile/header-mobile.component';
 
 @Component({
   selector: 'app-new-channel',
   standalone: true,
-  imports: [RouterLink, BottomSheetComponent, ChannelMessageComponent],
   templateUrl: './new-channel.component.html',
   styleUrl: './new-channel.component.scss',
+  imports: [
+    RouterLink,
+    BottomSheetComponent,
+    ChannelMessageComponent,
+    HeaderMobileComponent,
+  ],
 })
 export class NewChannelComponent implements OnInit {
   firestore = inject(FirebaseService);
