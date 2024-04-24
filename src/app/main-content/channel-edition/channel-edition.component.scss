@@ -8,6 +8,7 @@
 @include dialog.core-styles;
 @include textfield.core-styles;
 @include card.core-styles;
+@import "../../../styles/mixins.scss";
 
 main {
   height: 100vh;
@@ -78,6 +79,7 @@ main {
   padding: 10px;
   position: sticky;
   top: 0; 
+  @include shadow-bottom();
 }
 
 .sticky-textbox {

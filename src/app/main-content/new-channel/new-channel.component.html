@@ -21,9 +21,105 @@
     </div>
   </div>
   <div class="content">
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
+    <div class="message-content">
+      @if(this.firestore.channelMessages.length !== 0){
+        @for (channelMessage of this.firestore.channelMessages; track
+        channelMessage.id) {
+        <app-channel-message
+          [channelMessage]="channelMessage"
+        ></app-channel-message>
+        }
+      } @else {
+        <div class="channel-info">
+          <h1 class="no-margin">{{ channel.name }}</h1>
+          <p>
+            Du hast diesen Channel heute erstellt. Das ist der Anfang des Channels
+          </p>
+        </div>      
+      }
+    </div>
   </div>
-  <div class="footer">Footer</div>
+  <div class="footer">
+    <div class="sticky-textbox">
+      <textarea
+        placeholder="Schreibe eine Nachricht"
+        class="input-field"
+      ></textarea>
+      <div class="icons">
+        <img src="./assets/img/icon/add.svg" alt="" />
+        <div class="vertical-line"></div>
+        <img src="./assets/img/icon/smile.svg" alt="" />
+        <img src="./assets/img/icon/email.svg" alt="" />
+      </div>
+      <div class="send">
+        <img src="./assets/img/icon/send.svg" alt="" />
+      </div>
+    </div>
+  </div>
+  <div id="overlay1" class="overlay">
+    <div class="overlay-content">
+      <div class="display-flex">
+        <h1 class="no-margin">Mitglieder:</h1>
+        <img
+          src="./assets/img/icon/close.svg"
+          alt=""
+          (click)="closeOverlay('overlay1')"
+        />
+      </div>
+      <div class="members">
+        @for (user of this.firestore.getUsers(); track $index) {
+        <div class="profil">
+          <img class="img-profil" src="{{ user.avatar }}" alt="" />
+
+          @if(user.isOnline){
+          <img
+            src="./assets/img/characters/online.svg"
+            alt="Online"
+            class="online-avatar"
+          />
+          } @else {
+          <img
+            src="./assets/img/characters/offline.svg"
+            alt="Offline"
+            class="offline-avatar"
+          />
+          }
+
+          <p class="no-margin">{{ user.displayName }}</p>
+        </div>
+        }
+        <div class="profil">
+          <img
+            class="height"
+            src="./assets/img/icon/add_member.svg"
+            alt=""
+          />
+          <p (click)="toggleOverlay('overlay2')" class="no-margin">
+            Mitglied hinzufügen
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="overlay2" class="overlay">
+    <div class="overlay-content">
+      <div class="display-flex">
+        <h1 class="no-margin">Leute hinzufügen</h1>
+        <img
+          src="./assets/img/icon/close.svg"
+          alt=""
+          (click)="closeOverlay('overlay2')"
+        />
+      </div>
+      <input class="search-input" type="text" placeholder="Suche Mitglied" />
+      <div class="btn-pos">
+        <button class="add-button" (click)="closeOverlay('overlay2')">
+          Hinzufügen
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
 
 
