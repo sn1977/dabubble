@@ -27,6 +27,7 @@ export class ChannelMessageComponent implements OnInit {
   edit: boolean = false;
   hovered: boolean = false;
   isMessageFromYou: boolean = false;
+  // heutiges Datum noch einbauen für time seperator
 
   ngOnInit(): void {
     this.getItemValuesProfile('users', this.channelMessage.creator);
