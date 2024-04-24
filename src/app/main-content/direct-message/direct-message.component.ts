@@ -119,7 +119,7 @@ export class DirectMessageComponent implements OnInit {
       this.user = new User(this.firestore.user);
       console.log('Avatar: ' + this.user.avatar);
       console.log(this.user.displayName);
-      
+
     });
   }
 }

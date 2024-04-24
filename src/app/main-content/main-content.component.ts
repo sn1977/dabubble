@@ -21,6 +21,8 @@ import {Observable} from 'rxjs';
 import {Channel} from '../../models/channel.class';
 import {User} from '../../models/user.class';
 import {NgForOf, NgIf} from '@angular/common';
+import {MatDialog} from '@angular/material/dialog';
+import {SearchResultsDialogComponent} from '../search-results-dialog/search-results-dialog.component';
 
 @Component({
   selector: 'app-main-content',
@@ -80,7 +82,8 @@ export class MainContentComponent implements OnInit {
 
 
   constructor(public navigationService: NavigationService,
-              private itemStateService: ItemStateService) {
+              private itemStateService: ItemStateService,
+              private dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -126,6 +129,21 @@ export class MainContentComponent implements OnInit {
     this.filteredResults = [...channelMatches, ...userMatches];
     console.log('Gefilterte Resultate: ', this.filteredResults);
   }
+
+  // searchWorkspace(query: string) {
+  //   if (!query) {
+  //     this.filteredResults = [];
+  //     return;
+  //   }
+  //   query = query.toLowerCase();
+  //   this.filteredResults = [...this.allChannels.filter(channel => channel.name.toLowerCase().includes(query)),
+  //     ...this.allUsers.filter(user => user.displayName.toLowerCase().includes(query))];
+  //
+  //   this.dialog.open(SearchResultsDialogComponent, {
+  //     width: '300px',
+  //     data: { results: this.filteredResults }
+  //   });
+  // }
 
   onPanelOpened(index: number) {
     this.panels[index].expanded = true;
