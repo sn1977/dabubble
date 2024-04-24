@@ -41,24 +41,28 @@
                         <!-- Zeige das Inputfeld nur, wenn showInputField true ist -->
                         <input *ngIf="showInputField" type="text" class="input-field" placeholder="Leute suchen"
                             (input)="filterUsers($event)">
-                        @for (user of this.firestore.getUsers(); track $index) {
-                            <div class="channel-name pl-7" [id]="user.id" (click)="addmember($event)">
-                              <img src="{{ user.avatar }}">
-                
-                              @if(user.isOnline){
-                                <img src="./assets/img/characters/online.svg" alt="Online" class="online-avatar">
-                              }
-                              @else{
-                                <img src="./assets/img/characters/offline.svg" alt="Offline" class="offline-avatar">
-                              }
-                
-                              <span>{{ user.displayName }}
-                                @if(user.id === this.authService.activeUserId){
-                                  <span> (Du)</span>
-                                }
-                              </span>
+                            <div class="add-member">
+                                @for (user of this.firestore.getUsers(); track $index) {
+                                    <div class="channel-name pl-7" [id]="user.id" (click)="addmember($event)">
+                                      <img src="{{ user.avatar }}">
+                        
+                                      @if(user.isOnline){
+                                        <img src="./assets/img/characters/online.svg" alt="Online" class="online-avatar">
+                                      }
+                                      @else{
+                                        <img src="./assets/img/characters/offline.svg" alt="Offline" class="offline-avatar">
+                                      }
+                        
+                                      <span>{{ user.displayName }}
+                                        @if(user.id === this.authService.activeUserId){
+                                          <span> (Du)</span>
+                                        }
+                                      </span>
+                                    </div>
+                                  }
+
                             </div>
-                          }
+                        
                     </div>
                     <div class="btn-pos">
                         <button class="add-button" routerLink="/new-channel">Erstellen</button>
