@@ -1,10 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { BottomSheetComponent } from '../../../main-content/bottom-sheet/bottom-sheet.component';
-import { Subscription } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { FirebaseService } from '../../services/firebase.service';
-import { Auth } from '@angular/fire/auth';
 import { User } from '../../../../models/user.class';
 
 @Component({
@@ -15,9 +13,7 @@ import { User } from '../../../../models/user.class';
   styleUrl: './header-mobile.component.scss',
 })
 export class HeaderMobileComponent implements OnInit {
-  userAvatarUrl: string = 'assets/img/characters/character_FrederikBeck.svg';
   firestore = inject(FirebaseService);
-  firebaseAuth = inject(Auth);
   authService = inject(AuthService);
   user: User = new User();
 
@@ -40,14 +36,12 @@ export class HeaderMobileComponent implements OnInit {
 
   test() {
     let id = this.authService.activeUserAccount.uid;
-    console.log(id); // Stelle sicher, dass id definiert ist, bevor du darauf zugreifst
+    // console.log(id); // Stelle sicher, dass id definiert ist, bevor du darauf zugreifst
     this.getItemValues('users', id);
   }
 
 
   openBottomSheet(): void {
-    // this._bottomSheet.open(BottomSheetComponent);
-
     const bottomSheetRef = this._bottomSheet.open(BottomSheetComponent, {
       data: { user: this.user } // Übergabe des Benutzerobjekts an die BottomSheet
     });
@@ -59,13 +53,8 @@ export class HeaderMobileComponent implements OnInit {
   }
 
   getItemValues(collection: string, itemID: string) {
-    // console.log('1');
-
     this.firestore.getSingleItemData(collection, itemID, () => {
-      // return
-      // console.log('2');
       this.user = new User(this.firestore.user);
-      // console.log('Avatar: ' + this.user.avatar);
     });
   }
 }
