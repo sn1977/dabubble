@@ -20,6 +20,7 @@ import {ItemStateService} from '../shared/services/item-state.service';
 import {Observable} from 'rxjs';
 import {Channel} from '../../models/channel.class';
 import {User} from '../../models/user.class';
+import {NgForOf, NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-main-content',
@@ -38,6 +39,8 @@ import {User} from '../../models/user.class';
     MatFabButton,
     FormsModule,
     RouterLink,
+    NgForOf,
+    NgIf,
   ],
   templateUrl: './main-content.component.html',
   styleUrl: './main-content.component.scss'
@@ -81,14 +84,7 @@ export class MainContentComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.firestore.subChannelList();
-    // this.firestore.subUserList();
     this.listenForDataChanges();
-    // this.allChannels = this.firestore.getChannels();
-    // this.allUsers = this.firestore.getUsers();
-    // console.log('das sind die gefilterten Resultate: ', this.filteredResults);
-    // console.log('Channels geladen: ', this.allChannels);
-    // console.log('Users geladen: ', this.allUsers);
   }
 
   listenForDataChanges() {
@@ -154,9 +150,9 @@ export class MainContentComponent implements OnInit {
     this.navigationService.navigate(['/add-channel']);
   }
 
-  checkInput(value: string): void {
-    this.inputHasValue = !!value.trim();
-  }
+  // checkInput(value: string): void {
+  //   this.inputHasValue = !!value.trim();
+  // }
 
   openChannel (event: MouseEvent, path: string) {
     const docRefId = (event.currentTarget as HTMLElement).id;
