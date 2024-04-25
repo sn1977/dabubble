@@ -22,7 +22,7 @@
         </div>
 
         <div class="btn-pos">
-            <button class="add-button" (click)="toggleOverlay()">Erstellen</button>
+            <button type="button" class="add-button" (click)="toggleOverlay()">Erstellen</button>
         </div>
         <div id="overlay" class="overlay" [class.show-overlay]="overlayVisible">
             <div>
@@ -71,8 +71,8 @@
                         </div>
 
                     </div>
-                    <div class="btn-pos">
-                        <button class="add-button" routerLink="/new-channel">Erstellen</button>
+                    <div class="btn-pos">                        
+                        <button type="submit" class="add-button">Erstellen</button>
                     </div>
 
                 </div>

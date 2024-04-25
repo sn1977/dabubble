@@ -31,16 +31,30 @@
         }
       } @else {
         <div class="channel-info">
-          <h1 class="no-margin">{{ channel.name }}</h1>
+          <h1 class="no-margin">
+            <span>#</span>
+            <span>{{ channel.name }}</span>
+          </h1>
           <p>
-            Du hast diesen Channel heute erstellt. Das ist der Anfang des Channels
+            Du hast diesen Channel heute erstellt. Das ist der Anfang des Channels {{ channel.name }}
           </p>
         </div>      
       }
     </div>
   </div>
   <div class="footer">
-    <div class="sticky-textbox">
+
+    <div class="message-box">
+      <div class="text-content">
+        <textarea name="new-message" id="new-message" cols="30" rows="4"></textarea>
+      </div>
+      <div class="actions">
+        <div class="other-content">1 2 3 </div>
+        <button>Senden</button>
+      </div>
+    </div>
+
+    <!-- <div class="sticky-textbox">
       <textarea
         placeholder="Schreibe eine Nachricht"
         class="input-field"
@@ -54,7 +68,7 @@
       <div class="send">
         <img src="./assets/img/icon/send.svg" alt="" />
       </div>
-    </div>
+    </div> -->
   </div>
   <!-- <div id="overlay1" class="overlay">
     <div class="overlay-content">
@@ -137,7 +151,7 @@
       />
     </div>
   </header> -->
-  <main>
+  <!-- <main>
     <div class="mdc-card">
       <div
         class="channel-box"
@@ -254,5 +268,5 @@
         </div>
       </div>
     </div>
-  </main>
+  </main> -->
 </div>
