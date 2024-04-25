@@ -24,8 +24,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class ChannelMessageComponent implements OnInit {
   constructor(private dialog: MatDialog) {
-    this.getCurrentDay();
-    this.dateTest();
+    this.getCurrentDay();    
   }
 
   firestore = inject(FirebaseService);
@@ -86,11 +85,5 @@ export class ChannelMessageComponent implements OnInit {
         // Führe hier Aktionen mit dem ausgewählten Emoji aus, z.B. Anzeigen in der UI
       }
     });
-  }
-
-  dateTest() {
-    const date = new Date();
-    console.log(date.toLocaleString());
-    console.log(date.toISOString());
   }
 }
