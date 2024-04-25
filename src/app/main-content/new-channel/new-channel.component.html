@@ -8,12 +8,13 @@
     >
       <h1 class="no-margin">
         <span>#</span>
-        <span>{{ channel.name }}</span>          
+        <span>{{ channel.name }}</span>
       </h1>
       <img src="./assets/img/icon/arrow_down.svg" alt="" />
     </div>
     <div>
-      <img class="pointer"
+      <img
+        class="pointer"
         (click)="toggleOverlay('overlay1')"
         src="./assets/img/icon/add_member.svg"
         alt=""
@@ -22,34 +23,44 @@
   </div>
   <div class="content">
     <div class="message-content">
-      @if(this.firestore.channelMessages.length !== 0){
-        @for (channelMessage of this.firestore.channelMessages; track
-        channelMessage.id) {
-        <app-channel-message
-          [channelMessage]="channelMessage"
-        ></app-channel-message>
-        }
-      } @else {
-        <div class="channel-info">
-          <h1 class="no-margin">
-            <span>#</span>
-            <span>{{ channel.name }}</span>
-          </h1>
-          <p>
-            Du hast diesen Channel heute erstellt. Das ist der Anfang des Channels {{ channel.name }}
-          </p>
-        </div>      
+      @if(this.firestore.channelMessages.length !== 0){ @for (channelMessage of
+      this.firestore.channelMessages; track channelMessage.id) {
+      <app-channel-message
+        [channelMessage]="channelMessage"
+      ></app-channel-message>
+      } } @else {
+      <div class="channel-info">
+        <h1 class="no-margin">
+          <span>#</span>
+          <span>{{ channel.name }}</span>
+        </h1>
+        <p>
+          Du hast diesen Channel heute erstellt. Das ist der Anfang des Channels
+          {{ channel.name }}
+        </p>
+      </div>
       }
     </div>
   </div>
   <div class="footer">
-
     <div class="message-box">
       <div class="text-content">
-        <textarea name="new-message" id="new-message" cols="30" rows="4"></textarea>
+        <textarea
+          type="text"
+          minlength="10"
+          placeholder="Nachricht an #Entwicklerteam"
+          name="messagetext"
+          id="messagetext"
+          required
+        ></textarea>
       </div>
       <div class="actions">
-        <div class="other-content">1 2 3 </div>
+        <div class="other-content">
+          <img src="./assets/img/icon/add.svg" alt="" />
+          <div class="vertical-line"></div>
+          <img src="./assets/img/icon/smile.svg" alt="" />
+          <img src="./assets/img/icon/email.svg" alt="" />
+        </div>
         <button>Senden</button>
       </div>
     </div>
@@ -135,7 +146,6 @@
     </div>
   </div> -->
 </div>
-
 
 <div>
   <!-- <header class="header-container">
