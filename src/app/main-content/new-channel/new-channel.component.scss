@@ -54,7 +54,7 @@ h1 {
 }
 
 .message-box{
-  @include dFlex($jc: flex-start, $ai: flex-start, $fd: column, $g: 7px);
+  @include dFlex($jc: flex-start, $ai: flex-start, $fd: column, $g: 0);
   height: 137px;
   width: 398px;
   border: 1px solid #ADB0D9;
@@ -70,7 +70,7 @@ h1 {
 input[type="text"],
 textarea{
   width: 100%;
-  height: 60px;
+  height: 68px;
   box-sizing: border-box;
   padding-block: 0;
   padding-inline: 0;
@@ -80,6 +80,7 @@ textarea{
   font-weight: 400;
   font-size: 18px;
   line-height: 24.55px;
+  resize: none;
 }
 
 
@@ -89,8 +90,8 @@ textarea{
   @include dFlex($jc: space-between, $ai: center, $fd: row, $g: 15px);
 }
 .other-content{
-  background-color: red;
-  height: 40px;
+  // background-color: red;
+  height: 28px;
   @include dFlex($jc: space-between, $ai: center, $fd: row, $g: 15px);
   .vertical-line {
     width: 1px;
