@@ -8,7 +8,6 @@ export class FirestoreTimestampPipe implements PipeTransform {
 
   transform(timestamp: any): string {
     const date = timestamp.toDate();
-    return date.toLocaleString();
+    return date.date.toISOString();
   }
-
 }

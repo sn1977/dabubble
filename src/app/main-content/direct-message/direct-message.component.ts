@@ -8,7 +8,7 @@ import {FirebaseService} from '../../shared/services/firebase.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {User} from '../../../models/user.class';
 import { AuthService } from '../../shared/services/auth.service';
-import { Channel } from '../../../models/channel.class';
+// import { Channel } from '../../../models/channel.class';
 import { HeaderMobileComponent } from '../../shared/components/header-mobile/header-mobile.component';
 import {HeaderStateService} from '../../shared/services/header-state.service';
 
@@ -24,7 +24,7 @@ export class DirectMessageComponent implements OnInit {
   router = inject(Router);
   itemID: any = '';
   user: User = new User();
-  channel: Channel = new Channel();
+  // channel: Channel = new Channel();
   authService = inject(AuthService);
 
   constructor(
@@ -44,10 +44,10 @@ export class DirectMessageComponent implements OnInit {
       this.getItemValues('users', this.itemID);
     });
 
-    this.route.paramMap.subscribe((paramMap) => {
-      this.itemID = paramMap.get('id');
-      this.getItemValues('channels', this.itemID);
-    });
+    // this.route.paramMap.subscribe((paramMap) => {
+    //   this.itemID = paramMap.get('id');
+    //   this.getItemValues('channels', this.itemID);
+    // });
 
     this.headerStateService.setAlternativeHeader(true);
   }
@@ -113,11 +113,11 @@ export class DirectMessageComponent implements OnInit {
     });
   }
 
-  getItemValuesChannel(collection: string, itemID: string) {
-    this.firestore.getSingleItemData(collection, itemID, () => {
-      this.channel = new Channel(this.firestore.channel);
-    });
-  }
+  // getItemValuesChannel(collection: string, itemID: string) {
+  //   this.firestore.getSingleItemData(collection, itemID, () => {
+  //     this.channel = new Channel(this.firestore.channel);
+  //   });
+  // }
 
   getItemValuesProfile(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {
