@@ -4,40 +4,67 @@ import { FirestoreTimestampPipe } from '../../../pipes/firestore-timestamp.pipe'
 import { ChannelMessage } from '../../../../models/channel-message.class';
 import { User } from '../../../../models/user.class';
 import { FirebaseService } from '../../../shared/services/firebase.service';
-import {MatDialog, MatDialogModule} from '@angular/material/dialog';
-import {EmojiPickerComponent} from '../../../shared/components/emoji-picker/emoji-picker.component';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { EmojiPickerComponent } from '../../../shared/components/emoji-picker/emoji-picker.component';
 import { AuthService } from '../../../shared/services/auth.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-channel-message',
   standalone: true,
   templateUrl: './channel-message.component.html',
   styleUrl: './channel-message.component.scss',
-  imports: [CommonModule, FirestoreTimestampPipe, MatDialogModule, EmojiPickerComponent],
+  imports: [
+    CommonModule,
+    FirestoreTimestampPipe,
+    MatDialogModule,
+    EmojiPickerComponent,
+    FormsModule,
+  ],
 })
 export class ChannelMessageComponent implements OnInit {
-
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog) {
+    this.getCurrentDay();
+  }
 
   firestore = inject(FirebaseService);
   authService = inject(AuthService);
   @Input() channelMessage!: ChannelMessage;
-  @Input() index!: number;  
+  @Input() index!: number;
   user: User = new User();
   edit: boolean = false;
   hovered: boolean = false;
   isMessageFromYou: boolean = false;
-  // heutiges Datum noch einbauen für time seperator
+  previousDate?: any;
+  currentDate: any;
+  isToday: boolean = false;
+
+  getCurrentDay(){
+    const date = new Date();
+    let day = date.getDate().toString().padStart(2, '0');
+    let month = (date.getMonth() + 1).toString().padStart(2, '0');
+    let year = date.getFullYear().toString();
+    this.currentDate = year + month + day;
+  }  
 
   ngOnInit(): void {
     this.getItemValuesProfile('users', this.channelMessage.creator);
-    this.isMessageFromYou = this.authService.activeUserAccount.uid !== this.channelMessage.creator ? false : true;
+    this.isMessageFromYou =
+      this.authService.activeUserAccount.uid !== this.channelMessage.creator
+        ? false
+        : true;
   }
 
   getItemValuesProfile(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {
       this.user = new User(this.firestore.user);
     });
+  }
+
+  formatDate(timestamp: any){
+    const date = new Date(timestamp.seconds * 1000);
+    const formattedDate = date.toISOString().slice(0, 10).replace(/-/g, '');    
+    return formattedDate;
   }
 
   deleteHovered() {
@@ -49,15 +76,14 @@ export class ChannelMessageComponent implements OnInit {
   openEmojiPicker(): void {
     const dialogRef = this.dialog.open(EmojiPickerComponent, {
       width: '300px',
-      height: '300px'
+      height: '300px',
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         console.log('Emoji ausgewählt:', result);
         // Führe hier Aktionen mit dem ausgewählten Emoji aus, z.B. Anzeigen in der UI
       }
     });
   }
-
 }

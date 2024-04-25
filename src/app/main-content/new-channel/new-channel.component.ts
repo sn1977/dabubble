@@ -63,7 +63,7 @@ export class NewChannelComponent implements OnInit {
 
   test() {
     let id = this.authService.activeUserAccount.uid;
-    console.log(id); // Stelle sicher, dass id definiert ist, bevor du darauf zugreifst
+    // console.log(id); // Stelle sicher, dass id definiert ist, bevor du darauf zugreifst
     this.getItemValuesProfile('users', id);
   }
 
@@ -110,7 +110,7 @@ export class NewChannelComponent implements OnInit {
   getItemValuesProfile(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {
       this.user = new User(this.firestore.user);
-      console.log('Avatar: ' + this.user.avatar);
+      // console.log('Avatar: ' + this.user.avatar);
     });
   }
 }

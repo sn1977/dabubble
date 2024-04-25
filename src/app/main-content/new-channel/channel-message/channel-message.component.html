@@ -1,3 +1,15 @@
+<div class="timeSeperator">
+  <img class="line" src="./assets/img/auth/line.svg" alt="" />
+
+  @if(currentDate == this.formatDate(this.channelMessage.createdAt)){  
+  <span>Heute</span>
+  } @else {
+  <span>{{
+    channelMessage.createdAt | firestoreTimestamp | date : "EEEE, d. MMMM"
+  }}</span>
+  }
+</div>
+
 <div
   class="content"
   [ngStyle]="{ 'flex-direction': isMessageFromYou ? 'row' : 'row-reverse' }"
@@ -13,7 +25,9 @@
   >
     <div
       class="message-content pointer"
-      [ngStyle]="{ 'align-items': isMessageFromYou ? 'flex-start' : 'flex-end' }"
+      [ngStyle]="{
+        'align-items': isMessageFromYou ? 'flex-start' : 'flex-end'
+      }"
     >
       <div
         class="creator-infos"
@@ -28,28 +42,29 @@
         </div>
       </div>
 
-
       @if(isMessageFromYou){
-        <div
+      <div
         class="message text-white"
         [ngStyle]="{
           'background-color': hovered ? '#797EF3' : '#797EF3',
-          'border-radius':
-          isMessageFromYou ? '0 30px 30px 30px' : '30px 0 30px 30px'
+          'border-radius': isMessageFromYou
+            ? '0 30px 30px 30px'
+            : '30px 0 30px 30px'
         }"
       >
         {{ channelMessage.text }}
-      </div>  
+      </div>
       } @else {
-        <div
+      <div
         class="message"
         [ngStyle]="{
           'background-color': hovered ? '#FFFFFF' : '#ECEEFE',
-          'border-radius':
-          isMessageFromYou ? '0 30px 30px 30px' : '30px 0 30px 30px'
+          'border-radius': isMessageFromYou
+            ? '0 30px 30px 30px'
+            : '30px 0 30px 30px'
         }"
       >
-        {{ channelMessage.text }}       
+        {{ channelMessage.text }}
       </div>
       }
 
