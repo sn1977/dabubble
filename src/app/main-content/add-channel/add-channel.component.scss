@@ -89,15 +89,56 @@
   transition: opacity 0.5s ease-in-out; /* Animation für die Sichtbarkeit */
 }
 
-.add-member{
-  height: 800px;
-  overflow: scroll;
 
+.add-member {
+  position: relative;
+	max-width: 30em;
+	height: 100px;
+  width: 200px;
+  
+
+	// looks
+	background-color: #fff;
+	padding: 10px;
+	font-size: 1.25em;
+	border-radius: 1rem;
+  box-shadow:	0 0.125rem 0.5rem rgba(0, 0, 0, .3), 0 0.0625rem 0.125rem rgba(0, 0, 0, .2);
 }
 
+.pl-7 {
+  padding-left: 23px;
+}
+
+.scroll{
+  overflow: scroll;
+  height: 100px;
+}
+
+
+.add-member:before {
+  // layout
+	content: '';
+	position: absolute;
+	width: 0;
+	height: 0;
+	bottom: 100%;
+	left: 1.5em; // offset should move with padding of parent
+	border: .75rem solid transparent;
+	border-top: none;
+
+	// looks
+	border-bottom-color: #fff;
+	filter: drop-shadow(0 -0.0625rem 0.0625rem rgba(0, 0, 0, .1));
+}
+
+
+
+
+
+
+
 .channel-name {
-  padding-left: 26px;
-  padding-top: 16px;
+  padding: 10px;
   gap: 16px;
   display: flex;
   align-items: center;
@@ -113,6 +154,19 @@
     border-radius: 100%;
     object-fit: cover;
   }
+
+  .online-avatar, .offline-avatar {
+    position: absolute;
+    bottom: 15px;
+    left: 48px;
+    width: 14px;
+    height: 14px;
+  }
+}
+
+.channel-name:hover {
+  background-color: lightgrey;
+  cursor: pointer;
 }
 
 

@@ -60,9 +60,9 @@ console.log(this.channelData);
 
 
 
-
   overlayVisible: boolean = false;
   showInputField: boolean = false;
+  showAddMember: boolean = false;
 
    /*constructor() {
     this.loadUsers();
@@ -95,35 +95,33 @@ console.log(this.channelData);
   }
 
 
-  filterUsers(event: any): void {
-    
-    const searchText: string = event.target.value;
-    if (!searchText) {
-      this.filteredUsers = [];
-      return;
-    }
-    this.filteredUsers = this.users.filter(user =>
-      user.displayName.toLowerCase().includes(searchText.toLowerCase())
-    );
-  }
-
 
   toggleOverlay() {
     this.overlayVisible = !this.overlayVisible;
   }
 
-  toggleInputField(event: any) {
-    this.showInputField =
-      event.target.id === 'addSpecificMembers' && event.target.checked;
-  }
+  toggleInputField(inputId: string) {
+    if (inputId === 'addSpecificMembers') {
+        this.showInputField = !this.showInputField; // Toggle für Checkbox
+        this.showAddMember = false; // Schließe das Div, wenn das Input-Feld geschlossen wird
+    } else if (inputId === 'searchPeople') {
+        if (this.showInputField) {
+            this.showAddMember = !this.showAddMember; // Toggle für showAddMember, nur wenn showInputField aktiv ist
+        } else {
+            this.showInputField = true; // Öffne das Div, wenn das Input-Feld geöffnet wird
+            this.showAddMember = true; // Öffne das Div, wenn das Input-Feld geöffnet wird
+        }
+    }
+}
+
+
+
 
   getInputValue(event: any): string {
     return event && event.target && event.target.value;
   }
 
-  toggleDropdown() {
-    this.showDropdown = !this.showDropdown;
-  }
+  
 
   
 }
