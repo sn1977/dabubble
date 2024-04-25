@@ -1,14 +1,15 @@
 <div>
-    <header class="header-container">
-        <div class="header-container">
-            <img src="./../../assets/img/icon/arrow_back.svg" alt="" routerLink="">
-            <img src="./../../assets/img/icon/Property 1=Default (1).svg" alt="">
-        </div>
-        <div>
-            {{this.authService.activeUserAccount?.displayName}}
-            <img class="header-img" (click)="openBottomSheet()" src="{{user.avatar}}">
-        </div>
-    </header>
+  <app-header-mobile></app-header-mobile>
+<!--    <header class="header-container">-->
+<!--        <div class="header-container">-->
+<!--            <img src="./../../assets/img/icon/arrow_back.svg" alt="" routerLink="">-->
+<!--            <img src="./../../assets/img/icon/Property 1=Default (1).svg" alt="">-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            {{this.authService.activeUserAccount?.displayName}}-->
+<!--            <img class="header-img" (click)="openBottomSheet()" src="{{user.avatar}}">-->
+<!--        </div>-->
+<!--    </header>-->
     <main>
         <div class="mdc-card">
             <div class="channel-box">

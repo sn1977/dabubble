@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import { BottomSheetComponent } from '../bottom-sheet/bottom-sheet.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { Router, RouterLink } from '@angular/router';
@@ -6,19 +6,21 @@ import { AuthService } from '../../shared/services/auth.service';
 import { Auth } from '@angular/fire/auth';
 import { FirebaseService } from '../../shared/services/firebase.service';
 import { User } from '../../../models/user.class';
+import {HeaderMobileComponent} from '../../shared/components/header-mobile/header-mobile.component';
+import {HeaderStateService} from '../../shared/services/header-state.service';
 
 @Component({
   selector: 'app-new-message',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, HeaderMobileComponent],
   templateUrl: './new-message.component.html',
   styleUrl: './new-message.component.scss'
 })
-export class NewMessageComponent {
+export class NewMessageComponent implements OnInit{
 
 
-  constructor(private _bottomSheet: MatBottomSheet){
-    
+  constructor(private _bottomSheet: MatBottomSheet, private headerStateService: HeaderStateService){
+
   }
   firebaseAuth = inject(Auth);
   authService = inject(AuthService);
@@ -29,7 +31,7 @@ export class NewMessageComponent {
   async ngOnInit(): Promise<void> {
     await this.waitForUserData();
     this.test();
-
+    this.headerStateService.setAlternativeHeader(true);
   }
 
   async waitForUserData(): Promise<void> {
@@ -47,21 +49,21 @@ export class NewMessageComponent {
     console.log(id); // Stelle sicher, dass id definiert ist, bevor du darauf zugreifst
     this.getItemValuesProfile('users', id);
   }
-  
+
   toggleOverlay(overlayId: string): void {
     const currentOverlay = document.querySelector('.overlay[style="display: block;"]') as HTMLElement;
     const newOverlay = document.getElementById(overlayId);
-  
+
     if (currentOverlay && currentOverlay.id !== overlayId) {
       // Schließe das aktuelle Overlay, wenn ein anderes Overlay geöffnet ist
       currentOverlay.style.display = "none";
     }
-  
+
     if (newOverlay) {
       newOverlay.style.display = newOverlay.style.display === "none" ? "block" : "none";
     }
   }
-  
+
   closeOverlay(overlayId: string): void {
     const overlay = document.getElementById(overlayId) as HTMLElement;
     if (overlay) {
