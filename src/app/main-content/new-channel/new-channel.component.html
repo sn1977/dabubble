@@ -42,7 +42,11 @@
       }
     </div>
   </div>
-  <div class="footer">
+
+  <!-- <app-text-box [placeholder]="Nachricht"></app-text-box> -->
+  <app-text-box></app-text-box>
+
+  <!-- <div class="footer">
     <div class="message-box">
       <div class="text-content">
         <textarea
@@ -64,7 +68,7 @@
         <img class="pointer" src="./assets/img/icon/send.svg" alt="" />
       </div>
     </div>   
-  </div>
+  </div> -->
   <!-- <div id="overlay1" class="overlay">
     <div class="overlay-content">
       <div class="display-flex">
@@ -131,73 +135,6 @@
   </div> -->
 </div>
 
-<div>
-  <!-- <header class="header-container">
-    <div class="header-container">
-      <img src="./assets/img/icon/arrow_back.svg" alt="" routerLink="" />
-      <img src="./assets/img/icon/Property 1=Default (1).svg" alt="" />
-    </div>
-    <div>
-      <img
-        class="header-img"
-        (click)="openBottomSheet()"
-        src="{{ user.avatar }}"
-      />
-    </div>
-  </header> -->
-  <!-- <main>
-    <div class="mdc-card">
-      <div
-        class="channel-box"
-        [id]="itemID"
-        (click)="openChannel($event, 'channel-edition')"
-      >
-        <h1 class="no-margin">{{ channel.name }}</h1>
-        <img src="./assets/img/icon/arrow_down.svg" alt="" />
-      </div>
-      <div>
-        <img
-          (click)="toggleOverlay('overlay1')"
-          src="./assets/img/icon/add_member.svg"
-          alt=""
-        />
-      </div>
-    </div>
-    
-    <div class="message-content">
-    @if(this.firestore.channelMessages.length !== 0){
-      @for (channelMessage of this.firestore.channelMessages; track
-      channelMessage.id) {
-      <app-channel-message
-        [channelMessage]="channelMessage"
-      ></app-channel-message>
-      }
-    } @else {
-      <div class="channel-info">
-        <h1 class="no-margin">{{ channel.name }}</h1>
-        <p>
-          Du hast diesen Channel heute erstellt. Das ist der Anfang des Channels
-        </p>
-      </div>      
-    }
-  </div>
-
-    <div class="sticky-textbox">
-      <textarea
-        placeholder="Schreibe eine Nachricht"
-        class="input-field"
-      ></textarea>
-      <div class="icons">
-        <img src="./assets/img/icon/add.svg" alt="" />
-        <div class="vertical-line"></div>
-        <img src="./assets/img/icon/smile.svg" alt="" />
-        <img src="./assets/img/icon/email.svg" alt="" />
-      </div>
-      <div class="send">
-        <img src="./assets/img/icon/send.svg" alt="" />
-      </div>
-    </div>
-
     <div id="overlay1" class="overlay">
       <div class="overlay-content">
         <div class="display-flex">
@@ -262,5 +199,3 @@
         </div>
       </div>
     </div>
-  </main> -->
-</div>

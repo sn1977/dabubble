@@ -12,6 +12,7 @@ import {Auth} from '@angular/fire/auth';
 import {ChannelMessageComponent} from './channel-message/channel-message.component';
 import {HeaderMobileComponent} from '../../shared/components/header-mobile/header-mobile.component';
 import {HeaderStateService} from '../../shared/services/header-state.service';
+import { TextBoxComponent } from '../../shared/components/text-box/text-box.component';
 
 @Component({
   selector: 'app-new-channel',
@@ -23,6 +24,7 @@ import {HeaderStateService} from '../../shared/services/header-state.service';
     BottomSheetComponent,
     ChannelMessageComponent,
     HeaderMobileComponent,
+    TextBoxComponent
   ],
 })
 export class NewChannelComponent implements OnInit {
