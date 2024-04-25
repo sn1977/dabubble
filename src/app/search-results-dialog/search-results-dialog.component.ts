@@ -18,6 +18,15 @@ import {NgForOf, NgIf} from '@angular/common';
 export class SearchResultsDialogComponent {
   constructor(@Inject(MAT_DIALOG_DATA) public data: {results: any[]}) { }
 
-  protected readonly Channel = Channel;
-  protected readonly User = User;
+  // protected readonly Channel = Channel;
+  // protected readonly User = User;
+
+  // isChannel(item: any): boolean {
+  //   return item instanceof Channel;
+  // }
+  //
+  // isUser(item: any): boolean {
+  //   return item instanceof User;
+  // }
+
 }

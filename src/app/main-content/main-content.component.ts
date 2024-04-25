@@ -128,6 +128,11 @@ export class MainContentComponent implements OnInit {
 
     this.filteredResults = [...channelMatches, ...userMatches];
     console.log('Gefilterte Resultate: ', this.filteredResults);
+
+    // this.dialog.open(SearchResultsDialogComponent, {
+    //       width: '300px',
+    //       data: { results: this.filteredResults }
+    //     });
   }
 
   // searchWorkspace(query: string) {
