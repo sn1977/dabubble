@@ -46,25 +46,26 @@ export class AddChannelComponent {
 
   
 
-  addmember(event: MouseEvent, user: User) {
-  
-    const docRefId = (event.currentTarget as HTMLElement).id;
+  // Annahme: User-Objekt hat ein Feld "selected"
+addmember(event: MouseEvent, user: User) {
+  const docRefId = (event.currentTarget as HTMLElement).id;
 
-    // Überprüfe, ob die docRefId bereits in this.selectedUser vorhanden ist
-    const index = this.selectedUser.indexOf(docRefId);
-    if (index === -1) {
-        // Wenn nicht, füge sie hinzu
-        this.selectedUser.push(docRefId);
-        this.selected = true; // Markiere den Benutzer als ausgewählt
-        console.log(this.selectedUser);
-    } else {
-        // Wenn vorhanden, entferne sie aus dem Array
-        this.selectedUser.splice(index, 1);
-        this.selected = false; // Markiere den Benutzer als nicht ausgewählt
-        console.log('Diese docRefId wurde entfernt:', docRefId);
-        console.log(this.selectedUser);
-    }
+  // Überprüfe, ob die docRefId bereits in this.selectedUser vorhanden ist
+  const index = this.selectedUser.indexOf(docRefId);
+  if (index === -1) {
+      // Wenn nicht, füge sie hinzu
+      this.selectedUser.push(docRefId);
+      user.selected = true; // Markiere den Benutzer als ausgewählt
+      console.log(this.selectedUser);
+  } else {
+      // Wenn vorhanden, entferne sie aus dem Array
+      this.selectedUser.splice(index, 1);
+      user.selected = false; // Markiere den Benutzer als nicht ausgewählt
+      console.log('Diese docRefId wurde entfernt:', docRefId);
+      console.log(this.selectedUser);
+  }
 }
+
 
 
 searchQuery: string = '';
@@ -72,10 +73,6 @@ searchQuery: string = '';
 onSearchInputChange(value: string) {
     this.searchQuery = value;
 }
-
-
-
- 
 
   matchesSearch(user: any): boolean {
     if (!this.searchQuery || this.searchQuery.trim() === '') {

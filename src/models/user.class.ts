@@ -5,6 +5,7 @@ export class User {
   displayName: string;
   isOnline: boolean;
   provider: string;
+  selected: boolean | undefined;
 
   constructor(obj?: any) {
     this.avatar = obj ? obj.avatar : '';
@@ -12,6 +13,7 @@ export class User {
     this.displayName = obj ? obj.displayName : '';
     this.isOnline = obj ? obj.isOnline : true;
     this.provider = obj ? obj.provider : '';
+    this.selected= obj ? obj.selected : '';
   }
 
   public toJSON() {
@@ -21,6 +23,7 @@ export class User {
       displayName: this.displayName,
       isOnline: this.isOnline,
       provider: this.provider,
+      selected: this.selected
     };
   }
 }
