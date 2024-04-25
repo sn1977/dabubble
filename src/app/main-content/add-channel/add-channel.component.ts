@@ -33,13 +33,9 @@ export class AddChannelComponent {
   router = inject(Router);
   authService = inject(AuthService);
   users: User[] = [];
-<<<<<<< HEAD
-  channel: Channel = new Channel;
   selected: boolean = false;
-=======
   channel: Channel = new Channel();
   selectedUser: any = [];
->>>>>>> 48625f1bc971b9348b776fef4f24193a7b8848ac
 
   channelData = {
     creator: '',
@@ -48,19 +44,15 @@ export class AddChannelComponent {
     name: '',
   };
 
-<<<<<<< HEAD
-  selectedUser:any = [];
+  
 
   addmember(event: MouseEvent, user: User) {
-=======
-  addmember(event: MouseEvent) {
->>>>>>> 48625f1bc971b9348b776fef4f24193a7b8848ac
+  
     const docRefId = (event.currentTarget as HTMLElement).id;
 
     // Überprüfe, ob die docRefId bereits in this.selectedUser vorhanden ist
     const index = this.selectedUser.indexOf(docRefId);
     if (index === -1) {
-<<<<<<< HEAD
         // Wenn nicht, füge sie hinzu
         this.selectedUser.push(docRefId);
         this.selected = true; // Markiere den Benutzer als ausgewählt
@@ -81,27 +73,9 @@ onSearchInputChange(value: string) {
     this.searchQuery = value;
 }
 
-matchesSearch(user: any): boolean {
-  if (!this.searchQuery || this.searchQuery.trim() === '') {
-      return true; // Wenn keine Suchabfrage vorhanden ist, zeige den Benutzer
-=======
-      // Wenn nicht, füge sie hinzu
-      this.selectedUser.push(docRefId);
-      //console.log(this.selectedUser);
-    } else {
-      // Wenn vorhanden, entferne sie aus dem Array
-      this.selectedUser.splice(index, 1);
-      //console.log('Diese docRefId wurde entfernt:', docRefId);
-      //console.log(this.selectedUser);
-    }
->>>>>>> 48625f1bc971b9348b776fef4f24193a7b8848ac
-  }
 
-  searchQuery: string = '';
 
-  onSearchInputChange(value: string) {
-    this.searchQuery = value;
-  }
+ 
 
   matchesSearch(user: any): boolean {
     if (!this.searchQuery || this.searchQuery.trim() === '') {
