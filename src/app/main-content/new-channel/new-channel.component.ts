@@ -1,16 +1,17 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
-import { BottomSheetComponent } from '../bottom-sheet/bottom-sheet.component';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { Channel } from '../../../models/channel.class';
-import { FirebaseService } from '../../shared/services/firebase.service';
-import { ActivatedRoute } from '@angular/router';
-import { User } from '../../../models/user.class';
-import { NavigationService } from '../../shared/services/navigation.service';
-import { AuthService } from '../../shared/services/auth.service';
-import { Auth } from '@angular/fire/auth';
-import { ChannelMessageComponent } from './channel-message/channel-message.component';
-import { HeaderMobileComponent } from '../../shared/components/header-mobile/header-mobile.component';
+import {Component, inject, Input, OnInit} from '@angular/core';
+import {Router, RouterLink} from '@angular/router';
+import {BottomSheetComponent} from '../bottom-sheet/bottom-sheet.component';
+import {MatBottomSheet} from '@angular/material/bottom-sheet';
+import {Channel} from '../../../models/channel.class';
+import {FirebaseService} from '../../shared/services/firebase.service';
+import {ActivatedRoute} from '@angular/router';
+import {User} from '../../../models/user.class';
+import {NavigationService} from '../../shared/services/navigation.service';
+import {AuthService} from '../../shared/services/auth.service';
+import {Auth} from '@angular/fire/auth';
+import {ChannelMessageComponent} from './channel-message/channel-message.component';
+import {HeaderMobileComponent} from '../../shared/components/header-mobile/header-mobile.component';
+import {HeaderStateService} from '../../shared/services/header-state.service';
 
 @Component({
   selector: 'app-new-channel',
@@ -37,8 +38,11 @@ export class NewChannelComponent implements OnInit {
   constructor(
     private _bottomSheet: MatBottomSheet,
     private route: ActivatedRoute,
-    public navigationService: NavigationService
-  ) {}
+    public navigationService: NavigationService,
+    private headerStateService: HeaderStateService
+  ) {
+    // this.headerStateService.setAlternativeHeader(true);
+  }
 
   async ngOnInit(): Promise<void> {
     await this.waitForUserData();
@@ -49,6 +53,8 @@ export class NewChannelComponent implements OnInit {
       this.getItemValues('channels', this.itemID);
       this.firestore.getAllChannelMessages(this.itemID);
     });
+
+    this.headerStateService.setAlternativeHeader(true);
   }
 
   async waitForUserData(): Promise<void> {

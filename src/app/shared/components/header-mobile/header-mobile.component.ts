@@ -1,14 +1,16 @@
-import { Component, inject, OnInit } from '@angular/core';
+import {Component, inject, Input, OnInit} from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { BottomSheetComponent } from '../../../main-content/bottom-sheet/bottom-sheet.component';
 import { AuthService } from '../../services/auth.service';
 import { FirebaseService } from '../../services/firebase.service';
 import { User } from '../../../../models/user.class';
+import {Location, NgIf} from '@angular/common';
+import {HeaderStateService} from '../../services/header-state.service';
 
 @Component({
   selector: 'app-header-mobile',
   standalone: true,
-  imports: [BottomSheetComponent],
+  imports: [BottomSheetComponent, NgIf],
   templateUrl: './header-mobile.component.html',
   styleUrl: './header-mobile.component.scss',
 })
@@ -16,12 +18,22 @@ export class HeaderMobileComponent implements OnInit {
   firestore = inject(FirebaseService);
   authService = inject(AuthService);
   user: User = new User();
+  // alternativeHeader: boolean | undefined;
+  @Input() alternativeHeader: boolean = false;
 
-  constructor(private _bottomSheet: MatBottomSheet) {}
+  // @Input() mode: 'default' | 'custom' = 'default';
+  // @Input() backButtonImage: string = 'assets/img/back-button.svg'; // Standardbild für den Zurück-Button
+
+
+  constructor(private _bottomSheet: MatBottomSheet, private headerStateService: HeaderStateService, private _location: Location) {}
 
   async ngOnInit(): Promise<void> {
     await this.waitForUserData();
     this.test();
+
+    this.headerStateService.alternativeHeader$.subscribe(value => {
+      this.alternativeHeader = value;
+    });
   }
 
   async waitForUserData(): Promise<void> {
@@ -56,5 +68,12 @@ export class HeaderMobileComponent implements OnInit {
     this.firestore.getSingleItemData(collection, itemID, () => {
       this.user = new User(this.firestore.user);
     });
+  }
+
+  onBack(): void {
+    // this.router.navigate(['/previous-page']);
+    console.log('ZURÜCK!!!!!!');
+    this._location.back();
+    this.headerStateService.setAlternativeHeader(false);
   }
 }
