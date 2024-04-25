@@ -9,11 +9,12 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {User} from '../../../models/user.class';
 import { AuthService } from '../../shared/services/auth.service';
 import { Channel } from '../../../models/channel.class';
+import { HeaderMobileComponent } from '../../shared/components/header-mobile/header-mobile.component';
 
 @Component({
   selector: 'app-direct-message',
   standalone: true,
-  imports: [],
+  imports: [HeaderMobileComponent],
   templateUrl: './direct-message.component.html',
   styleUrl: './direct-message.component.scss'
 })
