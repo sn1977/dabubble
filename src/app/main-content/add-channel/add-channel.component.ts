@@ -57,6 +57,19 @@ console.log(this.channelData);
     }
 }
 
+searchQuery: string = '';
+
+onSearchInputChange(value: string) {
+    this.searchQuery = value;
+}
+
+matchesSearch(user: any): boolean {
+  if (!this.searchQuery || this.searchQuery.trim() === '') {
+      return true; // Wenn keine Suchabfrage vorhanden ist, zeige den Benutzer
+  }
+  return user.displayName.toLowerCase().includes(this.searchQuery.toLowerCase());
+}
+
 
 
 

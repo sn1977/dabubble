@@ -43,7 +43,7 @@
                         <div id="add-member" class="add-member" *ngIf="showAddMember">
                             <div class="scroll">
                                 @for (user of this.firestore.getUsers(); track $index) {
-                                    <div class="channel-name pl-7" [id]="user.id" (click)="addmember($event)">
+                                    <div class="channel-name pl-7" [id]="user.id" (click)="addmember($event)" *ngIf="matchesSearch(user)">
                                         <img src="{{ user.avatar }}">
                             
                                           @if(user.isOnline){
