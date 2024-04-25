@@ -89,6 +89,12 @@
   transition: opacity 0.5s ease-in-out; /* Animation für die Sichtbarkeit */
 }
 
+.add-member{
+  height: 800px;
+  overflow: scroll;
+
+}
+
 .channel-name {
   padding-left: 26px;
   padding-top: 16px;
