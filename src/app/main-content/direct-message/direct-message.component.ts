@@ -10,6 +10,7 @@ import {User} from '../../../models/user.class';
 import { AuthService } from '../../shared/services/auth.service';
 import { Channel } from '../../../models/channel.class';
 import { HeaderMobileComponent } from '../../shared/components/header-mobile/header-mobile.component';
+import {HeaderStateService} from '../../shared/services/header-state.service';
 
 @Component({
   selector: 'app-direct-message',
@@ -30,7 +31,8 @@ export class DirectMessageComponent implements OnInit {
     public dialog: MatDialog,
     private navigationService: NavigationService,
     private _bottomSheet: MatBottomSheet,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private headerStateService: HeaderStateService) {
   }
 
   async ngOnInit(): Promise<void> {
@@ -46,6 +48,8 @@ export class DirectMessageComponent implements OnInit {
       this.itemID = paramMap.get('id');
       this.getItemValues('channels', this.itemID);
     });
+
+    this.headerStateService.setAlternativeHeader(true);
   }
 
   async waitForUserData(): Promise<void> {
