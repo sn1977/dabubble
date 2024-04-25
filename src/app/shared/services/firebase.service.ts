@@ -17,12 +17,14 @@ import {
 import { User } from '../../../models/user.class';
 import { Channel } from '../../../models/channel.class';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FirebaseService {
   firestore: Firestore = inject(Firestore);
+  router = inject(Router);
   activeUser: any = [];
   user: User = new User();
   channel: Channel = new Channel();
@@ -175,13 +177,14 @@ export class FirebaseService {
   }
 
   async addChannel(item: Channel) {
-    await addDoc(this.getChannelsRef(), item)
+    await addDoc(this.getChannelsRef(), item.toJSON())
       .catch((err) => {
         console.error(err);
       })
       .then((docRef) => {
         console.log('Document written with ID: ', docRef?.id);
-      });
+        this.router.navigate(['/new-channel/' + docRef?.id]);
+      });      
   }
 
   private singleItemUnsubscribe: Unsubscribe | undefined;

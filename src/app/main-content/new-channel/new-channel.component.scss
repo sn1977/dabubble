@@ -17,15 +17,16 @@
 }
 
 .footer {
-  height: 150px;
-  background-color: green;
+  height: 175px;  
+  background-color: #FFFFFF;
+  @include dFlex($jc: flex-start, $ai: center, $fd: column, $g: 0);
 }
 
 .content {
   flex: 1;
   overflow-y: auto;
   background-color: #FFFFFF;
-  padding: 30px 16px;
+  padding: 30px 16px;  
 }
 
 .mdc-card {  
@@ -36,14 +37,38 @@
 
   .channel-box {
     @include dFlex($jc: flex-start, $ai: normal, $fd: row, $g: 15px);
-  }
+  }  
+}
 
-  h1 {
-    @include dFlex($jc: flex-start, $ai: normal, $fd: row, $g: 10px);
-    margin-block-start: 0em;    
-    margin-block-end: 0em;
-    padding: 2px 0;
-  }
+h1 {
+  @include dFlex($jc: flex-start, $ai: normal, $fd: row, $g: 10px);
+  margin-block-start: 0em;    
+  margin-block-end: 0em;
+  padding: 2px 0;
+}
+
+.channel-info {  
+  @include dFlex($jc: flex-start, $ai: flex-start, $fd: column, $g: 15px);
+  position: absolute;
+  bottom: 180px;
+}
+
+.message-box{
+  @include dFlex($jc: flex-start, $ai: flex-start, $fd: column, $g: 15px);
+  height: 145px;
+  width: 398px;
+  background-color: orange;
+  border: 1px solid #ADB0D9;
+  border-radius: 20px;
+  box-sizing: border-box;
+  margin-top: 8px;
+  padding: 20px;
+}
+
+.actions{
+  background-color: purple;
+  width: 100%;
+  @include dFlex($jc: space-between, $ai: center, $fd: row, $g: 15px);
 }
 
 // .message-content{
@@ -81,14 +106,6 @@
 
 // .text-container {
 //   padding: 15px;
-// }
-
-// .channel-info {
-//   position: fixed;
-//   bottom: 130px;
-//   width: 100%;
-//   padding: 20px;
-//   box-sizing: border-box;
 // }
 
 // .icons {

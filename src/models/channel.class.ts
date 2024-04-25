@@ -2,7 +2,7 @@ export class Channel {
   id?: string;
   creator: string;  
   description: string;  
-  member: string[];
+  member: string;
   name: string;
 
   constructor(obj?: any) {
