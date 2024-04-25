@@ -30,6 +30,7 @@ console.log(this.channelData);
   authService = inject(AuthService);
   users: User[] = [];
   channel: Channel = new Channel;
+  selected: boolean = false;
 
   channelData = {
     creator: this.authService.activeUserId, 
@@ -40,7 +41,7 @@ console.log(this.channelData);
 
   selectedUser:any = [];
 
-  addmember(event: MouseEvent) {
+  addmember(event: MouseEvent, user: User) {
     const docRefId = (event.currentTarget as HTMLElement).id;
     
     // Überprüfe, ob die docRefId bereits in this.selectedUser vorhanden ist
@@ -48,14 +49,17 @@ console.log(this.channelData);
     if (index === -1) {
         // Wenn nicht, füge sie hinzu
         this.selectedUser.push(docRefId);
+        this.selected = true; // Markiere den Benutzer als ausgewählt
         console.log(this.selectedUser);
     } else {
         // Wenn vorhanden, entferne sie aus dem Array
         this.selectedUser.splice(index, 1);
+        this.selected = false; // Markiere den Benutzer als nicht ausgewählt
         console.log('Diese docRefId wurde entfernt:', docRefId);
         console.log(this.selectedUser);
     }
 }
+
 
 searchQuery: string = '';
 

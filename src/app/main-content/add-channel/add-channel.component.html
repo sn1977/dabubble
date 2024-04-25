@@ -35,35 +35,41 @@
                         <input type="checkbox" id="addAllMembers">
                         <label for="addAllMembers">Alle Mitglieder von Office Team hinzufügen</label>
                         <br>
-                        <input type="checkbox" id="addSpecificMembers" (change)="toggleInputField('addSpecificMembers')">
+                        <input type="checkbox" id="addSpecificMembers"
+                            (change)="toggleInputField('addSpecificMembers')">
                         <label for="addSpecificMembers">Bestimmte Leute hinzufügen</label>
-                        
+
                         <!-- Zeige das Inputfeld nur, wenn showInputField true ist -->
-                        <input *ngIf="showInputField" type="text" class="input-field" placeholder="Leute suchen" (click)="toggleInputField('searchPeople')"  (input)="onSearchInputChange($any($event.target).value)">
+                        <input *ngIf="showInputField" type="text" class="input-field" placeholder="Leute suchen"
+                            (click)="toggleInputField('searchPeople')"
+                            (input)="onSearchInputChange($any($event.target).value)">
                         <div id="add-member" class="add-member" *ngIf="showAddMember">
                             <div class="scroll">
                                 @for (user of this.firestore.getUsers(); track $index) {
-                                    <div class="channel-name pl-7" [id]="user.id" (click)="addmember($event)" *ngIf="matchesSearch(user)">
-                                        <img src="{{ user.avatar }}">
-                            
-                                          @if(user.isOnline){
-                                            <img src="./assets/img/characters/online.svg" alt="Online" class="online-avatar">
-                                          }
-                                          @else{
-                                            <img src="./assets/img/characters/offline.svg" alt="Offline" class="offline-avatar">
-                                          }
-                            
-                                          <span>{{ user.displayName }}
-                                            @if(user.id === this.authService.activeUserId){
-                                              <span> (Du)</span>
-                                            }
-                                          </span>
-                                        </div>
-                                      }
-                                </div>
+                                <div class="channel-name pl-7" [id]="user.id" (click)="addmember($event, user)"
+                                    *ngIf="matchesSearch(user)">
+                                    <img src="{{ user.avatar }}">
+                                    
 
+                                    @if(user.isOnline){
+                                    <img src="./assets/img/characters/online.svg" alt="Online" class="online-avatar">
+                                    }
+                                    @else{
+                                    <img src="./assets/img/characters/offline.svg" alt="Offline" class="offline-avatar">
+                                    }
+
+                                    <span>{{ user.displayName }}
+                                        @if(user.id === this.authService.activeUserId){
+                                        <span> (Du)</span>
+                                        }
+                                    </span>
+                                    <img *ngIf="selected" src="./../../../assets/img/emojis/1.svg" class="checkbox" alt="hallo">
+                                </div>
+                                }
                             </div>
-                        
+
+                        </div>
+
                     </div>
                     <div class="btn-pos">
                         <button class="add-button" routerLink="/new-channel">Erstellen</button>
