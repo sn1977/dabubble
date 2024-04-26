@@ -4,16 +4,25 @@
   min-height: 175px;  
   background-color: #FFFFFF;
   @include dFlex($jc: flex-start, $ai: center, $fd: column, $g: 0);
+
+  form{
+    @include dFlex($jc: center, $ai: flex-end, $fd: column, $g: 0);
+    max-width: 398px;
+    width: 98%;
+    margin: 0 16px;
+  }
 }
+
+
 
 .message-box{
   @include dFlex($jc: flex-start, $ai: flex-start, $fd: column, $g: 0);
   min-height: 137px;
-  width: 398px;
+  width: 100%;
   border: 1px solid #ADB0D9;
   border-radius: 20px;
   box-sizing: border-box;
-  padding: 20px;
+  padding: 20px;  
 }
 
 .text-content{
