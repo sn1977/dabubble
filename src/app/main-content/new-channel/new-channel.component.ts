@@ -35,7 +35,13 @@ export class NewChannelComponent implements OnInit {
   channel: Channel = new Channel();
   channelList: any = [];
   firebaseAuth = inject(Auth);
-  authService = inject(AuthService);
+  authService = inject(AuthService);  
+  textBoxData: any = {
+    placeholder: 'Nachricht an: ',
+    channelName: '',
+  };
+
+  
 
   constructor(
     private _bottomSheet: MatBottomSheet,
@@ -44,6 +50,7 @@ export class NewChannelComponent implements OnInit {
     private headerStateService: HeaderStateService
   ) {
     // this.headerStateService.setAlternativeHeader(true);
+    
   }
 
   async ngOnInit(): Promise<void> {
@@ -57,6 +64,7 @@ export class NewChannelComponent implements OnInit {
     });
 
     this.headerStateService.setAlternativeHeader(true);
+    
   }
 
   async waitForUserData(): Promise<void> {
@@ -106,7 +114,9 @@ export class NewChannelComponent implements OnInit {
   getItemValues(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {
       this.channel = new Channel(this.firestore.channel);
+      this.textBoxData.channelName = this.channel.name;      
     });
+    
   }
 
   openChannel(event: MouseEvent, path: string) {

@@ -1,16 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-text-box',
   standalone: true,
-  imports: [ CommonModule ],
+  imports: [ CommonModule, FormsModule ],
   templateUrl: './text-box.component.html',
   styleUrl: './text-box.component.scss'
 })
 export class TextBoxComponent {
 
-  @Input() placeholder: string | undefined;
+  @Input() textBoxData: any;
 
   add_hovered: boolean = false;
   smile_hovered: boolean = false;
@@ -22,6 +23,10 @@ export class TextBoxComponent {
     this.smile_hovered = false;
     this.email_hovered = false;
     this.send_hovered = false;
+  }
+
+  onSubmit(){
+    console.log('klappt');
   }
 
 }
