@@ -13,11 +13,13 @@ import {
   updateDoc,
   getDocs,
   orderBy,
+  serverTimestamp,
 } from '@angular/fire/firestore';
 import { User } from '../../../models/user.class';
 import { Channel } from '../../../models/channel.class';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { ChannelMessage } from '../../../models/channel-message.class';
 
 @Injectable({
   providedIn: 'root',
@@ -184,7 +186,17 @@ export class FirebaseService {
       .then((docRef) => {
         console.log('Document written with ID: ', docRef?.id);
         this.router.navigate(['/new-channel/' + docRef?.id]);
-      });      
+      });
+  }
+
+  async addChannelMessage(message: ChannelMessage, docRef: string) {
+    await addDoc(collection(this.firestore, docRef), message.toJSON())
+      .catch((err) => {
+        console.error(err);
+      })
+      .then((docRef) => {
+        console.log('Document written with ID: ', docRef?.id);       
+      });
   }
 
   private singleItemUnsubscribe: Unsubscribe | undefined;
@@ -224,7 +236,9 @@ export class FirebaseService {
     this.channelMessages = [];
     querySnapshot.forEach((doc) => {
       // console.log(doc.id, ' => ', doc.data());
-      this.channelMessages.push(this.setChannelMessageObject(doc.data(), doc.id));
+      this.channelMessages.push(
+        this.setChannelMessageObject(doc.data(), doc.id)
+      );
     });
     // console.log(this.channelMessages);
     return this.channelMessages;

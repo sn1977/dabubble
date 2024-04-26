@@ -39,6 +39,8 @@ export class NewChannelComponent implements OnInit {
   textBoxData: any = {
     placeholder: 'Nachricht an: ',
     channelName: '',
+    messageText: '',
+    channelId: '',
   };
 
   
@@ -115,6 +117,7 @@ export class NewChannelComponent implements OnInit {
     this.firestore.getSingleItemData(collection, itemID, () => {
       this.channel = new Channel(this.firestore.channel);
       this.textBoxData.channelName = this.channel.name;      
+      this.textBoxData.channelId = itemID;
     });
     
   }

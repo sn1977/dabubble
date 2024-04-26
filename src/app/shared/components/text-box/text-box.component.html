@@ -8,8 +8,10 @@
           placeholder="{{ this.textBoxData.placeholder }} #{{
             this.textBoxData.channelName
           }}"
-          name="messagetext"
-          id="messagetext"
+          name="messageText"
+          id="messageText"
+          #messageText="ngModel"
+          [(ngModel)]="textBoxData.messageText"
           required
         ></textarea>
       </div>
