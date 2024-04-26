@@ -40,9 +40,7 @@
                         <label for="addSpecificMembers">Bestimmte Leute hinzufügen</label>
 
                         <!-- Zeige das Inputfeld nur, wenn showInputField true ist -->
-                        <input *ngIf="showInputField" type="text" class="input-field" placeholder="Leute suchen"
-                            (click)="toggleInputField('searchPeople')"
-                            (input)="onSearchInputChange($any($event.target).value)">
+                        <input *ngIf="showInputField" type="text" id="input" class="input-field" placeholder="Leute suchen" (click)="toggleInputField('searchPeople')" (input)="onSearchInputChange($any($event.target).value)" [value]="channelData.name">
                         <div id="add-member" class="add-member" *ngIf="showAddMember">
                             <div class="scroll">
                                 @for (user of this.firestore.getUsers(); track $index) {

@@ -16,6 +16,7 @@ import { AuthService } from '../../shared/services/auth.service';
   styleUrl: './add-channel.component.scss',
 })
 export class AddChannelComponent {
+
   onSubmit() {
     const channel = new Channel({
       creator: this.authService.activeUserId,
@@ -27,15 +28,23 @@ export class AddChannelComponent {
     this.firestore.addChannel(channel);
   }
 
+  selectedUser: any = [];
+  users: User[] = [];
   filteredUsers: User[] = [];
+  
+  selected: boolean = false;
   showDropdown: boolean = false;
+  overlayVisible: boolean = false;
+  showInputField: boolean = false;
+  showAddMember: boolean = false;
+
   firestore = inject(FirebaseService);
   router = inject(Router);
   authService = inject(AuthService);
-  users: User[] = [];
-  selected: boolean = false;
+  
+  
   channel: Channel = new Channel();
-  selectedUser: any = [];
+ 
 
   channelData = {
     creator: '',
@@ -45,27 +54,25 @@ export class AddChannelComponent {
   };
 
   
+  addmember(event: MouseEvent, user: User) {
+    const docRefId = (event.currentTarget as HTMLElement).id;
 
-  // Annahme: User-Objekt hat ein Feld "selected"
-addmember(event: MouseEvent, user: User) {
-  const docRefId = (event.currentTarget as HTMLElement).id;
+    // Überprüfen, ob der Benutzer bereits ausgewählt ist
+    const index = this.selectedUser.findIndex((selected: { id: string | undefined; }) => selected.id === user.id);
 
-  // Überprüfe, ob die docRefId bereits in this.selectedUser vorhanden ist
-  const index = this.selectedUser.indexOf(docRefId);
-  if (index === -1) {
-      // Wenn nicht, füge sie hinzu
-      this.selectedUser.push(docRefId);
-      user.selected = true; // Markiere den Benutzer als ausgewählt
-      console.log(this.selectedUser);
-  } else {
-      // Wenn vorhanden, entferne sie aus dem Array
+    if (index === -1) {
+      // Wenn nicht ausgewählt, Benutzer hinzufügen
+      this.selectedUser.push(user);
+      user.selected = true;
+    } else {
+      // Wenn bereits ausgewählt, Benutzer entfernen
       this.selectedUser.splice(index, 1);
-      user.selected = false; // Markiere den Benutzer als nicht ausgewählt
-      console.log('Diese docRefId wurde entfernt:', docRefId);
-      console.log(this.selectedUser);
-  }
-}
+      user.selected = false;
+    }
 
+    // Den Namen des ausgewählten Benutzers in channelData.name speichern
+    this.channelData.name = this.selectedUser.map((u: { displayName: any; }) => u.displayName).join(', ');
+  }
 
 
 searchQuery: string = '';
@@ -76,16 +83,14 @@ onSearchInputChange(value: string) {
 
   matchesSearch(user: any): boolean {
     if (!this.searchQuery || this.searchQuery.trim() === '') {
-      return true; // Wenn keine Suchabfrage vorhanden ist, zeige den Benutzer
+      return true; 
     }
     return user.displayName
       .toLowerCase()
       .includes(this.searchQuery.toLowerCase());
   }
 
-  overlayVisible: boolean = false;
-  showInputField: boolean = false;
-  showAddMember: boolean = false;
+  
 
   toggleOverlay() {
     this.overlayVisible = !this.overlayVisible;
@@ -93,14 +98,14 @@ onSearchInputChange(value: string) {
 
   toggleInputField(inputId: string) {
     if (inputId === 'addSpecificMembers') {
-      this.showInputField = !this.showInputField; // Toggle für Checkbox
-      this.showAddMember = false; // Schließe das Div, wenn das Input-Feld geschlossen wird
+      this.showInputField = !this.showInputField; 
+      this.showAddMember = false; 
     } else if (inputId === 'searchPeople') {
       if (this.showInputField) {
-        this.showAddMember = !this.showAddMember; // Toggle für showAddMember, nur wenn showInputField aktiv ist
+        this.showAddMember = !this.showAddMember; 
       } else {
-        this.showInputField = true; // Öffne das Div, wenn das Input-Feld geöffnet wird
-        this.showAddMember = true; // Öffne das Div, wenn das Input-Feld geöffnet wird
+        this.showInputField = true; 
+        this.showAddMember = true; 
       }
     }
   }
