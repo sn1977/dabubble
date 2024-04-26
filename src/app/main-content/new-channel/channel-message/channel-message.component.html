@@ -1,12 +1,10 @@
 <div class="timeSeperator">
   <img class="line" src="./assets/img/auth/line.svg" alt="" />
-
-  @if(currentDate == this.formatDate(this.channelMessage.createdAt)){
+  
+  @if(currentDate == messageDate){
   <span>Heute</span>
   } @else {
-  <span>{{
-    channelMessage.createdAt | firestoreTimestamp | date : "EEEE, d. MMMM"
-  }}</span>
+  <span>{{ messageDate }}</span>
   }
 </div>
 
@@ -37,7 +35,7 @@
       >
         <div class="creator">{{ this.user.displayName }}</div>
         <div class="time">
-          {{ channelMessage.createdAt | firestoreTimestamp | date : "HH:mm" }}
+          {{ channelMessage.createdAt }}
           Uhr
         </div>
       </div>

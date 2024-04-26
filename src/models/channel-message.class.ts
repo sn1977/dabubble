@@ -4,7 +4,7 @@ export class ChannelMessage {
   messageId?: string;
   channelId: string;
   creator: string;
-  createdAt?: Date;
+  createdAt?: any;
   text: string;
   reactions?: string;
 
