@@ -232,16 +232,16 @@ export class FirebaseService {
       `channels/${channelId}/channelmessages`
     );
 
-    const querySnapshot = await getDocs(query(ref, orderBy('createdAt')));
-    this.channelMessages = [];
-    querySnapshot.forEach((doc) => {
-      // console.log(doc.id, ' => ', doc.data());
-      this.channelMessages.push(
-        this.setChannelMessageObject(doc.data(), doc.id)
-      );
+    const querySnapshot = query(ref, orderBy('createdAt'));  
+    const unsubscribe = onSnapshot(querySnapshot, (snapshot) => {      
+      this.channelMessages = [];
+      snapshot.forEach((doc) => {        
+        this.channelMessages.push(
+          this.setChannelMessageObject(doc.data(), doc.id)
+        );
+      });      
     });
-    // console.log(this.channelMessages);
-    return this.channelMessages;
+    return unsubscribe;
   }
 
   ngonDestroyy() {
