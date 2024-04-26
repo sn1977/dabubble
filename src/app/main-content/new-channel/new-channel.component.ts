@@ -123,15 +123,13 @@ export class NewChannelComponent implements OnInit {
   }
 
   openChannel(event: MouseEvent, path: string) {
-    const docRefId = (event.currentTarget as HTMLElement).id;
-    console.log('Öffne Collection ' + path + ' mit ID: ' + docRefId);
+    const docRefId = (event.currentTarget as HTMLElement).id;    
     this.router.navigate(['/' + path + '/' + docRefId]);
   }
 
   getItemValuesProfile(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {
-      this.user = new User(this.firestore.user);
-      // console.log('Avatar: ' + this.user.avatar);
+      this.user = new User(this.firestore.user);      
     });
   }
 }

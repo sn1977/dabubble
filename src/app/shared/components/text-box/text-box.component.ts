@@ -16,6 +16,7 @@ export class TextBoxComponent {
 
   authService = inject(AuthService);
   firestore = inject(FirebaseService);
+  reactions = ['wave', 'rocket'];
   
   @Input() textBoxData: any;
 
@@ -31,23 +32,15 @@ export class TextBoxComponent {
     this.send_hovered = false;
   }
 
-  onSubmit(){    
+  onSubmit(){
     const message = new ChannelMessage({
       creator: this.authService.activeUserId,
       text: this.textBoxData.messageText,
       channelId: this.textBoxData.channelId,
       createdAt: this.textBoxData.createdAt,
-      reactions: this.textBoxData.reactions,
+      reactions: this.textBoxData.reactions = this.reactions,
     });
     
-    // console.log(message);
-
-    // 2. Funktion im Firestore aufrufen (1. textBoxData, 2. collection)
-    this.firestore.addChannelMessage(message, 'channels/9KJYLfxx07Wn5rbEupdA/channelmessages');
-
-    // 3. inhalte aktualisieren und nach unten scrollen
-    // muss aber in 
-    
+    this.firestore.addChannelMessage(message, `channels/${message.channelId}/channelmessages`);    
   }
-
 }
