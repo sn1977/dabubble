@@ -1,10 +1,10 @@
 <div class="timeSeperator">
   <img class="line" src="./assets/img/auth/line.svg" alt="" />
   
-  @if(currentDate == messageDate){
-  <span>Heute</span>
+  @if(currentDate == formatDate(channelMessage.createdAt)){
+    <span>Heute</span>
   } @else {
-  <span>{{ messageDate }}</span>
+  <span> {{this.dateFormatService.formatDate(channelMessage.createdAt)}}</span>
   }
 </div>
 
@@ -35,7 +35,7 @@
       >
         <div class="creator">{{ this.user.displayName }}</div>
         <div class="time">
-          {{ channelMessage.createdAt }}
+          {{ this.dateFormatService.formatTime(channelMessage.createdAt) }}
           Uhr
         </div>
       </div>
