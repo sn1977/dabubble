@@ -63,16 +63,6 @@ export class ChannelMessageComponent implements OnInit {
     });
   }
 
-  formatDate(timestamp: any): string {
-    if (timestamp && timestamp.seconds) {  
-        const date = new Date(timestamp.seconds * 1000);
-        const formattedDate = date.toISOString().slice(0, 10).replace(/-/g, '');
-        return formattedDate;
-    } else {        
-        return 'Datum nicht verfügbar';
-    }
-}
-
   deleteHovered() {
     if (!this.edit) {
       this.hovered = false;

@@ -1,16 +1,16 @@
 <div class="background">
     <div class="mdc-card">
         <div class="channel-header">
-            <h1 class="no-margin">{{ channel.name }}</h1>
+            <h1 class="no-margin"># {{ channel.name }}</h1>
             <img src="./assets/img/icon/close.svg" alt="" [id]="itemID" (click)="openChannel($event, 'new-channel')">
         </div>
     </div>
     <main>
         <div class="container" [style.border]="!isEditingChannelName ? '1px solid blue' : 'none'">
             <div class="channel-name">
-              <h1>{{channel.name}}</h1>
-              <p *ngIf="!isEditingChannelName" id="description">{{channel.name}}</p>
-              <input *ngIf="isEditingChannelName" placeholder="{{channel.name}}" id="input-edit-channel-name" class="input-edit" type="text" [(ngModel)]="editedChannelName" placeholder="# Entwicklerteam">
+              <h1>Channel-Name</h1>
+              <p *ngIf="!isEditingChannelName" id="description"># {{channel.name}}</p>
+              <input *ngIf="isEditingChannelName" placeholder="# {{channel.name}}" id="input-edit-channel-name" class="input-edit" type="text" [(ngModel)]="editedChannelName" placeholder="# Entwicklerteam">
             </div>
             <div class="edit-icon">
               <img *ngIf="!isEditingChannelName" id="edit-icon-channel-name" src="./assets/img/icon/edit.svg" alt="" (click)="toggleEdit('channelName')">

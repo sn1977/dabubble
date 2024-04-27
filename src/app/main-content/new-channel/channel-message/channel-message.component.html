@@ -1,7 +1,7 @@
 <div class="timeSeperator">
   <img class="line" src="./assets/img/auth/line.svg" alt="" />
 
-  @if(currentDate == formatDate(channelMessage.createdAt)){
+  @if(currentDate == this.dateFormatService.formatDateShort(channelMessage.createdAt)){
   <span>Heute</span>
   } @else {
   <span>{{this.dateFormatService.formatDate(channelMessage.createdAt)}}</span>

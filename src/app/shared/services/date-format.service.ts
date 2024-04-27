@@ -29,6 +29,16 @@ export class DateFormatService {
     'Samstag',
   ];
 
+  formatDateShort(timestamp: any): string {
+    if (timestamp && timestamp.seconds) {  
+        const date = new Date(timestamp.seconds * 1000);
+        const formattedDate = date.toISOString().slice(0, 10).replace(/-/g, '');
+        return formattedDate;
+    } else {        
+        return 'Datum nicht verfügbar';
+    }
+}
+
   formatDate(timestamp: { seconds: number; nanoseconds: number }): any {
     if (timestamp && timestamp.seconds) {
       const date = new Date(timestamp.seconds * 1000);

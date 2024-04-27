@@ -127,7 +127,18 @@ export class FirebaseService {
     await setDoc(doc(this.getUsersRef(), id), item.toJSON());
   }
 
-  // Im FirebaseService
+  async updateChannel(docId: string, channelData: Channel){
+    // console.log('ChannelId: ', docId);
+    // stefan
+    // console.log('ChannelData: ', channelData);
+    if (docId) {
+      let docRef = doc(this.getChannelsRef(), docId);
+      await updateDoc(docRef, channelData.toJSON()).catch((err) => {
+        console.log(err);
+      });
+    }
+  }
+  
   getChannels(): Observable<Channel[]> {
     return new Observable((observer) => {
       const unsubscribe = onSnapshot(
