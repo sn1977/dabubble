@@ -81,7 +81,8 @@
         />
         }@else{
         <img
-          class="pointer"          
+          class="pointer"
+          (click)="onSubmit()"          
           (mouseenter)="send_hovered = true"
           (mouseleave)="deleteHovered()"
           src="./assets/img/icon/send.svg"

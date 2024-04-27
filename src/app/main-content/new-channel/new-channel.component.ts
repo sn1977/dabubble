@@ -1,17 +1,17 @@
-import {Component, inject, Input, OnInit} from '@angular/core';
-import {Router, RouterLink} from '@angular/router';
-import {BottomSheetComponent} from '../bottom-sheet/bottom-sheet.component';
-import {MatBottomSheet} from '@angular/material/bottom-sheet';
-import {Channel} from '../../../models/channel.class';
-import {FirebaseService} from '../../shared/services/firebase.service';
-import {ActivatedRoute} from '@angular/router';
-import {User} from '../../../models/user.class';
-import {NavigationService} from '../../shared/services/navigation.service';
-import {AuthService} from '../../shared/services/auth.service';
-import {Auth} from '@angular/fire/auth';
-import {ChannelMessageComponent} from './channel-message/channel-message.component';
-import {HeaderMobileComponent} from '../../shared/components/header-mobile/header-mobile.component';
-import {HeaderStateService} from '../../shared/services/header-state.service';
+import { AfterViewChecked, Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { BottomSheetComponent } from '../bottom-sheet/bottom-sheet.component';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { Channel } from '../../../models/channel.class';
+import { FirebaseService } from '../../shared/services/firebase.service';
+import { ActivatedRoute } from '@angular/router';
+import { User } from '../../../models/user.class';
+import { NavigationService } from '../../shared/services/navigation.service';
+import { AuthService } from '../../shared/services/auth.service';
+import { Auth } from '@angular/fire/auth';
+import { ChannelMessageComponent } from './channel-message/channel-message.component';
+import { HeaderMobileComponent } from '../../shared/components/header-mobile/header-mobile.component';
+import { HeaderStateService } from '../../shared/services/header-state.service';
 import { TextBoxComponent } from '../../shared/components/text-box/text-box.component';
 
 @Component({
@@ -24,10 +24,10 @@ import { TextBoxComponent } from '../../shared/components/text-box/text-box.comp
     BottomSheetComponent,
     ChannelMessageComponent,
     HeaderMobileComponent,
-    TextBoxComponent
+    TextBoxComponent,
   ],
 })
-export class NewChannelComponent implements OnInit {
+export class NewChannelComponent implements OnInit, AfterViewChecked {
   firestore = inject(FirebaseService);
   router = inject(Router);
   itemID: any = '';
@@ -35,15 +35,16 @@ export class NewChannelComponent implements OnInit {
   channel: Channel = new Channel();
   channelList: any = [];
   firebaseAuth = inject(Auth);
-  authService = inject(AuthService);  
+  authService = inject(AuthService);
   textBoxData: any = {
     placeholder: 'Nachricht an: ',
     channelName: '',
     messageText: '',
     channelId: '',
-  };
+  }; 
 
-  
+  @ViewChild('messageContent') messageContent!: ElementRef;
+  previousMessageCount: number = 0;
 
   constructor(
     private _bottomSheet: MatBottomSheet,
@@ -52,7 +53,6 @@ export class NewChannelComponent implements OnInit {
     private headerStateService: HeaderStateService
   ) {
     // this.headerStateService.setAlternativeHeader(true);
-    
   }
 
   async ngOnInit(): Promise<void> {
@@ -65,9 +65,33 @@ export class NewChannelComponent implements OnInit {
       this.firestore.getAllChannelMessages(this.itemID);
     });
 
-    this.headerStateService.setAlternativeHeader(true);
-    
+    this.headerStateService.setAlternativeHeader(true);  
+    this.scrollToBottom();  
   }
+
+  ngAfterViewInit() {
+    this.previousMessageCount = this.getCurrentMessageCount();
+  }
+  ngAfterViewChecked() {
+    const currentMessageCount = this.getCurrentMessageCount();
+    if (currentMessageCount > this.previousMessageCount) {
+      this.scrollToBottom();
+      this.previousMessageCount = currentMessageCount;
+    }
+  }
+
+  getCurrentMessageCount(): number {
+    return this.messageContent.nativeElement.children.length;
+  }
+
+  scrollToBottom() {
+    try {
+      this.messageContent.nativeElement.scrollTo({
+        top: this.messageContent.nativeElement.scrollHeight,
+        behavior: 'smooth' // Hier wird smooth scrollen aktiviert
+      });
+    } catch(err) { }
+}
 
   async waitForUserData(): Promise<void> {
     while (!this.authService.activeUserAccount) {
@@ -116,20 +140,19 @@ export class NewChannelComponent implements OnInit {
   getItemValues(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {
       this.channel = new Channel(this.firestore.channel);
-      this.textBoxData.channelName = this.channel.name;      
+      this.textBoxData.channelName = this.channel.name;
       this.textBoxData.channelId = itemID;
     });
-    
   }
 
   openChannel(event: MouseEvent, path: string) {
-    const docRefId = (event.currentTarget as HTMLElement).id;    
+    const docRefId = (event.currentTarget as HTMLElement).id;
     this.router.navigate(['/' + path + '/' + docRefId]);
   }
 
   getItemValuesProfile(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {
-      this.user = new User(this.firestore.user);      
+      this.user = new User(this.firestore.user);
     });
   }
 }

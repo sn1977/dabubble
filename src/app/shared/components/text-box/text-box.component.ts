@@ -42,6 +42,6 @@ export class TextBoxComponent {
     });
     
     this.firestore.addChannelMessage(message, `channels/${message.channelId}/channelmessages`);
-    this.textBoxData.messageText = '';
+    this.textBoxData.messageText = '';        
   }
 }

@@ -53,228 +53,115 @@ h1 {
   bottom: 180px;
 }
 
-// .message-box{
-//   @include dFlex($jc: flex-start, $ai: flex-start, $fd: column, $g: 0);
-//   height: 137px;
-//   width: 398px;
-//   border: 1px solid #ADB0D9;
-//   border-radius: 20px;
-//   box-sizing: border-box;
-//   padding: 20px;
-// }
+.no-margin{
+  margin: 0;
+}
 
-// .text-content{
-//   width: 100%;  
-// }
+.members{
+  margin: 20px;
+}
 
-// input[type="text"],
-// textarea{
-//   width: 100%;
-//   height: 68px;
-//   box-sizing: border-box;
-//   padding-block: 0;
-//   padding-inline: 0;
-//   border-style: none;
-//   outline: none !important;
-//   font-family: 'Nunito';
-//   font-weight: 400;
-//   font-size: 18px;
-//   line-height: 24.55px;
-//   resize: none;
-// }
+.add-member{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+}
 
-// .actions{  
-//   width: 100%;
-//   @include dFlex($jc: space-between, $ai: center, $fd: row, $g: 15px);
-// }
+.overlay-content {
+  background-color: white;
+  width: 75%;
+  max-width: 600px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
 
-// .other-content{  
-//   height: 28px;
-//   @include dFlex($jc: space-between, $ai: center, $fd: row, $g: 15px);
-//   .vertical-line {
-//     width: 1px;
-//     height: 25px;
-//     background-color: #ADB0D9;
-//   }
-// }
+.overlay-profil{
+  background-color: white;
+  width: 89%;
+  max-width: 600px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 20px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3)
 
-// .message-content{
-//   overflow-y: auto;
-//   height: 100%;
-//   position: relative;
-//   margin-top: 16px;
-// }
+}
 
-// .sticky-textbox {
-//   position: fixed;
-//   bottom: 0;
-//   width: 100%;
-//   height: 150px;
+.profile-icon{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 10px;
+}
 
-//   z-index: 3;
-// }
+.search-input{
+  border: 0.5px solid blue;
+    border-radius: 20px;
+    padding: 8px;
+    margin-top: 10px;
+    width: 94%;
+    margin-bottom: 10px;
+}
 
-// .sticky-textbox .input-field {
-//   width: 87%;
-//   margin: 20px;
-//   height: 110px;
-//   border-radius: 20px;
-//   border: 1px solid black;
-//   outline: none;
-//   padding: 20px; /* Hier die gleichen Padding-Werte wie für den Placeholder setzen */
-//   box-sizing: border-box; /* Wichtig für die Berechnung von Padding und Border */
-// }
+.add-button {
+  background-color: rgb(104, 104, 104);
+  border: none;
+  border-radius: 20px;
+  color: white;
+  padding: 10px;
+  width: 100px;
+  cursor: pointer;
+}
 
-// .img-profil{
-//   height: 60px;
-//   border-radius: 30px;
+.btn-pos{
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
 
-// }
+.profil{
+  padding-left: 26px;
+  padding-top: 16px;
+  gap: 16px;
+  display: flex;
+  align-items: center;
+  position: relative;
 
-// .text-container {
-//   padding: 15px;
-// }
+  img {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    object-fit: cover;
+  }
 
-// .icons {
-//   position: absolute;
-//   top: 100px;
-//   left: 40px;
-//   cursor: pointer;
-//   display: flex;
-//   gap: 10px;
-// }
+  .online-avatar, .offline-avatar {
+    position: absolute;
+    bottom: 0;
+    left: 56px;
+    width: 14px;
+    height: 14px;
+  };
 
-// .vertical-line {
-//     width: 1px;
-//     height: 25px;
-//     background-color: blue;
-//   }
+}
 
-// .send {
-//   position: absolute;
-//   top: 100px;
-//   left: 310px;
-//   cursor: pointer;
-
-// }
-
-// .display-flex{
-//   display: flex;
-//   align-items: center;
-//   justify-content: space-between;
-
-// }
-
-// .no-margin{
-//   margin: 0;
-// }
-
-// .members{
-//   margin: 20px;
-// }
-
-// .add-member{
-//   display: flex;
-//   align-items: center;
-//   gap: 10px;
-// }
-
-// .overlay {
-//   display: none;
-//   position: fixed;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 100%;
-//   background-color: rgba(0, 0, 0, 0.5);
-//   z-index: 9999;
-// }
-
-// .overlay-content {
-//   background-color: white;
-//   width: 75%;
-//   max-width: 600px;
-//   position: absolute;
-//   top: 50%;
-//   left: 50%;
-//   transform: translate(-50%, -50%);
-//   padding: 20px;
-//   border-radius: 20px;
-//   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-// }
-
-// .overlay-profil{
-//   background-color: white;
-//   width: 89%;
-//   max-width: 600px;
-//   position: absolute;
-//   bottom: 0;
-//   left: 0;
-//   padding: 20px;
-//   border-top-left-radius: 20px;
-//   border-top-right-radius: 20px;
-//   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3)
-
-// }
-
-// .profile-icon{
-//   display: flex;
-//   align-items: center;
-//   gap: 10px;
-//   margin: 10px;
-// }
-
-// .search-input{
-//   border: 0.5px solid blue;
-//     border-radius: 20px;
-//     padding: 8px;
-//     margin-top: 10px;
-//     width: 94%;
-//     margin-bottom: 10px;
-// }
-
-// .add-button {
-//   background-color: rgb(104, 104, 104);
-//   border: none;
-//   border-radius: 20px;
-//   color: white;
-//   padding: 10px;
-//   width: 100px;
-//   cursor: pointer;
-// }
-
-// .btn-pos{
-//   display: flex;
-//   justify-content: flex-end;
-//   width: 100%;
-// }
-
-// .profil{
-//   padding-left: 26px;
-//   padding-top: 16px;
-//   gap: 16px;
-//   display: flex;
-//   align-items: center;
-//   position: relative;
-
-//   img {
-//     width: 50px;
-//     height: 50px;
-//     border-radius: 100%;
-//     object-fit: cover;
-//   }
-
-//   .online-avatar, .offline-avatar {
-//     position: absolute;
-//     bottom: 0;
-//     left: 56px;
-//     width: 14px;
-//     height: 14px;
-//   };
-
-// }
-
-// .height{
-//   height: 50px;
-// }
+.height{
+  height: 50px;
+}
