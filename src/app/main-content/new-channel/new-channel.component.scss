@@ -16,17 +16,11 @@
   width: 100%;
 }
 
-// .footer {
-//   height: 175px;  
-//   background-color: #FFFFFF;
-//   @include dFlex($jc: flex-start, $ai: center, $fd: column, $g: 0);
-// }
-
 .content {
   flex: 1;
   overflow-y: auto;
-  background-color: #FFFFFF;
-  padding: 30px 16px;  
+  background-color: #FFFFFF;  
+  padding: 24px 16px 12px 16px;
 }
 
 .mdc-card {  
