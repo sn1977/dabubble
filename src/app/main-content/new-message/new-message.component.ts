@@ -1,5 +1,5 @@
 import {Component, inject, OnInit} from '@angular/core';
-import { BottomSheetComponent } from '../bottom-sheet/bottom-sheet.component';
+import { BottomSheetComponent } from '../../shared/components/bottom-sheet/bottom-sheet.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../shared/services/auth.service';

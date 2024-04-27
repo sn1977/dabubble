@@ -2,7 +2,7 @@ import {Component, inject, OnInit} from '@angular/core';
 import {DirectMessageOverlayComponent} from '../direct-message-overlay/direct-message-overlay.component';
 import {MatDialog} from '@angular/material/dialog';
 import {NavigationService} from '../../shared/services/navigation.service';
-import {BottomSheetComponent} from '../bottom-sheet/bottom-sheet.component';
+import {BottomSheetComponent} from '../../shared/components/bottom-sheet/bottom-sheet.component';
 import {MatBottomSheet} from '@angular/material/bottom-sheet';
 import {FirebaseService} from '../../shared/services/firebase.service';
 import {ActivatedRoute, Router} from '@angular/router';

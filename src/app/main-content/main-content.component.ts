@@ -10,7 +10,7 @@ import {
   MatExpansionPanelDescription,
   MatExpansionPanelTitle
 } from '@angular/material/expansion';
-import {BottomSheetComponent} from './bottom-sheet/bottom-sheet.component';
+import {BottomSheetComponent} from '../shared/components/bottom-sheet/bottom-sheet.component';
 import {MatFabButton} from '@angular/material/button';
 import {FormsModule} from '@angular/forms';
 import {NavigationService} from '../shared/services/navigation.service';

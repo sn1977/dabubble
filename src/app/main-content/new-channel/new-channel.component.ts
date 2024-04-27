@@ -1,6 +1,6 @@
 import { AfterViewChecked, Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { BottomSheetComponent } from '../bottom-sheet/bottom-sheet.component';
+import { BottomSheetComponent } from '../../shared/components/bottom-sheet/bottom-sheet.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { Channel } from '../../../models/channel.class';
 import { FirebaseService } from '../../shared/services/firebase.service';
