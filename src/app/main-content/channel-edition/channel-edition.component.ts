@@ -1,71 +1,92 @@
-import {Component, inject, OnInit} from '@angular/core';
-import { NgIf } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FirebaseService } from '../../shared/services/firebase.service';
-import {ActivatedRoute, Router, RouterLink} from '@angular/router';
-import {Channel} from '../../../models/channel.class';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Channel } from '../../../models/channel.class';
 import { User } from '../../../models/user.class';
-
+import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
   selector: 'app-channel-edition',
   standalone: true,
-  imports: [NgIf, FormsModule, RouterLink],
+  imports: [FormsModule, RouterLink],
   templateUrl: './channel-edition.component.html',
-  styleUrl: './channel-edition.component.scss'
+  styleUrl: './channel-edition.component.scss',
 })
 export class ChannelEditionComponent implements OnInit {
-
-  firestore = inject(FirebaseService);
+  selectedUser: any = [];
   router = inject(Router);
   itemID: any = '';
-  channel: Channel = new Channel();
   user: User = new User();
-
+  firestore = inject(FirebaseService);
+  authService = inject(AuthService);
+  channel: Channel = new Channel();
   isEditingChannelName: boolean = false;
   isEditingDescription: boolean = false;
-  channelNameDescriptionText: string = "# Entwicklerteam";
-  descriptionDescriptionText: string = "Dieser Channel ist für alles rund um #dfsdf vorgesehen. Hier kannst du zusammen mit deinem Team Meetings abhalten, Dokumente teilen und Entscheidungen treffen";
 
-  editedChannelName: string = "";
-  editedDescriptionDescription: string = "";
+  channelData = {
+    creator: this.channel.creator,
+    description: this.channel.description,
+    member: this.channel.member,
+    name: this.channel.name,
+  };
 
   constructor(private route: ActivatedRoute) {}
+
+  onSubmit(toggle: string) {
+   
+    if(this.channelData.name === ''){
+      this.channelData.name = this.channel.name;
+    }
+    
+    if(this.channelData.description === ''){
+      this.channelData.description = this.channel.description;
+    }
+
+    if(this.channelData.member === ''){
+      this.channelData.member = this.channel.member;
+    }    
+
+    const channel = new Channel({
+      creator: this.channel.creator,
+      description: this.channelData.description,
+      member: this.selectedUser,
+      name: this.channelData.name,
+    });
+
+    this.toggleEdit(toggle);    
+    this.firestore.updateChannel(this.itemID, channel);
+  }
 
   toggleEdit(field: string) {
     if (field === 'channelName') {
       this.isEditingChannelName = !this.isEditingChannelName;
-      if (!this.isEditingChannelName) {
-        // Hier können Sie die spezifische Logik für das Abschließen der Bearbeitung des Channel-Namens implementieren
-        this.channelNameDescriptionText = this.editedChannelName;
-      }
-    } else if (field === 'description') {
+    } else if (field === 'channelDescription') {
       this.isEditingDescription = !this.isEditingDescription;
-      if (!this.isEditingDescription) {
-        // Hier können Sie die spezifische Logik für das Abschließen der Bearbeitung der Beschreibung implementieren
-        this.descriptionDescriptionText = this.editedDescriptionDescription;
-      }
     }
   }
 
   toggleOverlay(overlayId: string): void {
-    const currentOverlay = document.querySelector('.overlay[style="display: block;"]') as HTMLElement;
+    const currentOverlay = document.querySelector(
+      '.overlay[style="display: block;"]'
+    ) as HTMLElement;
     const newOverlay = document.getElementById(overlayId);
 
     if (currentOverlay && currentOverlay.id !== overlayId) {
       // Schließe das aktuelle Overlay, wenn ein anderes Overlay geöffnet ist
-      currentOverlay.style.display = "none";
+      currentOverlay.style.display = 'none';
     }
 
     if (newOverlay) {
-      newOverlay.style.display = newOverlay.style.display === "none" ? "block" : "none";
+      newOverlay.style.display =
+        newOverlay.style.display === 'none' ? 'block' : 'none';
     }
   }
 
   closeOverlay(overlayId: string): void {
     const overlay = document.getElementById(overlayId) as HTMLElement;
     if (overlay) {
-      overlay.style.display = "none";
+      overlay.style.display = 'none';
     }
   }
 
@@ -80,12 +101,23 @@ export class ChannelEditionComponent implements OnInit {
     this.firestore.getSingleItemData(collection, itemID, () => {
       this.channel = new Channel(this.firestore.channel);
     });
+    setTimeout(() => {
+      this.setOldChannelValues();
+    }, 1000)
   }
 
-  openChannel (event: MouseEvent, path: string) {
+  setOldChannelValues(){
+    this.channelData = {
+      creator: this.channel.creator,
+      description: this.channel.description,
+      member: this.channel.member,
+      name: this.channel.name,
+    };
+  }
+
+  openChannel(event: MouseEvent, path: string) {
     const docRefId = (event.currentTarget as HTMLElement).id;
     console.log('Öffne Collection ' + path + ' mit ID: ' + docRefId);
     this.router.navigate(['/' + path + '/' + docRefId]);
   }
-
 }
