@@ -33,15 +33,18 @@ export class TextBoxComponent {
   }
 
   onSubmit(){
-    const message = new ChannelMessage({
-      creator: this.authService.activeUserId,
-      text: this.textBoxData.messageText,
-      channelId: this.textBoxData.channelId,
-      createdAt: this.textBoxData.createdAt,
-      reactions: this.textBoxData.reactions = this.reactions,
-    });
-    
-    this.firestore.addChannelMessage(message, `channels/${message.channelId}/channelmessages`);
-    this.textBoxData.messageText = '';        
+
+    if(this.textBoxData.messageText != ''){
+      const message = new ChannelMessage({
+        creator: this.authService.activeUserId,
+        text: this.textBoxData.messageText,
+        channelId: this.textBoxData.channelId,
+        createdAt: this.textBoxData.createdAt,
+        reactions: this.textBoxData.reactions = this.reactions,
+      });
+      
+      this.firestore.addChannelMessage(message, `channels/${message.channelId}/channelmessages`);
+      this.textBoxData.messageText = '';        
+    }
   }
 }

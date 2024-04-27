@@ -52,13 +52,18 @@ h1 {
 }
 
 .members{
-  margin: 20px;
+  @include dFlex($jc: flex-start, $ai: flex-start, $fd: column, $g: 16px);
+  padding: 20px;
 }
 
 .add-member{
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.display-flex{
+  @include dFlex($jc: space-between, $ai: center, $fd: row, $g: 0);
 }
 
 .overlay {
@@ -73,6 +78,7 @@ h1 {
 }
 
 .overlay-content {
+  @include dFlex($jc: flex-start, $ai: space-between, $fd: column, $g: 20px);
   background-color: white;
   width: 75%;
   max-width: 600px;
@@ -82,6 +88,7 @@ h1 {
   transform: translate(-50%, -50%);
   padding: 20px;
   border-radius: 20px;
+  border-top-right-radius: 0;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
@@ -99,20 +106,11 @@ h1 {
 
 }
 
-.profile-icon{
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 10px;
-}
-
 .search-input{
-  border: 0.5px solid blue;
-    border-radius: 20px;
-    padding: 8px;
-    margin-top: 10px;
-    width: 94%;
-    margin-bottom: 10px;
+    border: 1px solid #ADB0D9;
+    border-radius: 30px;
+    width: calc(100% - 40px);
+    padding: 15px 20px;    
 }
 
 .add-button {
@@ -132,12 +130,13 @@ h1 {
 }
 
 .profil{
-  padding-left: 26px;
-  padding-top: 16px;
-  gap: 16px;
-  display: flex;
-  align-items: center;
+  @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 15px);  
+  padding: 4px 20px;
   position: relative;
+  font-family: 'Nunito';
+  font-weight: 400;  
+  font-size: 18px;
+  line-height: 24.55px;
 
   img {
     width: 50px;
@@ -153,6 +152,14 @@ h1 {
     width: 14px;
     height: 14px;
   };
+
+  &:hover,
+  &:active{
+    background-color: #ECEEFE;
+    border-radius: 30px;
+    font-weight: 700;
+    color:#535AF1;
+  }
 
 }
 

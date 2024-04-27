@@ -28,8 +28,8 @@
           }@else{
           <img
             class="pointer"
-            (mouseenter)="add_hovered = true"
-            (mouseleave)="deleteHovered()"
+            (mouseenter)="add_hovered = true"            
+            (mouseleave)="deleteHovered()"            
             src="./assets/img/icon/add.svg"
             alt=""
           />
@@ -39,7 +39,7 @@
           <img
             class="pointer"
             (mouseenter)="smile_hovered = true"
-            (mouseleave)="deleteHovered()"
+            (mouseleave)="deleteHovered()"            
             src="./assets/img/icon/smile_hover.svg"
             alt=""
           />
@@ -47,22 +47,22 @@
           <img
             class="pointer"
             (mouseenter)="smile_hovered = true"
-            (mouseleave)="deleteHovered()"
+            (mouseleave)="deleteHovered()"            
             src="./assets/img/icon/smile.svg"
             alt=""
           />
           } @if(email_hovered){
           <img
             class="pointer"
-            (mouseenter)="email_hovered = true"
-            (mouseleave)="deleteHovered()"
+            (mouseenter)="email_hovered = true"            
+            (mouseleave)="deleteHovered()"            
             src="./assets/img/icon/email_hover.svg"
             alt=""
           />
           }@else{
           <img
             class="pointer"
-            (mouseenter)="email_hovered = true"
+            (mouseenter)="email_hovered = true"            
             (mouseleave)="deleteHovered()"
             src="./assets/img/icon/email.svg"
             alt=""
@@ -75,7 +75,8 @@
           class="pointer"
           (click)="onSubmit()"
           (mouseenter)="send_hovered = true"
-          (mouseleave)="deleteHovered()"
+          (touchstart)="onSubmit()"
+          (mouseleave)="deleteHovered()"          
           src="./assets/img/icon/send_hover.svg"
           alt=""
         />
@@ -84,6 +85,7 @@
           class="pointer"
           (click)="onSubmit()"          
           (mouseenter)="send_hovered = true"
+          (touchstart)="onSubmit()"
           (mouseleave)="deleteHovered()"
           src="./assets/img/icon/send.svg"
           alt=""
