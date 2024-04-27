@@ -1,10 +1,10 @@
 <div class="timeSeperator">
   <img class="line" src="./assets/img/auth/line.svg" alt="" />
-  
-  @if(currentDate == formatDate(channelMessage.createdAt)){
-    <span>Heute</span>
+
+  @if(currentDate == messageDate){
+  <span>Heute</span>
   } @else {
-  <span> {{this.dateFormatService.formatDate(channelMessage.createdAt)}}</span>
+  <span>{{ messageDate }}</span>
   }
 </div>
 
@@ -35,7 +35,7 @@
       >
         <div class="creator">{{ this.user.displayName }}</div>
         <div class="time">
-          {{ this.dateFormatService.formatTime(channelMessage.createdAt) }}
+          {{ channelMessage.createdAt }}
           Uhr
         </div>
       </div>
@@ -86,14 +86,23 @@
     </div>
     <div class="reaction-infos">
       <div class="reactions">
-        <div class="reaction-group pointer">
-          <img class="reaction-icon" src="./assets/img/emojis/1.svg" alt="" />
-          <div class="reaction-count">2</div>
+        <div *ngFor="let reaction of emojiReactions" class="reaction-group pointer">
+          <span class="reaction-icon">{{ reaction.emoji }}</span>
+          <div class="reaction-count">{{ reaction.count }}</div>
         </div>
-        <div class="reaction-group pointer">
-          <img class="reaction-icon" src="./assets/img/emojis/2.svg" alt="" />
-          <div class="reaction-count">1</div>
-        </div>
+
+<!--        <div *ngIf="isEmojiSelected" class="reaction-group pointer">-->
+<!--          <span class="reaction-icon">{{ emojiCharacter }}</span>-->
+<!--          <div class="reaction-count">2</div>-->
+<!--        </div>-->
+<!--        <div class="reaction-group pointer">-->
+<!--          <span class="reaction-icon">{{ emojiCharacter }}</span>-->
+<!--          <div class="reaction-count">2</div>-->
+<!--        </div>-->
+<!--        <div class="reaction-group pointer">-->
+<!--          <img class="reaction-icon" src="./assets/img/emojis/2.svg" alt="" />-->
+<!--          <div class="reaction-count">1</div>-->
+<!--        </div>-->
       </div>
       <img
         class="new-reaction pointer"

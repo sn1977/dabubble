@@ -1,13 +1,13 @@
-import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit, inject } from '@angular/core';
-import { ChannelMessage } from '../../../../models/channel-message.class';
-import { User } from '../../../../models/user.class';
-import { FirebaseService } from '../../../shared/services/firebase.service';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { EmojiPickerComponent } from '../../../shared/components/emoji-picker/emoji-picker.component';
-import { AuthService } from '../../../shared/services/auth.service';
-import { FormsModule } from '@angular/forms';
-import { DateFormatService } from '../../../shared/services/date-format.service';
+import {CommonModule} from '@angular/common';
+import {Component, Input, OnInit, inject} from '@angular/core';
+import {ChannelMessage} from '../../../../models/channel-message.class';
+import {User} from '../../../../models/user.class';
+import {FirebaseService} from '../../../shared/services/firebase.service';
+import {MatDialog, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
+import {EmojiPickerComponent} from '../../../shared/components/emoji-picker/emoji-picker.component';
+import {AuthService} from '../../../shared/services/auth.service';
+import {FormsModule} from '@angular/forms';
+import {DateFormatService} from '../../../shared/services/date-format.service';
 
 @Component({
   selector: 'app-channel-message',
@@ -36,6 +36,9 @@ export class ChannelMessageComponent implements OnInit {
   currentDate: any;
   messageDate: any;
   isToday: boolean = false;
+  emojiCharacter: string = '';
+  isEmojiSelected: boolean = false;
+  emojiReactions: {emoji: string, count: number}[] = [];
 
   getCurrentDay() {
     const date = new Date();
@@ -58,18 +61,14 @@ export class ChannelMessageComponent implements OnInit {
     this.firestore.getSingleItemData(collection, itemID, () => {
       this.user = new User(this.firestore.user);
     });
-  }  
-    
-  formatDate(timestamp: any): string {
-    if (timestamp && timestamp.seconds) {  
-        const date = new Date(timestamp.seconds * 1000);
-        const formattedDate = date.toISOString().slice(0, 10).replace(/-/g, '');
-        return formattedDate;
-    } else {        
-        return 'Datum nicht verfügbar';
-    }
-}
-  
+  }
+
+  formatDate(timestamp: any) {
+    const date = new Date(timestamp.seconds * 1000);
+    const formattedDate = date.toISOString().slice(0, 10).replace(/-/g, '');
+    return formattedDate;
+  }
+
   deleteHovered() {
     if (!this.edit) {
       this.hovered = false;
@@ -78,15 +77,33 @@ export class ChannelMessageComponent implements OnInit {
 
   openEmojiPicker(): void {
     const dialogRef = this.dialog.open(EmojiPickerComponent, {
-      width: '300px',
+      width: '400px',
       height: '300px',
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('Emoji ausgewählt:', result);
-        // Führe hier Aktionen mit dem ausgewählten Emoji aus, z.B. Anzeigen in der UI
+        console.log('Empfangenes Emoji:', result);
+        this.updateEmoji(result);
+        // this.isEmojiSelected = true;
+        this.addEmojiReaction(result);
+      } else {
+        console.log('Kein Emoji ausgewählt oder Dialog abgebrochen');
       }
     });
-  } 
+  }
+
+  updateEmoji(selectedEmoji: string) {
+    console.log('Update Emoji auf:', selectedEmoji);
+    this.emojiCharacter = selectedEmoji;
+  }
+
+  addEmojiReaction(selectedEmoji: string) {
+    const existingEmoji = this.emojiReactions.find(e => e.emoji === selectedEmoji);
+    if (existingEmoji) {
+      existingEmoji.count++;
+    } else {
+      this.emojiReactions.push({ emoji: selectedEmoji, count: 1 });
+    }
+  }
 }
