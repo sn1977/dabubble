@@ -18,13 +18,8 @@ export class HeaderMobileComponent implements OnInit {
   firestore = inject(FirebaseService);
   authService = inject(AuthService);
   user: User = new User();
-  // alternativeHeader: boolean | undefined;
   @Input() alternativeHeader: boolean = false;
-
-  // @Input() mode: 'default' | 'custom' = 'default';
-  // @Input() backButtonImage: string = 'assets/img/back-button.svg'; // Standardbild für den Zurück-Button
   hoverBack: boolean = false;
-
 
   constructor(private _bottomSheet: MatBottomSheet, private headerStateService: HeaderStateService, private _location: Location) {}
 
@@ -53,7 +48,6 @@ export class HeaderMobileComponent implements OnInit {
     this.getItemValues('users', id);
   }
 
-
   openBottomSheet(): void {
     const bottomSheetRef = this._bottomSheet.open(BottomSheetComponent, {
       data: { user: this.user } // Übergabe des Benutzerobjekts an die BottomSheet
@@ -72,8 +66,6 @@ export class HeaderMobileComponent implements OnInit {
   }
 
   onBack(): void {
-    // this.router.navigate(['/previous-page']);
-    console.log('ZURÜCK!!!!!!');
     this._location.back();
     this.headerStateService.setAlternativeHeader(false);
   }
