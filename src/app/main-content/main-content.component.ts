@@ -115,7 +115,7 @@ export class MainContentComponent implements OnInit {
     console.log('Suchanfrage: ', query);
     if (!query) {
       this.filteredResults = [];
-      let erg = 0;      
+      let erg = 0;
       this.hideElements(query, erg);
       return;
     }
@@ -123,22 +123,17 @@ export class MainContentComponent implements OnInit {
 
     let channelMatches = this.allChannels.filter((channel) =>
       channel.name.toLowerCase().includes(query)
-    );
+    ).map(channel => ({ ...channel, type: 'channel' }));
 
     let userMatches = this.allUsers.filter(
       (user) =>
         user.displayName.toLowerCase().includes(query) ||
         user.email.toLowerCase().includes(query)
-    );
+    ).map(user => ({ ...user, type: 'user' }));
 
     this.filteredResults = [...channelMatches, ...userMatches];
-    //console.log('Gefilterte Resultate: ', this.filteredResults);
-    // this.dialog.open(SearchResultsDialogComponent, {
-    //       width: '300px',
-    //       data: { results: this.filteredResults }
-    //     });
 
-    let erg = 0;    
+    let erg = 0;
     this.hideElements(query, erg);
   }
 
@@ -158,33 +153,18 @@ export class MainContentComponent implements OnInit {
         element.classList.remove('d-none');
         erg++;
       } else {
-        filteredElements[i].classList.add('d-none');        
+        filteredElements[i].classList.add('d-none');
       }
     }
 
-    console.log(this.filteredResults);    
+    console.log(this.filteredResults);
 
     if(erg == 0){
-      this.noChannelFound = true;      
+      this.noChannelFound = true;
       this.noUserFound = true;
     }
 
   }
-
-  // searchWorkspace(query: string) {
-  //   if (!query) {
-  //     this.filteredResults = [];
-  //     return;
-  //   }
-  //   query = query.toLowerCase();
-  //   this.filteredResults = [...this.allChannels.filter(channel => channel.name.toLowerCase().includes(query)),
-  //     ...this.allUsers.filter(user => user.displayName.toLowerCase().includes(query))];
-  //
-  //   this.dialog.open(SearchResultsDialogComponent, {
-  //     width: '300px',
-  //     data: { results: this.filteredResults }
-  //   });
-  // }
 
   onPanelOpened(index: number) {
     this.panels[index].expanded = true;
@@ -209,10 +189,6 @@ export class MainContentComponent implements OnInit {
   navigateToAddChannel() {
     this.navigationService.navigate(['/add-channel']);
   }
-
-  // checkInput(value: string): void {
-  //   this.inputHasValue = !!value.trim();
-  // }
 
   openChannel(event: MouseEvent, path: string) {
     const docRefId = (event.currentTarget as HTMLElement).id;
