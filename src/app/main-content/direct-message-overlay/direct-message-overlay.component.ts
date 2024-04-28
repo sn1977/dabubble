@@ -41,10 +41,17 @@ export class DirectMessageOverlayComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.itemStateService.itemId$.subscribe(itemId => {
-      this.itemId = itemId;
-      console.log('ItemId im Overlay:', itemId);
-    });
+    // this.itemStateService.itemId$.subscribe(itemId => {
+    //   this.itemId = itemId;
+    //   console.log('ItemId im Overlay:', itemId);
+    // });
+    console.log('Übergebene Daten im Overlay:', this.data);
+    if (this.data && this.data.itemId) {
+      this.itemId = this.data.itemId;
+      console.log('ItemId direkt aus data:', this.itemId);
+    } else {
+      console.error('Keine itemId übergeben');
+    }
   }
 
   onNoClick(): void {

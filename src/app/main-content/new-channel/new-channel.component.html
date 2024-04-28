@@ -10,7 +10,7 @@
         <span>#</span>
         <span>{{ channel.name }}</span>
       </h1>
-      <img src="./assets/img/icon/arrow_down.svg" alt="" />
+      <img src="./assets/img/icon/arrow_down.svg" alt=""/>
     </div>
     <div>
       <img
@@ -27,22 +27,24 @@
       #messageContent
       style="overflow-y: scroll; height: 100%"
     >
-      @if(this.firestore.channelMessages.length !== 0){ @for (channelMessage of
-      this.firestore.channelMessages; track channelMessage.id) {
-      <app-channel-message
-        [channelMessage]="channelMessage"
-      ></app-channel-message>
-      } } @else {
-      <div class="channel-info">
-        <h1 class="no-margin">
-          <span>#</span>
-          <span>{{ channel.name }}</span>
-        </h1>
-        <p>
-          Du hast diesen Channel heute erstellt. Das ist der Anfang des Channels
-          {{ channel.name }}
-        </p>
-      </div>
+      @if (this.firestore.channelMessages.length !== 0) {
+        @for (channelMessage of
+          this.firestore.channelMessages; track channelMessage.id) {
+          <app-channel-message
+            [channelMessage]="channelMessage"
+          ></app-channel-message>
+        }
+      } @else {
+        <div class="channel-info">
+          <h1 class="no-margin">
+            <span>#</span>
+            <span>{{ channel.name }}</span>
+          </h1>
+          <p>
+            Du hast diesen Channel heute erstellt. Das ist der Anfang des Channels
+            {{ channel.name }}
+          </p>
+        </div>
       }
     </div>
   </div>
@@ -62,28 +64,28 @@
     </div>
     <div class="members">
       @for (user of this.firestore.getUsers(); track $index) {
-      <div class="profil">
-        <img class="img-profil" src="{{ user.avatar }}" alt="" />
+        <div class="profil" (click)="openDialog(user, user.id!)">
+          <img class="img-profil" src="{{ user.avatar }}" alt=""/>
 
-        @if(user.isOnline){
-        <img
-          src="./assets/img/characters/online.svg"
-          alt="Online"
-          class="online-avatar"
-        />
-        } @else {
-        <img
-          src="./assets/img/characters/offline.svg"
-          alt="Offline"
-          class="offline-avatar"
-        />
-        }
+          @if (user.isOnline) {
+            <img
+              src="./assets/img/characters/online.svg"
+              alt="Online"
+              class="online-avatar"
+            />
+          } @else {
+            <img
+              src="./assets/img/characters/offline.svg"
+              alt="Offline"
+              class="offline-avatar"
+            />
+          }
 
-        <p class="no-margin">{{ user.displayName }}</p>
-      </div>
+          <p class="no-margin">{{ user.displayName }}</p>
+        </div>
       }
       <div class="profil">
-        <img class="height" src="./assets/img/icon/add_member.svg" alt="" />
+        <img class="height" src="./assets/img/icon/add_member.svg" alt=""/>
         <p (click)="toggleOverlay('overlay2')" class="no-margin">
           Mitglied hinzufügen
         </p>
@@ -102,7 +104,7 @@
         (click)="closeOverlay('overlay2')"
       />
     </div>
-    <input class="search-input" type="text" placeholder="Name eingeben" />
+    <input class="search-input" type="text" placeholder="Name eingeben"/>
     <div class="btn-pos">
       <button class="add-button" (click)="closeOverlay('overlay2')">
         Hinzufügen

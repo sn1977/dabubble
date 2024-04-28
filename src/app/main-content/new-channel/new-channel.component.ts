@@ -13,6 +13,7 @@ import { ChannelMessageComponent } from './channel-message/channel-message.compo
 import { HeaderMobileComponent } from '../../shared/components/header-mobile/header-mobile.component';
 import { HeaderStateService } from '../../shared/services/header-state.service';
 import { TextBoxComponent } from '../../shared/components/text-box/text-box.component';
+import { DialogServiceService} from '../../shared/services/dialog-service.service';
 
 @Component({
   selector: 'app-new-channel',
@@ -41,7 +42,7 @@ export class NewChannelComponent implements OnInit, AfterViewChecked {
     channelName: '',
     messageText: '',
     channelId: '',
-  }; 
+  };
 
   @ViewChild('messageContent') messageContent!: ElementRef;
   previousMessageCount: number = 0;
@@ -50,10 +51,9 @@ export class NewChannelComponent implements OnInit, AfterViewChecked {
     private _bottomSheet: MatBottomSheet,
     private route: ActivatedRoute,
     public navigationService: NavigationService,
-    private headerStateService: HeaderStateService
-  ) {
-    // this.headerStateService.setAlternativeHeader(true);
-  }
+    private headerStateService: HeaderStateService,
+    private dialogService: DialogServiceService
+  ) {}
 
   async ngOnInit(): Promise<void> {
     await this.waitForUserData();
@@ -65,8 +65,8 @@ export class NewChannelComponent implements OnInit, AfterViewChecked {
       this.firestore.getAllChannelMessages(this.itemID);
     });
 
-    this.headerStateService.setAlternativeHeader(true);  
-    this.scrollToBottom();  
+    this.headerStateService.setAlternativeHeader(true);
+    this.scrollToBottom();
   }
 
   ngAfterViewInit() {
@@ -110,15 +110,17 @@ export class NewChannelComponent implements OnInit, AfterViewChecked {
   }
 
   toggleOverlay(overlayId: string): void {
-    const currentOverlay = document.querySelector(
-      '.overlay[style="display: block;"]'
-    ) as HTMLElement;
+    // const currentOverlay = document.querySelector(
+    //   '.overlay[style="display: block;"]'
+    // ) as HTMLElement;
     const newOverlay = document.getElementById(overlayId);
+    // n
+    console.log(overlayId);
 
-    if (currentOverlay && currentOverlay.id !== overlayId) {
-      // Schließe das aktuelle Overlay, wenn ein anderes Overlay geöffnet ist
-      currentOverlay.style.display = 'none';
-    }
+    // if (currentOverlay && currentOverlay.id !== overlayId) {
+    //   // Schließe das aktuelle Overlay, wenn ein anderes Overlay geöffnet ist
+    //   currentOverlay.style.display = 'none';
+    // }
 
     if (newOverlay) {
       newOverlay.style.display =
@@ -154,5 +156,15 @@ export class NewChannelComponent implements OnInit, AfterViewChecked {
     this.firestore.getSingleItemData(collection, itemID, () => {
       this.user = new User(this.firestore.user);
     });
+  }
+
+  // openDialog() {
+  //   this.itemID = this.user.id;
+  //   this.dialogService.openDirectMessageDialog({ user: this.user, itemId: this.itemID });
+  // }
+
+  openDialog(user: User, itemId: string) {
+    this.dialogService.openDirectMessageDialog(user, itemId);
+    this.closeOverlay('overlay1');
   }
 }
