@@ -1,28 +1,29 @@
-import {Component, inject, OnInit} from '@angular/core';
-import {FirebaseService} from '../shared/services/firebase.service';
-import {HeaderMobileComponent} from '../shared/components/header-mobile/header-mobile.component';
-import {MatIconModule} from '@angular/material/icon';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { Component, inject, OnInit } from '@angular/core';
+import { FirebaseService } from '../shared/services/firebase.service';
+import { HeaderMobileComponent } from '../shared/components/header-mobile/header-mobile.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import {
-  MatAccordion, MatExpansionModule,
+  MatAccordion,
+  MatExpansionModule,
   MatExpansionPanel,
   MatExpansionPanelDescription,
-  MatExpansionPanelTitle
+  MatExpansionPanelTitle,
 } from '@angular/material/expansion';
-import {BottomSheetComponent} from '../shared/components/bottom-sheet/bottom-sheet.component';
-import {MatFabButton} from '@angular/material/button';
-import {FormsModule} from '@angular/forms';
-import {NavigationService} from '../shared/services/navigation.service';
-import {Router, RouterLink} from '@angular/router';
-import {AuthService} from '../shared/services/auth.service';
-import {ItemStateService} from '../shared/services/item-state.service';
-import {Observable} from 'rxjs';
-import {Channel} from '../../models/channel.class';
-import {User} from '../../models/user.class';
-import {NgForOf, NgIf} from '@angular/common';
-import {MatDialog} from '@angular/material/dialog';
-import {SearchResultsDialogComponent} from '../search-results-dialog/search-results-dialog.component';
+import { BottomSheetComponent } from '../shared/components/bottom-sheet/bottom-sheet.component';
+import { MatFabButton } from '@angular/material/button';
+import { FormsModule } from '@angular/forms';
+import { NavigationService } from '../shared/services/navigation.service';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../shared/services/auth.service';
+import { ItemStateService } from '../shared/services/item-state.service';
+import { Observable } from 'rxjs';
+import { Channel } from '../../models/channel.class';
+import { User } from '../../models/user.class';
+import { NgForOf, NgIf } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { SearchResultsDialogComponent } from '../search-results-dialog/search-results-dialog.component';
 
 @Component({
   selector: 'app-main-content',
@@ -45,9 +46,8 @@ import {SearchResultsDialogComponent} from '../search-results-dialog/search-resu
     NgIf,
   ],
   templateUrl: './main-content.component.html',
-  styleUrl: './main-content.component.scss'
+  styleUrl: './main-content.component.scss',
 })
-
 export class MainContentComponent implements OnInit {
   firestore = inject(FirebaseService);
   router = inject(Router);
@@ -71,7 +71,7 @@ export class MainContentComponent implements OnInit {
       iconPathClosed: 'assets/img/icon/account_circle_color.png',
       title: 'Direktnachrichten',
       titleColor: '#000000', // Startfarbe beim Öffnen
-    }
+    },
   ];
 
   textData = { text: '' };
@@ -80,22 +80,22 @@ export class MainContentComponent implements OnInit {
   allUsers: User[] = [];
   filteredResults: any[] = [];
 
-
-  constructor(public navigationService: NavigationService,
-              private itemStateService: ItemStateService,
-              private dialog: MatDialog) {
-  }
+  constructor(
+    public navigationService: NavigationService,
+    private itemStateService: ItemStateService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this.listenForDataChanges();
   }
 
   listenForDataChanges() {
-    this.firestore.getChannels().subscribe(channels => {
+    this.firestore.getChannels().subscribe((channels) => {
       this.allChannels = channels;
       console.log('Channels geladen: ', this.allChannels);
     });
-    this.firestore.getUsers2().subscribe(users => {
+    this.firestore.getUsers2().subscribe((users) => {
       this.allUsers = this.sortUsers(users);
       console.log('Users geladen: ', this.allUsers);
     });
@@ -110,29 +110,54 @@ export class MainContentComponent implements OnInit {
   }
 
   searchWorkspace(query: string) {
-    console.log('Suchanfrage: ', query);
+    // console.log('Suchanfrage: ', query);
     if (!query) {
       this.filteredResults = [];
+      let erg = 0;
+      this.hideElements(query, erg);
       return;
     }
     query = query.toLowerCase();
 
-    let channelMatches = this.allChannels.filter(channel =>
+    let channelMatches = this.allChannels.filter((channel) =>
       channel.name.toLowerCase().includes(query)
     );
 
-    let userMatches = this.allUsers.filter(user =>
-      user.displayName.toLowerCase().includes(query) ||
-      user.email.toLowerCase().includes(query)
+    let userMatches = this.allUsers.filter(
+      (user) =>
+        user.displayName.toLowerCase().includes(query) ||
+        user.email.toLowerCase().includes(query)
     );
 
     this.filteredResults = [...channelMatches, ...userMatches];
-    console.log('Gefilterte Resultate: ', this.filteredResults);
-
+    //console.log('Gefilterte Resultate: ', this.filteredResults);
     // this.dialog.open(SearchResultsDialogComponent, {
     //       width: '300px',
     //       data: { results: this.filteredResults }
     //     });
+
+    let erg = 0;
+    this.hideElements(query, erg);
+  }
+
+  async hideElements(search: string, erg: number) {
+    let filteredElements = Array.from(
+      document.querySelectorAll('.channel-name')
+    ) as HTMLElement[];
+
+    for (let i = 0; i < filteredElements.length; i++) {
+      let element = filteredElements[i];
+      let innerText = element.innerText;
+      
+
+
+      if (innerText.toLowerCase().includes(search)) {
+        element.classList.remove('d-none');
+        erg++;
+      } else {
+        filteredElements[i].classList.add('d-none');
+      }
+    }
   }
 
   // searchWorkspace(query: string) {
@@ -159,14 +184,15 @@ export class MainContentComponent implements OnInit {
 
   onPanelClosed(index: number) {
     this.panels[index].expanded = false;
-    this.panels[index].arrowImagePath = 'assets/img/icon/arrow_drop_down_color.png';
+    this.panels[index].arrowImagePath =
+      'assets/img/icon/arrow_drop_down_color.png';
     this.panels[index].iconPath = this.panels[index].iconPathClosed;
     this.panels[index].titleColor = '#535AF1'; // Farbe, wenn geschlossen
   }
 
   onAddClick(event: MouseEvent): void {
     event.stopPropagation(); // Verhindert, dass das Click-Event weiter zum mat-expansion-panel propagiert wird.
-    this.navigateToAddChannel()
+    this.navigateToAddChannel();
   }
 
   navigateToAddChannel() {
@@ -177,7 +203,7 @@ export class MainContentComponent implements OnInit {
   //   this.inputHasValue = !!value.trim();
   // }
 
-  openChannel (event: MouseEvent, path: string) {
+  openChannel(event: MouseEvent, path: string) {
     const docRefId = (event.currentTarget as HTMLElement).id;
     this.itemStateService.setItemId(docRefId);
     this.router.navigate([path, docRefId]);
