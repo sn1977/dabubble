@@ -79,6 +79,8 @@ export class MainContentComponent implements OnInit {
   allChannels: Channel[] = [];
   allUsers: User[] = [];
   filteredResults: any[] = [];
+  noChannelFound: boolean = false;
+  noUserFound: boolean = false;
 
   constructor(
     public navigationService: NavigationService,
@@ -110,10 +112,10 @@ export class MainContentComponent implements OnInit {
   }
 
   searchWorkspace(query: string) {
-    // console.log('Suchanfrage: ', query);
+    console.log('Suchanfrage: ', query);
     if (!query) {
       this.filteredResults = [];
-      let erg = 0;
+      let erg = 0;      
       this.hideElements(query, erg);
       return;
     }
@@ -136,11 +138,14 @@ export class MainContentComponent implements OnInit {
     //       data: { results: this.filteredResults }
     //     });
 
-    let erg = 0;
+    let erg = 0;    
     this.hideElements(query, erg);
   }
 
   async hideElements(search: string, erg: number) {
+    this.noChannelFound = false;
+    this.noUserFound = false;
+
     let filteredElements = Array.from(
       document.querySelectorAll('.channel-name')
     ) as HTMLElement[];
@@ -148,16 +153,22 @@ export class MainContentComponent implements OnInit {
     for (let i = 0; i < filteredElements.length; i++) {
       let element = filteredElements[i];
       let innerText = element.innerText;
-      
-
 
       if (innerText.toLowerCase().includes(search)) {
         element.classList.remove('d-none');
         erg++;
       } else {
-        filteredElements[i].classList.add('d-none');
+        filteredElements[i].classList.add('d-none');        
       }
     }
+
+    console.log(this.filteredResults);    
+
+    if(erg == 0){
+      this.noChannelFound = true;      
+      this.noUserFound = true;
+    }
+
   }
 
   // searchWorkspace(query: string) {
