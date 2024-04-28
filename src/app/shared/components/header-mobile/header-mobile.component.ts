@@ -23,7 +23,7 @@ export class HeaderMobileComponent implements OnInit {
 
   // @Input() mode: 'default' | 'custom' = 'default';
   // @Input() backButtonImage: string = 'assets/img/back-button.svg'; // Standardbild für den Zurück-Button
-  hoverBack: any;
+  hoverBack: boolean = false;
 
 
   constructor(private _bottomSheet: MatBottomSheet, private headerStateService: HeaderStateService, private _location: Location) {}
