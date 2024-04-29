@@ -58,7 +58,7 @@
         </div>
       }
       @if(noChannelFound){
-        <div class="nothingFound">
+        <div class="noChannelFound">
           <span class="channel-tag"></span>
           <span>Kein Channel gefunden</span>
         </div>
@@ -98,7 +98,7 @@
         <div class="scrollable-panel-content">         
           @for (user of allUsers; track $index) {
           <div            
-            class="channel-name pl-7"
+            class="user-name pl-7"
             [id]="user.id"
             (click)="openChannel($event, 'message')"
           >
@@ -126,8 +126,8 @@
           </div>
         }
         @if(noUserFound){
-          <div class="nothingFound">
-            <span class="channel-tag"></span>
+          <div class="noUserFound">
+            <span class="user-tag"></span>
             <span>Kein User gefunden</span>
           </div>
         }

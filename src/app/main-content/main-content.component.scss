@@ -90,7 +90,9 @@
   }
 }
 
-.nothingFound,
+.noChannelFound,
+.noUserFound,
+.user-name,
 .channel-name {
   padding-left: 26px;
   padding-top: 16px;
@@ -119,6 +121,7 @@
   }
 }
 
+.user-tag,
 .channel-tag {
   font-size: 24px !important;
   font-weight: bold !important;

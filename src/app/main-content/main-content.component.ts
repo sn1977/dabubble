@@ -116,54 +116,79 @@ export class MainContentComponent implements OnInit {
     if (!query) {
       this.filteredResults = [];
       let erg = 0;
-      this.hideElements(query, erg);
+      this.hideUserElements(query, erg);
+      this.hideChannelElements(query, erg);
       return;
     }
     query = query.toLowerCase();
 
-    let channelMatches = this.allChannels.filter((channel) =>
-      channel.name.toLowerCase().includes(query)
-    ).map(channel => ({ ...channel, type: 'channel' }));
+    let channelMatches = this.allChannels
+      .filter((channel) => channel.name.toLowerCase().includes(query))
+      .map((channel) => ({ ...channel, type: 'channel' }));
 
-    let userMatches = this.allUsers.filter(
-      (user) =>
-        user.displayName.toLowerCase().includes(query) ||
-        user.email.toLowerCase().includes(query)
-    ).map(user => ({ ...user, type: 'user' }));
+    let userMatches = this.allUsers
+      .filter(
+        (user) =>
+          user.displayName.toLowerCase().includes(query) ||
+          user.email.toLowerCase().includes(query)
+      )
+      .map((user) => ({ ...user, type: 'user' }));
 
     this.filteredResults = [...channelMatches, ...userMatches];
 
-    let erg = 0;
-    this.hideElements(query, erg);
+    let resultUser = 0;
+    let resultChannel = 0;
+    this.hideUserElements(query, resultUser);
+    this.hideChannelElements(query, resultChannel);
   }
 
-  async hideElements(search: string, erg: number) {
-    this.noChannelFound = false;
+  async hideUserElements(search: string, erg: number) {
     this.noUserFound = false;
 
-    let filteredElements = Array.from(
-      document.querySelectorAll('.channel-name')
+    let filteredUsers = Array.from(
+      document.querySelectorAll('.user-name')
     ) as HTMLElement[];
 
-    for (let i = 0; i < filteredElements.length; i++) {
-      let element = filteredElements[i];
+    for (let i = 0; i < filteredUsers.length; i++) {
+      let element = filteredUsers[i];
       let innerText = element.innerText;
 
       if (innerText.toLowerCase().includes(search)) {
         element.classList.remove('d-none');
         erg++;
       } else {
-        filteredElements[i].classList.add('d-none');
+        filteredUsers[i].classList.add('d-none');
       }
     }
 
-    console.log(this.filteredResults);
-
-    if(erg == 0){
+    if (erg == 0) {
       this.noChannelFound = true;
       this.noUserFound = true;
     }
+  }
 
+  async hideChannelElements(search: string, erg: number) {
+    this.noChannelFound = false;
+
+    let filteredChannels = Array.from(
+      document.querySelectorAll('.channel-name')
+    ) as HTMLElement[];
+
+    for (let i = 0; i < filteredChannels.length; i++) {
+      let element = filteredChannels[i];
+      let innerText = element.innerText;
+
+      if (innerText.toLowerCase().includes(search)) {
+        element.classList.remove('d-none');
+        erg++;
+      } else {
+        filteredChannels[i].classList.add('d-none');
+      }
+    }
+
+    if (erg == 0) {
+      this.noChannelFound = true;
+    }
   }
 
   onPanelOpened(index: number) {
