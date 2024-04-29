@@ -99,6 +99,7 @@ export class FirebaseService {
       displayName: obj.displayName,
       isOnline: obj.isOnline,
       provider: obj.provider,
+      selected:obj.selected,
     };
   }
 
@@ -138,7 +139,7 @@ export class FirebaseService {
       });
     }
   }
-  
+
   getChannels(): Observable<Channel[]> {
     return new Observable((observer) => {
       const unsubscribe = onSnapshot(
@@ -206,7 +207,7 @@ export class FirebaseService {
         console.error(err);
       })
       .then((docRef) => {
-        console.log('Document written with ID: ', docRef?.id);       
+        console.log('Document written with ID: ', docRef?.id);
       });
   }
 
@@ -243,14 +244,14 @@ export class FirebaseService {
       `channels/${channelId}/channelmessages`
     );
 
-    const querySnapshot = query(ref, orderBy('createdAt'));  
-    const unsubscribe = onSnapshot(querySnapshot, (snapshot) => {      
+    const querySnapshot = query(ref, orderBy('createdAt'));
+    const unsubscribe = onSnapshot(querySnapshot, (snapshot) => {
       this.channelMessages = [];
-      snapshot.forEach((doc) => {        
+      snapshot.forEach((doc) => {
         this.channelMessages.push(
           this.setChannelMessageObject(doc.data(), doc.id)
         );
-      });      
+      });
     });
     return unsubscribe;
   }

@@ -13,7 +13,7 @@ export class User {
     this.displayName = obj ? obj.displayName : '';
     this.isOnline = obj ? obj.isOnline : true;
     this.provider = obj ? obj.provider : '';
-    this.selected= obj ? obj.selected : '';
+    this.selected= obj ? obj.selected : false;
   }
 
   public toJSON() {

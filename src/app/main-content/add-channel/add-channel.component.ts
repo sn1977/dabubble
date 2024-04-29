@@ -24,14 +24,14 @@ export class AddChannelComponent {
       member: this.selectedUser,
       name: this.channelData.name,
     });
-    
+
     this.firestore.addChannel(channel);
   }
 
   selectedUser: any = [];
   users: User[] = [];
   filteredUsers: User[] = [];
-  
+
   selected: boolean = false;
   showDropdown: boolean = false;
   overlayVisible: boolean = false;
@@ -41,10 +41,10 @@ export class AddChannelComponent {
   firestore = inject(FirebaseService);
   router = inject(Router);
   authService = inject(AuthService);
-  
-  
+
+
   channel: Channel = new Channel();
- 
+
 
   channelData = {
     creator: '',
@@ -53,7 +53,7 @@ export class AddChannelComponent {
     name: '',
   };
 
-  
+
   addmember(event: MouseEvent, user: User) {
     const docRefId = (event.currentTarget as HTMLElement).id;
 
@@ -62,7 +62,7 @@ export class AddChannelComponent {
 
     if (index === -1) {
       // Wenn nicht ausgewählt, Benutzer hinzufügen
-      this.selectedUser.push(user);
+      this.selectedUser.push(user.id);
       user.selected = true;
     } else {
       // Wenn bereits ausgewählt, Benutzer entfernen
@@ -83,14 +83,14 @@ onSearchInputChange(value: string) {
 
   matchesSearch(user: any): boolean {
     if (!this.searchQuery || this.searchQuery.trim() === '') {
-      return true; 
+      return true;
     }
     return user.displayName
       .toLowerCase()
       .includes(this.searchQuery.toLowerCase());
   }
 
-  
+
 
   toggleOverlay() {
     this.overlayVisible = !this.overlayVisible;
@@ -98,14 +98,14 @@ onSearchInputChange(value: string) {
 
   toggleInputField(inputId: string) {
     if (inputId === 'addSpecificMembers') {
-      this.showInputField = !this.showInputField; 
-      this.showAddMember = false; 
+      this.showInputField = !this.showInputField;
+      this.showAddMember = false;
     } else if (inputId === 'searchPeople') {
       if (this.showInputField) {
-        this.showAddMember = !this.showAddMember; 
+        this.showAddMember = !this.showAddMember;
       } else {
-        this.showInputField = true; 
-        this.showAddMember = true; 
+        this.showInputField = true;
+        this.showAddMember = true;
       }
     }
   }
