@@ -31,7 +31,7 @@ export class DirectMessageComponent implements OnInit {
     channelName: '',
     messageText: '',
     channelId: '',
-  };
+  };  
 
   constructor(
     public dialog: MatDialog,
@@ -43,24 +43,20 @@ export class DirectMessageComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     await this.waitForUserData();
-    this.test();
+    this.test();    
 
     this.route.paramMap.subscribe((paramMap) => {
       this.itemID = paramMap.get('id');
       this.getItemValues('users', this.itemID);
-    });
-
-    // this.route.paramMap.subscribe((paramMap) => {
-    //   this.itemID = paramMap.get('id');
-    //   this.getItemValues('channels', this.itemID);
-    // });
-
+    });    
+    
+    this.firestore.getMessages(this.authService.activeUserAccount.uid, this.itemID);
     this.headerStateService.setAlternativeHeader(true);
   }
 
   async waitForUserData(): Promise<void> {
     while (!this.authService.activeUserAccount) {
-      await this.delay(100); // Wartezeit in Millisekunden, bevor erneut überprüft wird
+      await this.delay(100);
     }
   }
 
@@ -70,16 +66,14 @@ export class DirectMessageComponent implements OnInit {
 
   test() {
     let id = this.authService.activeUserAccount.uid;
-    console.log(id); // Stelle sicher, dass id definiert ist, bevor du darauf zugreifst
-    this.getItemValuesProfile('users', id);
+    this.getItemValuesProfile('users', id);    
   }
 
   toggleOverlay(overlayId: string): void {
     const currentOverlay = document.querySelector('.overlay[style="display: block;"]') as HTMLElement;
     const newOverlay = document.getElementById(overlayId);
 
-    if (currentOverlay && currentOverlay.id !== overlayId) {
-      // Schließe das aktuelle Overlay, wenn ein anderes Overlay geöffnet ist
+    if (currentOverlay && currentOverlay.id !== overlayId) {      
       currentOverlay.style.display = "none";
     }
 
@@ -101,7 +95,7 @@ export class DirectMessageComponent implements OnInit {
       minHeight: '600px',
       panelClass: 'custom-dialog-container',
       data: { user: this.user,
-        itemId: this.itemID } // Übergeben des User-Objekts an den Dialog
+        itemId: this.itemID }
     });
   }
 
@@ -127,10 +121,7 @@ export class DirectMessageComponent implements OnInit {
 
   getItemValuesProfile(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {
-      this.user = new User(this.firestore.user);
-      console.log('Avatar: ' + this.user.avatar);
-      console.log(this.user.displayName);
-
+      this.user = new User(this.firestore.user);      
     });
   }
 }

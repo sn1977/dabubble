@@ -33,6 +33,7 @@ export class FirebaseService {
   userList: any = [];
   channelList: any = [];
   channelMessages: any = [];
+  message: any = [];
 
   unsubUsers;
   unsubChannel;
@@ -50,9 +51,14 @@ export class FirebaseService {
     return collection(this.firestore, 'channels');
   }
 
+  getMessageRef() {
+    return collection(this.firestore, 'messages');
+  }
+
   getSingleDocRef(colId: string, docId: string) {
     return doc(collection(this.firestore, colId), docId);
   }
+
 
   subUserList() {
     return onSnapshot(this.getUsersRef(), (list) => {
@@ -123,6 +129,17 @@ export class FirebaseService {
       reactions: obj.reactions,
     };
   }
+
+  // setMessageObject(obj: any, id: string): any {
+  //   return {
+  //     messageId: id,
+  //     channelId: obj.channelId,
+  //     creator: obj.creator,
+  //     createdAt: obj.createdAt,
+  //     text: obj.text,
+  //     reactions: obj.reactions,
+  //   };
+  // }
 
   async updateUser(item: User, id: string) {
     await setDoc(doc(this.getUsersRef(), id), item.toJSON());
@@ -250,6 +267,20 @@ export class FirebaseService {
       snapshot.forEach((doc) => {
         this.channelMessages.push(
           this.setChannelMessageObject(doc.data(), doc.id)
+        );
+      });
+    });
+    return unsubscribe;
+  }
+
+  async getMessages(sender: string, recipient: string) {
+    const querySnapshot = query(this.getMessageRef(),where('sender', 'in', [sender, recipient]), where('recipient', 'in', [sender, recipient]));
+    const unsubscribe = onSnapshot(querySnapshot, (snapshot) => {
+      this.message = [];
+      snapshot.forEach((doc) => {
+        this.message.push(
+          // this.setMessageObject(doc.data(), doc.id)
+          console.log(doc.data(), doc.id)
         );
       });
     });
