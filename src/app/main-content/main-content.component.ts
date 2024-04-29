@@ -162,7 +162,6 @@ export class MainContentComponent implements OnInit {
     }
 
     if (erg == 0) {
-      this.noChannelFound = true;
       this.noUserFound = true;
     }
   }
