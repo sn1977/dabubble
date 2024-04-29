@@ -24,8 +24,7 @@ export class DirectMessageComponent implements OnInit {
   firestore = inject(FirebaseService);
   router = inject(Router);
   itemID: any = '';
-  user: User = new User();
-  // channel: Channel = new Channel();
+  user: User = new User(); 
   authService = inject(AuthService);
   textBoxData: any = {
     placeholder: 'Nachricht an Sofia Müller ',
