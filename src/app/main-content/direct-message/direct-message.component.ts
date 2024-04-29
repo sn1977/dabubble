@@ -11,13 +11,14 @@ import { AuthService } from '../../shared/services/auth.service';
 // import { Channel } from '../../../models/channel.class';
 import { HeaderMobileComponent } from '../../shared/components/header-mobile/header-mobile.component';
 import {HeaderStateService} from '../../shared/services/header-state.service';
+import { TextBoxComponent } from "../../shared/components/text-box/text-box.component";
 
 @Component({
-  selector: 'app-direct-message',
-  standalone: true,
-  imports: [HeaderMobileComponent],
-  templateUrl: './direct-message.component.html',
-  styleUrl: './direct-message.component.scss'
+    selector: 'app-direct-message',
+    standalone: true,
+    templateUrl: './direct-message.component.html',
+    styleUrl: './direct-message.component.scss',
+    imports: [HeaderMobileComponent, TextBoxComponent]
 })
 export class DirectMessageComponent implements OnInit {
   firestore = inject(FirebaseService);
@@ -26,6 +27,12 @@ export class DirectMessageComponent implements OnInit {
   user: User = new User();
   // channel: Channel = new Channel();
   authService = inject(AuthService);
+  textBoxData: any = {
+    placeholder: 'Nachricht an Sofia Müller ',
+    channelName: '',
+    messageText: '',
+    channelId: '',
+  };
 
   constructor(
     public dialog: MatDialog,

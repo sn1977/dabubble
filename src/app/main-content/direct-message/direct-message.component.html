@@ -27,7 +27,7 @@
 
     </div>
 
-    <div class="sticky-textbox">
+    <!-- <div class="sticky-textbox">
       <textarea placeholder="Schreibe eine Nachricht" class="input-field"></textarea>
       <div class="icons">
         <img src="./assets/img/icon/add.svg" alt="">
@@ -38,7 +38,9 @@
       <div class="send">
         <img src="./assets/img/icon/send.svg" alt="">
       </div>
-    </div>
+    </div> -->
+
+    <app-text-box [textBoxData]="textBoxData"></app-text-box>
 
     <div id="overlay3" class="overlay" (click)="closeOverlay('overlay3')">
       <div class="overlay-profil">
