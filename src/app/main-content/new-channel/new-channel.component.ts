@@ -9,7 +9,7 @@ import { User } from '../../../models/user.class';
 import { NavigationService } from '../../shared/services/navigation.service';
 import { AuthService } from '../../shared/services/auth.service';
 import { Auth } from '@angular/fire/auth';
-import { ChannelMessageComponent } from './channel-message/channel-message.component';
+import { ConversationComponent } from '../../shared/components/conversation/conversation.component';
 import { HeaderMobileComponent } from '../../shared/components/header-mobile/header-mobile.component';
 import { HeaderStateService } from '../../shared/services/header-state.service';
 import { TextBoxComponent } from '../../shared/components/text-box/text-box.component';
@@ -23,7 +23,7 @@ import { DialogServiceService} from '../../shared/services/dialog-service.servic
   imports: [
     RouterLink,
     BottomSheetComponent,
-    ChannelMessageComponent,
+    ConversationComponent,
     HeaderMobileComponent,
     TextBoxComponent,
   ],

@@ -29,7 +29,7 @@ export class DateFormatService {
     'Samstag',
   ];
 
-  formatDateShort(timestamp: any): string {
+  formatDateYYYYMMDD(timestamp: any): string {
     if (timestamp && timestamp.seconds) {  
         const date = new Date(timestamp.seconds * 1000);
         const formattedDate = date.toISOString().slice(0, 10).replace(/-/g, '');

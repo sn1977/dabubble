@@ -30,9 +30,9 @@
       @if (this.firestore.channelMessages.length !== 0) {
         @for (channelMessage of
           this.firestore.channelMessages; track channelMessage.id) {
-          <app-channel-message
+          <app-conversation
             [channelMessage]="channelMessage"
-          ></app-channel-message>
+          ></app-conversation>
         }
       } @else {
         <div class="channel-info">
