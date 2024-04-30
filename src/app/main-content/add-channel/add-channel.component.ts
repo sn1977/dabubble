@@ -38,6 +38,8 @@ export class AddChannelComponent {
   router = inject(Router);
   authService = inject(AuthService);
 
+  activeUser: any ='';
+
 
   channel: Channel = new Channel();
 
@@ -54,13 +56,32 @@ export class AddChannelComponent {
     const memberNames = this.selectedUsers.map(user => user.displayName);
 
     const channel = new Channel({
-      creator: this.authService.activeUserId,
+      creator: this.activeUser.displayName,
       description: this.channelData.description,
       member: this.selectedUsers,
       name: this.channelData.name,
     });
 
     this.firestore.addChannel(channel);
+  }
+
+  constructor(
+    
+  ) {this.test()}
+
+  test() {
+    let id = this.authService.activeUserId;
+    // console.log(id); // Stelle sicher, dass id definiert ist, bevor du darauf zugreifst
+    this.getItemValuesProfile('users', id);
+  }
+
+
+  getItemValuesProfile(collection: string, itemID: string) {
+    this.firestore.getSingleItemData(collection, itemID, () => {
+      this.activeUser = new User(this.firestore.user);
+      console.log(this.activeUser.displayName);
+      
+    });
   }
 
   addmember(event: MouseEvent, user: User) {
