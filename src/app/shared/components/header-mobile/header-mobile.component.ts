@@ -6,11 +6,12 @@ import { FirebaseService } from '../../services/firebase.service';
 import { User } from '../../../../models/user.class';
 import {Location, NgIf} from '@angular/common';
 import {HeaderStateService} from '../../services/header-state.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header-mobile',
   standalone: true,
-  imports: [BottomSheetComponent, NgIf],
+  imports: [BottomSheetComponent, NgIf,],
   templateUrl: './header-mobile.component.html',
   styleUrl: './header-mobile.component.scss',
 })
@@ -21,7 +22,7 @@ export class HeaderMobileComponent implements OnInit {
   @Input() alternativeHeader: boolean = false;
   hoverBack: boolean = false;
 
-  constructor(private _bottomSheet: MatBottomSheet, private headerStateService: HeaderStateService, private _location: Location) {}
+  constructor(private _bottomSheet: MatBottomSheet, private headerStateService: HeaderStateService, private _location: Location,  private router: Router) {}
 
   async ngOnInit(): Promise<void> {
     await this.waitForUserData();
@@ -66,7 +67,7 @@ export class HeaderMobileComponent implements OnInit {
   }
 
   onBack(): void {
-    this._location.back();
+    this.router.navigate(['/']);
     this.headerStateService.setAlternativeHeader(false);
   }
 }

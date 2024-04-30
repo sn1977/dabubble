@@ -55,13 +55,6 @@
         <div class="container">
             <div class="channel-name">
                 <h1>Mitglieder</h1>
-              <!-- Du von Firebase -->
-                <div class="profil">
-                    <img src="./assets/img/characters/template1.svg" alt="">
-                    <p class="no-margin">Frederik Beck (DU‚)</p>
-                </div>
-              <!-- Alle Mitglieder von Firebase -->
-
               <div *ngFor="let member of channel.member">
                 <div class="profil">
                   <img class="img-profil" src="{{member.avatar}}" alt="">
