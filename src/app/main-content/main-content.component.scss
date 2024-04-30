@@ -1,5 +1,10 @@
 @import "../../styles/mixins.scss";
 
+
+  ::ng-deep html {
+    background-color: #FFFFFF;
+  }
+
 .input-field {
   width: 100%;
   display: flex;
