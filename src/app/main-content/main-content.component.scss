@@ -1,12 +1,4 @@
 @import "../../styles/mixins.scss";
-//
-//.mat-mdc-form-field-has-icon-suffix .mat-mdc-text-field-wrapper {
-//  border-radius: 42px;
-//}
-//
-//.br-42 {
-//  border-radius: 42px;
-//}
 
 .input-field {
   width: 100%;
@@ -39,13 +31,9 @@
 }
 
 .content-main {
-  height: 100vh;
+  max-height: calc(100vh - 80px);
   padding: 30px 16px;
-  //border: 1px solid red;
-
-  // .wrapper-content-main {
-  //   //border: 1px solid red;
-  // }
+  overflow-y: auto;
 }
 
 .p-0 {
@@ -132,7 +120,7 @@
   box-shadow: none !important;
 }
 
-.d-none{
+.d-none {
   display: none;
 }
 
@@ -150,9 +138,9 @@
   padding-left: 23px;
 }
 
-.btn-position {
-  position: relative;
-}
+//.btn-position {
+//  position: relative;
+//}
 
 .btn-edit-message {
   @include bg-c(#444DF2);
@@ -163,8 +151,8 @@
   border-radius: 100%;
   border: none;
   position: absolute;
-  right: 0;
-  bottom: 10px;
+  right: 16px;
+  bottom: 48px;
   fill: #ffffff;
 }
 
@@ -174,7 +162,5 @@
 }
 
 .scrollable-panel-content {
-  max-height: 330px;
-  overflow-y: auto;
-  scrollbar-color: #FFFFFF #FFFFFF;
+  padding-bottom: 64px
 }
