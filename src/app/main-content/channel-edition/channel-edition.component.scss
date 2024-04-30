@@ -194,6 +194,17 @@ main {
 
 }
 
+.add-button {
+  background-color: rgb(68, 77, 242);
+  border: none;
+  border-radius: 20px;
+  color: white;
+  padding: 15px;
+  margin: 20px;
+  width: 150px;
+  cursor: pointer;
+}
+
 
 
 .profil-box{
@@ -281,15 +292,6 @@ main {
     margin-bottom: 10px;
 }
 
-.add-button {
-  background-color: rgb(104, 104, 104); 
-  border: none; 
-  border-radius: 20px;
-  color: white; 
-  padding: 10px; 
-  width: 100px; 
-  cursor: pointer; 
-}
 
 .btn-pos{
   display: flex;

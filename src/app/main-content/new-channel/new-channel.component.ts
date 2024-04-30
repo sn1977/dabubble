@@ -14,6 +14,7 @@ import { HeaderMobileComponent } from '../../shared/components/header-mobile/hea
 import { HeaderStateService } from '../../shared/services/header-state.service';
 import { TextBoxComponent } from '../../shared/components/text-box/text-box.component';
 import { DialogServiceService} from '../../shared/services/dialog-service.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-new-channel',
@@ -26,6 +27,7 @@ import { DialogServiceService} from '../../shared/services/dialog-service.servic
     ConversationComponent,
     HeaderMobileComponent,
     TextBoxComponent,
+    CommonModule,
   ],
 })
 export class NewChannelComponent implements OnInit, AfterViewChecked {

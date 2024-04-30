@@ -63,27 +63,23 @@
       />
     </div>
     <div class="members">
-      @for (user of this.firestore.getUsers(); track $index) {
-        <div class="profil" (click)="openDialog(user, user.id!)">
-          <img class="img-profil" src="{{ user.avatar }}" alt=""/>
 
-          @if (user.isOnline) {
-            <img
-              src="./assets/img/characters/online.svg"
-              alt="Online"
-              class="online-avatar"
-            />
+      <div *ngFor="let member of channel.member">
+        <div class="profil">
+          <img class="img-profil" src="{{member.avatar}}" alt="">
+          
+          @if(user.isOnline){
+            <img src="./assets/img/characters/online.svg" alt="Online" class="online-avatar">
           } @else {
-            <img
-              src="./assets/img/characters/offline.svg"
-              alt="Offline"
-              class="offline-avatar"
-            />
+            <img src="./assets/img/characters/offline.svg" alt="Offline" class="offline-avatar">
           }
-
-          <p class="no-margin">{{ user.displayName }}</p>
+          
+          <p class="no-margin">{{member.displayName}}</p>
         </div>
-      }
+      
+      </div>
+
+
       <div class="profil">
         <img class="height" src="./assets/img/icon/add_member.svg" alt=""/>
         <p (click)="toggleOverlay('overlay2')" class="no-margin">
