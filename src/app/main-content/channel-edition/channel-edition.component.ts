@@ -5,11 +5,12 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Channel } from '../../../models/channel.class';
 import { User } from '../../../models/user.class';
 import { AuthService } from '../../shared/services/auth.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-channel-edition',
   standalone: true,
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule, RouterLink, CommonModule],
   templateUrl: './channel-edition.component.html',
   styleUrl: './channel-edition.component.scss',
 })
@@ -43,9 +44,9 @@ export class ChannelEditionComponent implements OnInit {
       this.channelData.description = this.channel.description;
     }
 
-    if(this.channelData.member === ''){
+    /*if(this.channelData.member === ''){
       this.channelData.member = this.channel.member;
-    }    
+    }    */
 
     const channel = new Channel({
       creator: this.channel.creator,

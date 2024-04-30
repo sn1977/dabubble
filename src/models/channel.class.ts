@@ -1,8 +1,10 @@
+import { User } from "./user.class";
+
 export class Channel {
   id?: string;
   creator: string;
   description: string;
-  member: string;
+  member: User[];
   name: string;
 
   constructor(obj?: any) {

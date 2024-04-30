@@ -11,6 +11,7 @@
             <div class="channel-name">
               <h1>Channel-Name</h1>
               
+              
               @if(!isEditingChannelName){
                 <p id="description"># {{channel.name}}</p>
               }@else {
@@ -61,9 +62,9 @@
                 </div>
               <!-- Alle Mitglieder von Firebase -->
 
-              @for (user of this.firestore.getUsers(); track $index) {
+              <div *ngFor="let member of channel.member">
                 <div class="profil">
-                  <img class="img-profil" src="{{user.avatar}}" alt="">
+                  <img class="img-profil" src="{{member.avatar}}" alt="">
                   
                   @if(user.isOnline){
                     <img src="./assets/img/characters/online.svg" alt="Online" class="online-avatar">
@@ -71,11 +72,12 @@
                     <img src="./assets/img/characters/offline.svg" alt="Offline" class="offline-avatar">
                   }
                   
-                  <p class="no-margin">{{user.displayName}}</p>
+                  <p class="no-margin">{{member.displayName}}</p>
                 </div>
-              }
-              <!-- Alle Mitglieder von Firebase -->
+              
+              </div>
 
+            
 
                 <div class="profil">
                     <img src="./assets/img/icon/add_member.svg" alt="">
