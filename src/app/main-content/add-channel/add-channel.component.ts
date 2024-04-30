@@ -7,7 +7,6 @@ import { CommonModule } from '@angular/common';
 import { User } from '../../../models/user.class';
 import { Channel } from '../../../models/channel.class';
 import { AuthService } from '../../shared/services/auth.service';
-
 @Component({
   selector: 'app-add-channel',
   standalone: true,
@@ -17,15 +16,11 @@ import { AuthService } from '../../shared/services/auth.service';
 })
 export class AddChannelComponent {
 
- 
-
   selectedUsers: User[] = [];
   userNames: string = '';
-
   selectedUser: any = [];
   users: User[] = [];
   filteredUsers: User[] = [];
-
   selected: boolean = false;
   showDropdown: boolean = false;
   overlayVisible: boolean = false;
@@ -33,14 +28,14 @@ export class AddChannelComponent {
   showAddMember: boolean = false;
   isAddAllMembersChecked: boolean = false;
   isAddSpecificMembersChecked: boolean = false;
-
   firestore = inject(FirebaseService);
   router = inject(Router);
   authService = inject(AuthService);
 
+  activeUser: any ='';
+
 
   channel: Channel = new Channel();
-
 
   channelData = {
     creator: '',
@@ -49,36 +44,52 @@ export class AddChannelComponent {
     name: '',
     user: '',
   };
-
   onSubmit() {
     const memberNames = this.selectedUsers.map(user => user.displayName);
 
     const channel = new Channel({
       creator: this.authService.activeUserId,
+      creator: this.activeUser.displayName,
       description: this.channelData.description,
       member: this.selectedUsers,
       name: this.channelData.name,
     });
-
     this.firestore.addChannel(channel);
+  }
+
+  constructor(
+
+  ) {this.test()}
+
+  test() {
+    let id = this.authService.activeUserId;
+    // console.log(id); // Stelle sicher, dass id definiert ist, bevor du darauf zugreifst
+    this.getItemValuesProfile('users', id);
+  }
+
+
+  getItemValuesProfile(collection: string, itemID: string) {
+    this.firestore.getSingleItemData(collection, itemID, () => {
+      this.activeUser = new User(this.firestore.user);
+      console.log(this.activeUser.displayName);
+
+    });
   }
 
   addmember(event: MouseEvent, user: User) {
     const index = this.selectedUsers.findIndex((selectedUser) => selectedUser.id === user.id);
-  
+
     if (index === -1) {
       this.selectedUsers.push(user);
-      
+
     } else {
       this.selectedUsers.splice(index, 1);
     }
     this.updateFormattedUserNames();
   }
-
   updateFormattedUserNames() {
     this.userNames = this.selectedUsers.map(user => user.displayName).join(', ');
   }
-
   removeUser(user: User) {
     const index = this.selectedUsers.findIndex(selectedUser => selectedUser.id === user.id);
     if (index !== -1) {
@@ -86,14 +97,10 @@ export class AddChannelComponent {
       this.updateFormattedUserNames();
     }
   }
-
-
-searchQuery: string = '';
-
-onSearchInputChange(value: string) {
+  searchQuery: string = '';
+  onSearchInputChange(value: string) {
     this.searchQuery = value;
-}
-
+  }
   matchesSearch(user: any): boolean {
     if (!this.searchQuery || this.searchQuery.trim() === '') {
       return true;
@@ -102,11 +109,9 @@ onSearchInputChange(value: string) {
       .toLowerCase()
       .includes(this.searchQuery.toLowerCase());
   }
-
   toggleOverlay() {
     this.overlayVisible = !this.overlayVisible;
   }
-
   toggleInputField(inputId: string) {
     if (inputId === 'addSpecificMembers') {
       this.showInputField = !this.showInputField;
@@ -120,7 +125,6 @@ onSearchInputChange(value: string) {
       }
     }
   }
-
   toggleCheckbox(checkboxId: string): void {
     if (checkboxId === 'addAllMembers') {
       this.isAddAllMembersChecked = true;
@@ -131,7 +135,6 @@ onSearchInputChange(value: string) {
       this.isAddSpecificMembersChecked = true;
     }
   }
-
   getInputValue(event: any): string {
     return event && event.target && event.target.value;
   }
