@@ -17,8 +17,7 @@
                 <h2>Beschreibung</h2>
                 <p>(optional)</p>
             </div>
-            <input type="text" name="description" #description="ngModel" minlength="3"
-                [(ngModel)]="channelData.description" class="input-field" placeholder="Dein Text hier" required>
+            <input type="text" name="description" #description="ngModel" minlength="3" [(ngModel)]="channelData.description" class="input-field" placeholder="Dein Text hier" required>
         </div>
 
         <div class="btn-pos">
@@ -39,19 +38,30 @@
                             (change)="toggleInputField('addSpecificMembers')">
                         <label for="addSpecificMembers">Bestimmte Leute hinzufügen</label>
 
-                        <!-- Zeige das Inputfeld nur, wenn showInputField true ist -->
-                        <input *ngIf="showInputField" type="text" id="input" class="input-field" placeholder="Leute suchen" (click)="toggleInputField('searchPeople')" (input)="onSearchInputChange($any($event.target).value)" [value]="channelData.name">
+                        <div class="selected-users-container">
+                            <div *ngFor="let user of selectedUsers" class="selected-user">
+                              <span>{{ user.displayName }}</span>
+                              <button (click)="removeUser(user)">X</button>
+                            </div>
+                            <input *ngIf="showInputField" type="text" id="input" class="input-field" name="selectedUser" placeholder="Leute suchen" (click)="toggleInputField('searchPeople')" (input)="onSearchInputChange($any($event.target).value)">
+                          </div>
+
+                          
+
+
+
+
+
+
                         <div id="add-member" class="add-member" *ngIf="showAddMember">
                             <div class="scroll">
                                 @for (user of this.firestore.getUsers(); track $index) {
-                                    <div class="channel-name pl-7" [id]="user.id" (click)="addmember($event, user)"
-                                    *ngIf="matchesSearch(user)">
+                                    <div *ngIf="matchesSearch(user)" class="channel-name pl-7" [id]="user.id" (click)="addmember($event, user)">
                                     <img src="{{ user.avatar }}">
                                     <img *ngIf="user.isOnline" src="./assets/img/characters/online.svg" alt="Online" class="online-avatar">
                                     <img *ngIf="!user.isOnline" src="./assets/img/characters/offline.svg" alt="Offline" class="offline-avatar">
                                     <div class="space-between">
                                         <span>{{ user.displayName }} <span *ngIf="user.id === this.authService.activeUserId">(Du)</span></span>
-                                    <img *ngIf="user.selected" src="./../../../assets/img/emojis/2.svg" class="checkbox" alt="hallo">
                                     </div>
                                     
                                 </div>

@@ -28,6 +28,9 @@ export class AddChannelComponent {
     this.firestore.addChannel(channel);
   }
 
+  selectedUsers: User[] = [];
+  userNames: string = '';
+
   selectedUser: any = [];
   users: User[] = [];
   filteredUsers: User[] = [];
@@ -51,28 +54,37 @@ export class AddChannelComponent {
     description: '',
     member: this.selectedUser,
     name: '',
+    user: '',
   };
+
+  updateFormattedUserNames() {
+    this.userNames = this.selectedUsers.map(user => user.displayName).join(', ');
+  }
 
 
   addmember(event: MouseEvent, user: User) {
-    const docRefId = (event.currentTarget as HTMLElement).id;
-
-    // Überprüfen, ob der Benutzer bereits ausgewählt ist
-    const index = this.selectedUser.findIndex((selected: { id: string | undefined; }) => selected.id === user.id);
-
+    const index = this.selectedUsers.findIndex((selectedUser) => selectedUser.id === user.id);
+  
     if (index === -1) {
-      // Wenn nicht ausgewählt, Benutzer hinzufügen
-      this.selectedUser.push(user.id);
-      user.selected = true;
+      this.selectedUsers.push(user);
+      
     } else {
-      // Wenn bereits ausgewählt, Benutzer entfernen
-      this.selectedUser.splice(index, 1);
-      user.selected = false;
+      this.selectedUsers.splice(index, 1);
     }
-
-    // Den Namen des ausgewählten Benutzers in channelData.name speichern
-    this.channelData.name = this.selectedUser.map((u: { displayName: any; }) => u.displayName).join(', ');
+    this.updateFormattedUserNames();
   }
+
+  removeUser(user: User) {
+    const index = this.selectedUsers.findIndex(selectedUser => selectedUser.id === user.id);
+    if (index !== -1) {
+      this.selectedUsers.splice(index, 1);
+      this.updateFormattedUserNames();
+    }
+  }
+
+  
+  
+  
 
 
 searchQuery: string = '';

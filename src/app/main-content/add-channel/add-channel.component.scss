@@ -145,6 +145,44 @@
 	filter: drop-shadow(0 -0.0625rem 0.0625rem rgba(0, 0, 0, .1));
 }
 
+.selected-users-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  padding: 8px;
+
+}
+
+.selected-user {
+  display: flex;
+  align-items: center;
+  background-color: #f0f0f0;
+  padding: 4px 8px;
+  border-radius: 16px;
+  position: absolute;
+    left: 33px;
+}
+
+.selected-user span {
+  margin-right: 8px;
+}
+
+.selected-user button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  border: none;
+  border-radius: 50%;
+  background-color: #ccc;
+  color: #666;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+
 
 
 
