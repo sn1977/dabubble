@@ -31,11 +31,10 @@
                         <img src="./../../../assets/img/icon/close.svg" alt="" (click)="toggleOverlay()">
                     </div>
                     <div class="checkbox-container">
-                        <input type="checkbox" id="addAllMembers">
+                        <input type="checkbox" id="addAllMembers" [checked]="isAddAllMembersChecked" (change)="toggleCheckbox('addAllMembers')">
                         <label for="addAllMembers">Alle Mitglieder von Office Team hinzufügen</label>
                         <br>
-                        <input type="checkbox" id="addSpecificMembers"
-                            (change)="toggleInputField('addSpecificMembers')">
+                        <input type="checkbox" id="addSpecificMembers" [checked]="isAddSpecificMembersChecked" (change)="toggleCheckbox('addSpecificMembers')" (change)="toggleInputField('addSpecificMembers')">
                         <label for="addSpecificMembers">Bestimmte Leute hinzufügen</label>
 
                         <div *ngIf="showInputField" class="selected-users-container">
@@ -46,13 +45,6 @@
                             </div>
                             <input  type="text" id="input" class="input-field" name="selectedUser" placeholder="Leute suchen" (click)="toggleInputField('searchPeople')" (input)="onSearchInputChange($any($event.target).value)">
                           </div>
-
-                          
-
-
-
-
-
 
                         <div id="add-member" class="add-member" *ngIf="showAddMember">
                             <div class="scroll">
