@@ -31,6 +31,8 @@ export class AddChannelComponent {
   overlayVisible: boolean = false;
   showInputField: boolean = false;
   showAddMember: boolean = false;
+  isAddAllMembersChecked: boolean = false;
+  isAddSpecificMembersChecked: boolean = false;
 
   firestore = inject(FirebaseService);
   router = inject(Router);
@@ -116,6 +118,17 @@ onSearchInputChange(value: string) {
         this.showInputField = true;
         this.showAddMember = true;
       }
+    }
+  }
+
+  toggleCheckbox(checkboxId: string): void {
+    if (checkboxId === 'addAllMembers') {
+      this.isAddAllMembersChecked = true;
+      this.isAddSpecificMembersChecked = false;
+      this.showInputField = false; // Ensure input field is hidden when "Alle Mitglieder" selected
+    } else if (checkboxId === 'addSpecificMembers') {
+      this.isAddAllMembersChecked = false;
+      this.isAddSpecificMembersChecked = true;
     }
   }
 
