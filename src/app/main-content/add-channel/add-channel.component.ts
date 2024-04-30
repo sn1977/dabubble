@@ -17,16 +17,7 @@ import { AuthService } from '../../shared/services/auth.service';
 })
 export class AddChannelComponent {
 
-  onSubmit() {
-    const channel = new Channel({
-      creator: this.authService.activeUserId,
-      description: this.channelData.description,
-      member: this.selectedUser,
-      name: this.channelData.name,
-    });
-
-    this.firestore.addChannel(channel);
-  }
+ 
 
   selectedUsers: User[] = [];
   userNames: string = '';
@@ -52,15 +43,23 @@ export class AddChannelComponent {
   channelData = {
     creator: '',
     description: '',
-    member: this.selectedUser,
+    member: [],
     name: '',
     user: '',
   };
 
-  updateFormattedUserNames() {
-    this.userNames = this.selectedUsers.map(user => user.displayName).join(', ');
-  }
+  onSubmit() {
+    const memberNames = this.selectedUsers.map(user => user.displayName);
 
+    const channel = new Channel({
+      creator: this.authService.activeUserId,
+      description: this.channelData.description,
+      member: this.selectedUsers,
+      name: this.channelData.name,
+    });
+
+    this.firestore.addChannel(channel);
+  }
 
   addmember(event: MouseEvent, user: User) {
     const index = this.selectedUsers.findIndex((selectedUser) => selectedUser.id === user.id);
@@ -74,6 +73,10 @@ export class AddChannelComponent {
     this.updateFormattedUserNames();
   }
 
+  updateFormattedUserNames() {
+    this.userNames = this.selectedUsers.map(user => user.displayName).join(', ');
+  }
+
   removeUser(user: User) {
     const index = this.selectedUsers.findIndex(selectedUser => selectedUser.id === user.id);
     if (index !== -1) {
@@ -81,10 +84,6 @@ export class AddChannelComponent {
       this.updateFormattedUserNames();
     }
   }
-
-  
-  
-  
 
 
 searchQuery: string = '';
@@ -101,8 +100,6 @@ onSearchInputChange(value: string) {
       .toLowerCase()
       .includes(this.searchQuery.toLowerCase());
   }
-
-
 
   toggleOverlay() {
     this.overlayVisible = !this.overlayVisible;
