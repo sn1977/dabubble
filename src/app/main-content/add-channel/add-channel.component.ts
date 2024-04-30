@@ -56,23 +56,29 @@ export class AddChannelComponent {
     this.firestore.addChannel(channel);
   }
 
-  constructor(
-
-  ) {this.test()}
-
-  test() {
-    let id = this.authService.activeUserId;
-    // console.log(id); // Stelle sicher, dass id definiert ist, bevor du darauf zugreifst
-    this.getItemValuesProfile('users', id);
+  constructor() {
+    this.getActiveUserID()
   }
 
-
-  getItemValuesProfile(collection: string, itemID: string) {
-    this.firestore.getSingleItemData(collection, itemID, () => {
-      this.activeUser = new User(this.firestore.user);
-      console.log(this.activeUser.displayName);
-
-    });
+  async getActiveUserID() {
+    try {
+      let id = this.authService.activeUserId;
+      // Stelle sicher, dass id definiert ist, bevor du darauf zugreifst
+      await this.getActiveUserDoc('users', id);
+    } catch (error) {
+      console.error('Error fetching active user ID:', error);
+    }
+  }
+  
+  async getActiveUserDoc(collection: string, itemID: string) {
+    try {
+      await this.firestore.getSingleItemData(collection, itemID, () => {
+        this.activeUser = new User(this.firestore.user);
+        console.log(this.activeUser.displayName);
+      });
+    } catch (error) {
+      console.error('Error fetching active user document:', error);
+    }
   }
 
   addmember(event: MouseEvent, user: User) {
