@@ -11,6 +11,7 @@
         [class.input-has-value]="inputHasValue"
         placeholder="Gehe zu..."
         required
+        autocomplete="off"
         class="full-width input-field-design input-background-icon"
       />
     </div>
@@ -95,9 +96,9 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
 
-        <div class="scrollable-panel-content">         
+        <div class="scrollable-panel-content">
           @for (user of allUsers; track $index) {
-          <div            
+          <div
             class="user-name pl-7"
             [id]="user.id"
             (click)="openChannel($event, 'message')"
@@ -105,13 +106,13 @@
             <img src="{{ user.avatar }}" />
 
             @if(user.isOnline){
-              <img              
+              <img
               src="./assets/img/characters/online.svg"
               alt="Online"
               class="online-avatar"
             />
             }@else {
-              <img              
+              <img
               src="./assets/img/characters/offline.svg"
               alt="Offline"
               class="offline-avatar"
