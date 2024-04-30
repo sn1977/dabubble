@@ -50,7 +50,7 @@ export class DirectMessageComponent implements OnInit {
       this.getItemValues('users', this.itemID);
     });    
     
-    this.firestore.getMessages(this.authService.activeUserAccount.uid, this.itemID);
+    this.firestore.getDirectMessages(this.authService.activeUserAccount.uid, this.itemID);
     this.headerStateService.setAlternativeHeader(true);
   }
 

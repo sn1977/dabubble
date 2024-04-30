@@ -9,17 +9,18 @@ import {
   setDoc,
   where,
   query,
-  getDoc,
   updateDoc,
-  getDocs,
   orderBy,
-  serverTimestamp,
+  or,
+  getDocs,
+  and,
 } from '@angular/fire/firestore';
 import { User } from '../../../models/user.class';
 import { Channel } from '../../../models/channel.class';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { ChannelMessage } from '../../../models/channel-message.class';
+import { DirectMessage } from '../../../models/direct-message.class';
 
 @Injectable({
   providedIn: 'root',
@@ -33,7 +34,8 @@ export class FirebaseService {
   userList: any = [];
   channelList: any = [];
   channelMessages: any = [];
-  message: any = [];
+  message: DirectMessage = new DirectMessage();
+  messageList: any = [];
 
   unsubUsers;
   unsubChannel;
@@ -51,14 +53,13 @@ export class FirebaseService {
     return collection(this.firestore, 'channels');
   }
 
-  getMessageRef() {
+  getDirectMessageRef() {
     return collection(this.firestore, 'messages');
   }
 
   getSingleDocRef(colId: string, docId: string) {
     return doc(collection(this.firestore, colId), docId);
   }
-
 
   subUserList() {
     return onSnapshot(this.getUsersRef(), (list) => {
@@ -80,23 +81,6 @@ export class FirebaseService {
     });
   }
 
-  // subSingleUser(){
-  //   // ID muss noch aus dem localeStorage übergeben werden
-  //   const docId = '9MacQRd4i2TX9J42mVLBGgVCsPp1'; // Die gewünschte Dokumenten-ID
-  //   const docRef = doc(this.getUsersRef(), docId);
-  //   this.activeUser = [];
-  //   return onSnapshot(docRef, (doc) => {
-  //     if (doc.exists()) {
-  //       this.activeUser = [];
-  //       const userData = doc.data();
-  //       this.activeUser.push(userData);
-  //     } else {
-  //       // Das Dokument existiert nicht
-  //       console.log("Das Dokument mit der ID", docId, "existiert nicht.");
-  //     }
-  //   });
-  // }
-
   setUserObject(obj: any, id: string): any {
     return {
       id: id,
@@ -105,7 +89,7 @@ export class FirebaseService {
       displayName: obj.displayName,
       isOnline: obj.isOnline,
       provider: obj.provider,
-      selected:obj.selected,
+      selected: obj.selected,
     };
   }
 
@@ -130,25 +114,19 @@ export class FirebaseService {
     };
   }
 
-  // setMessageObject(obj: any, id: string): any {
-  //   return {
-  //     messageId: id,
-  //     channelId: obj.channelId,
-  //     creator: obj.creator,
-  //     createdAt: obj.createdAt,
-  //     text: obj.text,
-  //     reactions: obj.reactions,
-  //   };
-  // }
+  setMessageObject(obj: any, id: string): any {
+    return {
+      id: id,
+      sender: obj.sender,
+      recipient: obj.recipient,
+    };
+  }
 
   async updateUser(item: User, id: string) {
     await setDoc(doc(this.getUsersRef(), id), item.toJSON());
   }
 
-  async updateChannel(docId: string, channelData: Channel){
-    // console.log('ChannelId: ', docId);
-    // stefan
-    // console.log('ChannelData: ', channelData);
+  async updateChannel(docId: string, channelData: Channel) {
     if (docId) {
       let docRef = doc(this.getChannelsRef(), docId);
       await updateDoc(docRef, channelData.toJSON()).catch((err) => {
@@ -273,18 +251,52 @@ export class FirebaseService {
     return unsubscribe;
   }
 
-  async getMessages(sender: string, recipient: string) {
-    const querySnapshot = query(this.getMessageRef(),where('sender', 'in', [sender, recipient]), where('recipient', 'in', [sender, recipient]));
-    const unsubscribe = onSnapshot(querySnapshot, (snapshot) => {
-      this.message = [];
-      snapshot.forEach((doc) => {
-        this.message.push(
-          // this.setMessageObject(doc.data(), doc.id)
-          console.log(doc.data(), doc.id)
-        );
-      });
+  async getDirectMessages(sender: string, recipient: string) {
+    const querySnapshot = query(
+      this.getDirectMessageRef(),
+      where('sender', 'in', [sender, recipient]),
+      where('recipient', 'in', [sender, recipient])
+    );
+
+    const querySnapshot1 = await getDocs(
+      query(
+        this.getDirectMessageRef(),
+        where('sender', '==', sender),
+        where('recipient', '==', recipient)
+      )
+    );
+
+    const querySnapshot2 = await getDocs(
+      query(
+        this.getDirectMessageRef(),
+        where('sender', '==', recipient),
+        where('recipient', '==', sender)
+      )
+    );
+
+    const combinedResults = querySnapshot1.docs.concat(querySnapshot2.docs);
+    this.messageList = [];
+
+    combinedResults.forEach((doc) => {
+      this.messageList.push(this.setMessageObject(doc.data(), doc.id));
     });
-    return unsubscribe;
+    
+    if (combinedResults.length === 0) {
+      this.createDirectMessage(sender, recipient);
+    }    
+  }
+
+  async createDirectMessage(sender: string, recipient: string) {
+    await addDoc(this.getDirectMessageRef(), {
+      sender: sender,
+      recipient: recipient,
+    })
+      .catch((err) => {
+        console.error(err);
+      })
+      .then((docRef) => {
+        console.log('MessageChat written with ID: ', docRef?.id);
+      });
   }
 
   ngonDestroyy() {
