@@ -1,20 +1,49 @@
-<div>
+<div class="container">
   <app-header-mobile></app-header-mobile>
+
   
-  <main>
     <div class="mdc-card">
       <div class="channel-box" (click)="openDirectMessageOverlay()">
-        <img class="profil" src="{{user.avatar}}" alt="">
-        <h1 class="no-margin">{{ user.displayName }}</h1>
+        <img class="profil" src="{{ user.avatar }}" alt="" />
+        @if(user.isOnline){
+        <img
+          src="./assets/img/characters/online.svg"
+          alt="Online"
+          class="online-avatar"
+        />
+        }@else {
+        <img
+          src="./assets/img/characters/offline.svg"
+          alt="Offline"
+          class="offline-avatar"
+        />
+        }
+        <h1 class="no-margin">
+          {{ user.displayName }}
+          @if(itemID === this.authService.activeUserId){ (Du) }
+        </h1>
       </div>
     </div>
+
+    <div class="content">Inhalt hier</div>
+
     <div class="channel-info">
       <div class="profil-box" (click)="openDirectMessageOverlay()">
-        <img class="profil" src="{{user.avatar}}" alt="">
-        <h1 class="no-margin">{{ user.displayName }}</h1>
+        <img class="profil" src="{{ user.avatar }}" alt="" />
+        <h1 class="no-margin">
+          {{ user.displayName }}
+
+          @if(itemID === this.authService.activeUserId){ (Du) }
+        </h1>
       </div>
 
-      <p>Diese Unterhaltung findet nur zwischen Sofia Müller und dir statt. </p>
+      @if(itemID === this.authService.activeUserId){ 
+        <p>
+          Dieser Raum ist nur für dich da. Mache dir Notizen, liste deine To-dos auf oder bewahre Links und Dateien griffbereit auf. Du kannst hier auch gerne Dinge mit dir selbst besprechen.
+        </p>
+       }@else {
+         <p>Diese Unterhaltung findet nur zwischen {{ '@' }}{{ user.displayName }} und dir statt.</p>
+       }
 
     </div>
 
@@ -23,14 +52,14 @@
     <div id="overlay3" class="overlay" (click)="closeOverlay('overlay3')">
       <div class="overlay-profil">
         <div class="profile-icon">
-          <img src="./assets/img/icon/account_circle.svg" alt="">
+          <img src="./assets/img/icon/account_circle.svg" alt="" />
           <p class="no-margin">Profil</p>
         </div>
         <div class="profile-icon">
-          <img src="./assets/img/icon/logout.svg" alt="">
+          <img src="./assets/img/icon/logout.svg" alt="" />
           <p class="no-margin">Log out</p>
         </div>
       </div>
     </div>
-  </main>
+  
 </div>
