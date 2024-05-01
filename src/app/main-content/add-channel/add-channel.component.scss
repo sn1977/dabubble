@@ -2,28 +2,59 @@
 
 .content {
   position: relative;
-    background-color: white;
-  padding: 0 16px;
+  background-color: white;
+  padding: 40px 20px;
   height: 100vh;
-  @include dFlex($jc: center, $ai: center, $fd: column, $g: 30px);
+  @include dFlex($jc: flex-start, $ai: center, $fd: column, $g: 25px);
 }
 
 .channel-header {
   width: 100%;
-  display: flex;
-  justify-content: space-between;
+  @include dFlex($jc: space-between, $ai: center, $fd: row, $g: 0);
+  font-family: "Nunito";
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 32.74px;
 }
 
-.display-flex{
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top:  10px;
-    margin-bottom:  10px;
+h1,
+h2 {
+  margin-block-start: 0em !important;
+  margin-block-end: 0em !important;
 }
 
-.cannel-container {
+.channel-description {
+  font-family: "Nunito";
+  font-weight: 400;
+  font-size: 16.5px;
+  line-height: 23.19px;
+  flex-wrap: nowrap;
+}
+
+form {
   width: 100%;
+  @include dFlex($jc: space-between, $ai: flex-start, $fd: column, $g: 20px);
+
+  input[type="text"] {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 18px 20px;
+    border-radius: 40px;
+    border: 1px solid #adb0d9;
+  }
+}
+
+.input-headline {
+  @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 8px);
+  div {
+    font-family: "Nunito";
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 24.55px;
+  }
+  span {
+    color: #686868;
+  }
 }
 
 .overlay {
@@ -33,7 +64,6 @@
   width: 100%;
   height: 100%;
   z-index: 9999;
-  
 }
 
 .overlay-content {
@@ -49,7 +79,6 @@
 }
 
 .dropdown-list {
-  
   z-index: 1000;
   background-color: #fff;
   border: 1px solid #ccc;
@@ -62,12 +91,11 @@
   overflow-y: auto; /* Scrollleiste anzeigen, wenn Inhalt überläuft */
 }
 
-.dropdown{
+.dropdown {
   height: 100px;
   overflow: scroll;
   margin: 20px;
   margin-top: unset;
-
 }
 
 .dropdown-list li {
@@ -89,60 +117,56 @@
   transition: opacity 0.5s ease-in-out; /* Animation für die Sichtbarkeit */
 }
 
-.space-between{
+.space-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-
-    img{
-      width : 20px!important;
-      height: 20px!important;
-    }
-
+  img {
+    width: 20px !important;
+    height: 20px !important;
+  }
 }
-
 
 .add-member {
   position: relative;
-	max-width: 30em;
-	height: 100px;
+  max-width: 30em;
+  height: 100px;
   width: 250px;
-  
 
-	// looks
-	background-color: #fff;
-	padding: 10px;
-	font-size: 1.25em;
-	border-radius: 1rem;
-  box-shadow:	0 0.125rem 0.5rem rgba(0, 0, 0, .3), 0 0.0625rem 0.125rem rgba(0, 0, 0, .2);
+  // looks
+  background-color: #fff;
+  padding: 10px;
+  font-size: 1.25em;
+  border-radius: 1rem;
+  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.3),
+    0 0.0625rem 0.125rem rgba(0, 0, 0, 0.2);
 }
 
 .pl-7 {
   padding-left: 23px;
 }
 
-.scroll{
+.scroll {
   overflow: scroll;
   height: 100px;
 }
 
-
 .add-member:before {
   // layout
-	content: '';
-	position: absolute;
-	width: 0;
-	height: 0;
-	bottom: 100%;
-	left: 1.5em; // offset should move with padding of parent
-	border: .75rem solid transparent;
-	border-top: none;
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  bottom: 100%;
+  left: 1.5em; // offset should move with padding of parent
+  border: 0.75rem solid transparent;
+  border-top: none;
 
-	// looks
-	border-bottom-color: #fff;
-	filter: drop-shadow(0 -0.0625rem 0.0625rem rgba(0, 0, 0, .1));
+  // looks
+  border-bottom-color: #fff;
+  filter: drop-shadow(0 -0.0625rem 0.0625rem rgba(0, 0, 0, 0.1));
 }
 
 .selected-users-container {
@@ -151,7 +175,6 @@
   gap: 8px;
   align-items: center;
   padding: 8px;
-
 }
 
 .selected-user {
@@ -160,14 +183,13 @@
   background-color: #f0f0f0;
   padding: 4px 8px;
   border-radius: 16px;
-  
 
-    img {
-      width: 35px;
-      height: 35px;
-      border-radius: 100%;
-      object-fit: cover;
-    }
+  img {
+    width: 35px;
+    height: 35px;
+    border-radius: 100%;
+    object-fit: cover;
+  }
 }
 
 .selected-user span {
@@ -188,13 +210,6 @@
   cursor: pointer;
 }
 
-
-
-
-
-
-
-
 .channel-name {
   padding: 10px;
   gap: 16px;
@@ -203,7 +218,13 @@
   position: relative;
 
   span {
-    @include fontBold($fw: 400, $fs: 17px, $lh: 23.19px, $ta: center, $c: #000000);
+    @include fontBold(
+      $fw: 400,
+      $fs: 17px,
+      $lh: 23.19px,
+      $ta: center,
+      $c: #000000
+    );
   }
 
   img {
@@ -213,7 +234,8 @@
     object-fit: cover;
   }
 
-  .online-avatar, .offline-avatar {
+  .online-avatar,
+  .offline-avatar {
     position: absolute;
     bottom: 8px;
     left: 35px;
@@ -225,17 +247,6 @@
 .channel-name:hover {
   background-color: lightgrey;
   cursor: pointer;
-}
-
-
-
-.input-field {
-  width: 90%;
-  padding: 15px;
-  border-radius: 20px;
-  border: 1px solid black;
-  margin-top: 10px;
-  margin-bottom: 10px;
 }
 
 .add-button {
