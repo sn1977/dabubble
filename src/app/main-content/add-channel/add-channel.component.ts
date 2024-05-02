@@ -48,12 +48,15 @@ export class AddChannelComponent {
     const memberNames = this.selectedUsers.map(user => user.displayName);
 
     const channel = new Channel({
-      creator: this.activeUser.displayName,
+      creator: this.authService.activeUserId,
       description: this.channelData.description,
       member: this.selectedUsers,
       name: this.channelData.name,
+      count: 0,
     });
     this.firestore.addChannel(channel);
+    
+    
   }
 
   constructor() {

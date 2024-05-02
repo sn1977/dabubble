@@ -8,7 +8,7 @@ export class ChannelMessage {
   text: string;
   reactions?: string;
   attachment?: string[];
-  count?: number;
+
 
   constructor(obj?: any) {
     this.channelId = obj ? obj.channelId : '';
@@ -17,7 +17,7 @@ export class ChannelMessage {
     this.text = obj ? obj.text : '';
     this.reactions = obj ? obj.reactions : '';
     this.attachment = obj ? obj.attachment : '';
-    this.count = obj ? obj.count : '';
+  
   }
 
   public toJSON() {
@@ -28,7 +28,7 @@ export class ChannelMessage {
       text: this.text,
       reactions: this.reactions,
       attachment: this.attachment,
-      coun: this.count,
+    
     };
   }
 }

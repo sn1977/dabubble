@@ -6,12 +6,14 @@ export class Channel {
   description: string;
   member: User[];
   name: string;
+  count: number;
 
   constructor(obj?: any) {
     this.creator = obj ? obj.creator : '';
     this.description = obj ? obj.description : '';
     this.member = obj ? obj.member : '';
     this.name = obj ? obj.name : '';
+    this.count = obj ? obj.count: 0;
   }
 
   public toJSON() {
@@ -20,6 +22,7 @@ export class Channel {
       description: this.description,
       member: this.member,
       name: this.name,
+      count: this.count,
     };
   }
 }

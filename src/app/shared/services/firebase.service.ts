@@ -100,6 +100,7 @@ export class FirebaseService {
       member: obj.member,
       id: id,
       name: obj.name,
+      count: obj.count,
     };
   }
 
