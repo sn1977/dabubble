@@ -46,7 +46,7 @@ export class TextBoxComponent {
         reactions: this.textBoxData.reactions = this.reactions,
         collection: this.textBoxData.collection,
         subcollection: this.textBoxData.subcollection,
-     
+        attachment: 'Anhang',
       });
       
       this.firestore.addChannelMessage(message, `${this.textBoxData.collection}/${message.channelId}/${this.textBoxData.subcollection}`);
