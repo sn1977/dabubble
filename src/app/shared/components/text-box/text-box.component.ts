@@ -17,6 +17,7 @@ export class TextBoxComponent {
   authService = inject(AuthService);
   firestore = inject(FirebaseService);
   reactions = ['wave', 'rocket'];
+  messageCount: number = 0;
   
   @Input() textBoxData: any;
 
@@ -34,6 +35,8 @@ export class TextBoxComponent {
 
   onSubmit(){
 
+    this.messageCount++;
+
     if(this.textBoxData.messageText != ''){
       const message = new ChannelMessage({
         creator: this.authService.activeUserId,
@@ -43,10 +46,13 @@ export class TextBoxComponent {
         reactions: this.textBoxData.reactions = this.reactions,
         collection: this.textBoxData.collection,
         subcollection: this.textBoxData.subcollection,
+        count: this.messageCount,
       });
       
-      this.firestore.addChannelMessage(message, `${this.textBoxData.collection}/${message.channelId}/${this.textBoxData.subcollection}`);
-      this.textBoxData.messageText = '';        
+      this.firestore.addChannelMessage(message, `${this.textBoxData.collection}/${message.channelId}/${this.textBoxData.subcollection}/${this.textBoxData.count}`);
+      this.textBoxData.messageText = '';  
+
+      
     }
   }
 }

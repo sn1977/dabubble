@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { FirebaseService } from '../shared/services/firebase.service';
 import { HeaderMobileComponent } from '../shared/components/header-mobile/header-mobile.component';
 import { MatIconModule } from '@angular/material/icon';
@@ -24,6 +24,7 @@ import { User } from '../../models/user.class';
 import { NgForOf, NgIf } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { SearchResultsDialogComponent } from '../search-results-dialog/search-results-dialog.component';
+import { ChannelMessage } from '../../models/channel-message.class';
 
 @Component({
   selector: 'app-main-content',
@@ -52,6 +53,7 @@ export class MainContentComponent implements OnInit {
   firestore = inject(FirebaseService);
   router = inject(Router);
   authService = inject(AuthService);
+  @Input() channelMessage!: ChannelMessage;
 
   panels = [
     {
@@ -75,6 +77,7 @@ export class MainContentComponent implements OnInit {
   ];
 
   textData = { text: '' };
+  
   inputHasValue = false;
   allChannels: Channel[] = [];
   allUsers: User[] = [];
