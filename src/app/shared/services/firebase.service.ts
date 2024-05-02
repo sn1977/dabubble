@@ -36,6 +36,7 @@ export class FirebaseService {
   channelMessages: any = [];
   message: DirectMessage = new DirectMessage();
   conversation: string | undefined;
+  channelMessagesCount: number = 0;
 
   unsubUsers;
   unsubChannel;
@@ -43,6 +44,7 @@ export class FirebaseService {
   constructor() {
     this.unsubUsers = this.subUserList();
     this.unsubChannel = this.subChannelList();
+    this.getCount();
   }
 
   getUsersRef() {
@@ -310,4 +312,22 @@ export class FirebaseService {
     this.unsubUsers();
     this.unsubChannel();
   }
+
+  getCount() {
+    return new Promise((resolve, reject) => {
+        const subCollectionRef = collection(this.firestore, 'channels/9KJYLfxx07Wn5rbEupdA/channelmessages');
+        getDocs(subCollectionRef)
+            .then(snapshot => {
+                const count = snapshot.size; // Anzahl der Dokumente in der Subcollection
+                resolve(count); // Resolve mit der Anzahl der Dokumente
+                this.channelMessagesCount = count
+                
+                
+            })
+            .catch(error => {
+                console.error('Fehler beim Abrufen der Dokumente:', error);
+                reject(error); // Reject im Fehlerfall
+            });
+    });
+}
 }
