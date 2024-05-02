@@ -44,6 +44,8 @@ export class NewChannelComponent implements OnInit, AfterViewChecked {
     channelName: '',
     messageText: '',
     channelId: '',
+    collection: 'channels',
+    subcollection: 'channelmessages',
   };
 
   @ViewChild('messageContent') messageContent!: ElementRef;

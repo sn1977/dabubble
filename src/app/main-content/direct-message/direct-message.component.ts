@@ -36,6 +36,8 @@ export class DirectMessageComponent implements OnInit {
     channelName: '',
     messageText: '',
     channelId: '',
+    collection: 'messages',
+    subcollection: 'chat',
   };
 
   constructor(
@@ -55,10 +57,13 @@ export class DirectMessageComponent implements OnInit {
       this.getItemValues('users', this.itemID);
     });
 
-    this.firestore.getDirectMessages(
+    await this.firestore.getDirectMessages(
       this.authService.activeUserAccount.uid,
-      this.itemID
+      this.itemID      
     );
+    
+    //console.log('hallo stefan:', this.firestore.conversation);
+    this.textBoxData.channelId = this.firestore.conversation;
     this.headerStateService.setAlternativeHeader(true);
   }
 

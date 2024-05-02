@@ -41,9 +41,11 @@ export class TextBoxComponent {
         channelId: this.textBoxData.channelId,
         createdAt: this.textBoxData.createdAt,
         reactions: this.textBoxData.reactions = this.reactions,
+        collection: this.textBoxData.collection,
+        subcollection: this.textBoxData.subcollection,
       });
       
-      this.firestore.addChannelMessage(message, `channels/${message.channelId}/channelmessages`);
+      this.firestore.addChannelMessage(message, `${this.textBoxData.collection}/${message.channelId}/${this.textBoxData.subcollection}`);
       this.textBoxData.messageText = '';        
     }
   }

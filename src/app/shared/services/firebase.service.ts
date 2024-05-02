@@ -36,6 +36,7 @@ export class FirebaseService {
   channelMessages: any = [];
   message: DirectMessage = new DirectMessage();
   messageList: any = [];
+  conversation: string | undefined;
 
   unsubUsers;
   unsubChannel;
@@ -275,15 +276,16 @@ export class FirebaseService {
     );
 
     const combinedResults = querySnapshot1.docs.concat(querySnapshot2.docs);
-    this.messageList = [];
-
-    combinedResults.forEach((doc) => {
+    this.messageList = [];    
+    
+    combinedResults.forEach((doc) => {      
       this.messageList.push(this.setMessageObject(doc.data(), doc.id));
+      this.conversation = doc.id;
     });
     
     if (combinedResults.length === 0) {
-      this.createDirectMessage(sender, recipient);
-    }    
+      await this.createDirectMessage(sender, recipient);      
+    }
   }
 
   async createDirectMessage(sender: string, recipient: string) {
@@ -295,7 +297,8 @@ export class FirebaseService {
         console.error(err);
       })
       .then((docRef) => {
-        console.log('MessageChat written with ID: ', docRef?.id);
+        // console.log('MessageChat written with ID: ', docRef?.id);
+        this.conversation = docRef?.id;
       });
   }
 
