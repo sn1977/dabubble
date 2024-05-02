@@ -30,13 +30,14 @@
       #messageContent
       style="overflow-y: scroll; height: 100%"
     >
-      <!-- @for (channelMessage of this.firestore.channelMessages; track
-      channelMessage.id) {
-      <app-conversation [channelMessage]="channelMessage"></app-conversation>
-      } -->
+      @for (chat of this.firestore.channelMessages; track
+      chat.id) {
+      <app-conversation [channelMessage]="chat"></app-conversation>
+      }
     </div>
   </div>
 
+  @if (this.firestore.channelMessages.length === 0) {
   <div class="channel-info">
     <div class="profile-box" (click)="openDirectMessageOverlay()">
       <img class="profile" src="{{ user.avatar }}" alt="" />
@@ -59,7 +60,7 @@
       }
     </div>
   </div>
-
+  }
   <app-text-box [textBoxData]="textBoxData"></app-text-box>
 
   <div id="overlay3" class="overlay" (click)="closeOverlay('overlay3')">

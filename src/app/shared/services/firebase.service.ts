@@ -35,7 +35,6 @@ export class FirebaseService {
   channelList: any = [];
   channelMessages: any = [];
   message: DirectMessage = new DirectMessage();
-  messageList: any = [];
   conversation: string | undefined;
 
   unsubUsers;
@@ -234,10 +233,15 @@ export class FirebaseService {
     );
   }
 
-  async getAllChannelMessages(channelId: string) {
+  async getAllChannelMessages(
+    channelId: string,
+    colID: string,
+    subcollection: string
+  ) {
+    
     const ref = collection(
       this.firestore,
-      `channels/${channelId}/channelmessages`
+      `${colID}/${channelId}/${subcollection}`
     );
 
     const querySnapshot = query(ref, orderBy('createdAt'));
@@ -276,15 +280,13 @@ export class FirebaseService {
     );
 
     const combinedResults = querySnapshot1.docs.concat(querySnapshot2.docs);
-    this.messageList = [];    
-    
-    combinedResults.forEach((doc) => {      
-      this.messageList.push(this.setMessageObject(doc.data(), doc.id));
+
+    combinedResults.forEach((doc) => {
       this.conversation = doc.id;
     });
-    
+
     if (combinedResults.length === 0) {
-      await this.createDirectMessage(sender, recipient);      
+      await this.createDirectMessage(sender, recipient);
     }
   }
 

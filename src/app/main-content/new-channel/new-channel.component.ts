@@ -65,8 +65,8 @@ export class NewChannelComponent implements OnInit, AfterViewChecked {
 
     this.route.paramMap.subscribe((paramMap) => {
       this.itemID = paramMap.get('id');
-      this.getItemValues('channels', this.itemID);
-      this.firestore.getAllChannelMessages(this.itemID);
+      this.getItemValues('channels', this.itemID);      
+      this.firestore.getAllChannelMessages(this.itemID, this.textBoxData.collection, this.textBoxData.subcollection);
     });
 
     this.headerStateService.setAlternativeHeader(true);

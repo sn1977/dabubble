@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { DirectMessageOverlayComponent } from '../direct-message-overlay/direct-message-overlay.component';
 import { MatDialog } from '@angular/material/dialog';
 import { NavigationService } from '../../shared/services/navigation.service';
@@ -26,6 +26,7 @@ import { ConversationComponent } from '../../shared/components/conversation/conv
   ],
 })
 export class DirectMessageComponent implements OnInit {
+  @ViewChild('messageContent') messageContent!: ElementRef;
   firestore = inject(FirebaseService);
   router = inject(Router);
   itemID: any = '';
@@ -61,10 +62,11 @@ export class DirectMessageComponent implements OnInit {
       this.authService.activeUserAccount.uid,
       this.itemID      
     );
-    
-    //console.log('hallo stefan:', this.firestore.conversation);
+        
     this.textBoxData.channelId = this.firestore.conversation;
     this.headerStateService.setAlternativeHeader(true);
+    this.firestore.getAllChannelMessages(this.textBoxData.channelId, this.textBoxData.collection, this.textBoxData.subcollection);
+    this.scrollToBottom();
   }
 
   async waitForUserData(): Promise<void> {
@@ -113,6 +115,15 @@ export class DirectMessageComponent implements OnInit {
       data: { user: this.user, itemId: this.itemID },
     });
   }
+
+  scrollToBottom() {
+    try {
+      this.messageContent.nativeElement.scrollTo({
+        top: this.messageContent.nativeElement.scrollHeight,
+        behavior: 'smooth' // Hier wird smooth scrollen aktiviert
+      });
+    } catch(err) { }
+}
 
   goBack(): void {
     this.navigationService.goBack();
