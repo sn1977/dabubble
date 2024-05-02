@@ -321,6 +321,7 @@ export class FirebaseService {
                 const count = snapshot.size; // Anzahl der Dokumente in der Subcollection
                 resolve(count); // Resolve mit der Anzahl der Dokumente
                 this.channelMessagesCount = count
+                console.log(count);
                 
                 
             })
