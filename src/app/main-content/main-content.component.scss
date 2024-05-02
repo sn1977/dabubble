@@ -93,6 +93,7 @@
   display: flex;
   align-items: center;
   position: relative;
+  justify-content: space-between;
 
   span {
     @include fontBold($fw: 400, $fs: 17px, $lh: 23.19px, $ta: center, $c: #000000);
@@ -112,6 +113,23 @@
     width: 14px;
     height: 14px;
   }
+}
+.pf{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+}
+
+.pop-up{
+  background-color: #004fffb3;
+    height: 20px;
+    width: 20px;
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    border-radius: 10px;
 }
 
 .user-tag,

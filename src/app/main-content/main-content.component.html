@@ -54,8 +54,13 @@
           [id]="channel.id"
           (click)="openChannel($event, 'new-channel')"
         >
+        <div class="pf">
           <span class="channel-tag">#</span>
           <span>{{ channel.name }}</span>
+        </div>
+        <div class="pop-up">
+          <p>1</p>
+        </div>
         </div>
       }
       @if(noChannelFound){
@@ -103,6 +108,7 @@
             [id]="user.id"
             (click)="openChannel($event, 'message')"
           >
+          <div class="pf">
             <img src="{{ user.avatar }}" />
 
             @if(user.isOnline){
@@ -124,6 +130,12 @@
                 <span> (Du)</span>
               }
             </span>
+          </div>
+          <div class="pop-up">
+            <p>1</p>
+          </div>
+
+            
           </div>
         }
         @if(noUserFound){
