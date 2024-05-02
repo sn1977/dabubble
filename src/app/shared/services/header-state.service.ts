@@ -9,7 +9,7 @@ export class HeaderStateService {
   alternativeHeader$ = this._alternativeHeader.asObservable();
 
   setAlternativeHeader(value: boolean) {
-    console.log('Setting alternativeHeader to', value);
+    // console.log('Setting alternativeHeader to', value);
     this._alternativeHeader.next(value);
   }
 }
