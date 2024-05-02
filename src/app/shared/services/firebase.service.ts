@@ -111,6 +111,7 @@ export class FirebaseService {
       createdAt: obj.createdAt,
       text: obj.text,
       reactions: obj.reactions,
+      attachment: obj.attachment,
     };
   }
 

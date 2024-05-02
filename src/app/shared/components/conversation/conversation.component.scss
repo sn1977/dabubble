@@ -79,6 +79,16 @@
         color: #000000;
       }
 
+      .attachment-list{
+        @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 8px);
+        flex-wrap: wrap;
+      }
+
+      .attachment{
+        height: 80px;
+        width: 80px;
+      }
+
       .text-white{
         color: #FFFFFF;
       }
