@@ -55,7 +55,7 @@ export class HeaderMobileComponent implements OnInit {
     });
 
     bottomSheetRef.afterDismissed().subscribe(result => {
-      console.log('Bottom Sheet closed', result);
+      // console.log('Bottom Sheet closed', result);
       // Hier kannst du weitere Aktionen ausführen, nachdem die Bottom Sheet geschlossen wurde
     });
   }
