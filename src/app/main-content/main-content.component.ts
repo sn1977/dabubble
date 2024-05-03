@@ -222,4 +222,6 @@ export class MainContentComponent implements OnInit {
     this.itemStateService.setItemId(docRefId);
     this.router.navigate([path, docRefId]);
   }
+
+  
 }
