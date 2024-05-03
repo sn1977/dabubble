@@ -1,0 +1,26 @@
+@import "../../../../styles/mixins.scss";
+
+.content{  
+  @include dFlex($jc: space-between, $ai: center, $fd: row, $g: 20px);
+  padding: 0 20px;
+  width: 100%;
+}
+
+.logo{
+  background-color: green;
+  width: 100%;
+  max-width: 366px;
+}
+
+.searchbar{
+  background-color: red;
+  width: 100%;
+  max-width: 989px;
+  flex: 1;
+}
+
+.header{
+  background-color: blue;
+  width: 100%;
+  max-width: 485px;
+}
