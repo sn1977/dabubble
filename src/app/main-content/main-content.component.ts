@@ -54,6 +54,7 @@ export class MainContentComponent implements OnInit {
   router = inject(Router);
   authService = inject(AuthService);
   @Input() channelMessage!: ChannelMessage;
+  @Input() isDesktop: boolean = false;
 
   panels = [
     {
