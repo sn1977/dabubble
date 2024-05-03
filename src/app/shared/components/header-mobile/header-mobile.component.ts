@@ -4,14 +4,14 @@ import { BottomSheetComponent } from '../bottom-sheet/bottom-sheet.component';
 import { AuthService } from '../../services/auth.service';
 import { FirebaseService } from '../../services/firebase.service';
 import { User } from '../../../../models/user.class';
-import {CommonModule, Location, NgIf} from '@angular/common';
+import {CommonModule, Location} from '@angular/common';
 import {HeaderStateService} from '../../services/header-state.service';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header-mobile',
   standalone: true,
-  imports: [BottomSheetComponent, NgIf, CommonModule],
+  imports: [BottomSheetComponent, CommonModule],
   templateUrl: './header-mobile.component.html',
   styleUrl: './header-mobile.component.scss',
 })
