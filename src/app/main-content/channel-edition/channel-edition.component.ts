@@ -6,11 +6,12 @@ import { Channel } from '../../../models/channel.class';
 import { User } from '../../../models/user.class';
 import { AuthService } from '../../shared/services/auth.service';
 import { CommonModule } from '@angular/common';
+import { SearchUserComponent } from '../../shared/components/search-user/search-user.component';
 
 @Component({
   selector: 'app-channel-edition',
   standalone: true,
-  imports: [FormsModule, RouterLink, CommonModule],
+  imports: [FormsModule, RouterLink, CommonModule, SearchUserComponent],
   templateUrl: './channel-edition.component.html',
   styleUrl: './channel-edition.component.scss',
 })

@@ -14,6 +14,7 @@ import { HeaderMobileComponent } from '../../shared/components/header-mobile/hea
 import { HeaderStateService } from '../../shared/services/header-state.service';
 import { TextBoxComponent } from '../../shared/components/text-box/text-box.component';
 import { DialogServiceService} from '../../shared/services/dialog-service.service';
+import { SearchUserComponent } from '../../shared/components/search-user/search-user.component';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -28,6 +29,7 @@ import { CommonModule } from '@angular/common';
     HeaderMobileComponent,
     TextBoxComponent,
     CommonModule,
+    SearchUserComponent,
   ],
 })
 export class NewChannelComponent implements OnInit, AfterViewChecked {

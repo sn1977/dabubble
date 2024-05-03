@@ -79,26 +79,13 @@
                 <span>{{ user.displayName }}</span>
                 <button (click)="removeUser(user)">X</button>
               </div>
-              <input
-                type="text"
-                id="input"
-                class="input-field"
-                name="selectedUser"
-                placeholder="Leute suchen"
-                (click)="toggleInputField('searchPeople')"
-                (input)="onSearchInputChange($any($event.target).value)"
+              <input type="text" id="input" class="input-field" name="selectedUser" placeholder="Leute suchen" (click)="toggleInputField('searchPeople')" (input)="onSearchInputChange($any($event.target).value)"
               />
             </div>
-
             <div id="add-member" class="add-member" *ngIf="showAddMember">
               <div class="scroll">
                 @for (user of this.firestore.getUsers(); track $index) {
-                <div
-                  *ngIf="matchesSearch(user)"
-                  class="channel-name pl-7"
-                  [id]="user.id"
-                  (click)="addmember($event, user)"
-                >
+                <div *ngIf="matchesSearch(user)" class="channel-name pl-7" [id]="user.id" (click)="addmember($event, user)">
                   <img src="{{ user.avatar }}" />
                   <img
                     *ngIf="user.isOnline"
