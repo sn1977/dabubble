@@ -4,14 +4,14 @@ import { BottomSheetComponent } from '../bottom-sheet/bottom-sheet.component';
 import { AuthService } from '../../services/auth.service';
 import { FirebaseService } from '../../services/firebase.service';
 import { User } from '../../../../models/user.class';
-import {Location, NgIf} from '@angular/common';
+import {CommonModule, Location, NgIf} from '@angular/common';
 import {HeaderStateService} from '../../services/header-state.service';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header-mobile',
   standalone: true,
-  imports: [BottomSheetComponent, NgIf,],
+  imports: [BottomSheetComponent, NgIf, CommonModule],
   templateUrl: './header-mobile.component.html',
   styleUrl: './header-mobile.component.scss',
 })
@@ -20,6 +20,7 @@ export class HeaderMobileComponent implements OnInit {
   authService = inject(AuthService);
   user: User = new User();
   @Input() alternativeHeader: boolean = false;
+  @Input() isDesktop: boolean = false;
   hoverBack: boolean = false;
 
   constructor(private _bottomSheet: MatBottomSheet, private headerStateService: HeaderStateService, private _location: Location,  private router: Router) {}

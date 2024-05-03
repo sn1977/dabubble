@@ -1,16 +1,35 @@
-<div class="content-header-mobile bg-c">
+<div 
+
+
+class="content-header-mobile bg-c"
+[ngStyle]="{
+  'justify-content': isDesktop ? 'flex-end' : 'space-between'
+}"
+>
+  @if(isDesktop){
+  {{ user.displayName }}
+  } @else {
+
   <div *ngIf="!alternativeHeader" class="logo-header">
-    <img src="assets/img/mobile-logo.svg"/>
+    <img src="assets/img/mobile-logo.svg" />
     <span class="logo-name">DABubble</span>
   </div>
-  <div *ngIf="alternativeHeader" class="alternative-header">
+  @if(alternativeHeader){
+  <div class="alternative-header">
     <!-- Aktualisieren Sie das img-Tag, um auf hoverBack zu reagieren -->
-    <img [src]="hoverBack ? 'assets/img/icon/arrow_back_color.svg' : 'assets/img/icon/arrow_back.svg'"
-         (click)="onBack()"
-         (mouseenter)="hoverBack = true"
-         (mouseleave)="hoverBack = false">
-    <img src="assets/img/icon/Property 1=Default (1).svg">
+    <img
+      [src]="
+        hoverBack
+          ? 'assets/img/icon/arrow_back_color.svg'
+          : 'assets/img/icon/arrow_back.svg'
+      "
+      (click)="onBack()"
+      (mouseenter)="hoverBack = true"
+      (mouseleave)="hoverBack = false"
+    />
+    <img src="assets/img/icon/Property 1=Default (1).svg" />
   </div>
-  <img class="header-img" (click)="openBottomSheet()" src="{{user.avatar}}">
-</div>
+  } }
 
+  <img class="header-img" (click)="openBottomSheet()" src="{{ user.avatar }}" />
+</div>
