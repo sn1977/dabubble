@@ -1,8 +1,11 @@
-@if(isDesktop){
+@if(!isDesktop){
   <app-header-mobile />
 }
 
-<div class="content-main bg-c">
+<div class="content-main bg-c"
+[ngStyle]="{ 'max-height': isDesktop ? 'calc(100vh - 120px)' : 'calc(100vh - 80px)' }"
+
+>
   <div class="wrapper-content-main">
     <div class="input-field">
       <input
@@ -150,7 +153,9 @@
         </div>
       </mat-expansion-panel>
     </mat-accordion>
-    <div class="btn-position">
+    <div class="btn-position"
+    [ngStyle]="{ 'display': isDesktop ? 'none' : 'block' }"    
+    >
       <button mat-fab class="btn-edit-message" routerLink="/new-message">
         <mat-icon class="white-icon"> edit_square </mat-icon>
       </button>

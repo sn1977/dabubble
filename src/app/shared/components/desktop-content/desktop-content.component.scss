@@ -1,39 +1,37 @@
 @import "../../../../styles/mixins.scss";
 
-.content{  
+.content {
   @include dFlex($jc: center, $ai: center, $fd: row, $g: 20px);
-  padding: 25px 20px 20px;
-  width: 100%;
+  padding: 0 20px 20px;
   box-sizing: border-box;
-  background-color: #ECEEFE;
+  background-color: #eceefe;
+  height: calc(100% - 120px);
+  margin: 0px;
 }
 
-.menu{
-  @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 16px);  
-  width: 100%;  
-  max-width: 23.06%;  
+.menu {
+  @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 16px);
+  width: 100%;
+  max-width: 23.06%;
   flex: 1;
+  height: calc(100% - 80px);
+  border: 1px solid transparent;
+  border-radius: 30px;  
 }
 
-.workspace{
+.workspace {
   background-color: red;
   width: 98%;
   max-width: 51.56%;
   flex: 1;
-  height: 70px;
+  height: 100%;
 }
 
-.threads{
+.threads {
   background-color: blue;
   width: 100%;
   max-width: 25.26%;
   min-width: 342px;
-  height: 70px;
   flex: 1;
-
-  font-family: 'Nunito';
-  font-size: 28px;
-  font-weight: 600;
-  line-height: 30.65px;
-  text-align: left;
+  height: 100%;  
 }

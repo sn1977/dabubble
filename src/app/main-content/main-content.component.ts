@@ -21,7 +21,7 @@ import { ItemStateService } from '../shared/services/item-state.service';
 import { Observable } from 'rxjs';
 import { Channel } from '../../models/channel.class';
 import { User } from '../../models/user.class';
-import { NgForOf, NgIf } from '@angular/common';
+import { CommonModule, NgForOf, NgIf } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { SearchResultsDialogComponent } from '../search-results-dialog/search-results-dialog.component';
 import { ChannelMessage } from '../../models/channel-message.class';
@@ -45,6 +45,7 @@ import { ChannelMessage } from '../../models/channel-message.class';
     RouterLink,
     NgForOf,
     NgIf,
+    CommonModule
   ],
   templateUrl: './main-content.component.html',
   styleUrl: './main-content.component.scss',
