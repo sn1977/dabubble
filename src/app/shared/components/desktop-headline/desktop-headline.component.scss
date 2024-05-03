@@ -3,7 +3,6 @@
 .content{  
   @include dFlex($jc: space-between, $ai: center, $fd: row, $g: 20px);
   padding: 0 20px;
-  width: 100%;
 }
 
 .logo{
@@ -14,7 +13,7 @@
 
 .searchbar{
   background-color: red;
-  width: 100%;
+  width: 98%;
   max-width: 989px;
   flex: 1;
 }
