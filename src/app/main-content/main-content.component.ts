@@ -95,12 +95,17 @@ export class MainContentComponent implements OnInit {
 
   ngOnInit() {
     this.listenForDataChanges();
+
+    
+    
   }
+
+  
 
   listenForDataChanges() {
     this.firestore.getChannels().subscribe((channels) => {
       this.allChannels = channels;
-      // console.log('Channels geladen: ', this.allChannels);
+    console.log('Channels geladen: ', this.allChannels);
     });
     this.firestore.getUsers2().subscribe((users) => {
       this.allUsers = this.sortUsers(users);

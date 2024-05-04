@@ -8,6 +8,7 @@ import {EmojiPickerComponent} from '../emoji-picker/emoji-picker.component';
 import {AuthService} from '../../services/auth.service';
 import {FormsModule} from '@angular/forms';
 import {DateFormatService} from '../../services/date-format.service';
+import { Channel } from '../../../../models/channel.class';
 
 @Component({
   selector: 'app-conversation',
@@ -39,6 +40,28 @@ export class ConversationComponent implements OnInit {
   emojiCharacter: string = '';
   isEmojiSelected: boolean = false;
   emojiReactions: {emoji: string, count: number}[] = [];
+  contentCount: number = 0;
+  channel: Channel = new Channel();
+
+  countContentElements(): void {
+    const contentDivs = document.querySelectorAll('.content');
+    this.contentCount = contentDivs.length;
+    this.contentCount --;
+
+    this.pushCount();
+
+    console.log('Anzahl der "content"-Elemente:', this.contentCount);
+  }
+
+  pushCount(){
+    const channel = new Channel({
+      count:  this.contentCount,
+    });
+    
+    this.firestore.addChannel(channel);
+    
+
+  }
 
   getCurrentDay() {
     const date = new Date();
@@ -55,6 +78,8 @@ export class ConversationComponent implements OnInit {
       this.authService.activeUserAccount.uid !== this.channelMessage.creator
         ? false
         : true;
+
+        this.countContentElements();
   }
 
   getItemValuesProfile(collection: string, itemID: string) {

@@ -44,7 +44,7 @@ export class FirebaseService {
   constructor() {
     this.unsubUsers = this.subUserList();
     this.unsubChannel = this.subChannelList();
-    //this.getCount();
+    this.getCount();
   }
 
   getUsersRef() {
@@ -315,7 +315,7 @@ export class FirebaseService {
 
  
  
-  /*
+  
   getCount() {
     return new Promise((resolve, reject) => {
         const subCollectionRef = collection(this.firestore, 'channels/9KJYLfxx07Wn5rbEupdA/channelmessages');
@@ -333,6 +333,6 @@ export class FirebaseService {
                 reject(error); // Reject im Fehlerfall
             });
     });
-}*/
+}
 
 }
