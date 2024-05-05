@@ -1,6 +1,6 @@
 @import "../../../../styles/mixins.scss";
 
-.content{  
+.content{
   @include dFlex($jc: center, $ai: center, $fd: row, $g: 20px);
   padding: 25px 20px 20px;
   width: 100%;
@@ -9,8 +9,8 @@
 }
 
 .logo{
-  @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 16px);  
-  width: 100%;  
+  @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 16px);
+  width: 100%;
   max-width: 23.06%;
   height: 70px;
   flex: 1;
@@ -28,7 +28,7 @@
 }
 
 .searchbar{
-  background-color: red;
+  //background-color: red;
   width: 98%;
   max-width: 51.56%;
   flex: 1;
