@@ -1,27 +1,52 @@
-import {Component, EventEmitter, Output} from '@angular/core';
-import {EmojiEvent} from '@ctrl/ngx-emoji-mart/ngx-emoji';
-import {PickerComponent} from '@ctrl/ngx-emoji-mart';
-import {MatDialogRef} from '@angular/material/dialog';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { EmojiService } from '../../services/emoji.service';
+import {Emoji, EmojiEvent} from '@ctrl/ngx-emoji-mart/ngx-emoji';
+import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 
 @Component({
   selector: 'app-emoji-picker',
+  templateUrl: './emoji-picker.component.html',
+  styleUrls: ['./emoji-picker.component.scss'],
   standalone: true,
   imports: [
     PickerComponent
-  ],
-  templateUrl: './emoji-picker.component.html',
-  styleUrl: './emoji-picker.component.scss'
+  ]
 })
 export class EmojiPickerComponent {
   @Output() emojiSelect = new EventEmitter<string>();
+  emojis: Emoji[] = [];
 
-  constructor(private dialogRef: MatDialogRef<EmojiPickerComponent>) {}
+  constructor(private emojiService: EmojiService) {
+    this.emojiService.getEmojis().subscribe(emojis => {
+      this.emojis = emojis;
+      console.log('Emojis bereit zur Anzeige:', this.emojis);
+    });
+  }
+
+  // onEmojiSelect(emoji: Emoji) {
+  //   this.emojiSelect.emit(emoji.native);
+  //   console.log('Ausgewähltes Emoji:', emoji.native);
+  // }
+
+  // onEmojiSelect(emoji: Emoji) {
+  //   if ('native' in emoji) {
+  //     this.emojiSelect.emit(emoji.native); // Stellen Sie sicher, dass `native` existiert, bevor Sie es verwenden
+  //     console.log('Ausgewähltes Emoji:', emoji.native);
+  //   }
+  // }
 
   onEmojiSelect(event: EmojiEvent) {
-    console.log('Ausgewähltes Emoji:', event.emoji.native);
-    // this.emojiSelect.emit(event);
-    this.emojiSelect.emit(event.emoji.native);
-    // Hier kannst du den Dialog schließen, wenn das Emoji ausgewählt wurde.
-    this.dialogRef.close(event.emoji.native);
+    if (event.emoji && event.emoji.unified) {
+      this.emojiSelect.emit(this.convertToNative(event.emoji.unified));
+      console.log('Ausgewähltes Emoji:', this.convertToNative(event.emoji.unified));
+    }
+  }
+
+  convertToNative(unified: string): string {
+    return unified.split('-')
+      .map(u => String.fromCodePoint(parseInt(u, 16)))
+      .join('');
   }
 }
+
+

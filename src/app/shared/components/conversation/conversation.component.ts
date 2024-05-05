@@ -39,7 +39,7 @@ export class ConversationComponent implements OnInit {
   isToday: boolean = false;
   emojiCharacter: string = '';
   isEmojiSelected: boolean = false;
-  emojiReactions: {emoji: string, count: number}[] = [];
+  emojiReactions: { emoji: string, count: number }[] = [];
   contentCount: number = 0;
   channel: Channel = new Channel();
 
@@ -57,9 +57,9 @@ export class ConversationComponent implements OnInit {
     const channel = new Channel({
       count:  this.contentCount,
     });
-    
+
     this.firestore.addChannel(channel);
-    
+
 
   }
 
@@ -75,9 +75,7 @@ export class ConversationComponent implements OnInit {
     this.getItemValuesProfile('users', this.channelMessage.creator);
     this.messageDate = this.channelMessage.createdAt;
     this.isMessageFromYou =
-      this.authService.activeUserAccount.uid !== this.channelMessage.creator
-        ? false
-        : true;
+      this.authService.activeUserAccount.uid === this.channelMessage.creator;
 
         this.countContentElements();
   }
@@ -95,6 +93,7 @@ export class ConversationComponent implements OnInit {
   }
 
   openEmojiPicker(): void {
+    // setTimeout(() => {
     const dialogRef = this.dialog.open(EmojiPickerComponent, {
       width: '400px',
       height: '300px',
@@ -110,6 +109,7 @@ export class ConversationComponent implements OnInit {
         console.log('Kein Emoji ausgewählt oder Dialog abgebrochen');
       }
     });
+    // }, 100);
   }
 
   updateEmoji(selectedEmoji: string) {
@@ -122,7 +122,7 @@ export class ConversationComponent implements OnInit {
     if (existingEmoji) {
       existingEmoji.count++;
     } else {
-      this.emojiReactions.push({ emoji: selectedEmoji, count: 1 });
+      this.emojiReactions.push({emoji: selectedEmoji, count: 1});
     }
   }
 }
