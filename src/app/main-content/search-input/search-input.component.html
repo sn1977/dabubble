@@ -1,0 +1,13 @@
+<div class="input-field">
+  <input
+    type="text"
+    name="text"
+    [(ngModel)]="textData.text"
+    (ngModelChange)="searchWorkspace(textData.text)"
+    [class.input-has-value]="inputHasValue"
+    placeholder="Gehe zu..."
+    required
+    autocomplete="off"
+    class="full-width input-field-design input-background-icon"
+  />
+</div>’

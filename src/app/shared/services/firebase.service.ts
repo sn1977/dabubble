@@ -190,6 +190,12 @@ export class FirebaseService {
   }
 
   async addChannel(item: Channel) {
+    // Überprüfen, ob das Feld 'creator' einen gültigen Wert enthält
+    if (typeof item.creator === 'undefined') {
+      console.error('Fehler: Creator ist undefined.');
+      return; // Beendet die Funktion vorzeitig, wenn 'creator' undefined ist
+    }
+
     await addDoc(this.getChannelsRef(), item.toJSON())
       .catch((err) => {
         console.error(err);
@@ -242,7 +248,7 @@ export class FirebaseService {
     colID: string,
     subcollection: string
   ) {
-    
+
     const ref = collection(
       this.firestore,
       `${colID}/${channelId}/${subcollection}`
@@ -313,9 +319,9 @@ export class FirebaseService {
     this.unsubChannel();
   }
 
- 
- 
-  
+
+
+
   getCount() {
     return new Promise((resolve, reject) => {
         const subCollectionRef = collection(this.firestore, 'channels/9KJYLfxx07Wn5rbEupdA/channelmessages');
@@ -325,8 +331,8 @@ export class FirebaseService {
                 resolve(count); // Resolve mit der Anzahl der Dokumente
                 this.channelMessagesCount = count
                 console.log(count);
-                
-                
+
+
             })
             .catch(error => {
                 console.error('Fehler beim Abrufen der Dokumente:', error);

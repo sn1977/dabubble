@@ -6,20 +6,22 @@
 [ngStyle]="{ 'max-height': isDesktop ? 'calc(100vh - 120px)' : 'calc(100vh - 80px)' }"
 
 >
-  <div class="wrapper-content-main">
-    <div class="input-field">
-      <input
-        type="text"
-        name="text"
-        [(ngModel)]="textData.text"
-        (ngModelChange)="searchWorkspace(textData.text)"
-        [class.input-has-value]="inputHasValue"
-        placeholder="Gehe zu..."
-        required
-        autocomplete="off"
-        class="full-width input-field-design input-background-icon"
-      />
-    </div>
+<!--  <div class="wrapper-content-main">-->
+<!--    <div class="input-field">-->
+<!--      <input-->
+<!--        type="text"-->
+<!--        name="text"-->
+<!--        [(ngModel)]="textData.text"-->
+<!--        (ngModelChange)="searchWorkspace(textData.text)"-->
+<!--        [class.input-has-value]="inputHasValue"-->
+<!--        placeholder="Gehe zu..."-->
+<!--        required-->
+<!--        autocomplete="off"-->
+<!--        class="full-width input-field-design input-background-icon"-->
+<!--      />-->
+<!--    </div>-->
+
+  <app-search-input (search)="searchWorkspace($event)"></app-search-input>
 
     <mat-accordion [multi]="true">
       <mat-expansion-panel
@@ -140,7 +142,7 @@
             <p class="pop-up-color">1</p>
           </div>
 
-            
+
           </div>
         }
         @if(noUserFound){
@@ -154,11 +156,11 @@
       </mat-expansion-panel>
     </mat-accordion>
     <div class="btn-position"
-    [ngStyle]="{ 'display': isDesktop ? 'none' : 'block' }"    
+    [ngStyle]="{ 'display': isDesktop ? 'none' : 'block' }"
     >
       <button mat-fab class="btn-edit-message" routerLink="/new-message">
         <mat-icon class="white-icon"> edit_square </mat-icon>
       </button>
     </div>
   </div>
-</div>
+<!--</div>-->

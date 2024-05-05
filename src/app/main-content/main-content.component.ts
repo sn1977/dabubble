@@ -25,6 +25,7 @@ import { CommonModule, NgForOf, NgIf } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { SearchResultsDialogComponent } from '../search-results-dialog/search-results-dialog.component';
 import { ChannelMessage } from '../../models/channel-message.class';
+import {SearchInputComponent} from './search-input/search-input.component';
 
 @Component({
   selector: 'app-main-content',
@@ -45,7 +46,8 @@ import { ChannelMessage } from '../../models/channel-message.class';
     RouterLink,
     NgForOf,
     NgIf,
-    CommonModule
+    CommonModule,
+    SearchInputComponent
   ],
   templateUrl: './main-content.component.html',
   styleUrl: './main-content.component.scss',
@@ -79,7 +81,7 @@ export class MainContentComponent implements OnInit {
   ];
 
   textData = { text: '' };
-  
+
   inputHasValue = false;
   allChannels: Channel[] = [];
   allUsers: User[] = [];
@@ -96,11 +98,11 @@ export class MainContentComponent implements OnInit {
   ngOnInit() {
     this.listenForDataChanges();
 
-    
-    
+
+
   }
 
-  
+
 
   listenForDataChanges() {
     this.firestore.getChannels().subscribe((channels) => {
@@ -230,5 +232,5 @@ export class MainContentComponent implements OnInit {
     this.router.navigate([path, docRefId]);
   }
 
-  
+
 }

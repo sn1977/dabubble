@@ -5,32 +5,6 @@
     background-color: #FFFFFF;
   }
 
-.input-field {
-  width: 100%;
-  display: flex;
-  align-items: center;
-
-  .input-field-design {
-    width: 100%;
-    border: 1px solid #ADB0D9;
-    border-radius: 30px;
-    height: 52px;
-    padding-left: 24px;
-    @include fontBold($fw: 400, $fs: 17px, $lh: 32px, $ta: left, $c: #686868);
-
-    &::placeholder {
-      @include fontBold($fw: 400, $fs: 17px, $lh: 32px, $ta: left, $c: #686868);
-    }
-  }
-
-  .input-background-icon {
-    background-image: url('/assets/img/icon/search.png');
-    background-position: right 10px center;
-    background-repeat: no-repeat;
-    padding-right: 50px;
-  }
-}
-
 .bg-c {
   @include bg-c(#FFFFFF);
 }
