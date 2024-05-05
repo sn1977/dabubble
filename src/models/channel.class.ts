@@ -4,7 +4,7 @@ export class Channel {
   id?: string;
   creator: string;
   description: string;
-  member: User[];
+  member: string;
   name: string;
   count: number;
 

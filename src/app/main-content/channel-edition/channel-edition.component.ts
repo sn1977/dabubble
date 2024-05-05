@@ -45,14 +45,14 @@ export class ChannelEditionComponent implements OnInit {
       this.channelData.description = this.channel.description;
     }
 
-    /*if(this.channelData.member === ''){
+    if(this.channelData.member === ''){
       this.channelData.member = this.channel.member;
-    }    */
+    }    
 
     const channel = new Channel({
       creator: this.channel.creator,
       description: this.channelData.description,
-      member: this.selectedUser,
+      member: this.channel.member,
       name: this.channelData.name,
     });
 
