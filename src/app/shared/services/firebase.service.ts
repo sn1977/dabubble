@@ -13,7 +13,7 @@ import {
   orderBy,
   or,
   getDocs,
-  and,
+  and, increment,
 } from '@angular/fire/firestore';
 import { User } from '../../../models/user.class';
 import { Channel } from '../../../models/channel.class';
@@ -154,7 +154,7 @@ export class FirebaseService {
       );
 
       // Cleanup on unsubscribe
-      return { unsubscribe };
+      return {unsubscribe};
     });
   }
 
@@ -173,7 +173,7 @@ export class FirebaseService {
       );
 
       // Cleanup on unsubscribe
-      return { unsubscribe };
+      return {unsubscribe};
     });
   }
 
@@ -217,6 +217,7 @@ export class FirebaseService {
   }
 
   private singleItemUnsubscribe: Unsubscribe | undefined;
+
   unsubscribeSingleUserData() {
     if (this.singleItemUnsubscribe) {
       this.singleItemUnsubscribe();
@@ -320,25 +321,35 @@ export class FirebaseService {
   }
 
 
-
-
   getCount() {
     return new Promise((resolve, reject) => {
-        const subCollectionRef = collection(this.firestore, 'channels/9KJYLfxx07Wn5rbEupdA/channelmessages');
-        getDocs(subCollectionRef)
-            .then(snapshot => {
-                const count = snapshot.size; // Anzahl der Dokumente in der Subcollection
-                resolve(count); // Resolve mit der Anzahl der Dokumente
-                this.channelMessagesCount = count
-                console.log(count);
+      const subCollectionRef = collection(this.firestore, 'channels/9KJYLfxx07Wn5rbEupdA/channelmessages');
+      getDocs(subCollectionRef)
+        .then(snapshot => {
+          const count = snapshot.size; // Anzahl der Dokumente in der Subcollection
+          resolve(count); // Resolve mit der Anzahl der Dokumente
+          this.channelMessagesCount = count
+          console.log(count);
 
 
-            })
-            .catch(error => {
-                console.error('Fehler beim Abrufen der Dokumente:', error);
-                reject(error); // Reject im Fehlerfall
-            });
+        })
+        .catch(error => {
+          console.error('Fehler beim Abrufen der Dokumente:', error);
+          reject(error); // Reject im Fehlerfall
+        });
     });
-}
+  }
+
+  async updateEmojiReactions(channelId: string, messageId: string, emoji: string) {
+    const messageRef = doc(this.firestore, `channels/${channelId}/messages`, messageId);
+    const reactionKey = `reactions.${emoji}`; // Pfad zum spezifischen Emoji
+
+    // Verwendung von increment, um die Anzahl der Emojis zu erhöhen
+    await updateDoc(messageRef, {
+      [reactionKey]: increment(1)
+    }).catch((error) => {
+      console.error('Fehler beim Aktualisieren der Emoji-Reaktionen:', error);
+    });
+  }
 
 }

@@ -1,11 +1,11 @@
 <div class="timeSeperator">
-  <img class="line" src="./assets/img/auth/line.svg" alt="" />
+  <img class="line" src="./assets/img/auth/line.svg" alt=""/>
 
-  @if(currentDate ==
-  this.dateFormatService.formatDateYYYYMMDD(channelMessage.createdAt)){
-  <span>Heute</span>
+  @if (currentDate ==
+  this.dateFormatService.formatDateYYYYMMDD(channelMessage.createdAt)) {
+    <span>Heute</span>
   } @else {
-  <span>{{ this.dateFormatService.formatDate(channelMessage.createdAt) }}</span>
+    <span>{{ this.dateFormatService.formatDate(channelMessage.createdAt) }}</span>
   }
 </div>
 
@@ -16,7 +16,7 @@
   (mouseleave)="deleteHovered()"
 >
   <div class="avatar pointer">
-    <img src="{{ this.user.avatar }}" alt="" />
+    <img src="{{ this.user.avatar }}" alt=""/>
   </div>
   <div
     class="main"
@@ -41,36 +41,37 @@
         </div>
       </div>
 
-      @if(isMessageFromYou){
-      <div
-        class="message text-white"
-        [ngStyle]="{
+      @if (isMessageFromYou) {
+        <div
+          class="message text-white"
+          [ngStyle]="{
           'background-color': hovered ? '#797EF3' : '#797EF3',
           'border-radius': isMessageFromYou
             ? '0 30px 30px 30px'
             : '30px 0 30px 30px'
         }"
-      >
-        {{ channelMessage.text }}
-      </div>
+        >
+          {{ channelMessage.text }}
+        </div>
       } @else {
-      <div
-        class="message"
-        [ngStyle]="{
+        <div
+          class="message"
+          [ngStyle]="{
           'background-color': hovered ? '#FFFFFF' : '#ECEEFE',
           'border-radius': isMessageFromYou
             ? '0 30px 30px 30px'
             : '30px 0 30px 30px'
         }"
-      >
-        {{ channelMessage.text }}
-      </div>
-      } @if(channelMessage.attachment){
-      <div class="attachment-list">
-        @for (item of channelMessage.attachment; track $index) {
-        <img class="attachment" src="{{ item }}" />
-        }
-      </div>
+        >
+          {{ channelMessage.text }}
+        </div>
+      }
+      @if (channelMessage.attachment) {
+        <div class="attachment-list">
+          @for (item of channelMessage.attachment; track $index) {
+            <img class="attachment" src="{{ item }}"/>
+          }
+        </div>
       }
 
       <!-- hier muss noch eine Prüfung rein auf Threads -->
@@ -81,12 +82,12 @@
         }"
       >
         <a href="http://localhost:4200/new-channel/9KJYLfxx07Wn5rbEupdA"
-          >2 Antworten</a
+        >2 Antworten</a
         >
         <span
           class="last-thread"
           [ngStyle]="{ color: hovered ? '#000000' : '#686868' }"
-          >Letzte Antwort 14:56</span
+        >Letzte Antwort 14:56</span
         >
       </div>
       <!-- Ende Prüfung auf Threads -->

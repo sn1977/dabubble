@@ -17,7 +17,7 @@ export class ChannelMessage {
     this.text = obj ? obj.text : '';
     this.reactions = obj ? obj.reactions : '';
     this.attachment = obj ? obj.attachment : '';
-  
+
   }
 
   public toJSON() {
@@ -28,7 +28,7 @@ export class ChannelMessage {
       text: this.text,
       reactions: this.reactions,
       attachment: this.attachment,
-    
+
     };
   }
 }

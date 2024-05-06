@@ -8,7 +8,7 @@ import {EmojiPickerComponent} from '../emoji-picker/emoji-picker.component';
 import {AuthService} from '../../services/auth.service';
 import {FormsModule} from '@angular/forms';
 import {DateFormatService} from '../../services/date-format.service';
-import { Channel } from '../../../../models/channel.class';
+import {Channel} from '../../../../models/channel.class';
 
 @Component({
   selector: 'app-conversation',
@@ -46,19 +46,19 @@ export class ConversationComponent implements OnInit {
   countContentElements(): void {
     const contentDivs = document.querySelectorAll('.content');
     this.contentCount = contentDivs.length;
-    this.contentCount --;
+    this.contentCount--;
 
     this.pushCount();
 
     console.log('Anzahl der "content"-Elemente:', this.contentCount);
   }
 
-  pushCount(){
+  pushCount() {
     const channel = new Channel({
-      count:  this.contentCount
+      count: this.contentCount
     });
     console.log(channel);
-     this.firestore.addChannel(channel);
+    this.firestore.addChannel(channel);
 
 
   }
@@ -77,7 +77,7 @@ export class ConversationComponent implements OnInit {
     this.isMessageFromYou =
       this.authService.activeUserAccount.uid === this.channelMessage.creator;
 
-        this.countContentElements();
+    this.countContentElements();
   }
 
   getItemValuesProfile(collection: string, itemID: string) {
@@ -102,7 +102,7 @@ export class ConversationComponent implements OnInit {
       console.log('Empfangenes Emoji:', selectedEmoji);
       this.updateEmoji(selectedEmoji);
       this.addEmojiReaction(selectedEmoji);
-      dialogRef.close();  // Schließe den Dialog, nachdem das Emoji ausgewählt wurde
+      dialogRef.close();
     });
   }
 
