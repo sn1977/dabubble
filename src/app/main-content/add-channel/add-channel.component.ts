@@ -40,46 +40,27 @@ export class AddChannelComponent {
   channelData = {
     creator: '',
     description: '',
-    member: [],
+    member: '',
     name: '',
     user: '',
+    count: '',
   };
   onSubmit() {
     const memberNames = this.selectedUsers.map(user => user.displayName);
 
     const channel = new Channel({
-      creator: this.activeUser.displayName,
+      creator: this.authService.activeUserId,
       description: this.channelData.description,
-      member: this.selectedUsers,
+      member: this.channelData.member,
       name: this.channelData.name,
+      count: this.channelData.count
       
     });
     this.firestore.addChannel(channel);
   }
 
   constructor() {
-    this.getActiveUserID()
-  }
-
-  async getActiveUserID() {
-    try {
-      let id = this.authService.activeUserId;
-      // Stelle sicher, dass id definiert ist, bevor du darauf zugreifst
-      await this.getActiveUserDoc('users', id);
-    } catch (error) {
-      console.error('Error fetching active user ID:', error);
-    }
-  }
-  
-  async getActiveUserDoc(collection: string, itemID: string) {
-    try {
-      await this.firestore.getSingleItemData(collection, itemID, () => {
-        this.activeUser = new User(this.firestore.user);
-        console.log(this.activeUser.displayName);
-      });
-    } catch (error) {
-      console.error('Error fetching active user document:', error);
-    }
+   
   }
 
   addmember(event: MouseEvent, user: User) {
