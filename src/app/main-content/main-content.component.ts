@@ -97,9 +97,6 @@ export class MainContentComponent implements OnInit {
 
   ngOnInit() {
     this.listenForDataChanges();
-
-
-
   }
 
 

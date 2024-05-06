@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 
 @Component({
@@ -20,4 +20,5 @@ export class SearchInputComponent {
     this.inputHasValue = !!query;
     this.search.emit(query);
   }
+
 }

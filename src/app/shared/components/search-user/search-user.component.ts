@@ -2,11 +2,11 @@ import { Component, inject } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { FirebaseService } from '../../../shared/services/firebase.service';
+import { FirebaseService } from '../../services/firebase.service';
 import { CommonModule } from '@angular/common';
 import { User } from '../../../../models/user.class';
 import { Channel } from '../../../../models/channel.class';
-import { AuthService } from '../../../shared/services/auth.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-search-user',
@@ -56,8 +56,8 @@ export class SearchUserComponent {
       count: 0,
     });
     this.firestore.addChannel(channel);
-    
-    
+
+
   }
 
   constructor() {
@@ -73,7 +73,7 @@ export class SearchUserComponent {
       console.error('Error fetching active user ID:', error);
     }
   }
-  
+
   async getActiveUserDoc(collection: string, itemID: string) {
     try {
       await this.firestore.getSingleItemData(collection, itemID, () => {

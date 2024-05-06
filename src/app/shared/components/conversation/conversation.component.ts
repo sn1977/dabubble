@@ -55,10 +55,10 @@ export class ConversationComponent implements OnInit {
 
   pushCount(){
     const channel = new Channel({
-      count:  this.contentCount,
+      count:  this.contentCount
     });
-
-    this.firestore.addChannel(channel);
+    console.log(channel);
+     this.firestore.addChannel(channel);
 
 
   }
@@ -93,23 +93,17 @@ export class ConversationComponent implements OnInit {
   }
 
   openEmojiPicker(): void {
-    // setTimeout(() => {
     const dialogRef = this.dialog.open(EmojiPickerComponent, {
       width: '400px',
       height: '300px',
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        console.log('Empfangenes Emoji:', result);
-        this.updateEmoji(result);
-        // this.isEmojiSelected = true;
-        this.addEmojiReaction(result);
-      } else {
-        console.log('Kein Emoji ausgewählt oder Dialog abgebrochen');
-      }
+    dialogRef.componentInstance.emojiSelect.subscribe(selectedEmoji => {
+      console.log('Empfangenes Emoji:', selectedEmoji);
+      this.updateEmoji(selectedEmoji);
+      this.addEmojiReaction(selectedEmoji);
+      dialogRef.close();  // Schließe den Dialog, nachdem das Emoji ausgewählt wurde
     });
-    // }, 100);
   }
 
   updateEmoji(selectedEmoji: string) {
@@ -124,5 +118,6 @@ export class ConversationComponent implements OnInit {
     } else {
       this.emojiReactions.push({emoji: selectedEmoji, count: 1});
     }
+    console.log('Emoji-Reaktionen:', this.emojiReactions);
   }
 }

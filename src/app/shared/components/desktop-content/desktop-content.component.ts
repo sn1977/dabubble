@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import { MainContentComponent } from "../../../main-content/main-content.component";
 import { CommonModule } from '@angular/common';
 import {MatCardModule} from '@angular/material/card';
