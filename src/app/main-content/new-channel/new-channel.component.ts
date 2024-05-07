@@ -111,23 +111,12 @@ export class NewChannelComponent implements OnInit, AfterViewChecked {
 
   test() {
     let id = this.authService.activeUserAccount.uid;
-    // console.log(id); // Stelle sicher, dass id definiert ist, bevor du darauf zugreifst
     this.getItemValuesProfile('users', id);
   }
 
   toggleOverlay(overlayId: string): void {
-    // const currentOverlay = document.querySelector(
-    //   '.overlay[style="display: block;"]'
-    // ) as HTMLElement;
+
     const newOverlay = document.getElementById(overlayId);
-    // n
-    console.log(overlayId);
-
-    // if (currentOverlay && currentOverlay.id !== overlayId) {
-    //   // Schließe das aktuelle Overlay, wenn ein anderes Overlay geöffnet ist
-    //   currentOverlay.style.display = 'none';
-    // }
-
     if (newOverlay) {
       newOverlay.style.display =
         newOverlay.style.display === 'none' ? 'block' : 'none';

@@ -47,7 +47,7 @@ export class FirebaseService {
   constructor() {
     this.unsubUsers = this.subUserList();
     this.unsubChannel = this.subChannelList();
-    this.getCount();
+    
   }
 
   getUsersRef() {
@@ -324,24 +324,7 @@ export class FirebaseService {
   }
 
 
-  getCount() {
-    return new Promise((resolve, reject) => {
-      const subCollectionRef = collection(this.firestore, 'channels/9KJYLfxx07Wn5rbEupdA/channelmessages');
-      getDocs(subCollectionRef)
-        .then(snapshot => {
-          const count = snapshot.size; // Anzahl der Dokumente in der Subcollection
-          resolve(count); // Resolve mit der Anzahl der Dokumente
-          this.channelMessagesCount = count
-          console.log(count);
-
-
-        })
-        .catch(error => {
-          console.error('Fehler beim Abrufen der Dokumente:', error);
-          reject(error); // Reject im Fehlerfall
-        });
-    });
-  }
+ 
 
   async updateEmojiReactions(channelId: string, messageId: string, emoji: string) {
     const messageRef = doc(this.firestore, `channels/${channelId}/messages`, messageId);

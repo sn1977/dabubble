@@ -78,13 +78,8 @@ export class ConversationComponent implements OnInit {
       name: this.channelData.name,
       count: this.contentCount
     });
- 
     this.firestore.updateChannel(this.itemID, channel);
-    console.log('funkt', channel);
-    
   }
-
-
 
   countContentElements(): void {
     const contentDivs = document.querySelectorAll('.content');
@@ -92,7 +87,6 @@ export class ConversationComponent implements OnInit {
     this.contentCount--;
     console.log('Anzahl der "content"-Elemente:', this.contentCount);
   }
-
 
   getCurrentDay() {
     const date = new Date();
@@ -114,29 +108,20 @@ export class ConversationComponent implements OnInit {
 
     this.route.paramMap.subscribe((paramMap) => {
       this.itemID = paramMap.get('id');
-      console.log(this.itemID);
       
       this.getItemValues('channels', this.itemID);
 
       setTimeout(() => {
          this.addCountToChannelDocument(this.itemID);
-      
       }, 1000)
-
-     
-      
-     
     });
   }
 
   getItemValues(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {
       this.channel = new Channel(this.firestore.channel);
-      console.log(this.channel);
-      
       this.setOldChannelValues();
     });
-    
   }
 
   setOldChannelValues(){
@@ -147,8 +132,6 @@ export class ConversationComponent implements OnInit {
       name: this.channel.name,
       count: this.channel.count
     };
-    console.log(this.channelData);
-    
   }
 
   
