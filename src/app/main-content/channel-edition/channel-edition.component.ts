@@ -26,6 +26,7 @@ export class ChannelEditionComponent implements OnInit {
   isEditingChannelName: boolean = false;
   isEditingDescription: boolean = false;
 
+
   channelData = {
     creator: this.channel.creator,
     description: this.channel.description,
@@ -33,7 +34,10 @@ export class ChannelEditionComponent implements OnInit {
     name: this.channel.name,
   };
 
-  constructor(private route: ActivatedRoute) {}
+  constructor( private route: ActivatedRoute, ) {
+  }
+
+ 
 
   onSubmit(toggle: string) {
    
@@ -45,9 +49,9 @@ export class ChannelEditionComponent implements OnInit {
       this.channelData.description = this.channel.description;
     }
 
-    if(this.channelData.member === ''){
+    if (this.channelData.member.length === 0 && Array.isArray(this.channel.member)) {
       this.channelData.member = this.channel.member;
-    }    
+    }
 
     const channel = new Channel({
       creator: this.channel.creator,
@@ -102,6 +106,7 @@ export class ChannelEditionComponent implements OnInit {
   getItemValues(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {
       this.channel = new Channel(this.firestore.channel);
+      console.log('hello', this.channel);
     });
     setTimeout(() => {
       this.setOldChannelValues();
@@ -115,6 +120,9 @@ export class ChannelEditionComponent implements OnInit {
       member: this.channel.member,
       name: this.channel.name,
     };
+
+    
+    
   }
 
   openChannel(event: MouseEvent, path: string) {

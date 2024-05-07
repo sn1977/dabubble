@@ -4,14 +4,14 @@ export class Channel {
   id?: string;
   creator: string;
   description: string;
-  member: string;
+  member: any[];
   name: string;
   count: number;
 
   constructor(obj?: any) {
     this.creator = obj ? obj.creator : '';
     this.description = obj ? obj.description : '';
-    this.member = obj ? obj.member : '';
+    this.member = obj && obj.member ? obj.member : [];
     this.name = obj ? obj.name : '';
     this.count = obj ? obj.count: 0;
   }

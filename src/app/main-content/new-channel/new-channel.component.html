@@ -63,10 +63,9 @@
       />
     </div>
     <div class="members">
-
       <div *ngFor="let member of channel.member">
         <div class="profil">
-          <!--<img class="img-profil" src="{{member.avatar}}" alt=""> -->
+          <img class="img-profil" src="{{ member.avatar }}" alt="">
           
           @if(user.isOnline){
             <img src="./assets/img/characters/online.svg" alt="Online" class="online-avatar">
@@ -74,7 +73,7 @@
             <img src="./assets/img/characters/offline.svg" alt="Offline" class="offline-avatar">
           }
           
-          <p class="no-margin">hallo</p>
+          <p class="no-margin">{{ member.displayName }}</p>
         </div>
       
       </div>

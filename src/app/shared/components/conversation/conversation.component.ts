@@ -67,9 +67,9 @@ export class ConversationComponent implements OnInit {
       this.channelData.description = this.channel.description;
     }
 
-    if(this.channelData.member === ''){
+    if (this.channelData.member.length === 0 && Array.isArray(this.channel.member)) {
       this.channelData.member = this.channel.member;
-    }    
+    }
 
     const channel = new Channel({
       creator: this.channel.creator,
