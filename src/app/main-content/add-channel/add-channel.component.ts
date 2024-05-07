@@ -57,6 +57,8 @@ export class AddChannelComponent {
       
     });
     this.firestore.addChannel(channel);
+    console.log(channel.creator);
+    
   }
 
   constructor() {

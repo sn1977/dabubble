@@ -9,18 +9,22 @@ import {AuthService} from '../../services/auth.service';
 import {FormsModule} from '@angular/forms';
 import {DateFormatService} from '../../services/date-format.service';
 import {Channel} from '../../../../models/channel.class';
+import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { addDoc, collection } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-conversation',
   standalone: true,
   templateUrl: './conversation.component.html',
   styleUrl: './conversation.component.scss',
-  imports: [CommonModule, MatDialogModule, EmojiPickerComponent, FormsModule],
+  imports: [CommonModule, MatDialogModule, EmojiPickerComponent, FormsModule, RouterLink],
 })
 export class ConversationComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
-    public dateFormatService: DateFormatService
+    public dateFormatService: DateFormatService,
+    private route: ActivatedRoute,
   ) {
     this.getCurrentDay();
   }
@@ -42,26 +46,53 @@ export class ConversationComponent implements OnInit {
   emojiReactions: { emoji: string, count: number }[] = [];
   contentCount: number = 0;
   channel: Channel = new Channel();
+  itemID: any = '';
+
+  channelData = {
+    creator: this.channel.creator,
+    description: this.channel.description,
+    member: this.channel.member,
+    name: this.channel.name,
+    count: this.channel.count
+    
+  };
+
+  addCountToChannelDocument(toggle: string) {
+   
+    if(this.channelData.name === ''){
+      this.channelData.name = this.channel.name;
+    }
+    
+    if(this.channelData.description === ''){
+      this.channelData.description = this.channel.description;
+    }
+
+    if(this.channelData.member === ''){
+      this.channelData.member = this.channel.member;
+    }    
+
+    const channel = new Channel({
+      creator: this.channel.creator,
+      description: this.channelData.description,
+      member: this.channel.member,
+      name: this.channelData.name,
+      count: this.contentCount
+    });
+ 
+    this.firestore.updateChannel(this.itemID, channel);
+    console.log('funkt', channel);
+    
+  }
+
+
 
   countContentElements(): void {
     const contentDivs = document.querySelectorAll('.content');
     this.contentCount = contentDivs.length;
     this.contentCount--;
-
-    this.pushCount();
-
     console.log('Anzahl der "content"-Elemente:', this.contentCount);
   }
 
-  pushCount() {
-    const channel = new Channel({
-      count: this.contentCount
-    });
-    console.log(channel);
-    this.firestore.addChannel(channel);
-
-
-  }
 
   getCurrentDay() {
     const date = new Date();
@@ -73,12 +104,62 @@ export class ConversationComponent implements OnInit {
 
   ngOnInit(): void {
     this.getItemValuesProfile('users', this.channelMessage.creator);
+    this.countContentElements();
+    
     this.messageDate = this.channelMessage.createdAt;
     this.isMessageFromYou =
       this.authService.activeUserAccount.uid === this.channelMessage.creator;
 
-    this.countContentElements();
+    
+
+    this.route.paramMap.subscribe((paramMap) => {
+      this.itemID = paramMap.get('id');
+      console.log(this.itemID);
+      
+      this.getItemValues('channels', this.itemID);
+
+      setTimeout(() => {
+         this.addCountToChannelDocument(this.itemID);
+      
+      }, 1000)
+
+     
+      
+     
+    });
   }
+
+  getItemValues(collection: string, itemID: string) {
+    this.firestore.getSingleItemData(collection, itemID, () => {
+      this.channel = new Channel(this.firestore.channel);
+      console.log(this.channel);
+      
+      this.setOldChannelValues();
+    });
+    
+  }
+
+  setOldChannelValues(){
+    this.channelData = {
+      creator: this.channel.creator,
+      description: this.channel.description,
+      member: this.channel.member,
+      name: this.channel.name,
+      count: this.channel.count
+    };
+    console.log(this.channelData);
+    
+  }
+
+  
+
+  
+
+  
+  
+
+
+  
 
   getItemValuesProfile(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {
