@@ -26,6 +26,9 @@ import { DirectMessage } from '../../../models/direct-message.class';
   providedIn: 'root',
 })
 export class FirebaseService {
+  collection(arg0: string) {
+    throw new Error('Method not implemented.');
+  }
   firestore: Firestore = inject(Firestore);
   router = inject(Router);
   activeUser: any = [];
