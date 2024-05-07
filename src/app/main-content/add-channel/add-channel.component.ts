@@ -40,28 +40,29 @@ export class AddChannelComponent {
   channelData = {
     creator: '',
     description: '',
-    member: '',
+    member: [],
     name: '',
     user: '',
     count: '',
   };
   onSubmit() {
-    const memberNames = this.selectedUsers.map(user => user.displayName);
 
     const channel = new Channel({
       creator: this.authService.activeUserId,
       description: this.channelData.description,
-      member: this.channelData.member,
+      member: this.selectedUsers,
       name: this.channelData.name,
       count: this.channelData.count
       
     });
     this.firestore.addChannel(channel);
-    console.log(channel.creator);
+    
     
   }
 
   constructor() {
+    console.log(this.selectedUsers);
+    
    
   }
 
@@ -70,15 +71,19 @@ export class AddChannelComponent {
 
     if (index === -1) {
       this.selectedUsers.push(user);
+      console.log(this.selectedUsers);
+      
 
     } else {
       this.selectedUsers.splice(index, 1);
     }
     this.updateFormattedUserNames();
   }
+
   updateFormattedUserNames() {
     this.userNames = this.selectedUsers.map(user => user.displayName).join(', ');
   }
+
   removeUser(user: User) {
     const index = this.selectedUsers.findIndex(selectedUser => selectedUser.id === user.id);
     if (index !== -1) {
@@ -86,10 +91,12 @@ export class AddChannelComponent {
       this.updateFormattedUserNames();
     }
   }
+  
   searchQuery: string = '';
   onSearchInputChange(value: string) {
     this.searchQuery = value;
   }
+
   matchesSearch(user: any): boolean {
     if (!this.searchQuery || this.searchQuery.trim() === '') {
       return true;
@@ -98,9 +105,11 @@ export class AddChannelComponent {
       .toLowerCase()
       .includes(this.searchQuery.toLowerCase());
   }
+
   toggleOverlay() {
     this.overlayVisible = !this.overlayVisible;
   }
+
   toggleInputField(inputId: string) {
     if (inputId === 'addSpecificMembers') {
       this.showInputField = !this.showInputField;
