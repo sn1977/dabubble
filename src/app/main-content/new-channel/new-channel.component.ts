@@ -39,6 +39,7 @@ export class NewChannelComponent implements OnInit, AfterViewChecked {
   user: User = new User();
   channel: Channel = new Channel();
   channelList: any = [];
+  newMessage: boolean = false;
   firebaseAuth = inject(Auth);
   authService = inject(AuthService);
   textBoxData: any = {
@@ -61,9 +62,52 @@ export class NewChannelComponent implements OnInit, AfterViewChecked {
     private dialogService: DialogServiceService
   ) {}
 
+  channelData = {
+    creator: this.channel.creator,
+    description: this.channel.description,
+    member: this.channel.member,
+    name: this.channel.name,
+    count: this.channel.count,
+    newMessage: this.channel.newMessage
+    
+  };
+
+  addCountToChannelDocument(toggle: string) {
+
+    if(this.channelData.name === ''){
+      this.channelData.name = this.channel.name;
+    }
+    
+    if(this.channelData.description === ''){
+      this.channelData.description = this.channel.description;
+    }
+
+    if (this.channelData.member.length === 0 && Array.isArray(this.channel.member)) {
+      this.channelData.member = this.channel.member;
+    }
+
+    const channel = new Channel({
+      creator: this.channel.creator,
+      description: this.channelData.description,
+      member: this.channel.member,
+      name: this.channelData.name,
+      count: this.channel.count,
+      newMessage: this.newMessage
+
+    });
+   
+    
+   
+  
+    
+    
+    this.firestore.updateChannel(this.itemID, channel);
+  }
+
   async ngOnInit(): Promise<void> {
     await this.waitForUserData();
     this.test();
+    this.newMessage = false; 
 
     this.route.paramMap.subscribe((paramMap) => {
       this.itemID = paramMap.get('id');
@@ -73,6 +117,9 @@ export class NewChannelComponent implements OnInit, AfterViewChecked {
 
     this.headerStateService.setAlternativeHeader(true);
     this.scrollToBottom();
+    setTimeout(() => {
+      this.addCountToChannelDocument(this.itemID);
+   }, 1000)
   }
 
   ngAfterViewInit() {
@@ -139,7 +186,19 @@ export class NewChannelComponent implements OnInit, AfterViewChecked {
       this.channel = new Channel(this.firestore.channel);
       this.textBoxData.channelName = this.channel.name;
       this.textBoxData.channelId = itemID;
+      this.setOldChannelValues();
     });
+  }
+
+  setOldChannelValues(){
+    this.channelData = {
+      creator: this.channel.creator,
+      description: this.channel.description,
+      member: this.channel.member,
+      name: this.channel.name,
+      count: this.channel.count,
+      newMessage: this.channel.newMessage
+    };
   }
 
   openChannel(event: MouseEvent, path: string) {
