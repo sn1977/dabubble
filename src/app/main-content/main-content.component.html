@@ -118,7 +118,7 @@
         <div class="scrollable-panel-content">
           @for (user of allUsers; track $index) {
           <div
-            class="user-name pl-7"
+            class="user-name"
             [id]="user.id"
             (click)="openChannel($event, 'message')"
           >

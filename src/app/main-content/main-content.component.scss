@@ -61,7 +61,7 @@
 .noUserFound,
 .user-name,
 .channel-name {
-  padding-left: 26px;
+  
   padding-top: 16px;
   gap: 16px;
   display: flex;
@@ -83,7 +83,7 @@
   .online-avatar, .offline-avatar {
     position: absolute;
     bottom: 0;
-    left: 56px;
+    left: 32px;
     width: 14px;
     height: 14px;
   }
