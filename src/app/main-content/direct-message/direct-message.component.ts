@@ -148,22 +148,11 @@ export class DirectMessageComponent implements OnInit {
     this.scrollToBottom();
   }
 
-  getItemValuesTwo(collection: string, itemID: string) {
+  getItemValues(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {
-      this.channel = new Channel(this.firestore.channel);
-      this.setOldChannelValues();
+      this.user = new User(this.firestore.user);
+      this.setOldChannelValuesTwo();
     });
-  }
-
-  setOldChannelValues(){
-    this.channelData = {
-      creator: this.channel.creator,
-      description: this.channel.description,
-      member: this.channel.member,
-      name: this.channel.name,
-      count: this.channel.count,
-      newMessage: this.channel.newMessage
-    };
   }
 
   setOldChannelValuesTwo(){
@@ -179,6 +168,34 @@ export class DirectMessageComponent implements OnInit {
 
     };
   }
+
+  getItemValuesTwo(collection: string, itemID: string) {
+    
+    
+    this.firestore.getSingleItemData(collection, itemID, () => {
+   
+      this.channel = new Channel(this.firestore.channel);
+    
+      this.setOldChannelValues();
+      console.log();
+      
+
+     
+    });
+  }
+
+  setOldChannelValues(){
+    this.channelData = {
+      creator: this.channel.creator,
+      description: this.channel.description,
+      member: this.channel.member,
+      name: this.channel.name,
+      count: this.channel.count,
+      newMessage: this.channel.newMessage
+    };
+  }
+
+  
 
   async waitForUserData(): Promise<void> {
     while (!this.authService.activeUserAccount) {
@@ -244,12 +261,7 @@ export class DirectMessageComponent implements OnInit {
     this._bottomSheet.open(BottomSheetComponent);
   }
 
-  getItemValues(collection: string, itemID: string) {
-    this.firestore.getSingleItemData(collection, itemID, () => {
-      this.user = new User(this.firestore.user);
-      this.setOldChannelValuesTwo();
-    });
-  }
+  
 
   // getItemValuesChannel(collection: string, itemID: string) {
   //   this.firestore.getSingleItemData(collection, itemID, () => {
