@@ -95,6 +95,7 @@ export class FirebaseService {
       isOnline: obj.isOnline,
       provider: obj.provider,
       selected: obj.selected,
+      count: obj.count,
     };
   }
 

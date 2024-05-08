@@ -33,7 +33,7 @@ export class ConversationComponent implements OnInit {
   authService = inject(AuthService);
   @Input() channelMessage!: ChannelMessage;
   @Input() index!: number;
-  user: User = new User();
+ 
   edit: boolean = false;
   hovered: boolean = false;
   isMessageFromYou: boolean = false;
@@ -45,8 +45,20 @@ export class ConversationComponent implements OnInit {
   isEmojiSelected: boolean = false;
   emojiReactions: { emoji: string, count: number }[] = [];
   contentCount: number = 0;
+  user: User = new User();
   channel: Channel = new Channel();
   itemID: any = '';
+
+  userData = {
+    avatar: this.user.avatar,
+    email: this.user.email,
+    displayName: this.user.displayName,
+    isOnline: this.user.isOnline,
+    provider: this.user.provider,
+    selected: this.user.selected,
+    count: this.user.count
+    
+  };
 
   channelData = {
     creator: this.channel.creator,
@@ -78,7 +90,18 @@ export class ConversationComponent implements OnInit {
       name: this.channelData.name,
       count: this.contentCount
     });
+
+    const user = new User({
+      avatar: this.user.avatar,
+      email: this.user.email,
+      displayName: this.user.displayName,
+      isOnline: this.user.isOnline,
+      provider: this.user.provider,
+      selected: this.user.selected,
+      count: this.contentCount
+    });
     this.firestore.updateChannel(this.itemID, channel);
+    this.firestore.updateUser(user, this.itemID, );
   }
 
   countContentElements(): void {
@@ -110,6 +133,7 @@ export class ConversationComponent implements OnInit {
       this.itemID = paramMap.get('id');
       
       this.getItemValues('channels', this.itemID);
+      this.getItemValuesTwo('users', this.itemID);
 
       setTimeout(() => {
          this.addCountToChannelDocument(this.itemID);
@@ -134,15 +158,29 @@ export class ConversationComponent implements OnInit {
     };
   }
 
-  
+  getItemValuesTwo(collection: string, itemID: string) {
+    this.firestore.getSingleItemData(collection, itemID, () => {
+      this.user = new User(this.firestore.user);
+      console.log(this.user);
+      
+      this.setOldChannelValuesTwo();
+    });
+  }
+
+  setOldChannelValuesTwo(){
+    this.userData = {
+      avatar: this.user.avatar,
+      email: this.user.email,
+      displayName: this.user.displayName,
+      isOnline: this.user.isOnline,
+      provider: this.user.provider,
+      selected: this.user.selected,
+      count: this.user.count
+    };
+  }
 
   
 
-  
-  
-
-
-  
 
   getItemValuesProfile(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {

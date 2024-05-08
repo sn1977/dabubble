@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FirebaseService } from '../../services/firebase.service';
 import { CommonModule } from '@angular/common';
 import { User } from '../../../../models/user.class';
@@ -77,8 +77,15 @@ export class SearchUserComponent {
 
   }
 
-  constructor() {
+  constructor (private route: ActivatedRoute,) {
     this.getActiveUserID()
+  }
+
+  ngOnInit() {
+    this.route.paramMap.subscribe((paramMap) => {
+      this.itemID = paramMap.get('id');
+      this.getItemValues('channels', this.itemID);
+    });
   }
 
 
@@ -187,5 +194,6 @@ export class SearchUserComponent {
     return event && event.target && event.target.value;
   }
 }
+
 
 

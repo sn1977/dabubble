@@ -19,6 +19,17 @@
   .selected-user span {
     margin-right: 8px;
   }
+
+  .add-button {
+    background-color: rgb(68, 77, 242);
+    border: none;
+    border-radius: 20px;
+    color: white;
+    padding: 15px;
+    margin: 20px;
+    width: 150px;
+    cursor: pointer;
+  }
   
   .selected-user button {
     display: flex;

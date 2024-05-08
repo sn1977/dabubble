@@ -6,6 +6,7 @@ export class User {
   isOnline: boolean;
   provider: string;
   selected: boolean | undefined;
+  count: number;
 
   constructor(obj?: any) {
     this.avatar = obj ? obj.avatar : '';
@@ -14,6 +15,7 @@ export class User {
     this.isOnline = obj ? obj.isOnline : true;
     this.provider = obj ? obj.provider : '';
     this.selected= obj ? obj.selected : false;
+    this.count = obj ? obj.count: 0;
   }
 
   public toJSON() {
@@ -23,7 +25,8 @@ export class User {
       displayName: this.displayName,
       isOnline: this.isOnline,
       provider: this.provider,
-      selected: this.selected
+      selected: this.selected,
+      count: this.count,
     };
   }
 }
