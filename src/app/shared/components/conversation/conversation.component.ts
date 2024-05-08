@@ -33,7 +33,7 @@ export class ConversationComponent implements OnInit {
   authService = inject(AuthService);
   @Input() channelMessage!: ChannelMessage;
   @Input() index!: number;
- 
+
   edit: boolean = false;
   hovered: boolean = false;
   isMessageFromYou: boolean = false;
@@ -58,7 +58,7 @@ export class ConversationComponent implements OnInit {
     selected: this.user.selected,
     count: this.user.count,
     newMessage: this.user.newMessage
-    
+
   };
 
   channelData = {
@@ -72,11 +72,11 @@ export class ConversationComponent implements OnInit {
   };
 
   addCountToChannelDocument(toggle: string) {
-   
+
     if(this.channelData.name === ''){
       this.channelData.name = this.channel.name;
     }
-    
+
     if(this.channelData.description === ''){
       this.channelData.description = this.channel.description;
     }
@@ -113,7 +113,7 @@ export class ConversationComponent implements OnInit {
     this.contentCount--;
     console.log('Anzahl der "content"-Elemente:', this.contentCount);
 
-  
+
   }
 
   getCurrentDay() {
@@ -127,16 +127,16 @@ export class ConversationComponent implements OnInit {
   ngOnInit(): void {
     this.getItemValuesProfile('users', this.channelMessage.creator);
     this.countContentElements();
-    
+
     this.messageDate = this.channelMessage.createdAt;
     this.isMessageFromYou =
       this.authService.activeUserAccount.uid === this.channelMessage.creator;
 
-    
+
 
     this.route.paramMap.subscribe((paramMap) => {
       this.itemID = paramMap.get('id');
-      
+
       this.getItemValues('channels', this.itemID);
       this.getItemValuesTwo('users', this.itemID);
 
@@ -184,7 +184,7 @@ export class ConversationComponent implements OnInit {
     };
   }
 
-  
+
 
 
   getItemValuesProfile(collection: string, itemID: string) {
@@ -207,16 +207,16 @@ export class ConversationComponent implements OnInit {
 
     dialogRef.componentInstance.emojiSelect.subscribe(selectedEmoji => {
       console.log('Empfangenes Emoji:', selectedEmoji);
-      this.updateEmoji(selectedEmoji);
+      // this.updateEmoji(selectedEmoji);
       this.addEmojiReaction(selectedEmoji);
       dialogRef.close();
     });
   }
 
-  updateEmoji(selectedEmoji: string) {
-    console.log('Update Emoji auf:', selectedEmoji);
-    this.emojiCharacter = selectedEmoji;
-  }
+  // updateEmoji(selectedEmoji: string) {
+  //   console.log('Update Emoji auf:', selectedEmoji);
+  //   this.emojiCharacter = selectedEmoji;
+  // }
 
   addEmojiReaction(selectedEmoji: string) {
     const existingEmoji = this.emojiReactions.find(e => e.emoji === selectedEmoji);
