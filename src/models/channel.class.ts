@@ -7,6 +7,7 @@ export class Channel {
   member: any[];
   name: string;
   count: number;
+  newMessage: boolean | undefined;
 
   constructor(obj?: any) {
     this.creator = obj ? obj.creator : '';
@@ -14,6 +15,7 @@ export class Channel {
     this.member = obj && obj.member ? obj.member : [];
     this.name = obj ? obj.name : '';
     this.count = obj ? obj.count: 0;
+    this.newMessage= obj ? obj.newMessage : false;
   }
 
   public toJSON() {
@@ -23,6 +25,7 @@ export class Channel {
       member: this.member,
       name: this.name,
       count: this.count,
+      newMessage: this.newMessage,
     };
   }
 }

@@ -6,6 +6,7 @@ import { AuthService } from '../../services/auth.service';
 import { FirebaseService } from '../../services/firebase.service';
 import { User } from '../../../../models/user.class';
 import { ActivatedRoute } from '@angular/router';
+import { Channel } from '../../../../models/channel.class';
 
 @Component({
   selector: 'app-text-box',
@@ -21,6 +22,7 @@ export class TextBoxComponent implements OnInit {
   reactions = ['wave', 'rocket'];
   newMessage: boolean = false;
   user: User = new User();
+  channel: Channel = new Channel();
   itemID: any = '';
  
   
@@ -39,8 +41,18 @@ export class TextBoxComponent implements OnInit {
     provider: this.user.provider,
     selected: this.user.selected,
     count: this.user.count,
-    newMessage: this.newMessage
+    newMessage: this.user.newMessage
 
+    
+  };
+
+  channelData = {
+    creator: this.channel.creator,
+    description: this.channel.description,
+    member: this.channel.member,
+    name: this.channel.name,
+    count: this.channel.count,
+    newMessage: this.channel.newMessage
     
   };
 
@@ -50,6 +62,29 @@ export class TextBoxComponent implements OnInit {
     
 
   addCountToChannelDocument(toggle: string) {
+
+
+    if(this.channelData.name === ''){
+      this.channelData.name = this.channel.name;
+    }
+    
+    if(this.channelData.description === ''){
+      this.channelData.description = this.channel.description;
+    }
+
+    if (this.channelData.member.length === 0 && Array.isArray(this.channel.member)) {
+      this.channelData.member = this.channel.member;
+    }
+
+    const channel = new Channel({
+      creator: this.channel.creator,
+      description: this.channelData.description,
+      member: this.channel.member,
+      name: this.channelData.name,
+      count: this.channel.count,
+      newMessage: this.newMessage
+
+    });
     
    
     const user = new User({
@@ -65,7 +100,7 @@ export class TextBoxComponent implements OnInit {
 
     
     
-    
+    this.firestore.updateChannel(this.itemID, channel);
     this.firestore.updateUser(user, this.itemID, );
   }
 
@@ -73,15 +108,29 @@ export class TextBoxComponent implements OnInit {
 
     this.route.paramMap.subscribe((paramMap) => {
       this.itemID = paramMap.get('id');
-      this.newMessage = false; 
-      
+      this.getItemValues('channels', this.itemID);
       this.getItemValuesTwo('users', this.itemID);
 
-      setTimeout(() => {
-        this.newMessage = false;  
-         
-      }, 1000)
+  
     });
+  }
+
+  getItemValues(collection: string, itemID: string) {
+    this.firestore.getSingleItemData(collection, itemID, () => {
+      this.channel = new Channel(this.firestore.channel);
+      this.setOldChannelValues();
+    });
+  }
+
+  setOldChannelValues(){
+    this.channelData = {
+      creator: this.channel.creator,
+      description: this.channel.description,
+      member: this.channel.member,
+      name: this.channel.name,
+      count: this.channel.count,
+      newMessage: this.channel.newMessage
+    };
   }
 
   getItemValuesTwo(collection: string, itemID: string) {

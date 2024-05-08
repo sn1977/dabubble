@@ -13,6 +13,7 @@ import { HeaderMobileComponent } from '../../shared/components/header-mobile/hea
 import { HeaderStateService } from '../../shared/services/header-state.service';
 import { TextBoxComponent } from '../../shared/components/text-box/text-box.component';
 import { ConversationComponent } from '../../shared/components/conversation/conversation.component';
+import { Channel } from '../../../models/channel.class';
 
 @Component({
   selector: 'app-direct-message',
@@ -31,7 +32,9 @@ export class DirectMessageComponent implements OnInit {
   router = inject(Router);
   itemID: any = '';
   user: User = new User();
+  channel: Channel = new Channel();
   authService = inject(AuthService);
+  newMessage: boolean = false;
   textBoxData: any = {
     placeholder: 'Nachricht an ',
     channelName: '',
@@ -40,6 +43,72 @@ export class DirectMessageComponent implements OnInit {
     collection: 'messages',
     subcollection: 'chat',
   };
+
+  userData = {
+    avatar: this.user.avatar,
+    email: this.user.email,
+    displayName: this.user.displayName,
+    isOnline: this.user.isOnline,
+    provider: this.user.provider,
+    selected: this.user.selected,
+    count: this.user.count,
+    newMessage: this.user.newMessage
+
+    
+  };
+
+  channelData = {
+    creator: this.channel.creator,
+    description: this.channel.description,
+    member: this.channel.member,
+    name: this.channel.name,
+    count: this.channel.count,
+    newMessage: this.channel.newMessage
+    
+  };
+
+  addCountToChannelDocument(toggle: string) {
+
+    if(this.channelData.name === ''){
+      this.channelData.name = this.channel.name;
+    }
+    
+    if(this.channelData.description === ''){
+      this.channelData.description = this.channel.description;
+    }
+
+    if (this.channelData.member.length === 0 && Array.isArray(this.channel.member)) {
+      this.channelData.member = this.channel.member;
+    }
+
+    const channel = new Channel({
+      creator: this.channel.creator,
+      description: this.channelData.description,
+      member: this.channel.member,
+      name: this.channelData.name,
+      count: this.channel.count,
+      newMessage: this.newMessage
+
+    });
+   
+    
+   
+    const user = new User({
+      avatar: this.user.avatar,
+      email: this.user.email,
+      displayName: this.user.displayName,
+      isOnline: this.user.isOnline,
+      provider: this.user.provider,
+      selected: this.user.selected,
+      count: this.user.count,
+      newMessage: this.newMessage
+    });
+
+    
+    
+    this.firestore.updateChannel(this.itemID, channel);
+    this.firestore.updateUser(user, this.itemID, );
+  }
 
   constructor(
     public dialog: MatDialog,
@@ -52,11 +121,21 @@ export class DirectMessageComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     await this.waitForUserData();
     this.test();
+    this.newMessage = false; 
+  
+
+    
+    
 
     this.route.paramMap.subscribe((paramMap) => {
       this.itemID = paramMap.get('id');
       this.getItemValues('users', this.itemID);
+      this.getItemValuesTwo('channels', this.itemID);
     });
+
+    setTimeout(() => {
+      this.addCountToChannelDocument(this.itemID);
+   }, 1000)
 
     await this.firestore.getDirectMessages(
       this.authService.activeUserAccount.uid,
@@ -67,6 +146,38 @@ export class DirectMessageComponent implements OnInit {
     this.headerStateService.setAlternativeHeader(true);
     this.firestore.getAllChannelMessages(this.textBoxData.channelId, this.textBoxData.collection, this.textBoxData.subcollection);
     this.scrollToBottom();
+  }
+
+  getItemValuesTwo(collection: string, itemID: string) {
+    this.firestore.getSingleItemData(collection, itemID, () => {
+      this.channel = new Channel(this.firestore.channel);
+      this.setOldChannelValues();
+    });
+  }
+
+  setOldChannelValues(){
+    this.channelData = {
+      creator: this.channel.creator,
+      description: this.channel.description,
+      member: this.channel.member,
+      name: this.channel.name,
+      count: this.channel.count,
+      newMessage: this.channel.newMessage
+    };
+  }
+
+  setOldChannelValuesTwo(){
+    this.userData = {
+      avatar: this.user.avatar,
+      email: this.user.email,
+      displayName: this.user.displayName,
+      isOnline: this.user.isOnline,
+      provider: this.user.provider,
+      selected: this.user.selected,
+      count: this.user.count,
+      newMessage: this.newMessage
+
+    };
   }
 
   async waitForUserData(): Promise<void> {
@@ -136,6 +247,7 @@ export class DirectMessageComponent implements OnInit {
   getItemValues(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {
       this.user = new User(this.firestore.user);
+      this.setOldChannelValuesTwo();
     });
   }
 

@@ -67,6 +67,7 @@ export class ConversationComponent implements OnInit {
     member: this.channel.member,
     name: this.channel.name,
     count: this.channel.count,
+    newMessage: this.channel.newMessage
     
   };
 
@@ -158,15 +159,14 @@ export class ConversationComponent implements OnInit {
       description: this.channel.description,
       member: this.channel.member,
       name: this.channel.name,
-      count: this.channel.count
+      count: this.channel.count,
+      newMessage: this.channel.newMessage
     };
   }
 
   getItemValuesTwo(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {
-      this.user = new User(this.firestore.user);
-      console.log(this.user);
-      
+      this.user = new User(this.firestore.user);   
       this.setOldChannelValuesTwo();
     });
   }

@@ -108,6 +108,7 @@ export class FirebaseService {
       id: id,
       name: obj.name,
       count: obj.count,
+      newMessage: obj.newMessage
     };
   }
 
