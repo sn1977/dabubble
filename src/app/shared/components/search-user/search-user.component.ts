@@ -32,6 +32,7 @@ export class SearchUserComponent {
   firestore = inject(FirebaseService);
   router = inject(Router);
   authService = inject(AuthService);
+  itemID: any = '';
 
   activeUser: any ='';
 
@@ -39,29 +40,67 @@ export class SearchUserComponent {
   channel: Channel = new Channel();
 
   channelData = {
-    creator: '',
-    description: '',
-    member: [],
-    name: '',
-    user: '',
+    creator: this.channel.creator,
+    description: this.channel.description,
+    member: this.channel.member,
+    name: this.channel.name,
+    count: this.channel.count,
   };
+
+
   onSubmit() {
     const memberNames = this.selectedUsers.map(user => user.displayName);
+
+    if(this.channelData.name === ''){
+      this.channelData.name = this.channel.name;
+    }
+    
+    if(this.channelData.description === ''){
+      this.channelData.description = this.channel.description;
+    }
+
+    if (this.channelData.member.length === 0 && Array.isArray(this.channel.member)) {
+      this.channelData.member = this.channel.member;
+    }
+
 
     const channel = new Channel({
       creator: this.authService.activeUserId,
       description: this.channelData.description,
       member: this.selectedUsers,
       name: this.channelData.name,
-      count: 0,
+      count: this.channel.count,
     });
-    this.firestore.addChannel(channel);
+    debugger
+    this.firestore.updateChannel(this.itemID, channel);
 
 
   }
 
   constructor() {
     this.getActiveUserID()
+  }
+
+
+  getItemValues(collection: string, itemID: string) {
+    this.firestore.getSingleItemData(collection, itemID, () => {
+      this.channel = new Channel(this.firestore.channel);
+      console.log('hello', this.channel);
+    });
+    setTimeout(() => {
+      this.setOldChannelValues();
+    }, 1000)
+  }
+
+  setOldChannelValues(){
+    this.channelData = {
+      creator: this.channel.creator,
+      description: this.channel.description,
+      member: this.channel.member,
+      name: this.channel.name,
+      count: this.channel.count,
+    };
+    
   }
 
   async getActiveUserID() {

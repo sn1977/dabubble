@@ -32,6 +32,7 @@ export class ChannelEditionComponent implements OnInit {
     description: this.channel.description,
     member: this.channel.member,
     name: this.channel.name,
+    count: this.channel.count,
   };
 
   constructor( private route: ActivatedRoute, ) {
@@ -58,6 +59,7 @@ export class ChannelEditionComponent implements OnInit {
       description: this.channelData.description,
       member: this.channel.member,
       name: this.channelData.name,
+      count: this.channel.count,
     });
 
     this.toggleEdit(toggle);    
@@ -103,14 +105,24 @@ export class ChannelEditionComponent implements OnInit {
     });
   }
 
+  
+
   getItemValues(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {
       this.channel = new Channel(this.firestore.channel);
       console.log('hello', this.channel);
+      this.getItemValuesTwo('users', this.channel.creator)
     });
     setTimeout(() => {
       this.setOldChannelValues();
     }, 1000)
+  }
+
+  getItemValuesTwo(collection: string, itemID: string) {
+    this.firestore.getSingleItemData(collection, itemID, () => {
+      this.user = new User(this.firestore.user);
+      console.log('hellotwo', this.user);
+    });
   }
 
   setOldChannelValues(){
@@ -119,12 +131,10 @@ export class ChannelEditionComponent implements OnInit {
       description: this.channel.description,
       member: this.channel.member,
       name: this.channel.name,
+      count: this.channel.count,
     };
-
-    
     
   }
-
   openChannel(event: MouseEvent, path: string) {
     const docRefId = (event.currentTarget as HTMLElement).id;
     console.log('Öffne Collection ' + path + ' mit ID: ' + docRefId);
