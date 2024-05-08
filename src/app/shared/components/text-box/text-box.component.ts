@@ -135,9 +135,7 @@ export class TextBoxComponent implements OnInit {
 
   getItemValuesTwo(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {
-      this.user = new User(this.firestore.user);
-      console.log(this.user);
-      
+      this.user = new User(this.firestore.user); 
       this.setOldChannelValuesTwo();
     });
   }

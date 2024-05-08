@@ -78,7 +78,7 @@ export class SearchUserComponent {
   }
 
   constructor (private route: ActivatedRoute,) {
-    this.getActiveUserID()
+    
   }
 
   ngOnInit() {
@@ -92,7 +92,6 @@ export class SearchUserComponent {
   getItemValues(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {
       this.channel = new Channel(this.firestore.channel);
-      console.log('hello', this.channel);
     });
     setTimeout(() => {
       this.setOldChannelValues();
@@ -110,26 +109,6 @@ export class SearchUserComponent {
     
   }
 
-  async getActiveUserID() {
-    try {
-      let id = this.authService.activeUserId;
-      // Stelle sicher, dass id definiert ist, bevor du darauf zugreifst
-      await this.getActiveUserDoc('users', id);
-    } catch (error) {
-      console.error('Error fetching active user ID:', error);
-    }
-  }
-
-  async getActiveUserDoc(collection: string, itemID: string) {
-    try {
-      await this.firestore.getSingleItemData(collection, itemID, () => {
-        this.activeUser = new User(this.firestore.user);
-        console.log(this.activeUser.displayName);
-      });
-    } catch (error) {
-      console.error('Error fetching active user document:', error);
-    }
-  }
 
   addmember(event: MouseEvent, user: User) {
     const index = this.selectedUsers.findIndex((selectedUser) => selectedUser.id === user.id);
