@@ -65,12 +65,16 @@
           <span class="channel-tag">#</span>
           <span>{{ channel.name }}</span>
         </div>
-        @if(channel.newMessage){
-          <p>neu</p>
-        }
+       <div class="flex">
         <div class="pop-up">
           <p class="pop-up-color">{{ channel.count }}</p>
         </div>
+        @if(channel.newMessage){
+          <p>neu Nachricht!</p>
+        }
+
+       </div>
+       
         </div>
       }
       @if(noChannelFound){
@@ -141,13 +145,15 @@
               }
             </span>
           </div>
-          @if(user.newMessage){
-            <p>neu</p>
-          }
-
-          <div class="pop-up">
-            <p class="pop-up-color">{{ user.count}}</p>
-          </div>
+          <div class="flex">
+            <div class="pop-up">
+              <p class="pop-up-color">{{ user.count }}</p>
+            </div>
+            @if(user.newMessage){
+              <p>neu Nachricht!</p>
+            }
+    
+           </div>
 
 
           </div>
