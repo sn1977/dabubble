@@ -56,7 +56,8 @@ export class ConversationComponent implements OnInit {
     isOnline: this.user.isOnline,
     provider: this.user.provider,
     selected: this.user.selected,
-    count: this.user.count
+    count: this.user.count,
+    newMessage: this.user.newMessage
     
   };
 
@@ -65,7 +66,7 @@ export class ConversationComponent implements OnInit {
     description: this.channel.description,
     member: this.channel.member,
     name: this.channel.name,
-    count: this.channel.count
+    count: this.channel.count,
     
   };
 
@@ -98,7 +99,8 @@ export class ConversationComponent implements OnInit {
       isOnline: this.user.isOnline,
       provider: this.user.provider,
       selected: this.user.selected,
-      count: this.contentCount
+      count: this.contentCount,
+      newMessage: this.user.newMessage
     });
     this.firestore.updateChannel(this.itemID, channel);
     this.firestore.updateUser(user, this.itemID, );
@@ -109,6 +111,8 @@ export class ConversationComponent implements OnInit {
     this.contentCount = contentDivs.length;
     this.contentCount--;
     console.log('Anzahl der "content"-Elemente:', this.contentCount);
+
+  
   }
 
   getCurrentDay() {
@@ -175,7 +179,8 @@ export class ConversationComponent implements OnInit {
       isOnline: this.user.isOnline,
       provider: this.user.provider,
       selected: this.user.selected,
-      count: this.user.count
+      count: this.user.count,
+      newMessage: this.user.newMessage
     };
   }
 

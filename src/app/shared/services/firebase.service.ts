@@ -96,6 +96,7 @@ export class FirebaseService {
       provider: obj.provider,
       selected: obj.selected,
       count: obj.count,
+      newMessage: obj.newMessage
     };
   }
 

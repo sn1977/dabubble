@@ -65,6 +65,9 @@
           <span class="channel-tag">#</span>
           <span>{{ channel.name }}</span>
         </div>
+        <div>
+          <p>neu</p>
+        </div>
         <div class="pop-up">
           <p class="pop-up-color">{{ channel.count }}</p>
         </div>
@@ -138,6 +141,11 @@
               }
             </span>
           </div>
+          @if(user.newMessage){
+            <p>neu</p>
+
+          }
+
           <div class="pop-up">
             <p class="pop-up-color">{{ user.count}}</p>
           </div>

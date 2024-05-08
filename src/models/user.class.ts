@@ -4,6 +4,7 @@ export class User {
   email: string;
   displayName: string;
   isOnline: boolean;
+  newMessage: boolean | undefined;
   provider: string;
   selected: boolean | undefined;
   count: number;
@@ -13,6 +14,7 @@ export class User {
     this.email = obj ? obj.email : '';
     this.displayName = obj ? obj.displayName : '';
     this.isOnline = obj ? obj.isOnline : true;
+    this.newMessage= obj ? obj.newMessage : false;
     this.provider = obj ? obj.provider : '';
     this.selected= obj ? obj.selected : false;
     this.count = obj ? obj.count: 0;
@@ -24,6 +26,7 @@ export class User {
       email: this.email,
       displayName: this.displayName,
       isOnline: this.isOnline,
+      newMessage: this.newMessage,
       provider: this.provider,
       selected: this.selected,
       count: this.count,
