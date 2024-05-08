@@ -47,7 +47,7 @@ export class FirebaseService {
   constructor() {
     this.unsubUsers = this.subUserList();
     this.unsubChannel = this.subChannelList();
-    
+
   }
 
   getUsersRef() {
@@ -326,7 +326,7 @@ export class FirebaseService {
   }
 
 
- 
+
 
   async updateEmojiReactions(channelId: string, messageId: string, emoji: string) {
     const messageRef = doc(this.firestore, `channels/${channelId}/messages`, messageId);
