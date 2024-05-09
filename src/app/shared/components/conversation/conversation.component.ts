@@ -33,6 +33,7 @@ export class ConversationComponent implements OnInit {
   authService = inject(AuthService);
   @Input() channelMessage!: ChannelMessage;
   @Input() index!: number;
+  // @Input() textBoxData: any;
 
   edit: boolean = false;
   hovered: boolean = false;
@@ -68,7 +69,7 @@ export class ConversationComponent implements OnInit {
     name: this.channel.name,
     count: this.channel.count,
     newMessage: this.channel.newMessage
-    
+
   };
 
   addCountToChannelDocument(toggle: string) {
@@ -152,7 +153,7 @@ export class ConversationComponent implements OnInit {
     this.firestore.getSingleItemData(collection, itemID, () => {
       this.channel = new Channel(this.firestore.channel);
       this.setOldChannelValues();
-      
+
     });
   }
 
@@ -169,9 +170,9 @@ export class ConversationComponent implements OnInit {
 
   getItemValuesTwo(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {
-      this.user = new User(this.firestore.user);   
+      this.user = new User(this.firestore.user);
       this.setOldChannelValuesTwo();
-      
+
     });
   }
 
@@ -186,7 +187,7 @@ export class ConversationComponent implements OnInit {
       count: this.user.count,
       newMessage: this.user.newMessage
     };
-    
+
   }
 
 
@@ -231,5 +232,23 @@ export class ConversationComponent implements OnInit {
       this.emojiReactions.push({emoji: selectedEmoji, count: 1});
     }
     console.log('Emoji-Reaktionen:', this.emojiReactions);
+    // this.updateEmoji();
   }
+
+  // updateEmoji() {
+  //   console.log('Hallo');
+  //   const message = new ChannelMessage({
+  //     creator: this.authService.activeUserId,
+  //     text: this.textBoxData.messageText,
+  //     channelId: this.textBoxData.channelId,
+  //     createdAt: this.textBoxData.createdAt,
+  //     reactions:  this.emojiReactions,
+  //     collection: this.textBoxData.collection,
+  //     subcollection: this.textBoxData.subcollection,
+  //     attachment: 'Anhang',
+  //   });
+  //
+  //   this.firestore.addChannelMessage(message, `${this.textBoxData.collection}/${message.channelId}/${this.textBoxData.subcollection}`);
+  //   console.log(this.emojiReactions);
+  // }
 }
