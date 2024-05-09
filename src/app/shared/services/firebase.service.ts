@@ -196,7 +196,6 @@ export class FirebaseService {
   }
 
   async addChannel(item: Channel) {
-    debugger
     if (typeof item.creator === 'undefined') {
       console.error('Fehler: Creator ist undefined.');
       return; // Beendet die Funktion vorzeitig, wenn 'creator' undefined ist
