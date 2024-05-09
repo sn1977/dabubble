@@ -31,8 +31,7 @@ export class ConversationComponent implements OnInit {
 
   firestore = inject(FirebaseService);
   authService = inject(AuthService);
-  @Input() channelMessage!: ChannelMessage;
-  @Input() index!: number;
+  
 
   edit: boolean = false;
   hovered: boolean = false;
@@ -73,23 +72,11 @@ export class ConversationComponent implements OnInit {
 
   addCountToChannelDocument(toggle: string) {
 
-    if(this.channelData.name === ''){
-      this.channelData.name = this.channel.name;
-    }
-
-    if(this.channelData.description === ''){
-      this.channelData.description = this.channel.description;
-    }
-
-    if (this.channelData.member.length === 0 && Array.isArray(this.channel.member)) {
-      this.channelData.member = this.channel.member;
-    }
-
     const channel = new Channel({
       creator: this.channel.creator,
-      description: this.channelData.description,
+      description: this.channel.description,
       member: this.channel.member,
-      name: this.channelData.name,
+      name: this.channel.name,
       count: this.contentCount,
       newMessage: this.channel.newMessage
 
@@ -105,6 +92,7 @@ export class ConversationComponent implements OnInit {
       count: this.contentCount,
       newMessage: this.user.newMessage
     });
+
     this.firestore.updateChannel(this.itemID, channel);
     this.firestore.updateUser(user, this.itemID, );
   }
@@ -127,14 +115,8 @@ export class ConversationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getItemValuesProfile('users', this.channelMessage.creator);
+    
     this.countContentElements();
-
-    this.messageDate = this.channelMessage.createdAt;
-    this.isMessageFromYou =
-      this.authService.activeUserAccount.uid === this.channelMessage.creator;
-
-
 
     this.route.paramMap.subscribe((paramMap) => {
       this.itemID = paramMap.get('id');
@@ -170,12 +152,12 @@ export class ConversationComponent implements OnInit {
   getItemValuesTwo(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {
       this.user = new User(this.firestore.user);   
-      this.setOldChannelValuesTwo();
+      this.setOldUserValuesTwo();
       
     });
   }
 
-  setOldChannelValuesTwo(){
+  setOldUserValuesTwo(){
     this.userData = {
       avatar: this.user.avatar,
       email: this.user.email,
@@ -187,15 +169,6 @@ export class ConversationComponent implements OnInit {
       newMessage: this.user.newMessage
     };
     
-  }
-
-
-
-
-  getItemValuesProfile(collection: string, itemID: string) {
-    this.firestore.getSingleItemData(collection, itemID, () => {
-      this.user = new User(this.firestore.user);
-    });
   }
 
   deleteHovered() {

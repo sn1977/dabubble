@@ -35,6 +35,7 @@ export class DirectMessageComponent implements OnInit {
   channel: Channel = new Channel();
   authService = inject(AuthService);
   newMessage: boolean = false;
+
   textBoxData: any = {
     placeholder: 'Nachricht an ',
     channelName: '',
@@ -57,42 +58,10 @@ export class DirectMessageComponent implements OnInit {
     
   };
 
-  channelData = {
-    creator: this.channel.creator,
-    description: this.channel.description,
-    member: this.channel.member,
-    name: this.channel.name,
-    count: this.channel.count,
-    newMessage: this.channel.newMessage
-    
-  };
+  
 
   addCountToChannelDocument(toggle: string) {
 
-    if(this.channelData.name === ''){
-      this.channelData.name = this.channel.name;
-    }
-    
-    if(this.channelData.description === ''){
-      this.channelData.description = this.channel.description;
-    }
-
-    if (this.channelData.member.length === 0 && Array.isArray(this.channel.member)) {
-      this.channelData.member = this.channel.member;
-    }
-
-    const channel = new Channel({
-      creator: this.channel.creator,
-      description: this.channelData.description,
-      member: this.channel.member,
-      name: this.channelData.name,
-      count: this.channel.count,
-      newMessage: this.newMessage
-
-    });
-   
-    
-   
     const user = new User({
       avatar: this.user.avatar,
       email: this.user.email,
@@ -105,8 +74,6 @@ export class DirectMessageComponent implements OnInit {
     });
 
     
-    
-    this.firestore.updateChannel(this.itemID, channel);
     this.firestore.updateUser(user, this.itemID, );
   }
 
@@ -122,15 +89,12 @@ export class DirectMessageComponent implements OnInit {
     await this.waitForUserData();
     this.test();
     this.newMessage = false; 
-  
 
-    
-    
 
     this.route.paramMap.subscribe((paramMap) => {
       this.itemID = paramMap.get('id');
       this.getItemValues('users', this.itemID);
-      this.getItemValuesTwo('channels', this.itemID);
+  
     });
 
     setTimeout(() => {
@@ -151,11 +115,11 @@ export class DirectMessageComponent implements OnInit {
   getItemValues(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {
       this.user = new User(this.firestore.user);
-      this.setOldChannelValuesTwo();
+      this.setOldUserlValues();
     });
   }
 
-  setOldChannelValuesTwo(){
+  setOldUserlValues(){
     this.userData = {
       avatar: this.user.avatar,
       email: this.user.email,
@@ -164,38 +128,10 @@ export class DirectMessageComponent implements OnInit {
       provider: this.user.provider,
       selected: this.user.selected,
       count: this.user.count,
-      newMessage: this.newMessage
+      newMessage: this.user.newMessage
 
     };
   }
-
-  getItemValuesTwo(collection: string, itemID: string) {
-    
-    
-    this.firestore.getSingleItemData(collection, itemID, () => {
-   
-      this.channel = new Channel(this.firestore.channel);
-    
-      this.setOldChannelValues();
-      console.log();
-      
-
-     
-    });
-  }
-
-  setOldChannelValues(){
-    this.channelData = {
-      creator: this.channel.creator,
-      description: this.channel.description,
-      member: this.channel.member,
-      name: this.channel.name,
-      count: this.channel.count,
-      newMessage: this.channel.newMessage
-    };
-  }
-
-  
 
   async waitForUserData(): Promise<void> {
     while (!this.authService.activeUserAccount) {
@@ -209,7 +145,7 @@ export class DirectMessageComponent implements OnInit {
 
   test() {
     let id = this.authService.activeUserAccount.uid;
-    this.getItemValuesProfile('users', id);
+    this.getItemValues('users', id);
   }
 
   toggleOverlay(overlayId: string): void {
@@ -261,17 +197,4 @@ export class DirectMessageComponent implements OnInit {
     this._bottomSheet.open(BottomSheetComponent);
   }
 
-  
-
-  // getItemValuesChannel(collection: string, itemID: string) {
-  //   this.firestore.getSingleItemData(collection, itemID, () => {
-  //     this.channel = new Channel(this.firestore.channel);
-  //   });
-  // }
-
-  getItemValuesProfile(collection: string, itemID: string) {
-    this.firestore.getSingleItemData(collection, itemID, () => {
-      this.user = new User(this.firestore.user);
-    });
-  }
 }
