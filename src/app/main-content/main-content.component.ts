@@ -26,6 +26,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { SearchResultsDialogComponent } from '../search-results-dialog/search-results-dialog.component';
 import { ChannelMessage } from '../../models/channel-message.class';
 import {SearchInputComponent} from './search-input/search-input.component';
+import {SearchService} from '../shared/services/search-service.service';
 
 @Component({
   selector: 'app-main-content',
@@ -92,11 +93,14 @@ export class MainContentComponent implements OnInit {
   constructor(
     public navigationService: NavigationService,
     private itemStateService: ItemStateService,
+    private searchService: SearchService,
     private dialog: MatDialog
   ) {}
 
   ngOnInit() {
     this.listenForDataChanges();
+    this.searchService.allChannels = []; // Beispieldaten oder Service-Aufrufe
+    this.searchService.allUsers = [];
   }
 
 

@@ -21,7 +21,11 @@
 <!--      />-->
 <!--    </div>-->
 
-  <app-search-input (search)="searchWorkspace($event)"></app-search-input>
+  @if(!isDesktop){
+<!--  <div *ngIf="!isDesktop">-->
+    <app-search-input (search)="searchWorkspace($event)"></app-search-input>
+<!--  </div>-->
+  }
 
     <mat-accordion [multi]="true">
       <mat-expansion-panel
@@ -74,7 +78,7 @@
         }
 
        </div>
-       
+
         </div>
       }
       @if(noChannelFound){
@@ -152,7 +156,7 @@
             @if(user.newMessage){
               <p>neu Nachricht!</p>
             }
-    
+
            </div>
 
 
