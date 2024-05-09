@@ -24,8 +24,8 @@ export class TextBoxComponent implements OnInit {
   user: User = new User();
   channel: Channel = new Channel();
   itemID: any = '';
- 
-  
+
+
   @Input() textBoxData: any;
 
   add_hovered: boolean = false;
@@ -43,7 +43,7 @@ export class TextBoxComponent implements OnInit {
     count: this.user.count,
     newMessage: this.user.newMessage
 
-    
+
   };
 
   channelData = {
@@ -53,13 +53,13 @@ export class TextBoxComponent implements OnInit {
     name: this.channel.name,
     count: this.channel.count,
     newMessage: this.channel.newMessage
-    
+
   };
 
-  
+
     constructor(private route: ActivatedRoute,) {
     }
-    
+
 
   addCountToChannelDocument(toggle: string) {
 
@@ -71,7 +71,7 @@ export class TextBoxComponent implements OnInit {
       count: this.channel.count,
       newMessage: this.newMessage
     });
-    
+
     const user = new User({
       avatar: this.user.avatar,
       email: this.user.email,
@@ -87,14 +87,14 @@ export class TextBoxComponent implements OnInit {
     this.firestore.updateUser(user, this.itemID, );
   }
 
-  ngOnInit(): void {  
+  ngOnInit(): void {
 
     this.route.paramMap.subscribe((paramMap) => {
       this.itemID = paramMap.get('id');
       this.getItemValues('channels', this.itemID);
       this.getItemValuesTwo('users', this.itemID);
 
-  
+
     });
   }
 
@@ -118,7 +118,7 @@ export class TextBoxComponent implements OnInit {
 
   getItemValuesTwo(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {
-      this.user = new User(this.firestore.user); 
+      this.user = new User(this.firestore.user);
       this.setOldChannelValuesTwo();
     });
   }
@@ -145,7 +145,7 @@ export class TextBoxComponent implements OnInit {
   }
 
   onSubmit(){
-    this.newMessage = true;  
+    this.newMessage = true;
 
     if(this.textBoxData.messageText != ''){
       const message = new ChannelMessage({
@@ -158,14 +158,14 @@ export class TextBoxComponent implements OnInit {
         subcollection: this.textBoxData.subcollection,
         attachment: 'Anhang',
       });
-      
+
       this.firestore.addChannelMessage(message, `${this.textBoxData.collection}/${message.channelId}/${this.textBoxData.subcollection}`);
-      this.textBoxData.messageText = '';  
-      
+      this.textBoxData.messageText = '';
+
       this.addCountToChannelDocument(this.itemID);
 
     }
 
-    
+
   }
 }
