@@ -103,7 +103,7 @@ export class ConversationComponent implements OnInit {
     const contentDivs = document.querySelectorAll('.content');
     this.contentCount = contentDivs.length;
     this.contentCount--;
-    console.log('Anzahl der "content"-Elemente:', this.contentCount);
+  
 
 
   }

@@ -74,32 +74,15 @@ export class NewChannelComponent implements OnInit, AfterViewChecked {
 
   addCountToChannelDocument(toggle: string) {
 
-    if(this.channelData.name === ''){
-      this.channelData.name = this.channel.name;
-    }
-    
-    if(this.channelData.description === ''){
-      this.channelData.description = this.channel.description;
-    }
-
-    if (this.channelData.member.length === 0 && Array.isArray(this.channel.member)) {
-      this.channelData.member = this.channel.member;
-    }
-
     const channel = new Channel({
       creator: this.channel.creator,
-      description: this.channelData.description,
+      description: this.channel.description,
       member: this.channel.member,
-      name: this.channelData.name,
+      name: this.channel.name,
       count: this.channel.count,
       newMessage: this.newMessage
 
     });
-   
-    
-   
-  
-    
     
     this.firestore.updateChannel(this.itemID, channel);
   }
@@ -107,6 +90,7 @@ export class NewChannelComponent implements OnInit, AfterViewChecked {
   async ngOnInit(): Promise<void> {
     await this.waitForUserData();
     this.test();
+
     this.newMessage = false; 
 
     this.route.paramMap.subscribe((paramMap) => {
@@ -117,9 +101,30 @@ export class NewChannelComponent implements OnInit, AfterViewChecked {
 
     this.headerStateService.setAlternativeHeader(true);
     this.scrollToBottom();
+
     setTimeout(() => {
       this.addCountToChannelDocument(this.itemID);
    }, 1000)
+  }
+
+  getItemValues(collection: string, itemID: string) {
+    this.firestore.getSingleItemData(collection, itemID, () => {
+      this.channel = new Channel(this.firestore.channel);
+      this.textBoxData.channelName = this.channel.name;
+      this.textBoxData.channelId = itemID;
+      this.setOldChannelValues();
+    });
+  }
+
+  setOldChannelValues(){
+    this.channelData = {
+      creator: this.channel.creator,
+      description: this.channel.description,
+      member: this.channel.member,
+      name: this.channel.name,
+      count: this.channel.count,
+      newMessage: this.channel.newMessage
+    };
   }
 
   ngAfterViewInit() {
@@ -181,25 +186,7 @@ export class NewChannelComponent implements OnInit, AfterViewChecked {
     this._bottomSheet.open(BottomSheetComponent);
   }
 
-  getItemValues(collection: string, itemID: string) {
-    this.firestore.getSingleItemData(collection, itemID, () => {
-      this.channel = new Channel(this.firestore.channel);
-      this.textBoxData.channelName = this.channel.name;
-      this.textBoxData.channelId = itemID;
-      this.setOldChannelValues();
-    });
-  }
 
-  setOldChannelValues(){
-    this.channelData = {
-      creator: this.channel.creator,
-      description: this.channel.description,
-      member: this.channel.member,
-      name: this.channel.name,
-      count: this.channel.count,
-      newMessage: this.channel.newMessage
-    };
-  }
 
   openChannel(event: MouseEvent, path: string) {
     const docRefId = (event.currentTarget as HTMLElement).id;
@@ -211,11 +198,6 @@ export class NewChannelComponent implements OnInit, AfterViewChecked {
       this.user = new User(this.firestore.user);
     });
   }
-
-  // openDialog() {
-  //   this.itemID = this.user.id;
-  //   this.dialogService.openDirectMessageDialog({ user: this.user, itemId: this.itemID });
-  // }
 
   openDialog(user: User, itemId: string) {
     this.dialogService.openDirectMessageDialog(user, itemId);
