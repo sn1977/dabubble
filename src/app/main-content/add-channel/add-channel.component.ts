@@ -44,6 +44,8 @@ export class AddChannelComponent {
     name: '',
     user: '',
     count: '',
+    newMessage: '',
+    
   };
   onSubmit() {
 
@@ -52,7 +54,8 @@ export class AddChannelComponent {
       description: this.channelData.description,
       member: this.selectedUsers,
       name: this.channelData.name,
-      count: this.channelData.count
+      count: this.channelData.count,
+      newMessage: this.channelData.newMessage
       
     });
     this.firestore.addChannel(channel);

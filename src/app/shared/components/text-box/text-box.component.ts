@@ -63,30 +63,15 @@ export class TextBoxComponent implements OnInit {
 
   addCountToChannelDocument(toggle: string) {
 
-
-    if(this.channelData.name === ''){
-      this.channelData.name = this.channel.name;
-    }
-    
-    if(this.channelData.description === ''){
-      this.channelData.description = this.channel.description;
-    }
-
-    if (this.channelData.member.length === 0 && Array.isArray(this.channel.member)) {
-      this.channelData.member = this.channel.member;
-    }
-
     const channel = new Channel({
       creator: this.channel.creator,
-      description: this.channelData.description,
+      description: this.channel.description,
       member: this.channel.member,
-      name: this.channelData.name,
+      name: this.channel.name,
       count: this.channel.count,
       newMessage: this.newMessage
-
     });
     
-   
     const user = new User({
       avatar: this.user.avatar,
       email: this.user.email,
@@ -98,8 +83,6 @@ export class TextBoxComponent implements OnInit {
       newMessage: this.newMessage
     });
 
-    
-    
     this.firestore.updateChannel(this.itemID, channel);
     this.firestore.updateUser(user, this.itemID, );
   }
@@ -149,14 +132,10 @@ export class TextBoxComponent implements OnInit {
       provider: this.user.provider,
       selected: this.user.selected,
       count: this.user.count,
-      newMessage: this.newMessage
+      newMessage: this.user.newMessage
 
     };
   }
-
-
-
-
 
   deleteHovered() {
     this.add_hovered = false;
@@ -167,9 +146,6 @@ export class TextBoxComponent implements OnInit {
 
   onSubmit(){
     this.newMessage = true;  
-    
-
-
 
     if(this.textBoxData.messageText != ''){
       const message = new ChannelMessage({
@@ -185,13 +161,9 @@ export class TextBoxComponent implements OnInit {
       
       this.firestore.addChannelMessage(message, `${this.textBoxData.collection}/${message.channelId}/${this.textBoxData.subcollection}`);
       this.textBoxData.messageText = '';  
+      
       this.addCountToChannelDocument(this.itemID);
 
-    
-
-      
-
-      
     }
 
     

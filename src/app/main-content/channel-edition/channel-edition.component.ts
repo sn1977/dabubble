@@ -33,6 +33,7 @@ export class ChannelEditionComponent implements OnInit {
     member: this.channel.member,
     name: this.channel.name,
     count: this.channel.count,
+    newMessage: this.channel.newMessage
   };
 
   constructor( private route: ActivatedRoute, ) {
@@ -60,6 +61,7 @@ export class ChannelEditionComponent implements OnInit {
       member: this.channel.member,
       name: this.channelData.name,
       count: this.channel.count,
+      newMessage: this.channel.newMessage
     });
 
     this.toggleEdit(toggle);    
@@ -121,7 +123,6 @@ export class ChannelEditionComponent implements OnInit {
   getItemValuesTwo(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {
       this.user = new User(this.firestore.user);
-      console.log('hellotwo', this.user);
     });
   }
 
@@ -132,6 +133,7 @@ export class ChannelEditionComponent implements OnInit {
       member: this.channel.member,
       name: this.channel.name,
       count: this.channel.count,
+      newMessage: this.channel.newMessage
     };
     
   }

@@ -45,6 +45,7 @@ export class SearchUserComponent {
     member: this.channel.member,
     name: this.channel.name,
     count: this.channel.count,
+    newMessage: this.channel.newMessage
   };
 
 
@@ -70,8 +71,8 @@ export class SearchUserComponent {
       member: this.selectedUsers,
       name: this.channelData.name,
       count: this.channel.count,
+      newMessage: this.channel.newMessage
     });
-    debugger
     this.firestore.updateChannel(this.itemID, channel);
 
 
@@ -105,6 +106,7 @@ export class SearchUserComponent {
       member: this.channel.member,
       name: this.channel.name,
       count: this.channel.count,
+      newMessage: this.channel.newMessage
     };
     
   }
