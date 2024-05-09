@@ -50,7 +50,7 @@ export class ConversationComponent implements OnInit {
   channel: Channel = new Channel();
   itemID: any = '';
 
-  userData = {
+  /*userData = {
     avatar: this.user.avatar,
     email: this.user.email,
     displayName: this.user.displayName,
@@ -60,7 +60,7 @@ export class ConversationComponent implements OnInit {
     count: this.user.count,
     newMessage: this.user.newMessage
 
-  };
+  };*/
 
   channelData = {
     creator: this.channel.creator,
@@ -84,7 +84,7 @@ export class ConversationComponent implements OnInit {
 
     });
 
-    const user = new User({
+    /*const user = new User({
       avatar: this.user.avatar,
       email: this.user.email,
       displayName: this.user.displayName,
@@ -93,10 +93,10 @@ export class ConversationComponent implements OnInit {
       selected: this.user.selected,
       count: this.contentCount,
       newMessage: this.user.newMessage
-    });
+    });*/
 
     this.firestore.updateChannel(this.itemID, channel);
-    this.firestore.updateUser(user, this.itemID, );
+    //this.firestore.updateUser(user, this.itemID, );
   }
 
   countContentElements(): void {
@@ -124,7 +124,7 @@ export class ConversationComponent implements OnInit {
       this.itemID = paramMap.get('id');
 
       this.getItemValues('channels', this.itemID);
-      this.getItemValuesTwo('users', this.itemID);
+      //this.getItemValuesTwo('users', this.itemID);
 
       setTimeout(() => {
          this.addCountToChannelDocument(this.itemID);
@@ -151,7 +151,7 @@ export class ConversationComponent implements OnInit {
     };
   }
 
-  getItemValuesTwo(collection: string, itemID: string) {
+  /*getItemValuesTwo(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {
       this.user = new User(this.firestore.user);   
       this.setOldUserValuesTwo();
@@ -171,7 +171,7 @@ export class ConversationComponent implements OnInit {
       newMessage: this.user.newMessage
     };
 
-  }
+  }*/
 
   deleteHovered() {
     if (!this.edit) {

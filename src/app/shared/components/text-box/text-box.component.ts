@@ -33,7 +33,7 @@ export class TextBoxComponent implements OnInit {
   email_hovered: boolean = false;
   send_hovered: boolean = false;
 
-  userData = {
+  /*userData = {
     avatar: this.user.avatar,
     email: this.user.email,
     displayName: this.user.displayName,
@@ -44,7 +44,7 @@ export class TextBoxComponent implements OnInit {
     newMessage: this.user.newMessage
 
 
-  };
+  }; */
 
   channelData = {
     creator: this.channel.creator,
@@ -72,7 +72,7 @@ export class TextBoxComponent implements OnInit {
       newMessage: this.newMessage
     });
 
-    const user = new User({
+    /*const user = new User({
       avatar: this.user.avatar,
       email: this.user.email,
       displayName: this.user.displayName,
@@ -81,10 +81,10 @@ export class TextBoxComponent implements OnInit {
       selected: this.user.selected,
       count: this.user.count,
       newMessage: this.newMessage
-    });
+    });*/
 
     this.firestore.updateChannel(this.itemID, channel);
-    this.firestore.updateUser(user, this.itemID, );
+    //this.firestore.updateUser(user, this.itemID, );
   }
 
   ngOnInit(): void {
@@ -92,7 +92,7 @@ export class TextBoxComponent implements OnInit {
     this.route.paramMap.subscribe((paramMap) => {
       this.itemID = paramMap.get('id');
       this.getItemValues('channels', this.itemID);
-      this.getItemValuesTwo('users', this.itemID);
+      //this.getItemValuesTwo('users', this.itemID);
 
 
     });
@@ -116,7 +116,7 @@ export class TextBoxComponent implements OnInit {
     };
   }
 
-  getItemValuesTwo(collection: string, itemID: string) {
+  /*getItemValuesTwo(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {
       this.user = new User(this.firestore.user);
       this.setOldChannelValuesTwo();
@@ -135,7 +135,7 @@ export class TextBoxComponent implements OnInit {
       newMessage: this.user.newMessage
 
     };
-  }
+  }*/
 
   deleteHovered() {
     this.add_hovered = false;
