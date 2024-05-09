@@ -31,6 +31,8 @@ export class ConversationComponent implements OnInit {
 
   firestore = inject(FirebaseService);
   authService = inject(AuthService);
+  @Input() channelMessage!: ChannelMessage;
+  @Input() index!: number;
   
 
   edit: boolean = false;
