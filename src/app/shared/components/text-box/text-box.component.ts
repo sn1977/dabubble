@@ -156,7 +156,7 @@ export class TextBoxComponent implements OnInit {
         reactions: this.textBoxData.reactions = this.reactions,
         collection: this.textBoxData.collection,
         subcollection: this.textBoxData.subcollection,
-        attachment: 'Anhang',
+        attachment: ['https://firebasestorage.googleapis.com/v0/b/da-bubble-ca3ba.appspot.com/o/attachments%2Fhelp.jpg?alt=media&token=e847cf2a-e2c3-41b3-9f94-a65db33f2046'],
       });
 
       this.firestore.addChannelMessage(message, `${this.textBoxData.collection}/${message.channelId}/${this.textBoxData.subcollection}`);
