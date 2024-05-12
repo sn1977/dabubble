@@ -108,7 +108,8 @@ export class FirebaseService {
       id: id,
       name: obj.name,
       count: obj.count,
-      newMessage: obj.newMessage
+      newMessage: obj.newMessage,
+      allMembers: obj.allMembers
     };
   }
 

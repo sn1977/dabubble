@@ -16,6 +16,18 @@ import { AuthService } from '../../shared/services/auth.service';
 })
 export class AddChannelComponent {
 
+  allMembers: any[] = [
+    {
+      displayName: 'Boss',
+      avatar: 'http://localhost:4200/assets/img/characters/template2.svg'
+    },
+    {
+      displayName: 'Sekretärin',
+      avatar: 'http://localhost:4200/assets/img/characters/template1.svg'
+    }
+  ];
+  
+
   selectedUsers: User[] = [];
   userNames: string = '';
   selectedUser: any = [];
@@ -41,33 +53,42 @@ export class AddChannelComponent {
     creator: '',
     description: '',
     member: [],
+    allMembers: [],
     name: '',
     user: '',
     count: '',
     newMessage: '',
     
   };
+
+  
   onSubmit() {
 
     const channel = new Channel({
       creator: this.authService.activeUserId,
       description: this.channelData.description,
       member: this.selectedUsers,
+      allMembers: this.allMembers,
       name: this.channelData.name,
       count: this.channelData.count,
       newMessage: this.channelData.newMessage
       
     });
     this.firestore.addChannel(channel);
+    console.log(this.allMembers);
+    
     
     
   }
 
   constructor() {
-    console.log(this.selectedUsers);
-    
-   
+    console.log(this.allMembers);
+
   }
+
+  
+
+
 
   addmember(event: MouseEvent, user: User) {
     const index = this.selectedUsers.findIndex((selectedUser) => selectedUser.id === user.id);

@@ -12,9 +12,13 @@
             [checked]="isAddAllMembersChecked"
             (change)="toggleCheckbox('addAllMembers')"
           />
-          <label for="addAllMembers"
-            >Alle Mitglieder von Office Team hinzufügen</label
-          >
+          <label for="addAllMembers">Alle Mitglieder von Office Team hinzufügen</label>
+          <div *ngIf="showGeneralInputField" class="selected-users-container">
+            <div *ngFor="let allmember of channel.allMembers"  class="selected-user">
+                <img class="img-profil" src="{{ allmember.avatar }}" alt="">
+                <p class="no-margin">{{ allmember.displayName }}</p>
+              </div>
+          </div>
           <br />
           <input
             type="checkbox"

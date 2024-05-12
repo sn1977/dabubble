@@ -33,7 +33,8 @@ export class ChannelEditionComponent implements OnInit {
     member: this.channel.member,
     name: this.channel.name,
     count: this.channel.count,
-    newMessage: this.channel.newMessage
+    newMessage: this.channel.newMessage,
+    allMembers: this.channel.allMembers
   };
 
   constructor( private route: ActivatedRoute, ) {
@@ -61,7 +62,8 @@ export class ChannelEditionComponent implements OnInit {
       member: this.channel.member,
       name: this.channelData.name,
       count: this.channel.count,
-      newMessage: this.channel.newMessage
+      newMessage: this.channel.newMessage,
+      allMembers: this.channel.allMembers
     });
 
     this.toggleEdit(toggle);    
@@ -133,7 +135,8 @@ export class ChannelEditionComponent implements OnInit {
       member: this.channel.member,
       name: this.channel.name,
       count: this.channel.count,
-      newMessage: this.channel.newMessage
+      newMessage: this.channel.newMessage,
+      allMembers: this.channel.allMembers
     };
     
   }

@@ -17,7 +17,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class SearchUserComponent {
 
-  selectedUsers: User[] = [];
+  selectedUsers: any[] = [];
   userNames: string = '';
   selectedUser: any = [];
   users: User[] = [];
@@ -27,6 +27,7 @@ export class SearchUserComponent {
   overlayVisible: boolean = false;
   showInputField: boolean = false;
   showAddMember: boolean = false;
+  showGeneralInputField: boolean = false
   isAddAllMembersChecked: boolean = false;
   isAddSpecificMembersChecked: boolean = false;
   firestore = inject(FirebaseService);
@@ -45,7 +46,8 @@ export class SearchUserComponent {
     member: this.channel.member,
     name: this.channel.name,
     count: this.channel.count,
-    newMessage: this.channel.newMessage
+    newMessage: this.channel.newMessage,
+    allMembers: this.channel.allMembers
   };
 
 
@@ -71,7 +73,8 @@ export class SearchUserComponent {
       member: this.selectedUsers,
       name: this.channelData.name,
       count: this.channel.count,
-      newMessage: this.channel.newMessage
+      newMessage: this.channel.newMessage,
+      allMembers: this.channel.allMembers
     });
     this.firestore.updateChannel(this.itemID, channel);
 
@@ -106,7 +109,8 @@ export class SearchUserComponent {
       member: this.channel.member,
       name: this.channel.name,
       count: this.channel.count,
-      newMessage: this.channel.newMessage
+      newMessage: this.channel.newMessage,
+      allMembers: this.channel.allMembers
     };
     
   }
@@ -161,16 +165,44 @@ export class SearchUserComponent {
       }
     }
   }
+  
   toggleCheckbox(checkboxId: string): void {
     if (checkboxId === 'addAllMembers') {
-      this.isAddAllMembersChecked = true;
-      this.isAddSpecificMembersChecked = false;
-      this.showInputField = false; // Ensure input field is hidden when "Alle Mitglieder" selected
+      // Checkbox 'Alle Mitglieder hinzufügen' wurde ausgewählt
+      if (this.isAddAllMembersChecked) {
+        // Checkbox ist jetzt ausgewählt
+        this.isAddAllMembersChecked = false;
+        this.showGeneralInputField = false; // Verstecke das allgemeine Eingabefeld
+      } else {
+        // Checkbox wird jetzt ausgewählt
+        this.isAddAllMembersChecked = true;
+        this.isAddSpecificMembersChecked = false; // Setze andere Checkbox zurück
+        this.showInputField = false; // Verstecke das spezifische Eingabefeld
+        this.showGeneralInputField = true; // Öffne das allgemeine Eingabefeld
+
+        this.selectedUsers = [
+          {
+            displayName: 'Boss',
+            avatar: 'http://localhost:4200/assets/img/characters/template2.svg'
+          },
+          {
+            displayName: 'Sekretärin',
+            avatar: 'http://localhost:4200/assets/img/characters/template1.svg'
+          }
+        ];
+        
+        // Aktualisiere die angezeigten Benutzernamen
+        this.updateFormattedUserNames();
+      }
     } else if (checkboxId === 'addSpecificMembers') {
-      this.isAddAllMembersChecked = false;
+      // Checkbox 'Bestimmte Leute hinzufügen' wurde ausgewählt
+      this.isAddAllMembersChecked = false; // Setze andere Checkbox zurück
       this.isAddSpecificMembersChecked = true;
+      this.showGeneralInputField = false; // Verstecke das allgemeine Eingabefeld
     }
   }
+  
+  
   getInputValue(event: any): string {
     return event && event.target && event.target.value;
   }
