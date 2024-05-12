@@ -42,6 +42,7 @@
   .main {
     width: 100%;
     @include dFlex($jc: flex-start, $ai: flex-start, $fd: column, $g: 20px);
+    padding: 0 8px;
 
     .message-content {
       width: 100%;

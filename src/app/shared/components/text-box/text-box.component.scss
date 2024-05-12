@@ -13,8 +13,6 @@
   }
 }
 
-
-
 .message-box{
   @include dFlex($jc: flex-start, $ai: flex-start, $fd: column, $g: 0);
   min-height: 137px;
@@ -45,7 +43,6 @@ textarea{
   resize: none;
 }
 
-
 .actions{  
   width: 100%;
   @include dFlex($jc: space-between, $ai: center, $fd: row, $g: 15px);
@@ -59,4 +56,19 @@ textarea{
     height: 25px;
     background-color: #ADB0D9;
   }
+
+  label{
+    @include dFlex($jc: center, $ai: center, $fd: row, $g: 0);
+  }
+
+  input[type="file"]{
+    display: none;
+  }
+
+  .preview{
+    height: 24px;
+    width: 24px;
+    object-fit: cover;
+  }
+
 }

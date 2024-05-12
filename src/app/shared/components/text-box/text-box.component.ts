@@ -7,16 +7,16 @@ import { FirebaseService } from '../../services/firebase.service';
 import { User } from '../../../../models/user.class';
 import { ActivatedRoute } from '@angular/router';
 import { Channel } from '../../../../models/channel.class';
+import { UploadService } from '../../services/upload.service';
 
 @Component({
   selector: 'app-text-box',
   standalone: true,
-  imports: [ CommonModule, FormsModule ],
+  imports: [CommonModule, FormsModule],
   templateUrl: './text-box.component.html',
-  styleUrl: './text-box.component.scss'
+  styleUrl: './text-box.component.scss',
 })
 export class TextBoxComponent implements OnInit {
-
   authService = inject(AuthService);
   firestore = inject(FirebaseService);
   reactions = ['wave', 'rocket'];
@@ -24,7 +24,9 @@ export class TextBoxComponent implements OnInit {
   user: User = new User();
   channel: Channel = new Channel();
   itemID: any = '';
-
+  selectedFiles: FileList | undefined;
+  filedate: number | undefined;
+  errorMessage: string | null = null;
 
   @Input() textBoxData: any;
 
@@ -52,24 +54,22 @@ export class TextBoxComponent implements OnInit {
     member: this.channel.member,
     name: this.channel.name,
     count: this.channel.count,
-    newMessage: this.channel.newMessage
-
+    newMessage: this.channel.newMessage,
   };
 
-
-    constructor(private route: ActivatedRoute,) {
-    }
-
+  constructor(
+    private route: ActivatedRoute,
+    private uploadService: UploadService
+  ) {}
 
   addCountToChannelDocument(toggle: string) {
-
     const channel = new Channel({
       creator: this.channel.creator,
       description: this.channel.description,
       member: this.channel.member,
       name: this.channel.name,
       count: this.channel.count,
-      newMessage: this.newMessage
+      newMessage: this.newMessage,
     });
 
     /*const user = new User({
@@ -88,13 +88,10 @@ export class TextBoxComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.route.paramMap.subscribe((paramMap) => {
       this.itemID = paramMap.get('id');
       this.getItemValues('channels', this.itemID);
       //this.getItemValuesTwo('users', this.itemID);
-
-
     });
   }
 
@@ -105,14 +102,14 @@ export class TextBoxComponent implements OnInit {
     });
   }
 
-  setOldChannelValues(){
+  setOldChannelValues() {
     this.channelData = {
       creator: this.channel.creator,
       description: this.channel.description,
       member: this.channel.member,
       name: this.channel.name,
       count: this.channel.count,
-      newMessage: this.channel.newMessage
+      newMessage: this.channel.newMessage,
     };
   }
 
@@ -144,28 +141,61 @@ export class TextBoxComponent implements OnInit {
     this.send_hovered = false;
   }
 
-  onSubmit(){
+  onSubmit() {
     this.newMessage = true;
 
-    if(this.textBoxData.messageText != ''){
+    if (this.textBoxData.messageText != '') {
+      
+      this.textBoxData.subcollection;
+
       const message = new ChannelMessage({
         creator: this.authService.activeUserId,
         text: this.textBoxData.messageText,
         channelId: this.textBoxData.channelId,
         createdAt: this.textBoxData.createdAt,
-        reactions: this.textBoxData.reactions = this.reactions,
+        reactions: (this.textBoxData.reactions = this.reactions),
         collection: this.textBoxData.collection,
         subcollection: this.textBoxData.subcollection,
-        attachment: ['https://firebasestorage.googleapis.com/v0/b/da-bubble-ca3ba.appspot.com/o/attachments%2Fhelp.jpg?alt=media&token=e847cf2a-e2c3-41b3-9f94-a65db33f2046'],
+        attachment: [ `${this.textBoxData.inputField}`, ],
       });
 
-      this.firestore.addChannelMessage(message, `${this.textBoxData.collection}/${message.channelId}/${this.textBoxData.subcollection}`);
+      this.firestore.addChannelMessage(
+        message,
+        `${this.textBoxData.collection}/${message.channelId}/${this.textBoxData.subcollection}`
+      );
+      this.textBoxData.inputField = '';
+      this.selectedFiles = undefined;
       this.textBoxData.messageText = '';
-
       this.addCountToChannelDocument(this.itemID);
-
     }
+  }
 
+  submitForm(event: any) {
+    event.preventDefault();
+    if (this.textBoxData.messageText.trim() !== '') {      
+      this.onSubmit();
+    }
+  }
 
+  detectFile(event: any) {
+    this.selectedFiles = event.target.files;
+    this.uploadSingleFile();
+  }
+
+  uploadSingleFile() {
+    if (this.selectedFiles) {
+      let file = this.selectedFiles.item(0);
+      if (file) {
+        this.filedate = new Date().getTime();
+        this.uploadService
+          .uploadFile(file, this.filedate, 'attachments')
+          .then((url: string) => {            
+            this.textBoxData.inputField = url;
+          })
+          .catch((error) => {
+            this.errorMessage = error.code;
+          });
+      }
+    }
   }
 }
