@@ -62,6 +62,9 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.firebaseService.subUserList();  // Abonniere die Benutzerliste
+
+    this.nameData.name = this.data.user.displayName || '';
+    this.emailData.email = this.data.user.email || '';
   }
 
   ngOnDestroy() {
@@ -70,8 +73,8 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
 
   saveProfile(): void {
     // Aktualisiere das User-Objekt mit neuen Daten aus den Formularfeldern
-    this.data.user.displayName = this.nameData.name;
-    this.data.user.email = this.emailData.email;
+    this.data.user.displayName = this.nameData.name || this.data.user.displayName;
+    this.data.user.email = this.emailData.email || this.data.user.email;
 
     this.firebaseService.updateUser(this.data.user, this.authService.activeUserAccount.uid).then(() => {
       this.dialogRef.close();
