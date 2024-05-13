@@ -33,7 +33,7 @@ export class ConversationComponent implements OnInit {
   authService = inject(AuthService);
   @Input() channelMessage!: ChannelMessage;
   @Input() index!: number;
-  
+
 
   edit: boolean = false;
   hovered: boolean = false;
@@ -103,7 +103,7 @@ export class ConversationComponent implements OnInit {
     const contentDivs = document.querySelectorAll('.content');
     this.contentCount = contentDivs.length;
     this.contentCount--;
-  
+
 
 
   }
@@ -117,7 +117,7 @@ export class ConversationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+
     this.countContentElements();
 
     this.route.paramMap.subscribe((paramMap) => {
@@ -153,9 +153,9 @@ export class ConversationComponent implements OnInit {
 
   /*getItemValuesTwo(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {
-      this.user = new User(this.firestore.user);   
+      this.user = new User(this.firestore.user);
       this.setOldUserValuesTwo();
-      
+
     });
   }
 
@@ -208,6 +208,16 @@ export class ConversationComponent implements OnInit {
     console.log('Emoji-Reaktionen:', this.emojiReactions);
     // this.updateEmoji();
   }
+
+  toggleReaction(reaction: any): void {
+    if (!reaction.toggled) {
+      reaction.count++;
+      reaction.toggled = true;
+    } else {
+      reaction.count--;
+      reaction.toggled = false;
+    }
+}
 
   // updateEmoji() {
   //   console.log('Hallo');

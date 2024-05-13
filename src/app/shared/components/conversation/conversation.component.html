@@ -98,7 +98,7 @@
           *ngFor="let reaction of emojiReactions"
           class="reaction-group pointer"
         >
-          <span class="reaction-icon">{{ reaction.emoji }}</span>
+          <span class="reaction-icon" (click)="toggleReaction(reaction)">{{ reaction.emoji }}</span>
           <div class="reaction-count">{{ reaction.count }}</div>
         </div>
 
