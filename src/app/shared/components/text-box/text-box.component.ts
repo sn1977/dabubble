@@ -55,6 +55,7 @@ export class TextBoxComponent implements OnInit {
     name: this.channel.name,
     count: this.channel.count,
     newMessage: this.channel.newMessage,
+    allMembers: this.channel.allMembers
   };
 
   constructor(
@@ -70,6 +71,7 @@ export class TextBoxComponent implements OnInit {
       name: this.channel.name,
       count: this.channel.count,
       newMessage: this.newMessage,
+      allMembers: this.channel.allMembers
     });
 
     /*const user = new User({
@@ -110,6 +112,7 @@ export class TextBoxComponent implements OnInit {
       name: this.channel.name,
       count: this.channel.count,
       newMessage: this.channel.newMessage,
+      allMembers: this.channel.allMembers
     };
   }
 

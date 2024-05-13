@@ -68,7 +68,8 @@ export class ConversationComponent implements OnInit {
     member: this.channel.member,
     name: this.channel.name,
     count: this.channel.count,
-    newMessage: this.channel.newMessage
+    newMessage: this.channel.newMessage,
+    allMembers: this.channel.allMembers
 
   };
 
@@ -80,7 +81,8 @@ export class ConversationComponent implements OnInit {
       member: this.channel.member,
       name: this.channel.name,
       count: this.contentCount,
-      newMessage: this.channel.newMessage
+      newMessage: this.channel.newMessage,
+      allMembers: this.channel.allMembers
 
     });
 
@@ -147,7 +149,8 @@ export class ConversationComponent implements OnInit {
       member: this.channel.member,
       name: this.channel.name,
       count: this.channel.count,
-      newMessage: this.channel.newMessage
+      newMessage: this.channel.newMessage,
+      allMembers: this.channel.allMembers
     };
   }
 
