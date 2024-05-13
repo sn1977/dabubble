@@ -46,7 +46,7 @@ export class ConversationComponent implements OnInit {
     isEmojiSelected: boolean = false;
     emojiReactions: { emoji: string; count: number }[] = [];
 
-    selectedEmojiTest: string = "";
+    // selectedEmojiTest: string = "";
     
   
     getCurrentDay() {
