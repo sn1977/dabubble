@@ -146,6 +146,16 @@ export class FirebaseService {
     }
   }
 
+  async updateChannelMessage(docId: string, channelData: ChannelMessage) {
+    if (docId) {
+      let docRef = doc(this.getChannelsRef(), docId);
+      await updateDoc(docRef, channelData.toJSON()).catch((err) => {
+        console.log(err);
+      });
+    }
+    console.log(docId, channelData);
+  }
+
   getChannels(): Observable<Channel[]> {
     return new Observable((observer) => {
       const unsubscribe = onSnapshot(
@@ -268,6 +278,8 @@ export class FirebaseService {
         this.channelMessages.push(
           this.setChannelMessageObject(doc.data(), doc.id)
         );
+        console.log(doc.data(), doc.id);
+        
       });
     });
     return unsubscribe;
@@ -329,16 +341,20 @@ export class FirebaseService {
 
 
 
-  async updateEmojiReactions(channelId: string, messageId: string, emoji: string) {
+  async updateEmojiReactions(channelId: string, messageId: string, user: string, emoji: string) {
     const messageRef = doc(this.firestore, `channels/${channelId}/messages`, messageId);
-    const reactionKey = `reactions.${emoji}`; // Pfad zum spezifischen Emoji
+    console.log(messageRef);
+    
+    // const reactionKey = `reactions.${emoji}`; // Pfad zum spezifischen Emoji
 
-    // Verwendung von increment, um die Anzahl der Emojis zu erhöhen
-    await updateDoc(messageRef, {
-      [reactionKey]: increment(1)
-    }).catch((error) => {
-      console.error('Fehler beim Aktualisieren der Emoji-Reaktionen:', error);
-    });
+    // // Verwendung von increment, um die Anzahl der Emojis zu erhöhen
+    // await updateDoc(messageRef, {
+    //   [reactionKey]: increment(1)
+    // }).catch((error) => {
+    //   console.error('Fehler beim Aktualisieren der Emoji-Reaktionen:', error);
+    // });
+    // console.log(channelId, messageId, user, emoji);
+    
   }
 
 }

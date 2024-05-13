@@ -6,7 +6,7 @@ export class ChannelMessage {
   creator: string;
   createdAt?: any;
   text: string;
-  reactions?: string;
+  reactions?: string[];
   attachment?: string[];
 
 
