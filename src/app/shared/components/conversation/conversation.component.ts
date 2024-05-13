@@ -75,22 +75,18 @@ export class ConversationComponent implements OnInit {
       height: '300px',
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        console.log('Empfangenes Emoji:', result);
-        this.updateEmoji(result);
-        // this.isEmojiSelected = true;
-        this.addEmojiReaction(result);
-      } else {
-        console.log('Kein Emoji ausgewählt oder Dialog abgebrochen');
-      }
+    dialogRef.componentInstance.emojiSelect.subscribe(selectedEmoji => {
+      console.log('Empfangenes Emoji:', selectedEmoji);
+      // this.updateEmoji(selectedEmoji);
+      this.addEmojiReaction(selectedEmoji);
+      dialogRef.close();
     });
   }
 
-  updateEmoji(selectedEmoji: string) {
-    console.log('Update Emoji auf:', selectedEmoji);
-    this.emojiCharacter = selectedEmoji;
-  }
+  // updateEmoji(selectedEmoji: string) {
+  //   console.log('Update Emoji auf:', selectedEmoji);
+  //   this.emojiCharacter = selectedEmoji;
+  // }
 
   addEmojiReaction(selectedEmoji: string) {
     const existingEmoji = this.emojiReactions.find(e => e.emoji === selectedEmoji);
@@ -102,7 +98,7 @@ export class ConversationComponent implements OnInit {
     console.log('Emoji-Reaktionen:', this.emojiReactions);
     // this.updateEmoji();
   }
-  
+
   toggleReaction(reaction: any): void {
     if (!reaction.toggled) {
       reaction.count++;
@@ -111,7 +107,6 @@ export class ConversationComponent implements OnInit {
       reaction.count--;
       reaction.toggled = false;
     }
-
 
 
 }
