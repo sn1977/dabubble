@@ -1,4 +1,74 @@
 import { CommonModule } from '@angular/common';
+import { Component, Input, inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { ChannelMessage } from '../../../../models/channel-message.class';
+import { AuthService } from '../../services/auth.service';
+import { FirebaseService } from '../../services/firebase.service';
+
+@Component({
+  selector: 'app-text-box',
+  standalone: true,
+  imports: [ CommonModule, FormsModule ],
+  templateUrl: './text-box.component.html',
+  styleUrl: './text-box.component.scss'
+})
+export class TextBoxComponent {
+
+  authService = inject(AuthService);
+  firestore = inject(FirebaseService);
+  reactions = ['wave', 'rocket'];
+ 
+  
+  @Input() textBoxData: any;
+
+  add_hovered: boolean = false;
+  smile_hovered: boolean = false;
+  email_hovered: boolean = false;
+  send_hovered: boolean = false;
+
+  deleteHovered() {
+    this.add_hovered = false;
+    this.smile_hovered = false;
+    this.email_hovered = false;
+    this.send_hovered = false;
+  }
+
+  onSubmit(){
+
+
+
+    if(this.textBoxData.messageText != ''){
+      const message = new ChannelMessage({
+        creator: this.authService.activeUserId,
+        text: this.textBoxData.messageText,
+        channelId: this.textBoxData.channelId,
+        createdAt: this.textBoxData.createdAt,
+        reactions: this.textBoxData.reactions = this.reactions,
+        collection: this.textBoxData.collection,
+        subcollection: this.textBoxData.subcollection,
+        attachment: 'Anhang',
+      });
+      
+      this.firestore.addChannelMessage(message, `${this.textBoxData.collection}/${message.channelId}/${this.textBoxData.subcollection}`);
+      this.textBoxData.messageText = '';  
+
+      
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/*import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ChannelMessage } from '../../../../models/channel-message.class';
@@ -46,7 +116,8 @@ export class TextBoxComponent implements OnInit {
     newMessage: this.user.newMessage
 
 
-  }; */
+  }; 
+
 
   channelData = {
     creator: this.channel.creator,
@@ -83,7 +154,7 @@ export class TextBoxComponent implements OnInit {
       selected: this.user.selected,
       count: this.user.count,
       newMessage: this.newMessage
-    });*/
+    });
 
     this.firestore.updateChannel(this.itemID, channel);
     //this.firestore.updateUser(user, this.itemID, );
@@ -135,7 +206,7 @@ export class TextBoxComponent implements OnInit {
       newMessage: this.user.newMessage
 
     };
-  }*/
+  }
 
   deleteHovered() {
     this.add_hovered = false;
@@ -201,4 +272,4 @@ export class TextBoxComponent implements OnInit {
       }
     }
   }
-}
+}*/
