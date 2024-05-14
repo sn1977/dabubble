@@ -13,7 +13,6 @@ import { AuthService } from "../../services/auth.service";
 import { FormsModule } from "@angular/forms";
 import { DateFormatService } from "../../services/date-format.service";
 
-
 @Component({
     selector: "app-conversation",
     standalone: true,
@@ -47,8 +46,7 @@ export class ConversationComponent implements OnInit {
     emojiReactions: { emoji: string; count: number }[] = [];
 
     // selectedEmojiTest: string = "";
-    
-  
+
     getCurrentDay() {
         const date = new Date();
         let day = date.getDate().toString().padStart(2, "0");
@@ -80,7 +78,7 @@ export class ConversationComponent implements OnInit {
     }
 
     testMap() {
-   /*      const userReactionMap = new Map();
+        /*      const userReactionMap = new Map();
         userReactionMap.set("user", this.authService.activeUserId);
         userReactionMap.set("reaction", "Reaktion2");
 
@@ -91,21 +89,28 @@ export class ConversationComponent implements OnInit {
         });
 
         console.log(userReactions); */
-      //   const userReactionArray = [
-      //     {
-      //       user: this.authService.activeUserId,
-      //       /* reaction: this.emojiReactions */
-      //       reaction: 'smile'
-      //     }
-      // ];
-      
-      /* console.log(userReactionArray); */
-      // this.firestore.updateEmojiReactions('tpOQyzdDVtAhGg5B92HG', '8X1QmDmSmoKpWncm4J8u', this.authService.activeUserId, 'smile');
-      this.channelMessage.reactions = ['Sascha'];
-      // this.firestore.updateChannelMessage('tpOQyzdDVtAhGg5B92HG', this.channelMessage);
-      const channelMessageInstance = new ChannelMessage(this.channelMessage);
-      console.log('channelMessageInstance:', channelMessageInstance);
-      this.firestore.updateChannelMessage('tpOQyzdDVtAhGg5B92HG', channelMessageInstance);
+        //   const userReactionArray = [
+        //     {
+        //       user: this.authService.activeUserId,
+        //       /* reaction: this.emojiReactions */
+        //       reaction: 'smile'
+        //     }
+        // ];
+
+        /* console.log(userReactionArray); */
+        // this.firestore.updateEmojiReactions('tpOQyzdDVtAhGg5B92HG', '8X1QmDmSmoKpWncm4J8u', this.authService.activeUserId, 'smile');
+        this.channelMessage.reactions = ["Sascha"];
+        // this.firestore.updateChannelMessage('tpOQyzdDVtAhGg5B92HG', this.channelMessage);
+        const channelMessageInstance = new ChannelMessage(this.channelMessage);
+        // console.log('channelMessageInstance:', channelMessageInstance);
+        if (this.channelMessage.messageId && this.channelMessage.messageId !== '') {
+          console.log(this.channelMessage.messageId);
+            this.firestore.updateChannelMessage(
+                channelMessageInstance.channelId,
+                this.channelMessage.messageId,
+                channelMessageInstance
+            );
+        }
     }
 
     openEmojiPicker(): void {

@@ -146,15 +146,17 @@ export class FirebaseService {
     }
   }
 
-  // async updateChannelMessage(docId: string, channelData: ChannelMessage) {
-  //   if (docId) {
-  //     let docRef = doc(this.getChannelsRef(), docId);
-  //     await updateDoc(docRef, channelData.toJSON()).catch((err) => {
-  //       console.log(err);
-  //     });
-  //   }
-  //   console.log(docId, channelData);
-  // }
+  async updateChannelMessage(docId: string, messageId: string, channelData: ChannelMessage) {
+    console.log(`${docId}/channelmessages/${messageId}`);
+    
+    if (docId) {
+      let docRef = doc(this.getChannelsRef(), `${docId}/channelmessages/${messageId}`);
+      await updateDoc(docRef, channelData.toJSON()).catch((err) => {
+        console.log(err);
+      });
+    }
+    // console.log(docId, channelData);
+  }
 
 
   // async updateChannelMessage(docId: string, channelData: ChannelMessage) {
@@ -172,20 +174,20 @@ export class FirebaseService {
   //   console.log(docId, channelData);
   // }
 
-  async updateChannelMessage(docId: string, channelData: ChannelMessage) {
-    if (docId) {
-      let docRef = doc(this.getChannelsRef(), docId);
-      console.log('channelData:', channelData);
-      if (channelData instanceof ChannelMessage && typeof channelData.toJSON === 'function') {
-        await updateDoc(docRef, channelData.toJSON()).catch((err) => {
-          console.log(err);
-        });
-      } else {
-        console.error('channelData is not an instance of ChannelMessage or toJSON is not a function');
-      }
-    }
-    console.log(docId, channelData);
-  }
+  // async updateChannelMessage(docId: string, channelData: ChannelMessage) {
+  //   if (docId) {
+  //     let docRef = doc(this.getChannelsRef(), docId);
+  //     console.log('channelData:', channelData);
+  //     if (channelData instanceof ChannelMessage && typeof channelData.toJSON === 'function') {
+  //       await updateDoc(docRef, channelData.toJSON()).catch((err) => {
+  //         console.log(err);
+  //       });
+  //     } else {
+  //       console.error('channelData is not an instance of ChannelMessage or toJSON is not a function');
+  //     }
+  //   }
+  //   console.log(docId, channelData);
+  // }
   
   
   getChannels(): Observable<Channel[]> {
@@ -310,7 +312,7 @@ export class FirebaseService {
         this.channelMessages.push(
           this.setChannelMessageObject(doc.data(), doc.id)
         );
-        console.log(doc.data(), doc.id);
+        // console.log(doc.data(), doc.id);
         
       });
     });

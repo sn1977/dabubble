@@ -7,7 +7,7 @@ export class ChannelMessage {
   createdAt?: any;
   text: string;
   reactions?: string[];
-  attachment?: string;
+  attachment?: string[];
 
 
   constructor(obj?: any) {
