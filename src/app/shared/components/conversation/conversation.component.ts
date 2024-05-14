@@ -12,6 +12,7 @@ import { EmojiPickerComponent } from "../emoji-picker/emoji-picker.component";
 import { AuthService } from "../../services/auth.service";
 import { FormsModule } from "@angular/forms";
 import { DateFormatService } from "../../services/date-format.service";
+import { serverTimestamp } from "@angular/fire/firestore";
 
 @Component({
     selector: "app-conversation",
@@ -101,16 +102,19 @@ export class ConversationComponent implements OnInit {
         // this.firestore.updateEmojiReactions('tpOQyzdDVtAhGg5B92HG', '8X1QmDmSmoKpWncm4J8u', this.authService.activeUserId, 'smile');
         this.channelMessage.reactions = ["Sascha"];
         // this.firestore.updateChannelMessage('tpOQyzdDVtAhGg5B92HG', this.channelMessage);
-        const channelMessageInstance = new ChannelMessage(this.channelMessage);
-        // console.log('channelMessageInstance:', channelMessageInstance);
-        if (this.channelMessage.messageId && this.channelMessage.messageId !== '') {
-          console.log(this.channelMessage.messageId);
+        let channelMessageInstance = new ChannelMessage(this.channelMessage);
+        channelMessageInstance.messageId = this.channelMessage.messageId;
+        console.log('channelMessageInstance:', channelMessageInstance);
+        console.log(serverTimestamp());
+        
+        // if (channelMessageInstance.messageId && channelMessageInstance.messageId !== '') {
+          // console.log(this.channelMessage.messageId);
             this.firestore.updateChannelMessage(
                 channelMessageInstance.channelId,
-                this.channelMessage.messageId,
+                channelMessageInstance.messageId!,
                 channelMessageInstance
             );
-        }
+        // }
     }
 
     openEmojiPicker(): void {

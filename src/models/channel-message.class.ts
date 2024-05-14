@@ -13,7 +13,7 @@ export class ChannelMessage {
   constructor(obj?: any) {
     this.channelId = obj ? obj.channelId : '';
     this.creator = obj ? obj.creator : '';
-    this.createdAt = obj ? obj.createdAt : '';
+    this.createdAt = obj ? obj.createdAt : serverTimestamp();
     this.text = obj ? obj.text : '';
     this.reactions = obj ? obj.reactions : [];
     this.attachment = obj ? obj.attachment : [];
@@ -24,7 +24,7 @@ export class ChannelMessage {
     return {
       channelId: this.channelId,
       creator: this.creator,
-      createdAt: serverTimestamp(),
+      createdAt: this.createdAt,
       text: this.text,
       reactions: this.reactions,
       attachment: this.attachment,
