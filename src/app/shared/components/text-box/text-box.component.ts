@@ -9,26 +9,24 @@ import { UploadService } from '../../services/upload.service';
 @Component({
   selector: 'app-text-box',
   standalone: true,
-  imports: [ CommonModule, FormsModule ],
+  imports: [CommonModule, FormsModule],
   templateUrl: './text-box.component.html',
-  styleUrl: './text-box.component.scss'
+  styleUrl: './text-box.component.scss',
 })
 export class TextBoxComponent {
-
   authService = inject(AuthService);
   firestore = inject(FirebaseService);
   reactions = ['wave', 'rocket'];
   selectedFiles: FileList | undefined;
   filedate: number | undefined;
   errorMessage: string | null = null;
-  
+
   @Input() textBoxData: any;
 
   add_hovered: boolean = false;
   smile_hovered: boolean = false;
   email_hovered: boolean = false;
   send_hovered: boolean = false;
-
 
   constructor(
     private route: ActivatedRoute,
@@ -43,9 +41,7 @@ export class TextBoxComponent {
   }
 
   onSubmit() {
-
     if (this.textBoxData.messageText != '') {
-      
       this.textBoxData.subcollection;
 
       const message = new ChannelMessage({
@@ -71,7 +67,7 @@ export class TextBoxComponent {
 
   submitForm(event: any) {
     event.preventDefault();
-    if (this.textBoxData.messageText.trim() !== '') {      
+    if (this.textBoxData.messageText.trim() !== '') {
       this.onSubmit();
     }
   }
@@ -88,7 +84,7 @@ export class TextBoxComponent {
         this.filedate = new Date().getTime();
         this.uploadService
           .uploadFile(file, this.filedate, 'attachments')
-          .then((url: string) => {            
+          .then((url: string) => {
             this.textBoxData.inputField = url;
           })
           .catch((error) => {
@@ -97,19 +93,7 @@ export class TextBoxComponent {
       }
     }
   }
-
 }
-
-
-
-
-
-
-
-
-
-
-
 
 /*import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit, inject } from '@angular/core';

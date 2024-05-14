@@ -16,7 +16,7 @@ export class ChannelMessage {
     this.createdAt = obj ? obj.createdAt : '';
     this.text = obj ? obj.text : '';
     this.reactions = obj ? obj.reactions : [];
-    this.attachment = obj ? obj.attachment : '';
+    this.attachment = obj ? obj.attachment : [];
 
   }
 
