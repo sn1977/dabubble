@@ -15,13 +15,14 @@
   flex: 1;
   height: 100%;
   border-radius: 30px;
+  overflow: scroll;
 }
 
-.menu {
-  @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 16px);
-  width: 100%;
-  max-width: 23.06%;
-}
+
+
+
+
+
 
 .workspace {   
   width: 51.56%;
