@@ -102,19 +102,33 @@ export class ChannelEditionComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
-    this.route.paramMap.subscribe((paramMap) => {
+  async ngOnInit(): Promise<void> {
+    this.route.paramMap.subscribe(async (paramMap) => {
       this.itemID = paramMap.get('id');
       this.getItemValues('channels', this.itemID);
+      await this.waitForUserData();
+      
     });
   }
+
+  async waitForUserData(): Promise<void> {
+    while (!this.authService.activeUserAccount) {
+      await this.delay(100); // Wartezeit in Millisekunden, bevor erneut überprüft wird
+      
+    }
+  }
+
+  delay(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  
 
   
 
   getItemValues(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {
       this.channel = new Channel(this.firestore.channel);
-      console.log('hello', this.channel);
       this.getItemValuesTwo('users', this.channel.creator)
     });
     setTimeout(() => {
@@ -144,5 +158,31 @@ export class ChannelEditionComponent implements OnInit {
     const docRefId = (event.currentTarget as HTMLElement).id;
     console.log('Öffne Collection ' + path + ' mit ID: ' + docRefId);
     this.router.navigate(['/' + path + '/' + docRefId]);
+    this.getActivUserId();
+
   }
+
+  getActivUserId() {
+    let id = this.authService.activeUserAccount.uid;
+    console.log(id); // Stelle sicher, dass id definiert ist, bevor du darauf zugreifst
+
+    this.removeMemberById(id);
+  
+  }
+
+  removeMemberById(id: string) {
+    const memberArray = this.channel.member || [];
+
+    const index = memberArray.findIndex(member => member.id === id);
+    
+
+    if (index !== -1) {
+      memberArray.splice(index, 1);
+      console.log('Mitglied mit ID', id, 'wurde aus dem Array entfernt.');
+      this.onSubmit('update');
+    } else {
+      console.log('Mitglied mit ID', id, 'nicht im Array gefunden.');
+    }
+  }
+  
 }

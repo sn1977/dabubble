@@ -46,7 +46,7 @@ export class HeaderMobileComponent implements OnInit {
 
   test() {
     let id = this.authService.activeUserAccount.uid;
-    // console.log(id); // Stelle sicher, dass id definiert ist, bevor du darauf zugreifst
+    console.log(id); // Stelle sicher, dass id definiert ist, bevor du darauf zugreifst
     this.getItemValues('users', id);
   }
 
