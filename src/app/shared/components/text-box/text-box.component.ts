@@ -56,7 +56,7 @@ export class TextBoxComponent {
         reactions: (this.textBoxData.reactions = this.reactions),
         collection: this.textBoxData.collection,
         subcollection: this.textBoxData.subcollection,
-        attachment: [ `${this.textBoxData.inputField}`, ],
+        attachment: this.textBoxData.inputField,
       });
 
       this.firestore.addChannelMessage(
@@ -76,7 +76,7 @@ export class TextBoxComponent {
     }
   }
 
-  detectFile(event: any) {
+  async detectFile(event: any) {
     this.selectedFiles = event.target.files;
     this.uploadSingleFile();
   }

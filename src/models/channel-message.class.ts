@@ -7,7 +7,7 @@ export class ChannelMessage {
   createdAt?: any;
   text: string;
   reactions?: string[];
-  attachment?: string[];
+  attachment?: string;
 
 
   constructor(obj?: any) {
@@ -16,7 +16,7 @@ export class ChannelMessage {
     this.createdAt = obj ? obj.createdAt : '';
     this.text = obj ? obj.text : '';
     this.reactions = obj ? obj.reactions : [];
-    this.attachment = obj ? obj.attachment : [];
+    this.attachment = obj ? obj.attachment : '';
 
   }
 
