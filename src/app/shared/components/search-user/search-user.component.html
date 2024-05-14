@@ -1,7 +1,11 @@
 <form (ngSubmit)="onSubmit()" #contactForm="ngForm" ngNativeValidate>
-  <div id="overlay" class="overlay" [class.show-overlay]="overlayVisible">
-    <div>
+  <div id="overlay" class="overlay">
+    
+      
       <div class="overlay-content">
+        <div class="display-flex">
+          <img src="./assets/img/icon/close.svg" alt="" (click)="closeOverlay('overlay')">
+      </div>
         <div class="channel-header">
           <h1>Leute hinzufügen</h1>
         </div>
@@ -69,9 +73,9 @@
           </div>
         </div>
         <div class="btn-pos">
-          <button type="submit" class="add-button">Erstellen </button>
+          <button type="submit" class="add-button" (click)="closeOverlay('overlay')">Erstellen </button>
         </div>
       </div>
     </div>
-  </div>
+
 </form>

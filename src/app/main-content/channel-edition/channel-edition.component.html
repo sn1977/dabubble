@@ -73,7 +73,7 @@
 
             
 
-                <div class="profil" (click)="toggleOverlay('overlay2')">
+                <div class="profil" (click)="toggleOverlay('overlay')">
                     <img src="./assets/img/icon/add_member.svg" alt="">
                     <p class="no-margin">Mitglieder Hinzufügen</p>
                 </div>
@@ -85,14 +85,11 @@
       </div>
         <div class="space">
         </div>
-        <div id="overlay2" class="overlay">
-          <div class="overlay-content">
-              <div class="display-flex">
-                  <img src="./assets/img/icon/close.svg" alt="" (click)="closeOverlay('overlay2')">
-              </div>
+        <div id="overlay" class="overlay" style="display: none;">
+          
               <app-search-user></app-search-user>
             
-          </div>
+
       </div>
     </main>
   </form>

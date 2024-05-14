@@ -206,6 +206,13 @@ export class SearchUserComponent {
   getInputValue(event: any): string {
     return event && event.target && event.target.value;
   }
+
+  closeOverlay(overlayId: string): void {
+    const overlay = document.getElementById(overlayId) as HTMLElement;
+    if (overlay) {
+      overlay.style.display = 'none';
+    }
+  }
 }
 
 

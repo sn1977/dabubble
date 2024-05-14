@@ -80,7 +80,7 @@ export class ChannelEditionComponent implements OnInit {
 
   toggleOverlay(overlayId: string): void {
     const currentOverlay = document.querySelector(
-      '.overlay[style="display: block;"]'
+      '.overlay1[style="display: block;"]'
     ) as HTMLElement;
     const newOverlay = document.getElementById(overlayId);
 
