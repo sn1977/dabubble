@@ -4,7 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { ChannelMessage } from '../../../../models/channel-message.class';
 import { AuthService } from '../../services/auth.service';
 import { FirebaseService } from '../../services/firebase.service';
-
+import { ActivatedRoute } from '@angular/router';
+import { UploadService } from '../../services/upload.service';
 @Component({
   selector: 'app-text-box',
   standalone: true,
@@ -17,7 +18,9 @@ export class TextBoxComponent {
   authService = inject(AuthService);
   firestore = inject(FirebaseService);
   reactions = ['wave', 'rocket'];
- 
+  selectedFiles: FileList | undefined;
+  filedate: number | undefined;
+  errorMessage: string | null = null;
   
   @Input() textBoxData: any;
 
@@ -26,6 +29,12 @@ export class TextBoxComponent {
   email_hovered: boolean = false;
   send_hovered: boolean = false;
 
+
+  constructor(
+    private route: ActivatedRoute,
+    private uploadService: UploadService
+  ) {}
+
   deleteHovered() {
     this.add_hovered = false;
     this.smile_hovered = false;
@@ -33,28 +42,62 @@ export class TextBoxComponent {
     this.send_hovered = false;
   }
 
-  onSubmit(){
+  onSubmit() {
 
+    if (this.textBoxData.messageText != '') {
+      
+      this.textBoxData.subcollection;
 
-
-    if(this.textBoxData.messageText != ''){
       const message = new ChannelMessage({
         creator: this.authService.activeUserId,
         text: this.textBoxData.messageText,
         channelId: this.textBoxData.channelId,
         createdAt: this.textBoxData.createdAt,
-        reactions: this.textBoxData.reactions = this.reactions,
+        reactions: (this.textBoxData.reactions = this.reactions),
         collection: this.textBoxData.collection,
         subcollection: this.textBoxData.subcollection,
-        attachment: 'Anhang',
+        attachment: [ `${this.textBoxData.inputField}`, ],
       });
-      
-      this.firestore.addChannelMessage(message, `${this.textBoxData.collection}/${message.channelId}/${this.textBoxData.subcollection}`);
-      this.textBoxData.messageText = '';  
 
-      
+      this.firestore.addChannelMessage(
+        message,
+        `${this.textBoxData.collection}/${message.channelId}/${this.textBoxData.subcollection}`
+      );
+      this.textBoxData.inputField = '';
+      this.selectedFiles = undefined;
+      this.textBoxData.messageText = '';
     }
   }
+
+  submitForm(event: any) {
+    event.preventDefault();
+    if (this.textBoxData.messageText.trim() !== '') {      
+      this.onSubmit();
+    }
+  }
+
+  detectFile(event: any) {
+    this.selectedFiles = event.target.files;
+    this.uploadSingleFile();
+  }
+
+  uploadSingleFile() {
+    if (this.selectedFiles) {
+      let file = this.selectedFiles.item(0);
+      if (file) {
+        this.filedate = new Date().getTime();
+        this.uploadService
+          .uploadFile(file, this.filedate, 'attachments')
+          .then((url: string) => {            
+            this.textBoxData.inputField = url;
+          })
+          .catch((error) => {
+            this.errorMessage = error.code;
+          });
+      }
+    }
+  }
+
 }
 
 

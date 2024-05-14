@@ -17,22 +17,30 @@
       </div>
       <div class="actions">
         <div class="other-content">
-          @if(add_hovered){
-            <img
-              class="pointer"
-              (mouseenter)="add_hovered = true"
-              (mouseleave)="deleteHovered()"
-              src="./assets/img/icon/add_hover.svg"
-              alt=""
-            />
-          }@else{
-            <img
-              class="pointer"
-              (mouseenter)="add_hovered = true"
-              (mouseleave)="deleteHovered()"
-              src="./assets/img/icon/add.svg"
-              alt=""
-            />
+          <label
+           for="inputField"
+            class="pointer"
+            (mouseenter)="add_hovered = true"
+            (mouseleave)="deleteHovered()"
+          >
+            <input
+              type="file"
+              (change)="detectFile($event)"
+              accept="image/*"
+              name="inputField"
+              id="inputField"
+              #inputField="ngModel"
+              [(ngModel)]="textBoxData.inputField"
+           />
+            @if(add_hovered){
+            <img src="./assets/img/icon/add_hover.svg" />
+            }@else{
+            <img src="./assets/img/icon/add.svg" />
+            }
+          </label>
+
+          @if(this.selectedFiles){
+            <img class="preview" src="{{ this.textBoxData.inputField }}" />
           }
           <div class="vertical-line"></div>
           @if(smile_hovered){
