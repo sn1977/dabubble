@@ -1,41 +1,39 @@
 @import "../../../../styles/mixins.scss";
 
-.content{
+.content {
   @include dFlex($jc: center, $ai: center, $fd: row, $g: 20px);
   padding: 25px 20px 20px;
   width: 100%;
   box-sizing: border-box;
-  background-color: #ECEEFE;
+  background-color: #eceefe;
 }
 
-.logo{
+.logo {
   @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 16px);
   width: 100%;
   max-width: 23.06%;
   height: 70px;
   flex: 1;
 
-  img{
+  img {
     height: 100%;
     width: 70px;
   }
-  span{
-    font-family: 'Nunito';
+  span {
+    font-family: "Nunito";
     font-size: 28px;
     font-weight: 600;
   }
-
 }
 
-.searchbar{
-  //background-color: red;
+.searchbar {
   width: 98%;
   max-width: 51.56%;
   flex: 1;
   height: 70px;
 }
 
-.header{
+.header {
   background-color: blue;
   width: 100%;
   max-width: 25.26%;
@@ -43,7 +41,7 @@
   height: 70px;
   flex: 1;
 
-  font-family: 'Nunito';
+  font-family: "Nunito";
   font-size: 28px;
   font-weight: 600;
   line-height: 30.65px;
