@@ -102,8 +102,10 @@ export class ConversationComponent implements OnInit {
       /* console.log(userReactionArray); */
       // this.firestore.updateEmojiReactions('tpOQyzdDVtAhGg5B92HG', '8X1QmDmSmoKpWncm4J8u', this.authService.activeUserId, 'smile');
       this.channelMessage.reactions = ['Sascha'];
-      this.firestore.updateChannelMessage('tpOQyzdDVtAhGg5B92HG', this.channelMessage);
-        
+      // this.firestore.updateChannelMessage('tpOQyzdDVtAhGg5B92HG', this.channelMessage);
+      const channelMessageInstance = new ChannelMessage(this.channelMessage);
+      console.log('channelMessageInstance:', channelMessageInstance);
+      this.firestore.updateChannelMessage('tpOQyzdDVtAhGg5B92HG', channelMessageInstance);
     }
 
     openEmojiPicker(): void {

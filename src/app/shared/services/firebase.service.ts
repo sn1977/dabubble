@@ -157,20 +157,36 @@ export class FirebaseService {
   // }
 
 
+  // async updateChannelMessage(docId: string, channelData: ChannelMessage) {
+  //   if (docId) {
+  //     let docRef = doc(this.getChannelsRef(), docId);
+  //     console.log('channelData:', channelData);
+  //     if (typeof channelData.toJSON === 'function') {
+  //       await updateDoc(docRef, channelData.toJSON()).catch((err) => {
+  //         console.log(err);
+  //       });
+  //     } else {
+  //       console.error('channelData.toJSON is not a function');
+  //     }
+  //   }
+  //   console.log(docId, channelData);
+  // }
+
   async updateChannelMessage(docId: string, channelData: ChannelMessage) {
     if (docId) {
       let docRef = doc(this.getChannelsRef(), docId);
       console.log('channelData:', channelData);
-      if (typeof channelData.toJSON === 'function') {
+      if (channelData instanceof ChannelMessage && typeof channelData.toJSON === 'function') {
         await updateDoc(docRef, channelData.toJSON()).catch((err) => {
           console.log(err);
         });
       } else {
-        console.error('channelData.toJSON is not a function');
+        console.error('channelData is not an instance of ChannelMessage or toJSON is not a function');
       }
     }
     console.log(docId, channelData);
   }
+  
   
   getChannels(): Observable<Channel[]> {
     return new Observable((observer) => {
