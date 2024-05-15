@@ -35,7 +35,9 @@
           'flex-direction': isMessageFromYou ? 'row' : 'row-reverse'
         }"
       >
-        <div class="creator">{{ this.user.displayName }}</div>
+        <div class="creator"
+        (click)="doNotClose($event)"
+        >{{ this.user.displayName }}</div>
         <div class="time">
           {{ this.dateFormatService.formatTime(channelMessage.createdAt) }}
           Uhr
@@ -83,6 +85,7 @@
         }"
       >
         <a href="http://localhost:4200/new-channel/9KJYLfxx07Wn5rbEupdA"
+        (click)="doNotClose($event)"
           >2 Antworten</a
         >
         <span
@@ -93,7 +96,7 @@
       </div>
       <!-- Ende Prüfung auf Threads -->
     </div>
-    <div class="reaction-infos">
+    <div class="reaction-infos" (click)="doNotClose($event)">
       <div class="reactions">
         <div
           *ngFor="let reaction of channelMessage.reactions"
@@ -126,7 +129,7 @@
   </div>
 
   @if(showReactionBar){
-    <div (click)="reactionBarAction($event);doNotClose($event)" class="reactionBar"
+    <div (click)="reactionBarAction($event); doNotClose($event)" class="reactionBar"
     [ngStyle]="{ 'right': isMessageFromYou ? '5%' : 'unset', 'left': isMessageFromYou ? 'unset' : '5%' }"
     >
       <img src="./assets/img/emojis/check_mark.svg" alt="">
