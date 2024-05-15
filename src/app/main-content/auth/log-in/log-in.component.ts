@@ -54,7 +54,7 @@ export class LogInComponent{
         next: () => {
 
           if(this.isDesktop){
-            this.router.navigateByUrl('/new-channel/iiPkXmkGeDkRMEprG59G');
+            this.router.navigateByUrl('/new-channel/3O5ALftPMOVCKsMLhLLN');
           } else{
             this.router.navigateByUrl('/');
           }

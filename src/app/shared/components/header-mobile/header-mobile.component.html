@@ -1,3 +1,4 @@
+@if(isDesktop){
 <div
   class="content-header-mobile bg-c"
   [ngStyle]="{ 'justify-content': isDesktop ? 'flex-end' : 'space-between' }"
@@ -29,3 +30,4 @@
 
   <img class="header-img" (click)="openBottomSheet()" src="{{ user.avatar }}" />
 </div>
+}

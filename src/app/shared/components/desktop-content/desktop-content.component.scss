@@ -9,17 +9,31 @@
   margin: 0px;
 }
 
+.mat-mdc-card-content{  
+  padding-top: 28px;
+}
+
 .menu,
 .workspace,
 .threads{
-  flex: 1;
   height: 100%;
   border-radius: 30px;
-  overflow: scroll;
+  padding: 8px;
+}
+
+.workspace,
+.threads{
+  flex: 1;
 }
 
 .workspace {   
   width: 51.56%;
+}
+
+.menu{
+  width: 100%;
+  max-width: 21.06%;
+  flex: 1;
 }
 
 .threads {  
