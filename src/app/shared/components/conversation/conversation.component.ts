@@ -23,7 +23,7 @@ export class ConversationComponent implements OnInit {
     public dateFormatService: DateFormatService
   ) {
     this.getCurrentDay();
-  }
+   }
 
   firestore = inject(FirebaseService);
   authService = inject(AuthService);
@@ -45,20 +45,14 @@ export class ConversationComponent implements OnInit {
     this.currentDate = year + month + day;
   }
 
+
+
   ngOnInit(): void {
     this.getItemValuesProfile('users', this.channelMessage.creator);
     this.messageDate = this.channelMessage.createdAt;
     this.isMessageFromYou =
       this.authService.activeUserAccount.uid === this.channelMessage.creator;
-
-    // Get the emoji reactions from Firestore
-    this.firestore.getEmojiReactions(this.channelMessage.channelId, this.channelMessage.messageId)
-      .then(reactions => {
-        this.emojiReactions = reactions;
-      })
-      .catch(error => {
-        console.error("Error getting emoji reactions: ", error);
-      });
+    this.initializeEmojiReactions();
   }
 
   getItemValuesProfile(collection: string, itemID: string) {
@@ -73,30 +67,24 @@ export class ConversationComponent implements OnInit {
     }
   }
 
+  initializeEmojiReactions(): void {
+    // Only initialize emojiReactions if it is not already initialized
+    if (this.emojiReactions.length === 0) {
+      // Get the emoji reactions from Firestore
+      this.firestore.getEmojiReactions(this.channelMessage.channelId, this.channelMessage.messageId)
+        .then(reactions => {
+          this.emojiReactions = reactions;
+        })
+        .catch(error => {
+          console.error("Error getting emoji reactions: ", error);
+        });
+    }
+  }
+
   testMap() {
-    // // this.firestore.updateEmojiReactions('tpOQyzdDVtAhGg5B92HG', '8X1QmDmSmoKpWncm4J8u', this.authService.activeUserId, 'smile');
-    // this.channelMessage.reactions = ['Sascha'];
-    // // this.firestore.updateChannelMessage('tpOQyzdDVtAhGg5B92HG', this.channelMessage);
-    // let channelMessageInstance = new ChannelMessage(this.channelMessage);
-    // channelMessageInstance.messageId = this.channelMessage.messageId;
-    // console.log('channelMessageInstance:', channelMessageInstance);
-    // console.log(serverTimestamp());
-    //
-    // // if (channelMessageInstance.messageId && channelMessageInstance.messageId !== '') {
-    // // console.log(this.channelMessage.messageId);
-    // this.firestore.updateChannelMessage(
-    //   channelMessageInstance.channelId,
-    //   channelMessageInstance.messageId!,
-    //   channelMessageInstance
-    // );
-    // // }
-    // Create a new instance of ChannelMessage with the current channelMessage data
     let channelMessageInstance = new ChannelMessage(this.channelMessage);
 
-    // Assign the messageId from the current channelMessage
     channelMessageInstance.messageId = this.channelMessage.messageId;
-
-    // Assign the emojiReactions to the reactions property of the channelMessageInstance
     channelMessageInstance.reactions = this.emojiReactions;
 
     // Update the channel message in Firestore with the new reactions

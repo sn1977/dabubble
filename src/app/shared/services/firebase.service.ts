@@ -341,20 +341,20 @@ export class FirebaseService {
   }
 
   async getEmojiReactions(channelId: string, messageId: string | undefined): Promise<any> {
-    if (messageId) {
-      const docRef = doc(this.firestore, `channels/${channelId}/messages`, messageId);
-      const docSnap = await getDoc(docRef);
-
-      if (docSnap.exists() && docSnap.data()) {
-        return docSnap.data()['reactions'];
-      } else {
-        console.log("No such document!");
-        return [];
-      }
-    } else {
+    if (!messageId) {
       console.log("messageId is undefined");
       return [];
     }
+
+    const docRef = doc(this.firestore, `channels/${channelId}/messages`, messageId);
+    const docSnap = await getDoc(docRef);
+
+    if (!docSnap.exists() || !docSnap.data()) {
+      console.log("No such document!");
+      return [];
+    }
+
+    return docSnap.data()['reactions'];
   }
 
 
@@ -371,7 +371,6 @@ export class FirebaseService {
     //   console.error('Fehler beim Aktualisieren der Emoji-Reaktionen:', error);
     // });
     // console.log(channelId, messageId, user, emoji);
-
   }
 
 }
