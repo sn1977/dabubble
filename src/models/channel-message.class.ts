@@ -1,5 +1,3 @@
-import { serverTimestamp } from '@angular/fire/firestore';
-
 export class ChannelMessage {
   messageId?: string;
   channelId: string;
