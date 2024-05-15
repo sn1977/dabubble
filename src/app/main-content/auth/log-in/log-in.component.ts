@@ -45,13 +45,20 @@ export class LogInComponent{
   router = inject(Router);
   errorMessage: string | null = null;
   playIntroAnimation: boolean = true;
+  isDesktop: boolean = false;
 
   onSubmit(): void {
     this.authService
       .login(this.contactData.email, this.contactData.password)
       .subscribe({
         next: () => {
-          this.router.navigateByUrl('/');
+
+          if(this.isDesktop){
+            this.router.navigateByUrl('/new-channel/iiPkXmkGeDkRMEprG59G');
+          } else{
+            this.router.navigateByUrl('/');
+          }
+
         },
         error: (err) => {
           this.errorMessage = err.code;

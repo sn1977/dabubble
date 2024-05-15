@@ -44,7 +44,6 @@ export class AuthService {
 
     authState(this.firebaseAuth).subscribe((user) => {
       if (user) {
-        // Hier könntest du zusätzliche Daten laden und im currentUserSubject speichern
         this.currentUserSubject.next(this.user);
       } else {
         this.currentUserSubject.next(null);
@@ -80,15 +79,19 @@ export class AuthService {
         const errorCode = error.code;
         const errorMessage = error.message;
       });
-    // setPersistence(auth, browserSessionPersistence)
-    // .then(() => {
-    //   return signInWithRedirect(auth, this.provider);
-    // })
-    // .catch((error) => {
-    //   const errorCode = error.code;
-    //   const errorMessage = error.message;
-    // });
-    // this.showInformations();
+  }
+
+  persistence(email: string, password: string) {
+    const auth = getAuth();
+    setPersistence(auth, browserSessionPersistence)
+      .then(() => {
+        //return signInWithRedirect(auth, this.provider);
+        return signInWithEmailAndPassword(auth, email, password);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+      });
   }
 
   register(
@@ -157,6 +160,8 @@ export class AuthService {
     //     const errorMessage = error.message;
     //   });
 
+    // this.persistence(email, password);
+
     return from(promise);
   }
 
@@ -169,13 +174,15 @@ export class AuthService {
     }
 
     return new Promise<void>((resolve, reject) => {
-      signOut(this.firebaseAuth).then(() => {
-        this.router.navigate(['/login']);
-        this.user.isOnline = false;
-        resolve();
-      }).catch(error => {
-        reject(error);
-      });
+      signOut(this.firebaseAuth)
+        .then(() => {
+          this.router.navigate(['/login']);
+          this.user.isOnline = false;
+          resolve();
+        })
+        .catch((error) => {
+          reject(error);
+        });
     });
   }
 
@@ -215,14 +222,18 @@ export class AuthService {
       .then(async (response) => {
         await updateProfile(response.user, {
           displayName: 'Anonym',
-          photoURL: 'http://localhost:4200/assets/img/characters/template' + randomInt + '.svg',
+          photoURL:
+            'http://localhost:4200/assets/img/characters/template' +
+            randomInt +
+            '.svg',
         });
         const currentUser = this.firebaseAuth.currentUser;
         if (currentUser) {
           this.user.id = currentUser.uid ?? this.user.id;
           this.user.avatar = response.user.photoURL ?? this.user.avatar;
           this.user.email = '';
-          this.user.displayName = response.user.displayName ?? this.user.displayName;
+          this.user.displayName =
+            response.user.displayName ?? this.user.displayName;
           this.user.provider = 'anonym';
           this.user.isOnline = true;
           this.router.navigateByUrl('');

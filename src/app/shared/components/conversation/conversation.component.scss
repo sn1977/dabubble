@@ -41,6 +41,7 @@
 
   .main {
     width: 100%;
+    position: relative;
     @include dFlex($jc: flex-start, $ai: flex-start, $fd: column, $g: 20px);
     padding: 0 8px;
 
@@ -155,4 +156,17 @@
     background-color: #ECEEFE;
   }
 
+}
+
+.reactionBar{
+  background-color: green;  
+  position: absolute;
+  top: -28px;
+  height: 46px;
+  width: 255px;
+  border: 1px solid #ADB0D9;
+  border-radius: 25px 25px 0px 25px;
+  padding: 3px 15px;
+  z-index: 9;
+  @include dFlex($jc: center, $ai: center, $fd: row, $g: 5px);
 }
