@@ -13,7 +13,7 @@ import {
   orderBy,
   or,
   getDocs,
-  and, increment,
+  and, increment, getDoc,
 } from '@angular/fire/firestore';
 import { User } from '../../../models/user.class';
 import { Channel } from '../../../models/channel.class';
@@ -148,7 +148,7 @@ export class FirebaseService {
 
   async updateChannelMessage(docId: string, messageId: string, channelData: ChannelMessage) {
     console.log(`${docId}/channelmessages/${messageId}`);
-    
+
     if (docId) {
       let docRef = doc(this.getChannelsRef(), `${docId}/channelmessages/${messageId}`);
       await updateDoc(docRef, channelData.toJSON()).catch((err) => {
@@ -158,38 +158,6 @@ export class FirebaseService {
     // console.log(docId, channelData);
   }
 
-
-  // async updateChannelMessage(docId: string, channelData: ChannelMessage) {
-  //   if (docId) {
-  //     let docRef = doc(this.getChannelsRef(), docId);
-  //     console.log('channelData:', channelData);
-  //     if (typeof channelData.toJSON === 'function') {
-  //       await updateDoc(docRef, channelData.toJSON()).catch((err) => {
-  //         console.log(err);
-  //       });
-  //     } else {
-  //       console.error('channelData.toJSON is not a function');
-  //     }
-  //   }
-  //   console.log(docId, channelData);
-  // }
-
-  // async updateChannelMessage(docId: string, channelData: ChannelMessage) {
-  //   if (docId) {
-  //     let docRef = doc(this.getChannelsRef(), docId);
-  //     console.log('channelData:', channelData);
-  //     if (channelData instanceof ChannelMessage && typeof channelData.toJSON === 'function') {
-  //       await updateDoc(docRef, channelData.toJSON()).catch((err) => {
-  //         console.log(err);
-  //       });
-  //     } else {
-  //       console.error('channelData is not an instance of ChannelMessage or toJSON is not a function');
-  //     }
-  //   }
-  //   console.log(docId, channelData);
-  // }
-  
-  
   getChannels(): Observable<Channel[]> {
     return new Observable((observer) => {
       const unsubscribe = onSnapshot(
@@ -313,7 +281,7 @@ export class FirebaseService {
           this.setChannelMessageObject(doc.data(), doc.id)
         );
         // console.log(doc.data(), doc.id);
-        
+
       });
     });
     return unsubscribe;
@@ -372,13 +340,28 @@ export class FirebaseService {
     this.unsubChannel();
   }
 
+  async getEmojiReactions(channelId: string, messageId: string | undefined): Promise<any> {
+    if (messageId) {
+      const docRef = doc(this.firestore, `channels/${channelId}/messages`, messageId);
+      const docSnap = await getDoc(docRef);
 
+      if (docSnap.exists() && docSnap.data()) {
+        return docSnap.data()['reactions'];
+      } else {
+        console.log("No such document!");
+        return [];
+      }
+    } else {
+      console.log("messageId is undefined");
+      return [];
+    }
+  }
 
 
   async updateEmojiReactions(channelId: string, messageId: string, user: string, emoji: string) {
     const messageRef = doc(this.firestore, `channels/${channelId}/messages`, messageId);
     console.log(messageRef);
-    
+
     // const reactionKey = `reactions.${emoji}`; // Pfad zum spezifischen Emoji
 
     // // Verwendung von increment, um die Anzahl der Emojis zu erhöhen
@@ -388,7 +371,7 @@ export class FirebaseService {
     //   console.error('Fehler beim Aktualisieren der Emoji-Reaktionen:', error);
     // });
     // console.log(channelId, messageId, user, emoji);
-    
+
   }
 
 }

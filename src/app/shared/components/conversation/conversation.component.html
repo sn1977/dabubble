@@ -14,8 +14,8 @@
   [ngStyle]="{ 'flex-direction': isMessageFromYou ? 'row' : 'row-reverse' }"
   (mouseenter)="hovered = true"
   (mouseleave)="deleteHovered()"
-  (click)="toggleReactionBar($event)"
 >
+<!--  (click)="toggleReactionBar($event)"-->
   <div class="avatar pointer">
     <img src="{{ this.user.avatar }}" alt="" />
   </div>
@@ -96,7 +96,7 @@
     <div class="reaction-infos">
       <div class="reactions">
         <div
-          *ngFor="let reaction of emojiReactions"
+          *ngFor="let reaction of channelMessage.reactions"
           class="reaction-group pointer"
         >
           <span class="reaction-icon" (click)="toggleReaction(reaction)">{{ reaction.emoji }}</span>
