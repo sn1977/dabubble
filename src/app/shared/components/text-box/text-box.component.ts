@@ -6,6 +6,7 @@ import { AuthService } from '../../services/auth.service';
 import { FirebaseService } from '../../services/firebase.service';
 import { ActivatedRoute } from '@angular/router';
 import { UploadService } from '../../services/upload.service';
+import { serverTimestamp } from '@angular/fire/firestore';
 @Component({
   selector: 'app-text-box',
   standalone: true,
@@ -48,17 +49,18 @@ export class TextBoxComponent {
         creator: this.authService.activeUserId,
         text: this.textBoxData.messageText,
         channelId: this.textBoxData.channelId,
-        createdAt: this.textBoxData.createdAt,
+        createdAt: serverTimestamp(),
         reactions: (this.textBoxData.reactions = this.reactions),
         collection: this.textBoxData.collection,
         subcollection: this.textBoxData.subcollection,
-        attachment: this.textBoxData.inputField,
+        attachment: [`${this.textBoxData.inputField}`],
       });
 
       this.firestore.addChannelMessage(
         message,
         `${this.textBoxData.collection}/${message.channelId}/${this.textBoxData.subcollection}`
       );
+
       this.textBoxData.inputField = '';
       this.selectedFiles = undefined;
       this.textBoxData.messageText = '';
