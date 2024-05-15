@@ -17,7 +17,8 @@ import { serverTimestamp } from '@angular/fire/firestore';
 export class TextBoxComponent {
   authService = inject(AuthService);
   firestore = inject(FirebaseService);
-  reactions = ['wave', 'rocket'];
+  // reactions = ['wave', 'rocket'];
+  reactions = [{'user' : 'Cd0px1WSLPRKM6tQxksMtSUyQWu1', 'reaction' : 'rocket'}];
   selectedFiles: FileList | undefined;
   filedate: number | undefined;
   errorMessage: string | null = null;
@@ -74,7 +75,7 @@ export class TextBoxComponent {
     }
   }
 
-  async detectFile(event: any) {
+  detectFile(event: any) {
     this.selectedFiles = event.target.files;
     this.uploadSingleFile();
   }
