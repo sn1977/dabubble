@@ -15,14 +15,6 @@ import {ChannelMessage} from '../../../../models/channel-message.class';
 })
 export class EmojiPickerComponent {
   @Output() emojiSelect = new EventEmitter<string>();
-  // emojis: Emoji[] = [];
-
-  // constructor(private emojiService: EmojiService) {
-  //   this.emojiService.getEmojis().subscribe(emojis => {
-  //     this.emojis = emojis;
-  //     console.log('Emojis bereit zur Anzeige:', this.emojis);
-  //   });
-  // }
 
   onEmojiSelect(event: EmojiEvent) {
     if (event.emoji && event.emoji.unified) {
