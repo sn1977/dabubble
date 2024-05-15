@@ -1,14 +1,13 @@
-import {CommonModule} from '@angular/common';
-import {Component, Input, OnInit, inject} from '@angular/core';
-import {ChannelMessage} from '../../../../models/channel-message.class';
-import {User} from '../../../../models/user.class';
-import {FirebaseService} from '../../services/firebase.service';
-import {MatDialog, MatDialogModule} from '@angular/material/dialog';
-import {EmojiPickerComponent} from '../emoji-picker/emoji-picker.component';
-import {AuthService} from '../../services/auth.service';
-import {FormsModule} from '@angular/forms';
-import {DateFormatService} from '../../services/date-format.service';
-import {serverTimestamp} from '@angular/fire/firestore';
+import { CommonModule } from '@angular/common';
+import { Component, Input, OnInit, inject } from '@angular/core';
+import { ChannelMessage } from '../../../../models/channel-message.class';
+import { User } from '../../../../models/user.class';
+import { FirebaseService } from '../../services/firebase.service';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { EmojiPickerComponent } from '../emoji-picker/emoji-picker.component';
+import { AuthService } from '../../services/auth.service';
+import { FormsModule } from '@angular/forms';
+import { DateFormatService } from '../../services/date-format.service';
 
 @Component({
   selector: 'app-conversation',
@@ -23,7 +22,7 @@ export class ConversationComponent implements OnInit {
     public dateFormatService: DateFormatService
   ) {
     this.getCurrentDay();
-   }
+  }
 
   firestore = inject(FirebaseService);
   authService = inject(AuthService);
@@ -36,6 +35,7 @@ export class ConversationComponent implements OnInit {
   currentDate: any;
   messageDate: any;
   emojiReactions: { emoji: string; count: number }[] = [];
+  showReactionBar: boolean = false;
 
   getCurrentDay() {
     const date = new Date();
@@ -44,8 +44,6 @@ export class ConversationComponent implements OnInit {
     let year = date.getFullYear().toString();
     this.currentDate = year + month + day;
   }
-
-
 
   ngOnInit(): void {
     this.getItemValuesProfile('users', this.channelMessage.creator);
@@ -71,12 +69,16 @@ export class ConversationComponent implements OnInit {
     // Only initialize emojiReactions if it is not already initialized
     if (this.emojiReactions.length === 0) {
       // Get the emoji reactions from Firestore
-      this.firestore.getEmojiReactions(this.channelMessage.channelId, this.channelMessage.messageId)
-        .then(reactions => {
+      this.firestore
+        .getEmojiReactions(
+          this.channelMessage.channelId,
+          this.channelMessage.messageId
+        )
+        .then((reactions) => {
           this.emojiReactions = reactions;
         })
-        .catch(error => {
-          console.error("Error getting emoji reactions: ", error);
+        .catch((error) => {
+          console.error('Error getting emoji reactions: ', error);
         });
     }
   }
@@ -88,7 +90,10 @@ export class ConversationComponent implements OnInit {
     channelMessageInstance.reactions = this.emojiReactions;
 
     // Update the channel message in Firestore with the new reactions
-    if (channelMessageInstance.messageId && channelMessageInstance.messageId !== '') {
+    if (
+      channelMessageInstance.messageId &&
+      channelMessageInstance.messageId !== ''
+    ) {
       this.firestore.updateChannelMessage(
         channelMessageInstance.channelId,
         channelMessageInstance.messageId,
@@ -119,7 +124,7 @@ export class ConversationComponent implements OnInit {
     if (existingEmoji) {
       existingEmoji.count++;
     } else {
-      this.emojiReactions.push({emoji: selectedEmoji, count: 1});
+      this.emojiReactions.push({ emoji: selectedEmoji, count: 1 });
     }
     console.log('Emoji-Reaktionen:', this.emojiReactions);
   }
@@ -135,13 +140,20 @@ export class ConversationComponent implements OnInit {
     // this.testMap();
   }
 
-  // toggleReactionBar(event: any): void {
-  //   event.preventDefault();
-  //   console.log('hallo');
-  //
-  //   //showReactionBar =
-  //
-  // }
+  toggleReactionBar(event: any): void {
+    event.preventDefault();
+    this.showReactionBar = !this.showReactionBar;
+  }
+
+  reactionBarAction(event: any): void {
+    event.preventDefault();
+    console.log('hallo');
+  }
+
+  doNotClose(event: any): void {  
+    event.stopPropagation();
+  }
+
 }
 
 /*import {CommonModule} from '@angular/common';

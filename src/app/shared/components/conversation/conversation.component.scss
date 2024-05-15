@@ -31,6 +31,7 @@
   @include dFlex($jc: flex-start, $ai: flex-start, $fd: row, $g: 20px);
 
   .avatar {    
+    padding: 0 8px;
     img {      
       width: 50px;
       height: 50px;
@@ -159,11 +160,12 @@
 }
 
 .reactionBar{
-  background-color: green;  
+  background-color: #FFFFFF;  
   position: absolute;
-  top: -28px;
-  height: 46px;
-  width: 255px;
+  top: -28px;  
+  height: 42px;
+  min-width: 210px;
+  max-width: 255px;
   border: 1px solid #ADB0D9;
   border-radius: 25px 25px 0px 25px;
   padding: 3px 15px;

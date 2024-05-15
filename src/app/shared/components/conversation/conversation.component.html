@@ -14,8 +14,8 @@
   [ngStyle]="{ 'flex-direction': isMessageFromYou ? 'row' : 'row-reverse' }"
   (mouseenter)="hovered = true"
   (mouseleave)="deleteHovered()"
+  (click)="toggleReactionBar($event)"
 >
-<!--  (click)="toggleReactionBar($event)"-->
   <div class="avatar pointer">
     <img src="{{ this.user.avatar }}" alt="" />
   </div>
@@ -125,10 +125,20 @@
     </div>
   </div>
 
-  <!-- @if(showReactionBar){
-    <div class="reactionBar">
-      HALLO
+  @if(showReactionBar){
+    <div (click)="reactionBarAction($event);doNotClose($event)" class="reactionBar"
+    [ngStyle]="{ 'right': isMessageFromYou ? '5%' : 'unset', 'left': isMessageFromYou ? 'unset' : '5%' }"
+    >
+      <img src="./assets/img/emojis/check_mark.svg" alt="">
+      <img src="./assets/img/emojis/hands_up.svg" alt="">
+      <img src="./assets/img/emojis/add_reaction.svg" alt="">
+      <img src="./assets/img/emojis/answer.svg" alt="">
+
+      @if(isMessageFromYou){
+        <img src="./assets/img/emojis/answer2.svg" alt="">
+      }
+
     </div>
-  } -->
+  }
 
 </div>
