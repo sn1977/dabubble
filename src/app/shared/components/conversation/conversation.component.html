@@ -14,6 +14,7 @@
   [ngStyle]="{ 'flex-direction': isMessageFromYou ? 'row' : 'row-reverse' }"
   (mouseenter)="hovered = true"
   (mouseleave)="deleteHovered()"
+  (click)="toggleReactionBar($event)"
 >
   <div class="avatar pointer">
     <img src="{{ this.user.avatar }}" alt="" />
@@ -124,8 +125,10 @@
     </div>
   </div>
 
-  <div class="reactionBar">
-    HALLO
-  </div>
+  <!-- @if(showReactionBar){
+    <div class="reactionBar">
+      HALLO
+    </div>
+  } -->
 
 </div>
