@@ -13,7 +13,10 @@ import {
   orderBy,
   or,
   getDocs,
-  and, increment, getDoc,
+  and,
+  increment,
+  getDoc,
+  getCountFromServer,
 } from '@angular/fire/firestore';
 import { User } from '../../../models/user.class';
 import { Channel } from '../../../models/channel.class';
@@ -47,6 +50,9 @@ export class FirebaseService {
   constructor() {
     this.unsubUsers = this.subUserList();
     this.unsubChannel = this.subChannelList();
+
+    // this.getAnswersCount('3O5ALftPMOVCKsMLhLLN', 'NoWBXJVr2AXKd0OKDB2V');
+    this.getAnswersCount();
 
   }
 
@@ -96,7 +102,7 @@ export class FirebaseService {
       provider: obj.provider,
       selected: obj.selected,
       count: obj.count,
-      newMessage: obj.newMessage
+      newMessage: obj.newMessage,
     };
   }
 
@@ -109,7 +115,7 @@ export class FirebaseService {
       name: obj.name,
       count: obj.count,
       newMessage: obj.newMessage,
-      allMembers: obj.allMembers
+      allMembers: obj.allMembers,
     };
   }
 
@@ -146,11 +152,18 @@ export class FirebaseService {
     }
   }
 
-  async updateChannelMessage(docId: string, messageId: string, channelData: ChannelMessage) {
+  async updateChannelMessage(
+    docId: string,
+    messageId: string,
+    channelData: ChannelMessage
+  ) {
     console.log(`${docId}/channelmessages/${messageId}`);
 
     if (docId) {
-      let docRef = doc(this.getChannelsRef(), `${docId}/channelmessages/${messageId}`);
+      let docRef = doc(
+        this.getChannelsRef(),
+        `${docId}/channelmessages/${messageId}`
+      );
       await updateDoc(docRef, channelData.toJSON()).catch((err) => {
         console.log(err);
       });
@@ -173,7 +186,7 @@ export class FirebaseService {
       );
 
       // Cleanup on unsubscribe
-      return {unsubscribe};
+      return { unsubscribe };
     });
   }
 
@@ -192,7 +205,7 @@ export class FirebaseService {
       );
 
       // Cleanup on unsubscribe
-      return {unsubscribe};
+      return { unsubscribe };
     });
   }
 
@@ -267,7 +280,6 @@ export class FirebaseService {
     colID: string,
     subcollection: string
   ) {
-
     const ref = collection(
       this.firestore,
       `${colID}/${channelId}/${subcollection}`
@@ -281,7 +293,6 @@ export class FirebaseService {
           this.setChannelMessageObject(doc.data(), doc.id)
         );
         // console.log(doc.data(), doc.id);
-
       });
     });
     return unsubscribe;
@@ -340,26 +351,41 @@ export class FirebaseService {
     this.unsubChannel();
   }
 
-  async getEmojiReactions(channelId: string, messageId: string | undefined): Promise<any> {
+  async getEmojiReactions(
+    channelId: string,
+    messageId: string | undefined
+  ): Promise<any> {
     if (!messageId) {
-      console.log("messageId is undefined");
+      console.log('messageId is undefined');
       return [];
     }
 
-    const docRef = doc(this.firestore, `channels/${channelId}/messages`, messageId);
+    const docRef = doc(
+      this.firestore,
+      `channels/${channelId}/messages`,
+      messageId
+    );
     const docSnap = await getDoc(docRef);
 
     if (!docSnap.exists() || !docSnap.data()) {
-      console.log("No such document!");
+      console.log('No such document!');
       return [];
     }
 
     return docSnap.data()['reactions'];
   }
 
-
-  async updateEmojiReactions(channelId: string, messageId: string, user: string, emoji: string) {
-    const messageRef = doc(this.firestore, `channels/${channelId}/messages`, messageId);
+  async updateEmojiReactions(
+    channelId: string,
+    messageId: string,
+    user: string,
+    emoji: string
+  ) {
+    const messageRef = doc(
+      this.firestore,
+      `channels/${channelId}/messages`,
+      messageId
+    );
     console.log(messageRef);
 
     // const reactionKey = `reactions.${emoji}`; // Pfad zum spezifischen Emoji
@@ -373,4 +399,13 @@ export class FirebaseService {
     // console.log(channelId, messageId, user, emoji);
   }
 
+  // async getAnswersCount(channelId: string, messageId: string | undefined) {    
+  async getAnswersCount() {
+    const coll = collection(this.getChannelsRef(), '3O5ALftPMOVCKsMLhLLN/channelmessages/NoWBXJVr2AXKd0OKDB2V/threads');
+    //const coll = collection(this.getChannelsRef(), `${channelId}/channelmessages/${messageId}/threads`);
+    //channels/3O5ALftPMOVCKsMLhLLN/channelmessages/NoWBXJVr2AXKd0OKDB2V/threads
+    const snapshot = await getCountFromServer(coll);
+    console.log('count: ', snapshot.data().count);
+    //return snapshot.data().count;
+  }
 }
