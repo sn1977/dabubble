@@ -4,7 +4,8 @@ export class ChannelMessage {
   creator: string;
   createdAt?: any;
   text: string;
-  reactions?: { emoji: string; count: number }[];
+  // reactions?: { emoji: string; count: number }[];
+  reactions: { emoji: string; users: string[] }[] = [];
   attachment?: string[];
 
 

@@ -34,7 +34,8 @@ export class ConversationComponent implements OnInit {
   isMessageFromYou: boolean = false;
   currentDate: any;
   messageDate: any;
-  emojiReactions: { emoji: string; count: number }[] = [];
+  // emojiReactions: { emoji: string; count: number }[] = [];
+  emojiReactions: { emoji: string; users: string[] }[] = [];
   showReactionBar: boolean = false;
   answerCount: number = 0;
 
@@ -119,14 +120,28 @@ export class ConversationComponent implements OnInit {
     });
   }
 
+  // addEmojiReaction(selectedEmoji: string) {
+  //   const existingEmoji = this.emojiReactions.find(
+  //     (e) => e.emoji === selectedEmoji
+  //   );
+  //   if (existingEmoji) {
+  //     existingEmoji.count++;
+  //   } else {
+  //     this.emojiReactions.push({ emoji: selectedEmoji, count: 1 });
+  //   }
+  //   console.log('Emoji-Reaktionen:', this.emojiReactions);
+  // }
+
   addEmojiReaction(selectedEmoji: string) {
     const existingEmoji = this.emojiReactions.find(
       (e) => e.emoji === selectedEmoji
     );
     if (existingEmoji) {
-      existingEmoji.count++;
+      // Add the user to the list of users who reacted with this emoji
+      existingEmoji.users.push(this.authService.activeUserAccount.uid);
     } else {
-      this.emojiReactions.push({ emoji: selectedEmoji, count: 1 });
+      // If the emoji does not exist yet, create a new entry with the user
+      this.emojiReactions.push({ emoji: selectedEmoji, users: [this.authService.activeUserAccount.uid] });
     }
     console.log('Emoji-Reaktionen:', this.emojiReactions);
   }
@@ -141,6 +156,17 @@ export class ConversationComponent implements OnInit {
     }
     // this.testMap();
   }
+
+  // toggleReaction(reaction: any): void {
+  //   const userIndex = reaction.users.indexOf(this.authService.activeUserAccount.uid);
+  //   if (userIndex === -1) {
+  //     // If the user has not reacted with this emoji yet, add them to the list
+  //     reaction.users.push(this.authService.activeUserAccount.uid);
+  //   } else {
+  //     // If the user has already reacted with this emoji, remove them from the list
+  //     reaction.users.splice(userIndex, 1);
+  //   }
+  // }
 
   toggleReactionBar(event: any): void {
     event.preventDefault();

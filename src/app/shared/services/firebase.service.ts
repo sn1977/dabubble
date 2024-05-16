@@ -16,7 +16,7 @@ import {
   and,
   increment,
   getDoc,
-  getCountFromServer,
+  getCountFromServer, arrayUnion, arrayRemove,
 } from '@angular/fire/firestore';
 import { User } from '../../../models/user.class';
 import { Channel } from '../../../models/channel.class';
@@ -50,6 +50,10 @@ export class FirebaseService {
   constructor() {
     this.unsubUsers = this.subUserList();
     this.unsubChannel = this.subChannelList();
+
+    // this.getAnswersCount('3O5ALftPMOVCKsMLhLLN', 'NoWBXJVr2AXKd0OKDB2V');
+    // this.getAnswersCount();
+
   }
 
   getUsersRef() {
@@ -383,17 +387,17 @@ export class FirebaseService {
       messageId
     );
     console.log(messageRef);
-
-    // const reactionKey = `reactions.${emoji}`; // Pfad zum spezifischen Emoji
-
-    // // Verwendung von increment, um die Anzahl der Emojis zu erhöhen
-    // await updateDoc(messageRef, {
-    //   [reactionKey]: increment(1)
-    // }).catch((error) => {
-    //   console.error('Fehler beim Aktualisieren der Emoji-Reaktionen:', error);
-    // });
-    // console.log(channelId, messageId, user, emoji);
-  }
+}
+  //   const reactionKey = `reactions.${emoji}`; // Pfad zum spezifischen Emoji
+  //
+  //   // Verwendung von increment, um die Anzahl der Emojis zu erhöhen
+  //   await updateDoc(messageRef, {
+  //     [reactionKey]: increment(1)
+  //   }).catch((error) => {
+  //     console.error('Fehler beim Aktualisieren der Emoji-Reaktionen:', error);
+  //   });
+  //   console.log(channelId, messageId, user, emoji);
+  // }
 
   async getAnswersCount(
     channelId: string,
@@ -404,7 +408,7 @@ export class FirebaseService {
       `${channelId}/channelmessages/${messageId}/threads`
     );
     const snapshot = await getCountFromServer(coll);
-    console.log(snapshot.data().count);    
+    console.log(snapshot.data().count);
     return snapshot.data().count;
   }
 }
