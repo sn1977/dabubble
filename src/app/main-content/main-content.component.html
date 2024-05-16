@@ -6,25 +6,9 @@
 [ngStyle]="{ 'max-height': isDesktop ? 'calc(100vh - 120px)' : 'calc(100vh - 80px)' }"
 
 >
-<!--  <div class="wrapper-content-main">-->
-<!--    <div class="input-field">-->
-<!--      <input-->
-<!--        type="text"-->
-<!--        name="text"-->
-<!--        [(ngModel)]="textData.text"-->
-<!--        (ngModelChange)="searchWorkspace(textData.text)"-->
-<!--        [class.input-has-value]="inputHasValue"-->
-<!--        placeholder="Gehe zu..."-->
-<!--        required-->
-<!--        autocomplete="off"-->
-<!--        class="full-width input-field-design input-background-icon"-->
-<!--      />-->
-<!--    </div>-->
 
   @if(!isDesktop){
-<!--  <div *ngIf="!isDesktop">-->
     <app-search-input (search)="searchWorkspace($event)"></app-search-input>
-<!--  </div>-->
   }
 
     <mat-accordion [multi]="true">
@@ -58,7 +42,6 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
 
-        <!-- Für Firebase -->
         @for (channel of this.firestore.getChannel(); track $index) {
         <div
           class="channel-name"
@@ -180,4 +163,3 @@
       </button>
     </div>
   </div>
-<!--</div>-->
