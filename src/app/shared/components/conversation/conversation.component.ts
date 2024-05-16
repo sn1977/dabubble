@@ -36,6 +36,7 @@ export class ConversationComponent implements OnInit {
   messageDate: any;
   emojiReactions: { emoji: string; count: number }[] = [];
   showReactionBar: boolean = false;
+  answerCount: number = 0;
 
   getCurrentDay() {
     const date = new Date();
@@ -50,7 +51,8 @@ export class ConversationComponent implements OnInit {
     this.messageDate = this.channelMessage.createdAt;
     this.isMessageFromYou =
       this.authService.activeUserAccount.uid === this.channelMessage.creator;
-    this.initializeEmojiReactions();
+    //this.initializeEmojiReactions();
+    //this.getAnswers();
   }
 
   getItemValuesProfile(collection: string, itemID: string) {
@@ -150,10 +152,33 @@ export class ConversationComponent implements OnInit {
     console.log('hallo');
   }
 
-  doNotClose(event: any): void {  
+  doNotClose(event: any): void {
     event.stopPropagation();
   }
 
+  // async getAnswers() {
+  //   console.log(this.channelMessage.channelId);
+  //   console.log(this.channelMessage.messageId);
+  //   await this.firestore.getAnswersCount(
+  //     this.channelMessage.channelId,
+  //     this.channelMessage.channelId
+  //   )
+  //   .then((reactions) => {
+  //     this.answerCount = reactions;
+  //   })
+  //   .catch((error) => {
+  //     console.error('Error getting emoji reactions: ', error);
+  //   });
+  //   ;
+  // }
+  // async getAnswers() {
+  //   console.log(this.channelMessage.channelId);
+  //   console.log(this.channelMessage.messageId);
+  //   this.answerCount = await this.firestore.getAnswersCount(
+  //     this.channelMessage.channelId,
+  //     this.channelMessage.channelId
+  //   );
+  // }
 }
 
 /*import {CommonModule} from '@angular/common';

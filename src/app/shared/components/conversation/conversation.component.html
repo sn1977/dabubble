@@ -35,9 +35,9 @@
           'flex-direction': isMessageFromYou ? 'row' : 'row-reverse'
         }"
       >
-        <div class="creator"
-        (click)="doNotClose($event)"
-        >{{ this.user.displayName }}</div>
+        <div class="creator" (click)="doNotClose($event)">
+          {{ this.user.displayName }}
+        </div>
         <div class="time">
           {{ this.dateFormatService.formatTime(channelMessage.createdAt) }}
           Uhr
@@ -75,20 +75,20 @@
         <img class="attachment" src="{{ item }}" />
         } }
       </div>
-      }
-
-      <!-- hier muss noch eine Prüfung rein auf Threads -->
+      } 
+      
+      <!-- @if(this.answerCount !== 0){
       <div
         class="thread-infos"
         [ngStyle]="{
           'flex-direction': isMessageFromYou ? 'row' : 'row-reverse'
         }"
       >
-        <a href="http://localhost:4200/new-channel/9KJYLfxx07Wn5rbEupdA"
-        (click)="doNotClose($event)"
-          >
-          <!-- {{this.firestore.getAnswersCount('3O5ALftPMOVCKsMLhLLN', 'NoWBXJVr2AXKd0OKDB2V')}} -->
-          2 Antworten</a
+        <a
+          href="http://localhost:4200/new-channel/9KJYLfxx07Wn5rbEupdA"
+          (click)="doNotClose($event)"
+        >
+          {{ this.answerCount }} Antworten</a
         >
         <span
           class="last-thread"
@@ -96,7 +96,7 @@
           >Letzte Antwort 14:56</span
         >
       </div>
-      <!-- Ende Prüfung auf Threads -->
+      } -->
     </div>
     <div class="reaction-infos" (click)="doNotClose($event)">
       <div class="reactions">
@@ -104,7 +104,9 @@
           *ngFor="let reaction of channelMessage.reactions"
           class="reaction-group pointer"
         >
-          <span class="reaction-icon" (click)="toggleReaction(reaction)">{{ reaction.emoji }}</span>
+          <span class="reaction-icon" (click)="toggleReaction(reaction)">{{
+            reaction.emoji
+          }}</span>
           <div class="reaction-count">{{ reaction.count }}</div>
         </div>
 
@@ -131,19 +133,22 @@
   </div>
 
   @if(showReactionBar){
-    <div (click)="reactionBarAction($event); doNotClose($event)" class="reactionBar"
-    [ngStyle]="{ 'right': isMessageFromYou ? '5%' : 'unset', 'left': isMessageFromYou ? 'unset' : '5%' }"
-    >
-      <img src="./assets/img/emojis/check_mark.svg" alt="">
-      <img src="./assets/img/emojis/hands_up.svg" alt="">
-      <img src="./assets/img/emojis/add_reaction.svg" alt="">
-      <img src="./assets/img/emojis/answer.svg" alt="">
+  <div
+    (click)="reactionBarAction($event); doNotClose($event)"
+    class="reactionBar"
+    [ngStyle]="{
+      right: isMessageFromYou ? '5%' : 'unset',
+      left: isMessageFromYou ? 'unset' : '5%'
+    }"
+  >
+    <img src="./assets/img/emojis/check_mark.svg" alt="" />
+    <img src="./assets/img/emojis/hands_up.svg" alt="" />
+    <img src="./assets/img/emojis/add_reaction.svg" alt="" />
+    <img src="./assets/img/emojis/answer.svg" alt="" />
 
-      @if(isMessageFromYou){
-        <img src="./assets/img/emojis/answer2.svg" alt="">
-      }
-
-    </div>
+    @if(isMessageFromYou){
+    <img src="./assets/img/emojis/answer2.svg" alt="" />
+    }
+  </div>
   }
-
 </div>

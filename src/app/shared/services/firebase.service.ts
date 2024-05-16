@@ -50,10 +50,6 @@ export class FirebaseService {
   constructor() {
     this.unsubUsers = this.subUserList();
     this.unsubChannel = this.subChannelList();
-
-    // this.getAnswersCount('3O5ALftPMOVCKsMLhLLN', 'NoWBXJVr2AXKd0OKDB2V');
-    this.getAnswersCount();
-
   }
 
   getUsersRef() {
@@ -399,13 +395,16 @@ export class FirebaseService {
     // console.log(channelId, messageId, user, emoji);
   }
 
-  // async getAnswersCount(channelId: string, messageId: string | undefined) {    
-  async getAnswersCount() {
-    const coll = collection(this.getChannelsRef(), '3O5ALftPMOVCKsMLhLLN/channelmessages/NoWBXJVr2AXKd0OKDB2V/threads');
-    //const coll = collection(this.getChannelsRef(), `${channelId}/channelmessages/${messageId}/threads`);
-    //channels/3O5ALftPMOVCKsMLhLLN/channelmessages/NoWBXJVr2AXKd0OKDB2V/threads
+  async getAnswersCount(
+    channelId: string,
+    messageId: string | undefined
+  ): Promise<number> {
+    const coll = collection(
+      this.getChannelsRef(),
+      `${channelId}/channelmessages/${messageId}/threads`
+    );
     const snapshot = await getCountFromServer(coll);
-    console.log('count: ', snapshot.data().count);
-    //return snapshot.data().count;
+    console.log(snapshot.data().count);    
+    return snapshot.data().count;
   }
 }
