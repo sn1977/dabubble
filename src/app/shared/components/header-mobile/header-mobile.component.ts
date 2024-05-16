@@ -68,7 +68,8 @@ export class HeaderMobileComponent implements OnInit {
   }
 
   onBack(): void {
-    this.router.navigate(['/']);
+    // this.router.navigate(['/']);
+    this.router.navigate(['/main']);
     this.headerStateService.setAlternativeHeader(false);
   }
 }

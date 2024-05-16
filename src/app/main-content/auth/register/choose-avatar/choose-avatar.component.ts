@@ -62,7 +62,8 @@ export class ChooseAvatarComponent {
         .subscribe({
           complete: () => {
             setTimeout(() => {
-              this.router.navigate(['/']);
+              // this.router.navigate(['/']);
+              this.router.navigate(['/main']);
             }, 3500);
           },
           next: () => {

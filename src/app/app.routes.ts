@@ -15,8 +15,9 @@ import { ChannelEditionComponent } from './main-content/channel-edition/channel-
 import { ChooseAvatarComponent } from './main-content/auth/register/choose-avatar/choose-avatar.component';
 import { ExampleComponent } from './shared/components/example/example.component';
 
-export const routes: Routes = [
+export const routes: Routes = [  
   { path: '', component: MainContentComponent },
+  { path: 'main', component: MainContentComponent },
   { path: 'imprint', component: ImprintComponent },
   { path: 'privacy-policy', component: PrivacyPolicyComponent },
   { path: 'add-channel', component: AddChannelComponent },

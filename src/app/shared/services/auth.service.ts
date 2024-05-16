@@ -71,7 +71,8 @@ export class AuthService {
           this.user.email = user.email ?? this.user.email;
           this.user.displayName = user.displayName ?? this.user.displayName;
           this.user.provider = 'google';
-          this.router.navigateByUrl('');
+          // this.router.navigateByUrl('');
+          this.router.navigateByUrl('/main');
           this.firebase.updateUser(this.user, this.user.id);
         }
       })
@@ -81,18 +82,18 @@ export class AuthService {
       });
   }
 
-  persistence(email: string, password: string) {
-    const auth = getAuth();
-    setPersistence(auth, browserSessionPersistence)
-      .then(() => {
-        //return signInWithRedirect(auth, this.provider);
-        return signInWithEmailAndPassword(auth, email, password);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-      });
-  }
+  // persistence(email: string, password: string) {
+  //   const auth = getAuth();
+  //   setPersistence(auth, browserSessionPersistence)
+  //     .then(() => {
+  //       //return signInWithRedirect(auth, this.provider);
+  //       return signInWithEmailAndPassword(auth, email, password);
+  //     })
+  //     .catch((error) => {
+  //       const errorCode = error.code;
+  //       const errorMessage = error.message;
+  //     });
+  // }
 
   register(
     email: string,
@@ -236,7 +237,8 @@ export class AuthService {
             response.user.displayName ?? this.user.displayName;
           this.user.provider = 'anonym';
           this.user.isOnline = true;
-          this.router.navigateByUrl('');
+          // this.router.navigateByUrl('');
+          this.router.navigateByUrl('/main');
           return this.firebase.updateUser(this.user, this.user.id);
         }
       })

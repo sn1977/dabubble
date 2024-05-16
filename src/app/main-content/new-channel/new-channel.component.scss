@@ -166,3 +166,10 @@ h1 {
 .height{
   height: 50px;
 }
+
+@media (min-width: 768px) {
+  .container{
+    height: calc(100vh - 200px);
+    background-color: red !important;
+  }
+}
