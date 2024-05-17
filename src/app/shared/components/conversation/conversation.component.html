@@ -86,7 +86,7 @@
         }"
       >
         <a
-          href="http://localhost:4200/new-channel/9KJYLfxx07Wn5rbEupdA"
+          href="#"
           (click)="doNotClose($event)"
         >
           {{ this.answerCount }} Antworten</a
@@ -94,7 +94,9 @@
         <span
           class="last-thread"
           [ngStyle]="{ color: hovered ? '#000000' : '#686868' }"
-          >Letzte Antwort 14:56</span
+          >Letzte Antwort 
+          {{ this.dateFormatService.formatTime(this.lastAnswerTime) }}
+          </span
         >
       </div>
       }

@@ -34,9 +34,11 @@ export class ConversationComponent implements OnInit {
   isMessageFromYou: boolean = false;
   currentDate: any;
   messageDate: any;
+  //NOTE - @Sascha - hier starten wir immer mit einem leeren Array
   emojiReactions: { emoji: string; users: string[] }[] = [];
   showReactionBar: boolean = false;
   answerCount: number = 0;
+  lastAnswerTime: any;
 
   getCurrentDay() {
     const date = new Date();
@@ -52,13 +54,15 @@ export class ConversationComponent implements OnInit {
     this.isMessageFromYou =
       this.authService.activeUserAccount.uid === this.channelMessage.creator;
     // this.initializeEmojiReactions();
-    //this.getAnswers();
-    
-    //LINK - @Sascha: Die benötigen wir vermutlich nicht (Stefan)
-    //this.loadEmojiReactions();
+    this.getAnswers();
 
-    if(this.channelMessage.reactions){      
-      this.emojiReactions = this.emojiReactions.concat(this.channelMessage.reactions);
+    //NOTE - @Sascha: Die benötigen wir nicht
+    //this.loadEmojiReactions();
+    //NOTE - @Sascha: Hier befüllen wir das noch leere Array mit den Daten aus der Datenbank
+    if (this.channelMessage.reactions) {
+      this.emojiReactions = this.emojiReactions.concat(
+        this.channelMessage.reactions
+      );
     }
   }
 
@@ -167,7 +171,10 @@ export class ConversationComponent implements OnInit {
       existingEmoji.users.push(this.authService.activeUserAccount.uid);
     } else {
       // If the emoji does not exist yet, create a new entry with the user
-      this.emojiReactions.push({ emoji: selectedEmoji, users: [this.authService.activeUserAccount.uid] });
+      this.emojiReactions.push({
+        emoji: selectedEmoji,
+        users: [this.authService.activeUserAccount.uid],
+      });
     }
     console.log('Emoji-Reaktionen:', this.emojiReactions);
   }
@@ -214,8 +221,10 @@ export class ConversationComponent implements OnInit {
   // }
 
   toggleReaction(reaction: { emoji: string; users: string[] }): void {
-    console.log(reaction.users.indexOf(this.authService.activeUserAccount.uid))
-    const userIndex = reaction.users.indexOf(this.authService.activeUserAccount.uid);
+    console.log(reaction.users.indexOf(this.authService.activeUserAccount.uid));
+    const userIndex = reaction.users.indexOf(
+      this.authService.activeUserAccount.uid
+    );
     if (userIndex === -1) {
       // If the user has not reacted with this emoji yet, add them to the list
       reaction.users.push(this.authService.activeUserAccount.uid);
@@ -238,29 +247,20 @@ export class ConversationComponent implements OnInit {
   doNotClose(event: any): void {
     event.stopPropagation();
   }
+  
+  async getAnswers() {
+    try {
+      const data = await this.firestore.getThreadData(
+        this.channelMessage.channelId,
+        this.channelMessage.messageId
+      );
 
-  // async getAnswers() {
-  //   console.log(this.channelMessage.channelId);
-  //   console.log(this.channelMessage.messageId);
-  //   this.answerCount = await this.firestore.getAnswersCount(
-  //     this.channelMessage.channelId,
-  //     this.channelMessage.channelId
-  //   );
-  // }
-
-  // async getAnswers() {
-  //   console.log(this.channelMessage.channelId);
-  //   console.log(this.channelMessage.messageId);
-
-  //   try {
-  //     this.answerCount = await this.firestore.getAnswersCount(
-  //       this.channelMessage.channelId,
-  //       this.channelMessage.channelId
-  //     );      
-  //   } catch (error) {
-  //     console.error(error);      
-  //   }
-  // }
+      this.answerCount = data.threadCount;
+      this.lastAnswerTime = data.newestCreatedAt;
+    } catch (error) {
+      console.error('Fehler beim Abrufen der Daten:', error);
+    }
+  }
 }
 
 /*import {CommonModule} from '@angular/common';
