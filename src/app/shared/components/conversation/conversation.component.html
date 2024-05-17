@@ -124,12 +124,13 @@
         <!--          <div class="reaction-count">1</div>-->
         <!--        </div>-->
       </div>
-<!--      <img-->
-<!--        class="new-reaction pointer"-->
-<!--        src="./assets/img/emojis/add_reaction.svg"-->
-<!--        alt=""-->
-<!--        (click)="openEmojiPicker()"-->
-<!--      />-->
+      <img
+        *ngIf="channelMessage.reactions.length > 0"
+        class="new-reaction pointer"
+        src="./assets/img/emojis/add_reaction.svg"
+        alt=""
+        (click)="openEmojiPicker()"
+      />
     </div>
   </div>
 

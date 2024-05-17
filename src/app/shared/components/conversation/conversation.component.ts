@@ -54,7 +54,7 @@ export class ConversationComponent implements OnInit {
       this.authService.activeUserAccount.uid === this.channelMessage.creator;
     // this.initializeEmojiReactions();
     //this.getAnswers();
-    // this.loadEmojiReactions();
+    this.loadEmojiReactions();
   }
 
   getItemValuesProfile(collection: string, itemID: string) {
@@ -93,6 +93,18 @@ export class ConversationComponent implements OnInit {
   //     this.channelMessage.messageId
   //   );
   // }
+
+  async loadEmojiReactions() {
+    const reactions = await this.firestore.getEmojiReactions(
+      this.channelMessage.channelId,
+      this.channelMessage.messageId
+    );
+    // console.log('Loaded reactions from database:', reactions);
+    // this.emojiReactions = reactions.map(reaction => ({
+    //   ...reaction,
+    //   count: reaction.users.length
+    // }));
+  }
 
   testMap() {
     let channelMessageInstance = new ChannelMessage(this.channelMessage);
@@ -154,15 +166,28 @@ export class ConversationComponent implements OnInit {
     console.log('Emoji-Reaktionen:', this.emojiReactions);
   }
 
+  // getUserReactionCount(selectedEmoji: string): number {
+  //   const existingEmoji = this.emojiReactions.find(
+  //     (e) => e.emoji === selectedEmoji
+  //   );
+  //   if (existingEmoji) {
+  //     // Zählt die Anzahl der Reaktionen des aktuellen Benutzers auf das Emoji
+  //     return existingEmoji.users.filter(
+  //       (userId) => userId === this.authService.activeUserAccount.uid
+  //     ).length;
+  //   } else {
+  //     // Wenn das Emoji noch nicht existiert, ist die Anzahl der Reaktionen 0
+  //     return 0;
+  //   }
+  // }
+
   getUserReactionCount(selectedEmoji: string): number {
     const existingEmoji = this.emojiReactions.find(
       (e) => e.emoji === selectedEmoji
     );
     if (existingEmoji) {
       // Zählt die Anzahl der Reaktionen des aktuellen Benutzers auf das Emoji
-      return existingEmoji.users.filter(
-        (userId) => userId === this.authService.activeUserAccount.uid
-      ).length;
+      return existingEmoji.users.length;
     } else {
       // Wenn das Emoji noch nicht existiert, ist die Anzahl der Reaktionen 0
       return 0;
@@ -182,7 +207,7 @@ export class ConversationComponent implements OnInit {
   //   // this.testMap();
   // }
 
-  toggleReaction(reaction: any): void {
+  toggleReaction(reaction: { emoji: string; users: string[] }): void {
     const userIndex = reaction.users.indexOf(this.authService.activeUserAccount.uid);
     if (userIndex === -1) {
       // If the user has not reacted with this emoji yet, add them to the list
