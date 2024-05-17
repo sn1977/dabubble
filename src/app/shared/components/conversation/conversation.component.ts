@@ -208,6 +208,7 @@ export class ConversationComponent implements OnInit {
   // }
 
   toggleReaction(reaction: { emoji: string; users: string[] }): void {
+    console.log(reaction.users.indexOf(this.authService.activeUserAccount.uid))
     const userIndex = reaction.users.indexOf(this.authService.activeUserAccount.uid);
     if (userIndex === -1) {
       // If the user has not reacted with this emoji yet, add them to the list
