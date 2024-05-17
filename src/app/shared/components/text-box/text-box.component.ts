@@ -17,8 +17,8 @@ import { serverTimestamp } from '@angular/fire/firestore';
 export class TextBoxComponent {
   authService = inject(AuthService);
   firestore = inject(FirebaseService);
-  // reactions = ['wave', 'rocket'];
-  reactions = [{'user' : 'Cd0px1WSLPRKM6tQxksMtSUyQWu1', 'reaction' : 'rocket'}];
+  // reactions = [{'user' : 'Cd0px1WSLPRKM6tQxksMtSUyQWu1', 'reaction' : 'rocket'}];
+  reactions = [{'user' : '', 'reaction' : ''}];
   selectedFiles: FileList | undefined;
   filedate: number | undefined;
   errorMessage: string | null = null;
