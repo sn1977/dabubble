@@ -108,7 +108,7 @@
           <span class="reaction-icon" (click)="toggleReaction(reaction)">{{
             reaction.emoji
           }}</span>
-          <div class="reaction-count">{{ reaction.users }}</div>
+          <div class="reaction-count">{{ getUserReactionCount(reaction.emoji) }}</div>
         </div>
 
         <!--        <div *ngIf="isEmojiSelected" class="reaction-group pointer">-->
@@ -124,12 +124,12 @@
         <!--          <div class="reaction-count">1</div>-->
         <!--        </div>-->
       </div>
-      <img
-        class="new-reaction pointer"
-        src="./assets/img/emojis/add_reaction.svg"
-        alt=""
-        (click)="openEmojiPicker()"
-      />
+<!--      <img-->
+<!--        class="new-reaction pointer"-->
+<!--        src="./assets/img/emojis/add_reaction.svg"-->
+<!--        alt=""-->
+<!--        (click)="openEmojiPicker()"-->
+<!--      />-->
     </div>
   </div>
 
@@ -144,7 +144,7 @@
   >
     <img src="./assets/img/emojis/check_mark.svg" alt="" />
     <img src="./assets/img/emojis/hands_up.svg" alt="" />
-    <img src="./assets/img/emojis/add_reaction.svg" alt="" />
+    <img src="./assets/img/emojis/add_reaction.svg" alt="" (click)="openEmojiPicker()"/>
     <img src="./assets/img/emojis/answer.svg" alt="" />
 
     @if(isMessageFromYou){

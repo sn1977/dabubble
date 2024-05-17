@@ -52,8 +52,9 @@ export class ConversationComponent implements OnInit {
     this.messageDate = this.channelMessage.createdAt;
     this.isMessageFromYou =
       this.authService.activeUserAccount.uid === this.channelMessage.creator;
-    //this.initializeEmojiReactions();
+    // this.initializeEmojiReactions();
     //this.getAnswers();
+    // this.loadEmojiReactions();
   }
 
   getItemValuesProfile(collection: string, itemID: string) {
@@ -68,23 +69,30 @@ export class ConversationComponent implements OnInit {
     }
   }
 
-  initializeEmojiReactions(): void {
-    // Only initialize emojiReactions if it is not already initialized
-    if (this.emojiReactions.length === 0) {
-      // Get the emoji reactions from Firestore
-      this.firestore
-        .getEmojiReactions(
-          this.channelMessage.channelId,
-          this.channelMessage.messageId
-        )
-        .then((reactions) => {
-          this.emojiReactions = reactions;
-        })
-        .catch((error) => {
-          console.error('Error getting emoji reactions: ', error);
-        });
-    }
-  }
+  // initializeEmojiReactions(): void {
+  //   // Only initialize emojiReactions if it is not already initialized
+  //   if (this.emojiReactions.length === 0) {
+  //     // Get the emoji reactions from Firestore
+  //     this.firestore
+  //       .getEmojiReactions(
+  //         this.channelMessage.channelId,
+  //         this.channelMessage.messageId
+  //       )
+  //       .then((reactions) => {
+  //         this.emojiReactions = reactions;
+  //       })
+  //       .catch((error) => {
+  //         console.error('Error getting emoji reactions: ', error);
+  //       });
+  //   }
+  // }
+
+  // async loadEmojiReactions() {
+  //   this.emojiReactions = await this.firestore.getEmojiReactions(
+  //     this.channelMessage.channelId,
+  //     this.channelMessage.messageId
+  //   );
+  // }
 
   testMap() {
     let channelMessageInstance = new ChannelMessage(this.channelMessage);
@@ -146,27 +154,44 @@ export class ConversationComponent implements OnInit {
     console.log('Emoji-Reaktionen:', this.emojiReactions);
   }
 
-  toggleReaction(reaction: any): void {
-    if (!reaction.toggled) {
-      reaction.count++;
-      reaction.toggled = true;
+  getUserReactionCount(selectedEmoji: string): number {
+    const existingEmoji = this.emojiReactions.find(
+      (e) => e.emoji === selectedEmoji
+    );
+    if (existingEmoji) {
+      // Zählt die Anzahl der Reaktionen des aktuellen Benutzers auf das Emoji
+      return existingEmoji.users.filter(
+        (userId) => userId === this.authService.activeUserAccount.uid
+      ).length;
     } else {
-      reaction.count--;
-      reaction.toggled = false;
+      // Wenn das Emoji noch nicht existiert, ist die Anzahl der Reaktionen 0
+      return 0;
     }
-    // this.testMap();
   }
 
+  // existingEmoji.users.length
+
   // toggleReaction(reaction: any): void {
-  //   const userIndex = reaction.users.indexOf(this.authService.activeUserAccount.uid);
-  //   if (userIndex === -1) {
-  //     // If the user has not reacted with this emoji yet, add them to the list
-  //     reaction.users.push(this.authService.activeUserAccount.uid);
+  //   if (!reaction.toggled) {
+  //     reaction.count++;
+  //     reaction.toggled = true;
   //   } else {
-  //     // If the user has already reacted with this emoji, remove them from the list
-  //     reaction.users.splice(userIndex, 1);
+  //     reaction.count--;
+  //     reaction.toggled = false;
   //   }
+  //   // this.testMap();
   // }
+
+  toggleReaction(reaction: any): void {
+    const userIndex = reaction.users.indexOf(this.authService.activeUserAccount.uid);
+    if (userIndex === -1) {
+      // If the user has not reacted with this emoji yet, add them to the list
+      reaction.users.push(this.authService.activeUserAccount.uid);
+    } else {
+      // If the user has already reacted with this emoji, remove them from the list
+      reaction.users.splice(userIndex, 1);
+    }
+  }
 
   toggleReactionBar(event: any): void {
     event.preventDefault();
