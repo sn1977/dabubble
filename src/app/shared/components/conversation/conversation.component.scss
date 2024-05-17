@@ -28,7 +28,7 @@
 .content {
   position: relative;
   padding: 10px 0 40px 0;
-  @include dFlex($jc: flex-start, $ai: flex-start, $fd: row, $g: 20px);
+  @include dFlex($jc: flex-start, $ai: flex-start, $fd: row, $g: 0);
 
   .avatar {    
     padding: 0 8px;
@@ -43,7 +43,7 @@
   .main {
     width: 100%;
     position: relative;
-    @include dFlex($jc: flex-start, $ai: flex-start, $fd: column, $g: 20px);
+    @include dFlex($jc: flex-start, $ai: flex-start, $fd: column, $g: 8px);
     padding: 0 8px;
 
     .message-content {
@@ -91,6 +91,8 @@
         height: 80px;
         width: 80px;
         object-fit: contain;
+        border: 1px solid #ADB0D9;
+        border-radius: 20px;
       }
 
       .text-white{
@@ -122,14 +124,13 @@
         }
       }
     }
-    .reaction-infos {
-      display: flex;
-      @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 8px);
+    .reaction-infos {      
+      @include dFlex($jc: flex-start, $ai: flex-start, $fd: row, $g: 8px);
       .reactions {
         @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 8px);
-
+        flex-wrap: wrap;
         .reaction-group {
-          @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 10px);
+          @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 2px);
           border-radius: 20px;
           background-color: #ffffff;
           padding: 5px 10px;

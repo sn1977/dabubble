@@ -34,7 +34,6 @@ export class ConversationComponent implements OnInit {
   isMessageFromYou: boolean = false;
   currentDate: any;
   messageDate: any;
-  // emojiReactions: { emoji: string; count: number }[] = [];
   emojiReactions: { emoji: string; users: string[] }[] = [];
   showReactionBar: boolean = false;
   answerCount: number = 0;
@@ -54,7 +53,13 @@ export class ConversationComponent implements OnInit {
       this.authService.activeUserAccount.uid === this.channelMessage.creator;
     // this.initializeEmojiReactions();
     //this.getAnswers();
-    this.loadEmojiReactions();
+    
+    //LINK - @Sascha: Die benötigen wir vermutlich nicht (Stefan)
+    //this.loadEmojiReactions();
+
+    if(this.channelMessage.reactions){      
+      this.emojiReactions = this.emojiReactions.concat(this.channelMessage.reactions);
+    }
   }
 
   getItemValuesProfile(collection: string, itemID: string) {
@@ -99,6 +104,7 @@ export class ConversationComponent implements OnInit {
       this.channelMessage.channelId,
       this.channelMessage.messageId
     );
+
     // console.log('Loaded reactions from database:', reactions);
     // this.emojiReactions = reactions.map(reaction => ({
     //   ...reaction,
@@ -236,25 +242,24 @@ export class ConversationComponent implements OnInit {
   // async getAnswers() {
   //   console.log(this.channelMessage.channelId);
   //   console.log(this.channelMessage.messageId);
-  //   await this.firestore.getAnswersCount(
-  //     this.channelMessage.channelId,
-  //     this.channelMessage.channelId
-  //   )
-  //   .then((reactions) => {
-  //     this.answerCount = reactions;
-  //   })
-  //   .catch((error) => {
-  //     console.error('Error getting emoji reactions: ', error);
-  //   });
-  //   ;
-  // }
-  // async getAnswers() {
-  //   console.log(this.channelMessage.channelId);
-  //   console.log(this.channelMessage.messageId);
   //   this.answerCount = await this.firestore.getAnswersCount(
   //     this.channelMessage.channelId,
   //     this.channelMessage.channelId
   //   );
+  // }
+
+  // async getAnswers() {
+  //   console.log(this.channelMessage.channelId);
+  //   console.log(this.channelMessage.messageId);
+
+  //   try {
+  //     this.answerCount = await this.firestore.getAnswersCount(
+  //       this.channelMessage.channelId,
+  //       this.channelMessage.channelId
+  //     );      
+  //   } catch (error) {
+  //     console.error(error);      
+  //   }
   // }
 }
 
