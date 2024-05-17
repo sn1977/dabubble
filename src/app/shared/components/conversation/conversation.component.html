@@ -71,7 +71,8 @@
       } @if (channelMessage.attachment) {
       <div class="attachment-list">
         @for (item of channelMessage.attachment; track $index) { @if(item !==
-        'undefined'){
+        'undefined' && item !==
+        ''){
         <img class="attachment" src="{{ item }}" />
         } }
       </div>
