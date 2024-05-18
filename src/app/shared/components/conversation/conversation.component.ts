@@ -107,7 +107,6 @@ export class ConversationComponent implements OnInit {
 
     dialogRef.componentInstance.emojiSelect.subscribe((selectedEmoji) => {
       console.log('Empfangenes Emoji:', selectedEmoji);
-      // this.updateEmoji(selectedEmoji);
       this.addEmojiReaction(selectedEmoji);
       dialogRef.close();
       this.testMap();

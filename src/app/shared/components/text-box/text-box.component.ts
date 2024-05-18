@@ -7,6 +7,8 @@ import { FirebaseService } from '../../services/firebase.service';
 import { ActivatedRoute } from '@angular/router';
 import { UploadService } from '../../services/upload.service';
 import { serverTimestamp } from '@angular/fire/firestore';
+import { EmojiService } from '../../services/emoji.service';
+
 @Component({
   selector: 'app-text-box',
   standalone: true,
@@ -32,8 +34,16 @@ export class TextBoxComponent {
 
   constructor(
     private route: ActivatedRoute,
-    private uploadService: UploadService
-  ) {}
+    private uploadService: UploadService,
+    private emojiPickerService: EmojiService
+  ) {
+
+      // Subscribe to the emojiClicked$ observable to receive updates
+      this.emojiPickerService.emojiClicked$.subscribe(emoji => {
+        // Do something with the clicked emoji
+        console.log(emoji);
+      });
+  }
 
   deleteHovered() {
     this.add_hovered = false;
@@ -96,6 +106,11 @@ export class TextBoxComponent {
       }
     }
   }
+
+  openEmojiPicker() {
+    // Use the emojiPickerService to notify all subscribers that an emoji was clicked
+    this.emojiPickerService.emojiClicked('😀');
+  }
 }
 
 /*import { CommonModule } from '@angular/common';
@@ -146,7 +161,7 @@ export class TextBoxComponent implements OnInit {
     newMessage: this.user.newMessage
 
 
-  }; 
+  };
 
 
   channelData = {
@@ -249,7 +264,7 @@ export class TextBoxComponent implements OnInit {
     this.newMessage = true;
 
     if (this.textBoxData.messageText != '') {
-      
+
       this.textBoxData.subcollection;
 
       const message = new ChannelMessage({
@@ -276,7 +291,7 @@ export class TextBoxComponent implements OnInit {
 
   submitForm(event: any) {
     event.preventDefault();
-    if (this.textBoxData.messageText.trim() !== '') {      
+    if (this.textBoxData.messageText.trim() !== '') {
       this.onSubmit();
     }
   }
@@ -293,7 +308,7 @@ export class TextBoxComponent implements OnInit {
         this.filedate = new Date().getTime();
         this.uploadService
           .uploadFile(file, this.filedate, 'attachments')
-          .then((url: string) => {            
+          .then((url: string) => {
             this.textBoxData.inputField = url;
           })
           .catch((error) => {

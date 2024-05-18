@@ -24,7 +24,7 @@
             (mouseenter)="add_hovered = true"
             (mouseleave)="deleteHovered()"
           >
-          
+
             <input
               type="file"
               (change)="detectFile($event)"
@@ -50,6 +50,7 @@
             class="pointer"
             (mouseenter)="smile_hovered = true"
             (mouseleave)="deleteHovered()"
+            (click)="openEmojiPicker()"
             src="./assets/img/icon/smile_hover.svg"
             alt=""
           />

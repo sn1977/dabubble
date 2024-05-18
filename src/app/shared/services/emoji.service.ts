@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import {BehaviorSubject, Subject} from 'rxjs';
 import { Emoji, EmojiData, EmojiEvent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { EventEmitter } from '@angular/core';
 
@@ -7,57 +7,30 @@ import { EventEmitter } from '@angular/core';
   providedIn: 'root'
 })
 export class EmojiService {
-  // private emojis = new BehaviorSubject<Emoji[]>([]);
+
+  // private reactionsSource = new BehaviorSubject<string[]>([]);
+  // reactions$ = this.reactionsSource.asObservable();
   //
-  // constructor() {
-  //   this.loadEmojis();
+  // addReaction(emoji: string) {
+  //   let currentReactions = this.reactionsSource.value;
+  //   if (!currentReactions.includes(emoji)) {
+  //     currentReactions.push(emoji);
+  //     this.reactionsSource.next(currentReactions);
+  //   }
   // }
   //
-  // private loadEmojis() {
-  //   // Beispielsweise Emoji-Daten laden
-  //   const rawEmojis: EmojiData[] = this.fetchEmojis(); // Ersetzen Sie dies durch Ihren Aufruf
-  //   const transformedEmojis = rawEmojis.map(emoji => this.transformToEmoji(emoji));
-  //   this.emojis.next(transformedEmojis);
-  // }
-  //
-  // getEmojis() {
-  //   return this.emojis.asObservable();
-  // }
-  //
-  // private transformToEmoji(data: EmojiData): Emoji {
-  //   return {
-  //     isNative: false,
-  //     forceSize: false,
-  //     tooltip: false,
-  //     skin: 1,
-  //     sheetSize: 32,
-  //     set: 'apple',
-  //     size: 24,
-  //     emoji: data.shortName,  // Dies könnte an Ihre Daten angepasst werden
-  //     backgroundImageFn: () => `${data.spriteUrl}`,  // Passen Sie die URL-Generierung an
-  //     emojiOver: new EventEmitter<EmojiEvent>(),
-  //     emojiLeave: new EventEmitter<EmojiEvent>(),
-  //     emojiClick: new EventEmitter<EmojiEvent>()
-  //   };
-  // }
-  //
-  // private fetchEmojis(): EmojiData[] {
-  //   // Diese Methode soll Ihre Emoji-Daten abrufen
-  //   return [];
+  // clearReactions() {
+  //   this.reactionsSource.next([]);
   // }
 
-  private reactionsSource = new BehaviorSubject<string[]>([]);
-  reactions$ = this.reactionsSource.asObservable();
+  // Observable string sources
+  private emojiClickedSource = new Subject<string>();
 
-  addReaction(emoji: string) {
-    let currentReactions = this.reactionsSource.value;
-    if (!currentReactions.includes(emoji)) {
-      currentReactions.push(emoji);
-      this.reactionsSource.next(currentReactions);
-    }
-  }
+  // Observable string streams
+  emojiClicked$ = this.emojiClickedSource.asObservable();
 
-  clearReactions() {
-    this.reactionsSource.next([]);
+  // Service message commands
+  emojiClicked(emoji: string) {
+    this.emojiClickedSource.next(emoji);
   }
 }
