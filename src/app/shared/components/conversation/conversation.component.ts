@@ -37,6 +37,7 @@ export class ConversationComponent implements OnInit {
   //NOTE - @Sascha - hier starten wir immer mit einem leeren Array
   emojiReactions: { emoji: string; users: string[] }[] = [];
   showReactionBar: boolean = false;
+  isLoading: boolean = true;
   answerCount: number = 0;
   lastAnswerTime: any;
 
@@ -52,11 +53,17 @@ export class ConversationComponent implements OnInit {
     this.getItemValuesProfile('users', this.channelMessage.creator);
     this.messageDate = this.channelMessage.createdAt;
     this.isMessageFromYou =
-      this.authService.activeUserAccount.uid === this.channelMessage.creator;
+    this.authService.activeUserAccount.uid === this.channelMessage.creator;
+    this.isLoading = true;
     this.getAnswers();
+
 
     //NOTE - @Sascha: Hier befüllen wir das noch leere Array mit den Daten aus der Datenbank
     this.fillEmojiReactions();
+  }
+
+  ngOnDestroyy() {
+    this.isLoading = true;
   }
 
   fillEmojiReactions() {
@@ -66,7 +73,6 @@ export class ConversationComponent implements OnInit {
       );
     }
   }
-
 
   getItemValuesProfile(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {
@@ -169,7 +175,10 @@ export class ConversationComponent implements OnInit {
     channelMessageInstance.reactions = this.emojiReactions;
 
     // Update the channel message in Firestore with the new reactions
-    if (channelMessageInstance.messageId && channelMessageInstance.messageId !== '') {
+    if (
+      channelMessageInstance.messageId &&
+      channelMessageInstance.messageId !== ''
+    ) {
       this.firestore.updateChannelMessage(
         channelMessageInstance.channelId,
         channelMessageInstance.messageId,
@@ -196,8 +205,17 @@ export class ConversationComponent implements OnInit {
 
       this.answerCount = data.threadCount;
       this.lastAnswerTime = data.newestCreatedAt;
+
+      // if(data){
+      //   this.answerCount = data.threadCount;
+      //   this.lastAnswerTime = data.newestCreatedAt;
+      // }else{
+      //   this.answerCount = 0;
+      // }
     } catch (error) {
       console.error('Fehler beim Abrufen der Daten:', error);
+    } finally {
+      this.isLoading = false; // Ladezustand auf false setzen, wenn die Abfrage fertig ist
     }
   }
 }

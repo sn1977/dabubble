@@ -19,8 +19,7 @@ import { EmojiService } from '../../services/emoji.service';
 export class TextBoxComponent {
   authService = inject(AuthService);
   firestore = inject(FirebaseService);
-  // reactions = [{'user' : 'Cd0px1WSLPRKM6tQxksMtSUyQWu1', 'reaction' : 'rocket'}];
-  reactions = [{'user' : '', 'reaction' : ''}];
+  reactions = [];
   selectedFiles: FileList | undefined;
   filedate: number | undefined;
   errorMessage: string | null = null;

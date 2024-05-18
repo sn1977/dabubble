@@ -71,24 +71,18 @@
       } @if (channelMessage.attachment) {
       <div class="attachment-list">
         @for (item of channelMessage.attachment; track $index) { @if(item !==
-        'undefined' && item !==
-        ''){
+        'undefined' && item !== ''){
         <img class="attachment" src="{{ item }}" />
         } }
       </div>
-      }
-
-      @if(this.answerCount !== 0){
+      } @if(!isLoading && answerCount !== 0){
       <div
         class="thread-infos"
         [ngStyle]="{
           'flex-direction': isMessageFromYou ? 'row' : 'row-reverse'
         }"
       >
-        <a
-          href="#"
-          (click)="doNotClose($event)"
-        >
+        <a href="#" (click)="doNotClose($event)">
           {{ this.answerCount }} Antworten</a
         >
         <span
@@ -96,20 +90,21 @@
           [ngStyle]="{ color: hovered ? '#000000' : '#686868' }"
           >Letzte Antwort
           {{ this.dateFormatService.formatTime(this.lastAnswerTime) }}
-          </span
-        >
+        </span>
       </div>
       }
     </div>
+    @if(channelMessage.reactions.length > 0){
     <div class="reaction-infos" (click)="doNotClose($event)">
       <div class="reactions">
         <ng-container *ngFor="let reaction of channelMessage.reactions">
-          <div
-            *ngIf="reaction.emoji"
-            class="reaction-group pointer"
-          >
-            <span class="reaction-icon" (click)="toggleReaction(reaction)">{{ reaction.emoji }}</span>
-            <div class="reaction-count">{{ getUserReactionCount(reaction.emoji) }}</div>
+          <div *ngIf="reaction.emoji" class="reaction-group pointer">
+            <span class="reaction-icon" (click)="toggleReaction(reaction)">{{
+              reaction.emoji
+            }}</span>
+            <div class="reaction-count">
+              {{ getUserReactionCount(reaction.emoji) }}
+            </div>
           </div>
         </ng-container>
       </div>
@@ -121,6 +116,7 @@
         (click)="openEmojiPicker()"
       />
     </div>
+    }
   </div>
 
   @if(showReactionBar){
@@ -134,7 +130,11 @@
   >
     <img src="./assets/img/emojis/check_mark.svg" alt="" />
     <img src="./assets/img/emojis/hands_up.svg" alt="" />
-    <img src="./assets/img/emojis/add_reaction.svg" alt="" (click)="openEmojiPicker()"/>
+    <img
+      src="./assets/img/emojis/add_reaction.svg"
+      alt=""
+      (click)="openEmojiPicker()"
+    />
     <img src="./assets/img/emojis/answer.svg" alt="" />
 
     @if(isMessageFromYou){
