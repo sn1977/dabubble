@@ -69,7 +69,7 @@ export class NewChannelComponent implements OnInit, AfterViewChecked {
     name: this.channel.name,
     count: this.channel.count,
     newMessage: this.channel.newMessage,
-    allMembers: this.channel.allMembers
+    // allMembers: this.channel.allMembers
     
   };
 
@@ -82,7 +82,7 @@ export class NewChannelComponent implements OnInit, AfterViewChecked {
       name: this.channel.name,
       count: this.channel.count,
       newMessage: this.newMessage,
-      allMembers: this.channel.allMembers
+      // allMembers: this.channel.allMembers
 
     });
     
@@ -126,7 +126,7 @@ export class NewChannelComponent implements OnInit, AfterViewChecked {
       name: this.channel.name,
       count: this.channel.count,
       newMessage: this.channel.newMessage,
-      allMembers: this.channel.allMembers
+      // allMembers: this.channel.allMembers
     };
   }
 

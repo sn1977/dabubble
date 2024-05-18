@@ -47,7 +47,7 @@ export class SearchUserComponent {
     name: this.channel.name,
     count: this.channel.count,
     newMessage: this.channel.newMessage,
-    allMembers: this.channel.allMembers
+    // allMembers: this.channel.allMembers
   };
 
 
@@ -74,7 +74,7 @@ export class SearchUserComponent {
       name: this.channelData.name,
       count: this.channel.count,
       newMessage: this.channel.newMessage,
-      allMembers: this.channel.allMembers
+      // allMembers: this.channel.allMembers
     });
     this.firestore.updateChannel(this.itemID, channel);
 
@@ -110,11 +110,10 @@ export class SearchUserComponent {
       name: this.channel.name,
       count: this.channel.count,
       newMessage: this.channel.newMessage,
-      allMembers: this.channel.allMembers
+      // allMembers: this.channel.allMembers
     };
     
   }
-
 
   addmember(event: MouseEvent, user: User) {
     const index = this.selectedUsers.findIndex((selectedUser) => selectedUser.id === user.id);
@@ -167,6 +166,7 @@ export class SearchUserComponent {
   }
   
   toggleCheckbox(checkboxId: string): void {
+
     if (checkboxId === 'addAllMembers') {
       // Checkbox 'Alle Mitglieder hinzufügen' wurde ausgewählt
       if (this.isAddAllMembersChecked) {
@@ -182,12 +182,24 @@ export class SearchUserComponent {
 
         this.selectedUsers = [
           {
+            avatar: 'http://localhost:4200/assets/img/characters/template2.svg',
+            count: 0,            
             displayName: 'Boss',
-            avatar: 'http://localhost:4200/assets/img/characters/template2.svg'
+            email: 'boss@d.ch',
+            isOnline: true,
+            newMessage: false,
+            provider: 'email',
+            selected: false
           },
           {
+            avatar: 'http://localhost:4200/assets/img/characters/template1.svg',
+            count: 0,            
             displayName: 'Sekretärin',
-            avatar: 'http://localhost:4200/assets/img/characters/template1.svg'
+            email: 'secretary@d.ch',
+            isOnline: false,
+            newMessage: false,
+            provider: 'email',
+            selected: false
           }
         ];
         

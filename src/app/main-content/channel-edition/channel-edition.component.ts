@@ -34,7 +34,7 @@ export class ChannelEditionComponent implements OnInit {
     name: this.channel.name,
     count: this.channel.count,
     newMessage: this.channel.newMessage,
-    allMembers: this.channel.allMembers
+    // allMembers: this.channel.allMembers
   };
 
   constructor( private route: ActivatedRoute, ) {
@@ -63,7 +63,7 @@ export class ChannelEditionComponent implements OnInit {
       name: this.channelData.name,
       count: this.channel.count,
       newMessage: this.channel.newMessage,
-      allMembers: this.channel.allMembers
+      // allMembers: this.channel.allMembers
     });
 
     this.toggleEdit(toggle);    
@@ -150,7 +150,7 @@ export class ChannelEditionComponent implements OnInit {
       name: this.channel.name,
       count: this.channel.count,
       newMessage: this.channel.newMessage,
-      allMembers: this.channel.allMembers
+      // allMembers: this.channel.allMembers
     };
     
   }
@@ -159,7 +159,6 @@ export class ChannelEditionComponent implements OnInit {
     console.log('Öffne Collection ' + path + ' mit ID: ' + docRefId);
     this.router.navigate(['/' + path + '/' + docRefId]);
     this.getActivUserId();
-
   }
 
   getActivUserId() {
@@ -172,7 +171,6 @@ export class ChannelEditionComponent implements OnInit {
 
   removeMemberById(id: string) {
     const memberArray = this.channel.member || [];
-
     const index = memberArray.findIndex(member => member.id === id);
     
 

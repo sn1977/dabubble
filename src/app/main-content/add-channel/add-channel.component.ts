@@ -18,12 +18,24 @@ export class AddChannelComponent {
 
   allMembers: any[] = [
     {
+      avatar: 'http://localhost:4200/assets/img/characters/template2.svg',
+      count: 0,            
       displayName: 'Boss',
-      avatar: 'http://localhost:4200/assets/img/characters/template2.svg'
+      email: 'boss@d.ch',
+      isOnline: true,
+      newMessage: false,
+      provider: 'email',
+      selected: false
     },
     {
+      avatar: 'http://localhost:4200/assets/img/characters/template1.svg',
+      count: 0,            
       displayName: 'Sekretärin',
-      avatar: 'http://localhost:4200/assets/img/characters/template1.svg'
+      email: 'secretary@d.ch',
+      isOnline: false,
+      newMessage: false,
+      provider: 'email',
+      selected: false
     }
   ];
   
@@ -45,7 +57,6 @@ export class AddChannelComponent {
   authService = inject(AuthService);
 
   activeUser: any ='';
-
 
   channel: Channel = new Channel();
 
@@ -134,7 +145,8 @@ export class AddChannelComponent {
     this.overlayVisible = !this.overlayVisible;
   }
 
-  toggleInputField(inputId: string) {
+  toggleInputField(inputId: string) {    
+
     if (inputId === 'addSpecificMembers') {
       this.showInputField = !this.showInputField;
       this.showAddMember = false;
@@ -148,11 +160,22 @@ export class AddChannelComponent {
     }
   }
   toggleCheckbox(checkboxId: string): void {
+
     if (checkboxId === 'addAllMembers') {
       this.isAddAllMembersChecked = true;
       this.isAddSpecificMembersChecked = false;
       this.showInputField = false; // Ensure input field is hidden when "Alle Mitglieder" selected
+
+      this.selectedUsers = this.selectedUsers.concat(
+        this.allMembers
+      );
+
     } else if (checkboxId === 'addSpecificMembers') {
+
+      
+
+      this.selectedUsers = [];
+
       this.isAddAllMembersChecked = false;
       this.isAddSpecificMembersChecked = true;
     }
