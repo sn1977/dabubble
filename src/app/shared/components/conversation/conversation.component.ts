@@ -56,12 +56,17 @@ export class ConversationComponent implements OnInit {
     this.getAnswers();
 
     //NOTE - @Sascha: Hier befüllen wir das noch leere Array mit den Daten aus der Datenbank
+    this.fillEmojiReactions();
+  }
+
+  fillEmojiReactions() {
     if (this.channelMessage.reactions) {
       this.emojiReactions = this.emojiReactions.concat(
         this.channelMessage.reactions
       );
     }
   }
+
 
   getItemValuesProfile(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {
@@ -151,11 +156,27 @@ export class ConversationComponent implements OnInit {
       // If the user has already reacted with this emoji, remove them from the list
       reaction.users.splice(userIndex, 1);
     }
+    this.updateReactionsInDatabase();
   }
 
   toggleReactionBar(event: any): void {
     event.preventDefault();
     this.showReactionBar = !this.showReactionBar;
+  }
+
+  updateReactionsInDatabase(): void {
+    let channelMessageInstance = new ChannelMessage(this.channelMessage);
+    channelMessageInstance.messageId = this.channelMessage.messageId;
+    channelMessageInstance.reactions = this.emojiReactions;
+
+    // Update the channel message in Firestore with the new reactions
+    if (channelMessageInstance.messageId && channelMessageInstance.messageId !== '') {
+      this.firestore.updateChannelMessage(
+        channelMessageInstance.channelId,
+        channelMessageInstance.messageId,
+        channelMessageInstance
+      );
+    }
   }
 
   reactionBarAction(event: any): void {
