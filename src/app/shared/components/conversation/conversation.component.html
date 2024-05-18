@@ -12,9 +12,8 @@
 <div
   class="content"
   [ngStyle]="{ 'flex-direction': isMessageFromYou ? 'row' : 'row-reverse' }"
-  (mouseenter)="hovered = true"
-  (mouseleave)="deleteHovered()"
-  (click)="toggleReactionBar($event)"
+  (mouseenter)="hovered = true;toggleReactionBar($event)"
+  (mouseleave)="deleteHovered();toggleReactionBar($event)"
 >
   <div class="avatar pointer">
     <img src="{{ this.user.avatar }}" alt="" />
@@ -138,8 +137,21 @@
     <img src="./assets/img/emojis/answer.svg" alt="" />
 
     @if(isMessageFromYou){
-    <img src="./assets/img/emojis/answer2.svg" alt="" />
+    <img
+      src="./assets/img/emojis/answer2.svg"
+      alt=""
+      (click)="toggleEditMessage($event); doNotClose($event)"
+    />
     }
   </div>
-  }
+  @if(showEditMessage){
+  <div class="editMessageButton"
+  [ngStyle]="{
+    right: isMessageFromYou ? '5%' : 'unset',
+    left: isMessageFromYou ? 'unset' : '5%'
+  }"
+  >
+    <span> Nachricht bearbeiten </span>
+  </div>
+  } }
 </div>

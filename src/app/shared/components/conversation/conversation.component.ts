@@ -37,6 +37,7 @@ export class ConversationComponent implements OnInit {
   //NOTE - @Sascha - hier starten wir immer mit einem leeren Array
   emojiReactions: { emoji: string; users: string[] }[] = [];
   showReactionBar: boolean = false;
+  showEditMessage: boolean = false;
   isLoading: boolean = true;
   answerCount: number = 0;
   lastAnswerTime: any;
@@ -218,6 +219,12 @@ export class ConversationComponent implements OnInit {
       this.isLoading = false; // Ladezustand auf false setzen, wenn die Abfrage fertig ist
     }
   }
+
+  toggleEditMessage(event: any): void {
+    event.preventDefault();
+    this.showEditMessage = !this.showEditMessage;
+  }
+
 }
 
 /*import {CommonModule} from '@angular/common';
