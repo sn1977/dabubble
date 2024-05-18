@@ -94,7 +94,7 @@
         <span
           class="last-thread"
           [ngStyle]="{ color: hovered ? '#000000' : '#686868' }"
-          >Letzte Antwort 
+          >Letzte Antwort
           {{ this.dateFormatService.formatTime(this.lastAnswerTime) }}
           </span
         >
@@ -103,28 +103,15 @@
     </div>
     <div class="reaction-infos" (click)="doNotClose($event)">
       <div class="reactions">
-        <div
-          *ngFor="let reaction of channelMessage.reactions"
-          class="reaction-group pointer"
-        >
-          <span class="reaction-icon" (click)="toggleReaction(reaction)">{{
-            reaction.emoji
-          }}</span>
-          <div class="reaction-count">{{ getUserReactionCount(reaction.emoji) }}</div>
-        </div>
-
-        <!--        <div *ngIf="isEmojiSelected" class="reaction-group pointer">-->
-        <!--          <span class="reaction-icon">{{ emojiCharacter }}</span>-->
-        <!--          <div class="reaction-count">2</div>-->
-        <!--        </div>-->
-        <!--        <div class="reaction-group pointer">-->
-        <!--          <span class="reaction-icon">{{ emojiCharacter }}</span>-->
-        <!--          <div class="reaction-count">2</div>-->
-        <!--        </div>-->
-        <!--        <div class="reaction-group pointer">-->
-        <!--          <img class="reaction-icon" src="./assets/img/emojis/2.svg" alt="" />-->
-        <!--          <div class="reaction-count">1</div>-->
-        <!--        </div>-->
+        <ng-container *ngFor="let reaction of channelMessage.reactions">
+          <div
+            *ngIf="reaction.emoji"
+            class="reaction-group pointer"
+          >
+            <span class="reaction-icon" (click)="toggleReaction(reaction)">{{ reaction.emoji }}</span>
+            <div class="reaction-count">{{ getUserReactionCount(reaction.emoji) }}</div>
+          </div>
+        </ng-container>
       </div>
       <img
         *ngIf="channelMessage.reactions.length > 0"

@@ -53,11 +53,8 @@ export class ConversationComponent implements OnInit {
     this.messageDate = this.channelMessage.createdAt;
     this.isMessageFromYou =
       this.authService.activeUserAccount.uid === this.channelMessage.creator;
-    // this.initializeEmojiReactions();
     this.getAnswers();
 
-    //NOTE - @Sascha: Die benötigen wir nicht
-    //this.loadEmojiReactions();
     //NOTE - @Sascha: Hier befüllen wir das noch leere Array mit den Daten aus der Datenbank
     if (this.channelMessage.reactions) {
       this.emojiReactions = this.emojiReactions.concat(
@@ -76,44 +73,6 @@ export class ConversationComponent implements OnInit {
     if (!this.edit) {
       this.hovered = false;
     }
-  }
-
-  // initializeEmojiReactions(): void {
-  //   // Only initialize emojiReactions if it is not already initialized
-  //   if (this.emojiReactions.length === 0) {
-  //     // Get the emoji reactions from Firestore
-  //     this.firestore
-  //       .getEmojiReactions(
-  //         this.channelMessage.channelId,
-  //         this.channelMessage.messageId
-  //       )
-  //       .then((reactions) => {
-  //         this.emojiReactions = reactions;
-  //       })
-  //       .catch((error) => {
-  //         console.error('Error getting emoji reactions: ', error);
-  //       });
-  //   }
-  // }
-
-  // async loadEmojiReactions() {
-  //   this.emojiReactions = await this.firestore.getEmojiReactions(
-  //     this.channelMessage.channelId,
-  //     this.channelMessage.messageId
-  //   );
-  // }
-
-  async loadEmojiReactions() {
-    const reactions = await this.firestore.getEmojiReactions(
-      this.channelMessage.channelId,
-      this.channelMessage.messageId
-    );
-
-    // console.log('Loaded reactions from database:', reactions);
-    // this.emojiReactions = reactions.map(reaction => ({
-    //   ...reaction,
-    //   count: reaction.users.length
-    // }));
   }
 
   testMap() {
@@ -150,18 +109,6 @@ export class ConversationComponent implements OnInit {
     });
   }
 
-  // addEmojiReaction(selectedEmoji: string) {
-  //   const existingEmoji = this.emojiReactions.find(
-  //     (e) => e.emoji === selectedEmoji
-  //   );
-  //   if (existingEmoji) {
-  //     existingEmoji.count++;
-  //   } else {
-  //     this.emojiReactions.push({ emoji: selectedEmoji, count: 1 });
-  //   }
-  //   console.log('Emoji-Reaktionen:', this.emojiReactions);
-  // }
-
   addEmojiReaction(selectedEmoji: string) {
     const existingEmoji = this.emojiReactions.find(
       (e) => e.emoji === selectedEmoji
@@ -179,26 +126,11 @@ export class ConversationComponent implements OnInit {
     console.log('Emoji-Reaktionen:', this.emojiReactions);
   }
 
-  // getUserReactionCount(selectedEmoji: string): number {
-  //   const existingEmoji = this.emojiReactions.find(
-  //     (e) => e.emoji === selectedEmoji
-  //   );
-  //   if (existingEmoji) {
-  //     // Zählt die Anzahl der Reaktionen des aktuellen Benutzers auf das Emoji
-  //     return existingEmoji.users.filter(
-  //       (userId) => userId === this.authService.activeUserAccount.uid
-  //     ).length;
-  //   } else {
-  //     // Wenn das Emoji noch nicht existiert, ist die Anzahl der Reaktionen 0
-  //     return 0;
-  //   }
-  // }
-
   getUserReactionCount(selectedEmoji: string): number {
     const existingEmoji = this.emojiReactions.find(
       (e) => e.emoji === selectedEmoji
     );
-    if (existingEmoji) {
+    if (existingEmoji && existingEmoji.users) {
       // Zählt die Anzahl der Reaktionen des aktuellen Benutzers auf das Emoji
       return existingEmoji.users.length;
     } else {
@@ -206,19 +138,6 @@ export class ConversationComponent implements OnInit {
       return 0;
     }
   }
-
-  // existingEmoji.users.length
-
-  // toggleReaction(reaction: any): void {
-  //   if (!reaction.toggled) {
-  //     reaction.count++;
-  //     reaction.toggled = true;
-  //   } else {
-  //     reaction.count--;
-  //     reaction.toggled = false;
-  //   }
-  //   // this.testMap();
-  // }
 
   toggleReaction(reaction: { emoji: string; users: string[] }): void {
     console.log(reaction.users.indexOf(this.authService.activeUserAccount.uid));
@@ -247,7 +166,7 @@ export class ConversationComponent implements OnInit {
   doNotClose(event: any): void {
     event.stopPropagation();
   }
-  
+
   async getAnswers() {
     try {
       const data = await this.firestore.getThreadData(

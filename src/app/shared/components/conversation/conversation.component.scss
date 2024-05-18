@@ -1,6 +1,6 @@
 @import "../../../../styles/mixins.scss";
 
-.timeSeperator{
+.timeSeperator {
   position: relative;
   @include dFlex($jc: center, $ai: center, $fd: row, $g: 0);
   margin: 28px 0;
@@ -21,7 +21,7 @@
   border-radius: 30px;
 }
 
-.line{
+.line {
   width: 100%;
 }
 
@@ -30,9 +30,10 @@
   padding: 10px 0 40px 0;
   @include dFlex($jc: flex-start, $ai: flex-start, $fd: row, $g: 0);
 
-  .avatar {    
+  .avatar {
     padding: 0 8px;
-    img {      
+
+    img {
       width: 50px;
       height: 50px;
       border-radius: 100%;
@@ -82,12 +83,12 @@
         color: #000000;
       }
 
-      .attachment-list{
+      .attachment-list {
         @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 8px);
         flex-wrap: wrap;
       }
 
-      .attachment{
+      .attachment {
         height: 80px;
         width: 80px;
         object-fit: contain;
@@ -95,7 +96,7 @@
         border-radius: 20px;
       }
 
-      .text-white{
+      .text-white {
         color: #FFFFFF;
       }
 
@@ -124,11 +125,14 @@
         }
       }
     }
-    .reaction-infos {      
+
+    .reaction-infos {
       @include dFlex($jc: flex-start, $ai: flex-start, $fd: row, $g: 8px);
+
       .reactions {
         @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 8px);
         flex-wrap: wrap;
+
         .reaction-group {
           @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 2px);
           border-radius: 20px;
@@ -155,16 +159,15 @@
     }
   }
 
-  &:hover{
+  &:hover {
     background-color: #ECEEFE;
   }
-
 }
 
-.reactionBar{
-  background-color: #FFFFFF;  
+.reactionBar {
+  background-color: #FFFFFF;
   position: absolute;
-  top: -28px;  
+  top: -28px;
   height: 42px;
   min-width: 210px;
   max-width: 255px;
@@ -174,3 +177,4 @@
   z-index: 9;
   @include dFlex($jc: center, $ai: center, $fd: row, $g: 5px);
 }
+
