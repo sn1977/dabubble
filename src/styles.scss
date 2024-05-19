@@ -164,3 +164,11 @@ app-root{
   }
 }
 
+:root {
+  --mdc-snackbar-container-color: transparent; /* Ändern Sie dies, um die Hintergrundfarbe anzupassen */
+}
+
+::ng-deep .mat-mdc-snack-bar-container .mdc-snackbar__surface {
+  background-color: var(--mdc-snackbar-container-color) !important;
+}
+

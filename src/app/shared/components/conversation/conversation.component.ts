@@ -8,6 +8,9 @@ import { EmojiPickerComponent } from '../emoji-picker/emoji-picker.component';
 import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { DateFormatService } from '../../services/date-format.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import { ViewEncapsulation } from '@angular/core';
+import {EmojiSnackbarComponent} from '../emoji-snackbar/emoji-snackbar.component';
 
 @Component({
   selector: 'app-conversation',
@@ -15,11 +18,13 @@ import { DateFormatService } from '../../services/date-format.service';
   templateUrl: './conversation.component.html',
   styleUrl: './conversation.component.scss',
   imports: [CommonModule, MatDialogModule, EmojiPickerComponent, FormsModule],
+  encapsulation: ViewEncapsulation.None
 })
 export class ConversationComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
-    public dateFormatService: DateFormatService
+    public dateFormatService: DateFormatService,
+    private snackBar: MatSnackBar
   ) {
     this.getCurrentDay();
   }
@@ -73,6 +78,27 @@ export class ConversationComponent implements OnInit {
         this.channelMessage.reactions
       );
     }
+  }
+
+  // showEmojiSnackbar(emoji: string, user: string) {
+  //   this.snackBar.open(`${emoji} \n ${user} hat reagiert`, '', {
+  //     duration: 2000, // Die Dauer in Millisekunden, für die der Snackbar angezeigt wird
+  //   });
+  // }
+
+  // showEmojiSnackbar(emoji: string, user: string) {
+  //   this.snackBar.openFromComponent(EmojiSnackbarComponent, {
+  //     data: { emoji: emoji, user: user },
+  //     duration: 2000,
+  //     panelClass: ['custom-snackbar']
+  //   });
+  // }
+
+  showEmojiSnackbar(emoji: string, user: string) {
+    this.snackBar.openFromComponent(EmojiSnackbarComponent, {
+      data: { emoji: emoji, user: user },
+      // duration: 2500,
+    });
   }
 
   getItemValuesProfile(collection: string, itemID: string) {
@@ -135,6 +161,9 @@ export class ConversationComponent implements OnInit {
       });
     }
     console.log('Emoji-Reaktionen:', this.emojiReactions);
+
+    // Show the snackbar
+    this.showEmojiSnackbar(selectedEmoji, this.authService.activeUserAccount.displayName);
   }
 
   getUserReactionCount(selectedEmoji: string): number {
@@ -236,7 +265,7 @@ export class ConversationComponent implements OnInit {
   }
 
   changeMessage(event: any): void {
-    console.log('ende der bearbeitung');    
+    console.log('ende der bearbeitung');
     this.isMessageDisabled = true;
     // update der Message!
   }
