@@ -11,6 +11,7 @@ import { DateFormatService } from '../../services/date-format.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { ViewEncapsulation } from '@angular/core';
 import {EmojiSnackbarComponent} from '../emoji-snackbar/emoji-snackbar.component';
+import {PositionService} from '../../services/position.service';
 
 @Component({
   selector: 'app-conversation',
@@ -24,7 +25,8 @@ export class ConversationComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     public dateFormatService: DateFormatService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private positionService: PositionService
   ) {
     this.getCurrentDay();
   }
@@ -97,8 +99,18 @@ export class ConversationComponent implements OnInit {
   showEmojiSnackbar(emoji: string, user: string) {
     this.snackBar.openFromComponent(EmojiSnackbarComponent, {
       data: { emoji: emoji, user: user },
-      // duration: 2500,
+      duration: 2500,
     });
+  }
+
+  setReactionGroupPosition() {
+    const reactionGroupDiv = document.querySelector('.reaction-group.pointer');
+    if (reactionGroupDiv) {
+      const rect = reactionGroupDiv.getBoundingClientRect();
+      this.positionService.setPosition(rect.top, rect.left);
+    } else {
+      console.error('Element mit der Klasse "reaction-group pointer" wurde nicht gefunden');
+    }
   }
 
   getItemValuesProfile(collection: string, itemID: string) {
