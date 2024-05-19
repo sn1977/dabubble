@@ -41,6 +41,7 @@ export class ConversationComponent implements OnInit {
   isLoading: boolean = true;
   answerCount: number = 0;
   lastAnswerTime: any;
+  isMessageDisabled: boolean = true;
 
   getCurrentDay() {
     const date = new Date();
@@ -54,10 +55,9 @@ export class ConversationComponent implements OnInit {
     this.getItemValuesProfile('users', this.channelMessage.creator);
     this.messageDate = this.channelMessage.createdAt;
     this.isMessageFromYou =
-    this.authService.activeUserAccount.uid === this.channelMessage.creator;
+      this.authService.activeUserAccount.uid === this.channelMessage.creator;
     this.isLoading = true;
     this.getAnswers();
-
 
     //NOTE - @Sascha: Hier befüllen wir das noch leere Array mit den Daten aus der Datenbank
     this.fillEmojiReactions();
@@ -168,6 +168,9 @@ export class ConversationComponent implements OnInit {
   toggleReactionBar(event: any): void {
     event.preventDefault();
     this.showReactionBar = !this.showReactionBar;
+    if(!this.showReactionBar){
+      this.showEditMessage = false;
+    }
   }
 
   updateReactionsInDatabase(): void {
@@ -223,6 +226,19 @@ export class ConversationComponent implements OnInit {
   toggleEditMessage(event: any): void {
     event.preventDefault();
     this.showEditMessage = !this.showEditMessage;
+  }
+
+  editMessage(event: any): void {
+    this.toggleReactionBar(event);
+    this.isMessageDisabled = false;
+    console.log('start bearbeitung');
+    // setze Focus auf die Textbox
+  }
+
+  changeMessage(event: any): void {
+    console.log('ende der bearbeitung');    
+    this.isMessageDisabled = true;
+    // update der Message!
   }
 
 }
