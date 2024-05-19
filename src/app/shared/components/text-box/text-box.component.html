@@ -32,80 +32,199 @@
               name="inputField"
               id="inputField"
             >
-            @if(add_hovered){
-            <img src="./assets/img/icon/add_hover.svg" />
-            }@else{
-            <img src="./assets/img/icon/add.svg" />
+            @if (add_hovered) {
+              <img src="./assets/img/icon/add_hover.svg"/>
+            } @else {
+              <img src="./assets/img/icon/add.svg"/>
             }
           </label>
 
-          @if(this.selectedFiles){
-            <img class="preview" src="{{ this.textBoxData.inputField }}" />
+          @if (this.selectedFiles) {
+            <img class="preview" src="{{ this.textBoxData.inputField }}"/>
           }
 
           <div class="vertical-line"></div>
-
-          @if(smile_hovered){
-          <img
-            class="pointer"
-            (mouseenter)="smile_hovered = true"
-            (mouseleave)="deleteHovered()"
-            (click)="openEmojiPicker()"
-            src="./assets/img/icon/smile_hover.svg"
-            alt=""
-          />
-          }@else{
-          <img
-            class="pointer"
-            (mouseenter)="smile_hovered = true"
-            (mouseleave)="deleteHovered()"
-            src="./assets/img/icon/smile.svg"
-            alt=""
-          />
-          } @if(email_hovered){
-          <img
-            class="pointer"
-            (mouseenter)="email_hovered = true"
-            (mouseleave)="deleteHovered()"
-            src="./assets/img/icon/email_hover.svg"
-            alt=""
-          />
-          }@else{
-          <img
-            class="pointer"
-            (mouseenter)="email_hovered = true"
-            (mouseleave)="deleteHovered()"
-            src="./assets/img/icon/email.svg"
-            alt=""
-          />
+          @if (smile_hovered) {
+            <img
+              class="pointer"
+              (mouseenter)="smile_hovered = true"
+              (mouseleave)="deleteHovered()"
+              (click)="openEmojiPickerDialog()"
+              src="./assets/img/icon/smile.svg"
+              alt=""
+            />
+            <!-- Rest of your code -->
+          } @else {
+            <img
+              class="pointer"
+              (mouseenter)="smile_hovered = true"
+              (mouseleave)="deleteHovered()"
+              src="./assets/img/icon/smile.svg"
+              alt=""
+            />
+          }
+          @if (email_hovered) {
+            <img
+              class="pointer"
+              (mouseenter)="email_hovered = true"
+              (mouseleave)="deleteHovered()"
+              src="./assets/img/icon/email_hover.svg"
+              alt=""
+            />
+          } @else {
+            <img
+              class="pointer"
+              (mouseenter)="email_hovered = true"
+              (mouseleave)="deleteHovered()"
+              src="./assets/img/icon/email.svg"
+              alt=""
+            />
           }
         </div>
 
-        @if(send_hovered){
-        <img
-          class="pointer"
-          (click)="onSubmit()"
-          (mouseenter)="send_hovered = true"
-          (touchstart)="onSubmit()"
-          (mouseleave)="deleteHovered()"
-          src="./assets/img/icon/send_hover.svg"
-          alt=""
-        />
-        }@else{
-        <img
-          class="pointer"
-          (click)="onSubmit()"
-          (mouseenter)="send_hovered = true"
-          (touchstart)="onSubmit()"
-          (mouseleave)="deleteHovered()"
-          src="./assets/img/icon/send.svg"
-          alt=""
-        />
+        @if (send_hovered) {
+          <img
+            class="pointer"
+            (click)="onSubmit()"
+            (mouseenter)="send_hovered = true"
+            (touchstart)="onSubmit()"
+            (mouseleave)="deleteHovered()"
+            src="./assets/img/icon/send_hover.svg"
+            alt=""
+          />
+        } @else {
+          <img
+            class="pointer"
+            (click)="onSubmit()"
+            (mouseenter)="send_hovered = true"
+            (touchstart)="onSubmit()"
+            (mouseleave)="deleteHovered()"
+            src="./assets/img/icon/send.svg"
+            alt=""
+          />
         }
       </div>
     </div>
   </form>
+  <emoji-mart *ngIf="openEmojiPicker" (emojiClick)="addEmoji($event)"></emoji-mart>
 </div>
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </form>-->
+
+<!--</div>-->
+
+
+<!--<div class="footer">-->
+<!--  <form (ngSubmit)="onSubmit()" #messageForm="ngForm" ngNativeValidate>-->
+<!--    <div class="message-box">-->
+<!--      <div class="text-content">-->
+<!--        <textarea-->
+<!--          type="text"-->
+<!--          minlength="1"-->
+<!--          placeholder="{{ this.textBoxData.placeholder }} {{-->
+<!--            this.textBoxData.channelName-->
+<!--          }}"-->
+<!--          name="messageText"-->
+<!--          id="messageText"-->
+<!--          #messageText="ngModel"-->
+<!--          [(ngModel)]="textBoxData.messageText"-->
+<!--          required-->
+<!--          (keydown.enter)="submitForm($event)"-->
+<!--        ></textarea>-->
+<!--      </div>-->
+<!--      <div class="actions">-->
+<!--        <div class="other-content">-->
+<!--          <label-->
+<!--            for="inputField"-->
+<!--            class="pointer"-->
+<!--            (mouseenter)="add_hovered = true"-->
+<!--            (mouseleave)="deleteHovered()"-->
+<!--          >-->
+
+<!--            <input-->
+<!--              type="file"-->
+<!--              (change)="detectFile($event)"-->
+<!--              accept="image/*"-->
+<!--              name="inputField"-->
+<!--              id="inputField"-->
+<!--            >-->
+<!--            @if(add_hovered){-->
+<!--            <img src="./assets/img/icon/add_hover.svg" />-->
+<!--            }@else{-->
+<!--            <img src="./assets/img/icon/add.svg" />-->
+<!--            }-->
+<!--          </label>-->
+
+<!--          @if(this.selectedFiles){-->
+<!--            <img class="preview" src="{{ this.textBoxData.inputField }}" />-->
+<!--          }-->
+
+<!--          <div class="vertical-line"></div>-->
+
+<!--          @if(smile_hovered){-->
+<!--          <img-->
+<!--            class="pointer"-->
+<!--            (mouseenter)="smile_hovered = true"-->
+<!--            (mouseleave)="deleteHovered()"-->
+<!--            (click)="openEmojiPicker()"-->
+<!--            src="./assets/img/icon/smile_hover.svg"-->
+<!--            alt=""-->
+<!--          />-->
+<!--          }@else{-->
+<!--          <img-->
+<!--            class="pointer"-->
+<!--            (mouseenter)="smile_hovered = true"-->
+<!--            (mouseleave)="deleteHovered()"-->
+<!--            src="./assets/img/icon/smile.svg"-->
+<!--            alt=""-->
+<!--          />-->
+<!--          } @if(email_hovered){-->
+<!--          <img-->
+<!--            class="pointer"-->
+<!--            (mouseenter)="email_hovered = true"-->
+<!--            (mouseleave)="deleteHovered()"-->
+<!--            src="./assets/img/icon/email_hover.svg"-->
+<!--            alt=""-->
+<!--          />-->
+<!--          }@else{-->
+<!--          <img-->
+<!--            class="pointer"-->
+<!--            (mouseenter)="email_hovered = true"-->
+<!--            (mouseleave)="deleteHovered()"-->
+<!--            src="./assets/img/icon/email.svg"-->
+<!--            alt=""-->
+<!--          />-->
+<!--          }-->
+<!--        </div>-->
+
+<!--        @if(send_hovered){-->
+<!--        <img-->
+<!--          class="pointer"-->
+<!--          (click)="onSubmit()"-->
+<!--          (mouseenter)="send_hovered = true"-->
+<!--          (touchstart)="onSubmit()"-->
+<!--          (mouseleave)="deleteHovered()"-->
+<!--          src="./assets/img/icon/send_hover.svg"-->
+<!--          alt=""-->
+<!--        />-->
+<!--        }@else{-->
+<!--        <img-->
+<!--          class="pointer"-->
+<!--          (click)="onSubmit()"-->
+<!--          (mouseenter)="send_hovered = true"-->
+<!--          (touchstart)="onSubmit()"-->
+<!--          (mouseleave)="deleteHovered()"-->
+<!--          src="./assets/img/icon/send.svg"-->
+<!--          alt=""-->
+<!--        />-->
+<!--        }-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </form>-->
+<!--</div>-->
+
 
 <!--<div class="footer">-->
 <!--  <form (ngSubmit)="onSubmit()" #messageForm="ngForm" ngNativeValidate>-->

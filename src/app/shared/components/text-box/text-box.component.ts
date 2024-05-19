@@ -1,18 +1,21 @@
-import { CommonModule } from '@angular/common';
-import { Component, Input, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { ChannelMessage } from '../../../../models/channel-message.class';
-import { AuthService } from '../../services/auth.service';
-import { FirebaseService } from '../../services/firebase.service';
-import { ActivatedRoute } from '@angular/router';
-import { UploadService } from '../../services/upload.service';
-import { serverTimestamp } from '@angular/fire/firestore';
-import { EmojiService } from '../../services/emoji.service';
+import {CommonModule} from '@angular/common';
+import {Component, Input, inject} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {ChannelMessage} from '../../../../models/channel-message.class';
+import {AuthService} from '../../services/auth.service';
+import {FirebaseService} from '../../services/firebase.service';
+import {ActivatedRoute} from '@angular/router';
+import {UploadService} from '../../services/upload.service';
+import {serverTimestamp} from '@angular/fire/firestore';
+import {EmojiEvent} from '@ctrl/ngx-emoji-mart/ngx-emoji';
+import {PickerComponent} from '@ctrl/ngx-emoji-mart';
+import {MatDialog} from '@angular/material/dialog';
+import {EmojiPickerComponent} from '../emoji-picker/emoji-picker.component';
 
 @Component({
   selector: 'app-text-box',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, PickerComponent],
   templateUrl: './text-box.component.html',
   styleUrl: './text-box.component.scss',
 })
@@ -23,6 +26,7 @@ export class TextBoxComponent {
   selectedFiles: FileList | undefined;
   filedate: number | undefined;
   errorMessage: string | null = null;
+  openEmojiPicker: boolean = false;
 
   @Input() textBoxData: any;
 
@@ -34,14 +38,12 @@ export class TextBoxComponent {
   constructor(
     private route: ActivatedRoute,
     private uploadService: UploadService,
-    private emojiPickerService: EmojiService
-  ) {
+    private dialog: MatDialog
+  ) {}
 
-      // Subscribe to the emojiClicked$ observable to receive updates
-      this.emojiPickerService.emojiClicked$.subscribe(emoji => {
-        // Do something with the clicked emoji
-        console.log(emoji);
-      });
+  addEmoji(event: EmojiEvent) {
+    const {emoji} = event;
+    this.textBoxData.messageText += emoji.native;
   }
 
   deleteHovered() {
@@ -106,9 +108,18 @@ export class TextBoxComponent {
     }
   }
 
-  openEmojiPicker() {
-    // Use the emojiPickerService to notify all subscribers that an emoji was clicked
-    this.emojiPickerService.emojiClicked('😀');
+  openEmojiPickerDialog(): void {
+    const dialogRef = this.dialog.open(EmojiPickerComponent, {
+      width: '400px',
+      height: '300px',
+    });
+
+
+    dialogRef.componentInstance.emojiSelect.subscribe((event: string) => {
+      console.log('Empfangenes Emoji:', event);
+      this.addEmoji({emoji: {native: event}} as EmojiEvent); // Konvertieren Sie den empfangenen String in ein EmojiEvent Objekt
+      dialogRef.close();
+    });
   }
 }
 

@@ -1,8 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { EmojiService } from '../../services/emoji.service';
 import {Emoji, EmojiEvent} from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
-import {ChannelMessage} from '../../../../models/channel-message.class';
 
 @Component({
   selector: 'app-emoji-picker',
