@@ -225,6 +225,9 @@ export class ConversationComponent implements OnInit {
       reaction.users.splice(userIndex, 1);
     }
     this.updateReactionsInDatabase();
+
+    // Show the snackbar
+    this.showEmojiSnackbar(reaction.emoji, this.authService.activeUserAccount.displayName);
   }
 
   toggleReactionBar(event: any): void {
