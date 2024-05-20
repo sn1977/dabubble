@@ -12,6 +12,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import { ViewEncapsulation } from '@angular/core';
 import {EmojiSnackbarComponent} from '../emoji-snackbar/emoji-snackbar.component';
 import {PositionService} from '../../services/position.service';
+import {SnackbarOverlayService} from '../../services/snackbar-overlay.service';
 
 @Component({
   selector: 'app-conversation',
@@ -26,7 +27,8 @@ export class ConversationComponent implements OnInit {
     private dialog: MatDialog,
     public dateFormatService: DateFormatService,
     private snackBar: MatSnackBar,
-    private positionService: PositionService
+    private positionService: PositionService,
+    private snackbarOverlayService: SnackbarOverlayService
   ) {
     this.getCurrentDay();
   }
@@ -96,15 +98,34 @@ export class ConversationComponent implements OnInit {
   //   });
   // }
 
+  // showEmojiSnackbar(emoji: string, user: string) {
+  //   this.setReactionGroupPosition();
+  //   this.snackBar.openFromComponent(EmojiSnackbarComponent, {
+  //     data: { emoji: emoji, user: user },
+  //     duration: 2500,
+  //   });
+  // }
+
+
   showEmojiSnackbar(emoji: string, user: string) {
-    this.snackBar.openFromComponent(EmojiSnackbarComponent, {
-      data: { emoji: emoji, user: user },
-      duration: 2500,
-    });
+    const reactionGroupDiv = document.querySelector('.reaction-group.pointer');
+    if (reactionGroupDiv) {
+      const rect = reactionGroupDiv.getBoundingClientRect();
+      const snackbarHeight = 48; // Ersetzen Sie dies durch die tatsächliche Höhe Ihrer Snackbar
+      const snackbarWidth = 200; // Ersetzen Sie dies durch die tatsächliche Breite Ihrer Snackbar
+      this.snackbarOverlayService.open({
+        // top: rect.top - snackbarHeight,
+        // left: rect.right - snackbarWidth,
+        emoji,
+        user
+      });
+    } else {
+      console.error('Element mit der Klasse "reaction-group pointer" wurde nicht gefunden');
+    }
   }
 
   setReactionGroupPosition() {
-    const reactionGroupDiv = document.querySelector('.reaction-group.pointer');
+    const reactionGroupDiv = document.querySelector('.reaction-group .pointer');
     if (reactionGroupDiv) {
       const rect = reactionGroupDiv.getBoundingClientRect();
       this.positionService.setPosition(rect.top, rect.left);
