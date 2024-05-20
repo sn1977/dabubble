@@ -43,6 +43,7 @@ export class ConversationComponent implements OnInit {
   firestore = inject(FirebaseService);
   authService = inject(AuthService);
   @Input() channelMessage!: ChannelMessage;
+  @Input() isChannel!: boolean;
   @Input() index!: number;
   user: User = new User();
   edit: boolean = false;
@@ -59,7 +60,7 @@ export class ConversationComponent implements OnInit {
   lastAnswerTime: any;
   isMessageDisabled: boolean = true;
   showEmojiSnackbarStefan: boolean = false;
-  @ViewChild('myInput') myInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('messageToEdit') messageToEdit!: ElementRef<HTMLInputElement>;
 
   getCurrentDay() {
     const date = new Date();
@@ -303,12 +304,12 @@ export class ConversationComponent implements OnInit {
   editMessage(event: any, id?: string): void {
     if (id) {
       this.isMessageDisabled = false;
-      const setFocusMessage = this.myInput.nativeElement.value;
+      const setFocusMessage = this.messageToEdit.nativeElement.value;
       if (setFocusMessage) {
         setTimeout(() => {
           this.showEditMessage = false;
           this.showReactionBar = false;
-          this.myInput.nativeElement.focus();
+          this.messageToEdit.nativeElement.focus();
         }, 200);
       } else {
         console.log('nicht gefunden');
@@ -316,11 +317,19 @@ export class ConversationComponent implements OnInit {
     }
   }
 
-  changeMessage(event: any, id?: string): void {
-    if (id) {
-      console.log(id);
-      console.log(this.myInput.nativeElement.value);
-      // this.firestore.updateSingleMessageText();
+  changeMessage(event: any): void {
+    const colId = this.isChannel == true ? 'channels' : 'messages';
+    const docId = this.channelMessage.channelId;
+    const messageId = this.channelMessage.messageId;
+
+    if (messageId) {
+      const updateMessage = this.messageToEdit.nativeElement.value;
+      this.firestore.updateSingleMessageText(
+        colId,
+        docId,
+        messageId,
+        updateMessage
+      );
     }
     this.isMessageDisabled = true;
   }

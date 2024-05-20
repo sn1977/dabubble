@@ -15,7 +15,7 @@ import {
   getDocs,
   and,
   increment,
-  getDoc,  
+  getDoc,
   limit,
 } from '@angular/fire/firestore';
 import { User } from '../../../models/user.class';
@@ -395,25 +395,60 @@ export class FirebaseService {
   //   console.log(channelId, messageId, user, emoji);
   // }
 
-  async getThreadData(channelId: string, messageId: string | undefined): Promise<{ threadCount: number, newestCreatedAt: any }> {
+  async getThreadData(
+    channelId: string,
+    messageId: string | undefined
+  ): Promise<{ threadCount: number; newestCreatedAt: any }> {
     return new Promise((resolve, reject) => {
       const threadsRef = collection(
         this.getChannelsRef(),
         `${channelId}/channelmessages/${messageId}/threads`
       );
-      
-      onSnapshot(threadsRef, (snapshot) => {
-        const threadCount = snapshot.size;
-        const newestThreadQuery = query(threadsRef, orderBy("createdAt", "desc"), limit(1));
-        onSnapshot(newestThreadQuery, (newestSnapshot) => {
-          let newestCreatedAt = null;
-          if (!newestSnapshot.empty) {
-            const newestThreadDoc = newestSnapshot.docs[0];
-            newestCreatedAt = newestThreadDoc.data()['createdAt'];
-          }
-          resolve({ threadCount, newestCreatedAt });
-        }, reject);
-      }, reject);
+
+      onSnapshot(
+        threadsRef,
+        (snapshot) => {
+          const threadCount = snapshot.size;
+          const newestThreadQuery = query(
+            threadsRef,
+            orderBy('createdAt', 'desc'),
+            limit(1)
+          );
+          onSnapshot(
+            newestThreadQuery,
+            (newestSnapshot) => {
+              let newestCreatedAt = null;
+              if (!newestSnapshot.empty) {
+                const newestThreadDoc = newestSnapshot.docs[0];
+                newestCreatedAt = newestThreadDoc.data()['createdAt'];
+              }
+              resolve({ threadCount, newestCreatedAt });
+            },
+            reject
+          );
+        },
+        reject
+      );
+    });
+  }
+
+  async updateSingleMessageText(
+    colId: string,
+    docId: string,
+    id: string,
+    updateMessage: string
+  ) {
+    const collection = colId === 'channels' ? 'channels' : 'messages';
+    const subcollection =
+      collection === 'channels' ? 'channelmessages' : 'chat';
+
+    const documentRef = doc(
+      this.getSingleDocRef(collection, docId),
+      subcollection,
+      id
+    );
+    await updateDoc(documentRef, {
+      text: updateMessage,
     });
   }
 }

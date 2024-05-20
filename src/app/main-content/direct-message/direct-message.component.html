@@ -32,7 +32,7 @@
     >
       @for (chat of this.firestore.channelMessages; track
       chat.id) {
-      <app-conversation [channelMessage]="chat"></app-conversation>
+      <app-conversation [channelMessage]="chat" [isChannel]="false"></app-conversation>
       }
     </div>
   </div>

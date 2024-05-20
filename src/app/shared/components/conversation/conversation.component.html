@@ -45,8 +45,7 @@
       </div>
 
       @if (isMessageFromYou) {
-        <form (ngSubmit)="changeMessage($event, channelMessage.messageId)" ngNativeValidate>
-        <!-- <form ngNativeValidate> -->
+      <form ngNativeValidate>
         <textarea
         class="message text-white"
         [ngStyle]="{
@@ -56,16 +55,15 @@
             : '30px 0 30px 30px'
         }"
         [disabled]="isMessageDisabled"
-        id="{{ channelMessage.messageId }}" 
-        #myInput       
+        id="{{ channelMessage.messageId }}"
+        #messageToEdit
         cols="30"
         rows="10"
         minlength="1"
         required
-        (change)="changeMessage($event, channelMessage.messageId)"
+        (change)="changeMessage($event)"
         >{{ channelMessage.text }}</textarea>
       </form>
-      <!-- {{ channelMessage.text }} -->
       
       } @else {
       <div
