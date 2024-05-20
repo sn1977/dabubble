@@ -51,6 +51,7 @@ export class ConversationComponent implements OnInit {
   answerCount: number = 0;
   lastAnswerTime: any;
   isMessageDisabled: boolean = true;
+  showEmojiSnackbarStefan: boolean = false;
 
   getCurrentDay() {
     const date = new Date();

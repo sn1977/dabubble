@@ -104,13 +104,26 @@
     <div class="reaction-infos" (click)="doNotClose($event)">
       <div class="reactions">
         <ng-container *ngFor="let reaction of channelMessage.reactions">
-          <div *ngIf="reaction.emoji" class="reaction-group pointer">
+          <div *ngIf="reaction.emoji" class="reaction-group pointer"
+          (mouseenter)="showEmojiSnackbarStefan = true"
+          (mouseleave)="showEmojiSnackbarStefan = false"
+          >
             <span class="reaction-icon" (click)="toggleReaction(reaction)">{{
               reaction.emoji
             }}</span>
             <div class="reaction-count">
               {{ getUserReactionCount(reaction.emoji) }}
             </div>
+
+            @if(showEmojiSnackbarStefan){
+              <div class="reaction-snackbar">
+                {{
+                  reaction.emoji
+                }}
+              HARDCECODED hat reagiert
+            </div>
+          }
+
           </div>
         </ng-container>
       </div>
