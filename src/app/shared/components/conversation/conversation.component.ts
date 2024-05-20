@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit, inject } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  ViewChild,
+  inject,
+} from '@angular/core';
 import { ChannelMessage } from '../../../../models/channel-message.class';
 import { User } from '../../../../models/user.class';
 import { FirebaseService } from '../../services/firebase.service';
@@ -8,11 +15,11 @@ import { EmojiPickerComponent } from '../emoji-picker/emoji-picker.component';
 import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { DateFormatService } from '../../services/date-format.service';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ViewEncapsulation } from '@angular/core';
-import {EmojiSnackbarComponent} from '../emoji-snackbar/emoji-snackbar.component';
-import {PositionService} from '../../services/position.service';
-import {SnackbarOverlayService} from '../../services/snackbar-overlay.service';
+import { EmojiSnackbarComponent } from '../emoji-snackbar/emoji-snackbar.component';
+import { PositionService } from '../../services/position.service';
+import { SnackbarOverlayService } from '../../services/snackbar-overlay.service';
 
 @Component({
   selector: 'app-conversation',
@@ -20,7 +27,7 @@ import {SnackbarOverlayService} from '../../services/snackbar-overlay.service';
   templateUrl: './conversation.component.html',
   styleUrl: './conversation.component.scss',
   imports: [CommonModule, MatDialogModule, EmojiPickerComponent, FormsModule],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class ConversationComponent implements OnInit {
   constructor(
@@ -52,6 +59,7 @@ export class ConversationComponent implements OnInit {
   lastAnswerTime: any;
   isMessageDisabled: boolean = true;
   showEmojiSnackbarStefan: boolean = false;
+  @ViewChild('myInput') myInput!: ElementRef<HTMLInputElement>;
 
   getCurrentDay() {
     const date = new Date();
@@ -107,7 +115,6 @@ export class ConversationComponent implements OnInit {
   //   });
   // }
 
-
   showEmojiSnackbar(emoji: string, user: string) {
     const reactionGroupDiv = document.querySelector('.reaction-group.pointer');
     if (reactionGroupDiv) {
@@ -118,10 +125,12 @@ export class ConversationComponent implements OnInit {
         // top: rect.top - snackbarHeight,
         // left: rect.right - snackbarWidth,
         emoji,
-        user
+        user,
       });
     } else {
-      console.error('Element mit der Klasse "reaction-group pointer" wurde nicht gefunden');
+      console.error(
+        'Element mit der Klasse "reaction-group pointer" wurde nicht gefunden'
+      );
     }
   }
 
@@ -131,7 +140,9 @@ export class ConversationComponent implements OnInit {
       const rect = reactionGroupDiv.getBoundingClientRect();
       this.positionService.setPosition(rect.top, rect.left);
     } else {
-      console.error('Element mit der Klasse "reaction-group pointer" wurde nicht gefunden');
+      console.error(
+        'Element mit der Klasse "reaction-group pointer" wurde nicht gefunden'
+      );
     }
   }
 
@@ -197,7 +208,10 @@ export class ConversationComponent implements OnInit {
     console.log('Emoji-Reaktionen:', this.emojiReactions);
 
     // Show the snackbar
-    this.showEmojiSnackbar(selectedEmoji, this.authService.activeUserAccount.displayName);
+    this.showEmojiSnackbar(
+      selectedEmoji,
+      this.authService.activeUserAccount.displayName
+    );
   }
 
   getUserReactionCount(selectedEmoji: string): number {
@@ -228,14 +242,18 @@ export class ConversationComponent implements OnInit {
     this.updateReactionsInDatabase();
 
     // Show the snackbar
-    this.showEmojiSnackbar(reaction.emoji, this.authService.activeUserAccount.displayName);
+    this.showEmojiSnackbar(
+      reaction.emoji,
+      this.authService.activeUserAccount.displayName
+    );
   }
 
   toggleReactionBar(event: any): void {
     event.preventDefault();
     this.showReactionBar = !this.showReactionBar;
-    if(!this.showReactionBar){
+    if (!this.showReactionBar) {
       this.showEditMessage = false;
+      this.isMessageDisabled = true;
     }
   }
 
@@ -257,11 +275,6 @@ export class ConversationComponent implements OnInit {
     }
   }
 
-  reactionBarAction(event: any): void {
-    event.preventDefault();
-    console.log('hallo');
-  }
-
   doNotClose(event: any): void {
     event.stopPropagation();
   }
@@ -275,17 +288,10 @@ export class ConversationComponent implements OnInit {
 
       this.answerCount = data.threadCount;
       this.lastAnswerTime = data.newestCreatedAt;
-
-      // if(data){
-      //   this.answerCount = data.threadCount;
-      //   this.lastAnswerTime = data.newestCreatedAt;
-      // }else{
-      //   this.answerCount = 0;
-      // }
     } catch (error) {
       console.error('Fehler beim Abrufen der Daten:', error);
     } finally {
-      this.isLoading = false; // Ladezustand auf false setzen, wenn die Abfrage fertig ist
+      this.isLoading = false;
     }
   }
 
@@ -295,267 +301,27 @@ export class ConversationComponent implements OnInit {
   }
 
   editMessage(event: any, id?: string): void {
-    this.toggleReactionBar(event);
-    this.isMessageDisabled = false;
-    // setze Focus auf die Textbox
-    if(id){
-      const setFocusMessage = document.getElementById(`${id}`)as HTMLElement | null;    
-      if (setFocusMessage){
-        setFocusMessage.focus();        
-      }
-      else {
-        console.log('nicht gefunden');      
+    if (id) {
+      this.isMessageDisabled = false;
+      const setFocusMessage = this.myInput.nativeElement.value;
+      if (setFocusMessage) {
+        setTimeout(() => {
+          this.showEditMessage = false;
+          this.showReactionBar = false;
+          this.myInput.nativeElement.focus();
+        }, 200);
+      } else {
+        console.log('nicht gefunden');
       }
     }
-    // reactionBar ausblenden
   }
 
-  changeMessage(event: any): void {
-    console.log('ende der bearbeitung');
+  changeMessage(event: any, id?: string): void {
+    if (id) {
+      console.log(id);
+      console.log(this.myInput.nativeElement.value);
+      // this.firestore.updateSingleMessageText();
+    }
     this.isMessageDisabled = true;
-    // update der Message!
   }
-
 }
-
-/*import {CommonModule} from '@angular/common';
-import {Component, Input, OnInit, inject} from '@angular/core';
-import {ChannelMessage} from '../../../../models/channel-message.class';
-import {User} from '../../../../models/user.class';
-import {FirebaseService} from '../../services/firebase.service';
-import {MatDialog, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
-import {EmojiPickerComponent} from '../emoji-picker/emoji-picker.component';
-import {AuthService} from '../../services/auth.service';
-import {FormsModule} from '@angular/forms';
-import {DateFormatService} from '../../services/date-format.service';
-import {Channel} from '../../../../models/channel.class';
-import { Router, RouterLink } from '@angular/router';
-import { ActivatedRoute } from '@angular/router';
-import { addDoc, collection } from '@angular/fire/firestore';
-
-@Component({
-  selector: 'app-conversation',
-  standalone: true,
-  templateUrl: './conversation.component.html',
-  styleUrl: './conversation.component.scss',
-  imports: [CommonModule, MatDialogModule, EmojiPickerComponent, FormsModule, RouterLink],
-})
-export class ConversationComponent implements OnInit {
-  constructor(
-    private dialog: MatDialog,
-    public dateFormatService: DateFormatService,
-    private route: ActivatedRoute,
-  ) {
-    this.getCurrentDay();
-  }
-
-  firestore = inject(FirebaseService);
-  authService = inject(AuthService);
-  @Input() channelMessage!: ChannelMessage;
-  @Input() index!: number;
-
-
-  edit: boolean = false;
-  hovered: boolean = false;
-  isMessageFromYou: boolean = false;
-  previousDate?: any;
-  currentDate: any;
-  messageDate: any;
-  isToday: boolean = false;
-  emojiCharacter: string = '';
-  isEmojiSelected: boolean = false;
-  emojiReactions: { emoji: string, count: number }[] = [];
-  contentCount: number = 0;
-  user: User = new User();
-  channel: Channel = new Channel();
-  itemID: any = '';
-
-  userData = {
-    avatar: this.user.avatar,
-    email: this.user.email,
-    displayName: this.user.displayName,
-    isOnline: this.user.isOnline,
-    provider: this.user.provider,
-    selected: this.user.selected,
-    count: this.user.count,
-    newMessage: this.user.newMessage
-
-  }
-
-  channelData = {
-    creator: this.channel.creator,
-    description: this.channel.description,
-    member: this.channel.member,
-    name: this.channel.name,
-    count: this.channel.count,
-    newMessage: this.channel.newMessage,
-    allMembers: this.channel.allMembers
-
-  };
-
-  addCountToChannelDocument(toggle: string) {
-
-    /*const channel = new Channel({
-      creator: this.channel.creator,
-      description: this.channel.description,
-      member: this.channel.member,
-      name: this.channel.name,
-      count: this.contentCount,
-      newMessage: this.channel.newMessage,
-      allMembers: this.channel.allMembers
-
-    });
-
-    const user = new User({
-      avatar: this.user.avatar,
-      email: this.user.email,
-      displayName: this.user.displayName,
-      isOnline: this.user.isOnline,
-      provider: this.user.provider,
-      selected: this.user.selected,
-      count: this.contentCount,
-      newMessage: this.user.newMessage
-    });
-
-    //this.firestore.updateChannel(this.itemID, channel);
-    this.firestore.updateUser(user, this.itemID, );
-  }
-
-  countContentElements(): void {
-    const contentDivs = document.querySelectorAll('.content');
-    this.contentCount = contentDivs.length;
-    this.contentCount--;
-
-
-
-  }
-
-  getCurrentDay() {
-    const date = new Date();
-    let day = date.getDate().toString().padStart(2, '0');
-    let month = (date.getMonth() + 1).toString().padStart(2, '0');
-    let year = date.getFullYear().toString();
-    this.currentDate = year + month + day;
-  }
-
-  ngOnInit(): void {
-
-    this.countContentElements();
-
-    this.route.paramMap.subscribe((paramMap) => {
-      this.itemID = paramMap.get('id');
-
-      //this.getItemValues('channels', this.itemID);
-      this.getItemValuesTwo('users', this.itemID);
-
-      setTimeout(() => {
-         this.addCountToChannelDocument(this.itemID);
-      }, 1000)
-    });
-  }
-
-  /*getItemValues(collection: string, itemID: string) {
-    this.firestore.getSingleItemData(collection, itemID, () => {
-      this.channel = new Channel(this.firestore.channel);
-      this.setOldChannelValues();
-
-    });
-  }
-
-  setOldChannelValues(){
-    this.channelData = {
-      creator: this.channel.creator,
-      description: this.channel.description,
-      member: this.channel.member,
-      name: this.channel.name,
-      count: this.channel.count,
-      newMessage: this.channel.newMessage,
-      allMembers: this.channel.allMembers
-    };
-  }
-
-  getItemValuesTwo(collection: string, itemID: string) {
-    this.firestore.getSingleItemData(collection, itemID, () => {
-      this.user = new User(this.firestore.user);
-      this.setOldUserValuesTwo();
-
-    });
-  }
-
-  setOldUserValuesTwo(){
-    this.userData = {
-      avatar: this.user.avatar,
-      email: this.user.email,
-      displayName: this.user.displayName,
-      isOnline: this.user.isOnline,
-      provider: this.user.provider,
-      selected: this.user.selected,
-      count: this.user.count,
-      newMessage: this.user.newMessage
-    };
-
-  }
-
-  deleteHovered() {
-    if (!this.edit) {
-      this.hovered = false;
-    }
-  }
-
-  openEmojiPicker(): void {
-    const dialogRef = this.dialog.open(EmojiPickerComponent, {
-      width: '400px',
-      height: '300px',
-    });
-
-    dialogRef.componentInstance.emojiSelect.subscribe(selectedEmoji => {
-      console.log('Empfangenes Emoji:', selectedEmoji);
-      // this.updateEmoji(selectedEmoji);
-      this.addEmojiReaction(selectedEmoji);
-      dialogRef.close();
-    });
-  }
-
-  // updateEmoji(selectedEmoji: string) {
-  //   console.log('Update Emoji auf:', selectedEmoji);
-  //   this.emojiCharacter = selectedEmoji;
-  // }
-
-  addEmojiReaction(selectedEmoji: string) {
-    const existingEmoji = this.emojiReactions.find(e => e.emoji === selectedEmoji);
-    if (existingEmoji) {
-      existingEmoji.count++;
-    } else {
-      this.emojiReactions.push({emoji: selectedEmoji, count: 1});
-    }
-    console.log('Emoji-Reaktionen:', this.emojiReactions);
-    // this.updateEmoji();
-  }
-
-  toggleReaction(reaction: any): void {
-    if (!reaction.toggled) {
-      reaction.count++;
-      reaction.toggled = true;
-    } else {
-      reaction.count--;
-      reaction.toggled = false;
-    }
-}
-
-  // updateEmoji() {
-  //   console.log('Hallo');
-  //   const message = new ChannelMessage({
-  //     creator: this.authService.activeUserId,
-  //     text: this.textBoxData.messageText,
-  //     channelId: this.textBoxData.channelId,
-  //     createdAt: this.textBoxData.createdAt,
-  //     reactions:  this.emojiReactions,
-  //     collection: this.textBoxData.collection,
-  //     subcollection: this.textBoxData.subcollection,
-  //     attachment: 'Anhang',
-  //   });
-  //
-  //   this.firestore.addChannelMessage(message, `${this.textBoxData.collection}/${message.channelId}/${this.textBoxData.subcollection}`);
-  //   console.log(this.emojiReactions);
-  // }
-}*/

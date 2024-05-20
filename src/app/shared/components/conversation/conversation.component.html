@@ -45,7 +45,9 @@
       </div>
 
       @if (isMessageFromYou) {
-      <textarea
+        <form (ngSubmit)="changeMessage($event, channelMessage.messageId)" ngNativeValidate>
+        <!-- <form ngNativeValidate> -->
+        <textarea
         class="message text-white"
         [ngStyle]="{
           'background-color': hovered ? '#797EF3' : '#797EF3',
@@ -54,14 +56,17 @@
             : '30px 0 30px 30px'
         }"
         [disabled]="isMessageDisabled"
-        name=""
-        id="{{ channelMessage.messageId }}"
+        id="{{ channelMessage.messageId }}" 
+        #myInput       
         cols="30"
         rows="10"
-        (change)="changeMessage($event)"
-      >
-      {{ channelMessage.text }}
-      </textarea>
+        minlength="1"
+        required
+        (change)="changeMessage($event, channelMessage.messageId)"
+        >{{ channelMessage.text }}</textarea>
+      </form>
+      <!-- {{ channelMessage.text }} -->
+      
       } @else {
       <div
         class="message"
@@ -140,7 +145,7 @@
 
   @if(showReactionBar){
   <div
-    (click)="reactionBarAction($event); doNotClose($event)"
+    (click)="doNotClose($event)"
     class="reactionBar"
     [ngStyle]="{
       right: isMessageFromYou ? '5%' : 'unset',
