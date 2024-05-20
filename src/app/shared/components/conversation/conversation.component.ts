@@ -294,11 +294,20 @@ export class ConversationComponent implements OnInit {
     this.showEditMessage = !this.showEditMessage;
   }
 
-  editMessage(event: any): void {
+  editMessage(event: any, id?: string): void {
     this.toggleReactionBar(event);
     this.isMessageDisabled = false;
-    console.log('start bearbeitung');
     // setze Focus auf die Textbox
+    if(id){
+      const setFocusMessage = document.getElementById(`${id}`)as HTMLElement | null;    
+      if (setFocusMessage){
+        setFocusMessage.focus();        
+      }
+      else {
+        console.log('nicht gefunden');      
+      }
+    }
+    // reactionBar ausblenden
   }
 
   changeMessage(event: any): void {

@@ -10,10 +10,11 @@
 </div>
 
 <div
-  class="content"
+  class="content-message"
   [ngStyle]="{ 'flex-direction': isMessageFromYou ? 'row' : 'row-reverse' }"
   (mouseenter)="hovered = true; toggleReactionBar($event)"
   (mouseleave)="deleteHovered(); toggleReactionBar($event)"
+
 >
   <div class="avatar pointer">
     <img src="{{ this.user.avatar }}" alt="" />
@@ -61,7 +62,6 @@
       >
       {{ channelMessage.text }}
       </textarea>
-
       } @else {
       <div
         class="message"
@@ -172,7 +172,7 @@
       left: isMessageFromYou ? 'unset' : '5%'
     }"
   >
-    <span (click)="editMessage($event)"> Nachricht bearbeiten </span>
+    <span (click)="editMessage($event, channelMessage.messageId)"> Nachricht bearbeiten </span>
   </div>
   } }
 </div>
