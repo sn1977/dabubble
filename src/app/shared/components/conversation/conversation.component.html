@@ -53,20 +53,30 @@
           'border-radius': isMessageFromYou
             ? '0 30px 30px 30px'
             : '30px 0 30px 30px'
-        }"
+        }"        
         [disabled]="isMessageDisabled"
         id="{{ channelMessage.messageId }}"
         #messageToEdit
-        cols="30"
-        rows="10"
         minlength="1"
         required
-        (change)="changeMessage($event)"
+        (input)="adjustTextareaHeight(messageToEdit)"
+        (change)="changeMessage($event);adjustTextareaHeight(messageToEdit)"
         >{{ channelMessage.text }}</textarea>
-      </form>
-      
+      </form>      
       } @else {
-      <div
+        <textarea class="message"
+        [ngStyle]="{
+          'background-color': hovered ? '#FFFFFF' : '#ECEEFE',
+          'border-radius': isMessageFromYou
+            ? '0 30px 30px 30px'
+            : '30px 0 30px 30px'
+        }"
+        #messageToEdit
+        [disabled]="true"
+        (input)="adjustTextareaHeight(messageToEdit)"
+        (change)="adjustTextareaHeight(messageToEdit)"
+        >{{ channelMessage.text }}</textarea>
+      <!-- <div
         class="message"
         [ngStyle]="{
           'background-color': hovered ? '#FFFFFF' : '#ECEEFE',
@@ -76,7 +86,7 @@
         }"
       >
         {{ channelMessage.text }}
-      </div>
+      </div> -->
       } @if (channelMessage.attachment) {
       <div class="attachment-list">
         @for (item of channelMessage.attachment; track $index) { @if(item !==

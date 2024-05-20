@@ -10,10 +10,12 @@
           }}"
           name="messageText"
           id="messageText"
-          #messageText="ngModel"
+          #messageText
           [(ngModel)]="textBoxData.messageText"
           required
           (keydown.enter)="submitForm($event)"
+          (input)="adjustTextareaHeight(messageText)"
+          (change)="adjustTextareaHeight(messageText)"
         ></textarea>
       </div>
       <div class="actions">

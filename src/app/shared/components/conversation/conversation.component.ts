@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import {
+  AfterViewInit,
   Component,
   ElementRef,
   Input,
@@ -29,7 +30,7 @@ import { SnackbarOverlayService } from '../../services/snackbar-overlay.service'
   imports: [CommonModule, MatDialogModule, EmojiPickerComponent, FormsModule],
   encapsulation: ViewEncapsulation.None,
 })
-export class ConversationComponent implements OnInit {
+export class ConversationComponent implements OnInit, AfterViewInit {
   constructor(
     private dialog: MatDialog,
     public dateFormatService: DateFormatService,
@@ -59,8 +60,9 @@ export class ConversationComponent implements OnInit {
   answerCount: number = 0;
   lastAnswerTime: any;
   isMessageDisabled: boolean = true;
-  showEmojiSnackbarStefan: boolean = false;
-  @ViewChild('messageToEdit') messageToEdit!: ElementRef<HTMLInputElement>;
+  showEmojiSnackbarStefan: boolean = false;  
+  @ViewChild('messageToEdit') messageToEdit!: ElementRef<HTMLTextAreaElement>;
+
 
   getCurrentDay() {
     const date = new Date();
@@ -80,6 +82,10 @@ export class ConversationComponent implements OnInit {
 
     //NOTE - @Sascha: Hier befüllen wir das noch leere Array mit den Daten aus der Datenbank
     this.fillEmojiReactions();
+  }
+
+  ngAfterViewInit() {
+    this.adjustTextareaHeight(this.messageToEdit.nativeElement);
   }
 
   ngOnDestroyy() {
@@ -333,4 +339,10 @@ export class ConversationComponent implements OnInit {
     }
     this.isMessageDisabled = true;
   }
+
+  adjustTextareaHeight(textarea: HTMLTextAreaElement) {
+    textarea.style.height = 'auto';
+    textarea.style.height = textarea.scrollHeight + 'px';
+  }
+
 }
