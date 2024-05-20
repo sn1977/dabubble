@@ -310,8 +310,15 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   editMessage(event: any, id?: string): void {
     if (id) {
       this.isMessageDisabled = false;
-      const setFocusMessage = this.messageToEdit.nativeElement.value;
-      if (setFocusMessage) {
+      const setFocusMessage = this.messageToEdit.nativeElement;
+      //NOTE - classList add und nach bearbeitung wieder entfernen
+      
+      // in die klasse aufnehmen!
+      // setFocusMessage.style.background = '#FFFFFF';
+      // setFocusMessage.style.color = '#686868';
+      // border radius 20px
+
+      if (setFocusMessage.value) {
         setTimeout(() => {
           this.showEditMessage = false;
           this.showReactionBar = false;
@@ -338,6 +345,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
       );
     }
     this.isMessageDisabled = true;
+    this.showReactionBar = false;
   }
 
   adjustTextareaHeight(textarea: HTMLTextAreaElement) {
