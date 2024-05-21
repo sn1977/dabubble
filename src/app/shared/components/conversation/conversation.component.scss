@@ -76,8 +76,14 @@
 
         .edit-bar {
           @include dFlex($jc: space-between, $ai: center, $fd: row, $g: 0);
-          .edit-bar-right {
-            @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 32px);
+          .buttons {
+            @include dFlex($jc: center, $ai: center, $fd: row, $g: 32px);
+            .btn-primary {
+              @include btn($h: 49px, $br: 25px, $ptb: 12px, $plr: 25px, $c: #FFF, $bgc: #444df2, $bgch: #797ef3, $ch: #FFF, $fbc: #444DF2);
+            }
+            .btn-secondary {
+              @include btn($h: 49px, $br: 25px, $ptb: 12px, $plr: 25px, $c: #444df2, $bgc: transparent, $bgch: #535af1, $ch: #FFF, $fbc: #444DF2);
+            }
           }
         }
       }

@@ -65,11 +65,15 @@
         >{{ channelMessage.text }}</textarea>
         @if(!isMessageDisabled){
           <div class="edit-bar">
-            <div class="edit-bar-left">IMG</div>
-            <div class="edit-bar-right">
-              <button>Abbrechen</button>
-              <button>Speichern</button>
-            </div>
+            <img
+      src="./assets/img/emojis/add_reaction.svg"
+      alt=""
+      (click)="openEmojiPicker()"
+    />
+    <div class="buttons">
+      <button class="btn-secondary pointer" type="button">Abbrechen</button>
+      <button class="btn-primary pointer" type="submit">Speichern</button>
+    </div>
           </div>
         }
       </form>      
