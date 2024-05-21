@@ -43,7 +43,7 @@ export class NewChannelComponent implements OnInit, AfterViewChecked {
   firebaseAuth = inject(Auth);
   authService = inject(AuthService);
   textBoxData: any = {
-    placeholder: 'Nachricht an: #',
+    placeholder: 'Nachricht an #',
     channelName: '',
     messageText: '',
     channelId: '',

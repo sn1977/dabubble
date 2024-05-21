@@ -43,7 +43,7 @@ export class DirectMessageComponent implements OnInit {
     channelId: '',
     collection: 'messages',
     subcollection: 'chat',
-  };
+  };  
 
   userData = {
     avatar: this.user.avatar,
@@ -88,8 +88,7 @@ export class DirectMessageComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     await this.waitForUserData();
     this.test();
-    this.newMessage = false; 
-
+    this.newMessage = false;    
 
     this.route.paramMap.subscribe((paramMap) => {
       this.itemID = paramMap.get('id');
@@ -107,6 +106,7 @@ export class DirectMessageComponent implements OnInit {
     );
         
     this.textBoxData.channelId = this.firestore.conversation;
+    this.textBoxData.placeholder = 'Nachricht an ' + this.user.displayName;
     this.headerStateService.setAlternativeHeader(true);
     this.firestore.getAllChannelMessages(this.textBoxData.channelId, this.textBoxData.collection, this.textBoxData.subcollection);
     this.scrollToBottom();

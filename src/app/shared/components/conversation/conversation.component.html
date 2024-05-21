@@ -89,18 +89,7 @@
         [disabled]="true"
         (input)="adjustTextareaHeight(messageToEdit)"
         (change)="adjustTextareaHeight(messageToEdit)"
-        >{{ channelMessage.text }}</textarea>
-      <!-- <div
-        class="message"
-        [ngStyle]="{
-          'background-color': hovered ? '#FFFFFF' : '#ECEEFE',
-          'border-radius': isMessageFromYou
-            ? '0 30px 30px 30px'
-            : '30px 0 30px 30px'
-        }"
-      >
-        {{ channelMessage.text }}
-      </div> -->
+        >{{ channelMessage.text }}</textarea>      
       } @if (channelMessage.attachment) {
       <div class="attachment-list">
         @for (item of channelMessage.attachment; track $index) { @if(item !==
@@ -115,7 +104,7 @@
           'flex-direction': isMessageFromYou ? 'row' : 'row-reverse'
         }"
       >
-        <a href="#" (click)="doNotClose($event)">
+        <a href="#" (click)="doNotClose($event);openThread()">
           {{ this.answerCount }} Antworten</a
         >
         <span
@@ -167,7 +156,7 @@
 
   @if(showReactionBar){
   <div
-    (click)="doNotClose($event)"
+    
     class="reactionBar"
     [ngStyle]="{
       right: isMessageFromYou ? '5%' : 'unset',
@@ -176,12 +165,8 @@
   >
     <img src="./assets/img/emojis/check_mark.svg" alt="" />
     <img src="./assets/img/emojis/hands_up.svg" alt="" />
-    <img
-      src="./assets/img/emojis/add_reaction.svg"
-      alt=""
-      (click)="openEmojiPicker()"
-    />
-    <img src="./assets/img/emojis/answer.svg" alt="" />
+    <img src="./assets/img/emojis/add_reaction.svg" alt="" (click)="openEmojiPicker()" />
+    <img src="./assets/img/emojis/answer.svg" alt="" (click)="openThread()" />
 
     @if(isMessageFromYou){
     <img

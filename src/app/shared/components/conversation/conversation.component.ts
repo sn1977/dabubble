@@ -13,6 +13,7 @@ import { User } from '../../../../models/user.class';
 import { FirebaseService } from '../../services/firebase.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { EmojiPickerComponent } from '../emoji-picker/emoji-picker.component';
+// import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { DateFormatService } from '../../services/date-format.service';
@@ -21,13 +22,19 @@ import { ViewEncapsulation } from '@angular/core';
 import { EmojiSnackbarComponent } from '../emoji-snackbar/emoji-snackbar.component';
 import { PositionService } from '../../services/position.service';
 import { SnackbarOverlayService } from '../../services/snackbar-overlay.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-conversation',
   standalone: true,
   templateUrl: './conversation.component.html',
   styleUrl: './conversation.component.scss',
-  imports: [CommonModule, MatDialogModule, EmojiPickerComponent, FormsModule],
+  imports: [
+    CommonModule, 
+    MatDialogModule, 
+    EmojiPickerComponent, 
+    FormsModule
+  ],
   encapsulation: ViewEncapsulation.None,
 })
 export class ConversationComponent implements OnInit, AfterViewInit {
@@ -42,6 +49,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   }
 
   firestore = inject(FirebaseService);
+  router = inject(Router);
   authService = inject(AuthService);
   @Input() channelMessage!: ChannelMessage;
   @Input() isChannel!: boolean;
@@ -368,4 +376,17 @@ export class ConversationComponent implements OnInit, AfterViewInit {
     textarea.style.height = textarea.scrollHeight + 'px';
   }
 
+  openThread(){
+    
+    const colId = this.isChannel == true ? 'channels' : 'messages';
+    const docId = this.channelMessage.channelId;
+    const messageId = this.channelMessage.messageId;
+
+    // routerLink="/thread/{{ channelMessage.messageId }}"
+    
+    console.log(colId);
+    console.log(docId);
+    console.log(messageId);
+    // this.router.navigate([path, docRefId]);
+  }
 }
