@@ -79,10 +79,30 @@
           .buttons {
             @include dFlex($jc: center, $ai: center, $fd: row, $g: 32px);
             .btn-primary {
-              @include btn($h: 49px, $br: 25px, $ptb: 12px, $plr: 25px, $c: #FFF, $bgc: #444df2, $bgch: #797ef3, $ch: #FFF, $fbc: #444DF2);
+              @include btn(
+                $h: 49px,
+                $br: 25px,
+                $ptb: 12px,
+                $plr: 25px,
+                $c: #fff,
+                $bgc: #444df2,
+                $bgch: #797ef3,
+                $ch: #fff,
+                $fbc: #444df2
+              );
             }
             .btn-secondary {
-              @include btn($h: 49px, $br: 25px, $ptb: 12px, $plr: 25px, $c: #444df2, $bgc: transparent, $bgch: #535af1, $ch: #FFF, $fbc: #444DF2);
+              @include btn(
+                $h: 49px,
+                $br: 25px,
+                $ptb: 12px,
+                $plr: 25px,
+                $c: #444df2,
+                $bgc: transparent,
+                $bgch: #535af1,
+                $ch: #fff,
+                $fbc: #444df2
+              );
             }
           }
         }
@@ -142,21 +162,16 @@
       .thread-infos {
         @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 20px);
 
-        a:link,
-        a:focus,
-        a:active,
-        a:hover,
-        a:visited {
+        .answer {
           font-family: "Nunito";
           font-weight: 400;
           font-size: 18px;
           line-height: 24.55px;
           color: #444df2;
           text-decoration: none;
-        }
-
-        a:hover{
-          font-weight: 600;
+          &:hover {
+            font-weight: 600;
+          }
         }
 
         .last-thread {

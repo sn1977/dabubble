@@ -110,9 +110,7 @@
           'flex-direction': isMessageFromYou ? 'row' : 'row-reverse'
         }"
       >
-        <a href="#" (click)="doNotClose($event); openThread()">
-          {{ this.answerCount }} Antworten</a
-        >
+        <span class="answer" (click)="doNotClose($event); openThread()">{{ this.answerCount }} Antworten</span>
         <span
           class="last-thread"
           [ngStyle]="{ color: hovered ? '#000000' : '#686868' }"
