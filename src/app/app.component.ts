@@ -31,8 +31,8 @@ export class AppComponent implements OnInit{
   authService = inject(AuthService);
   firestore = inject(FirebaseService);
   isMobileLandscapeOrientation: boolean = false;  
-  isDesktop: boolean = false;  
-
+  isDesktop: boolean = false;
+  isLoggedIn: boolean = false;
  
   ngOnInit(): void {
     this.authService.user$.subscribe(user => {
@@ -41,8 +41,10 @@ export class AppComponent implements OnInit{
           email: user.email!,
           username: user.displayName!,
         });
+        this.isLoggedIn = true;
       } else {
         this.authService.currentUserSig.set(null);
+        this.isLoggedIn = false;
       }
     })
     this.isMobileLandscapeOrientation = this.checkIsMobileOrientation();
