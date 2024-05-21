@@ -74,10 +74,9 @@
       form {
         width: 100%;
 
-        .edit-bar {
-          @include dFlex($jc: space-between, $ai: center, $fd: row, $g: 0);
+        .edit-bar {          
           .buttons {
-            @include dFlex($jc: center, $ai: center, $fd: row, $g: 32px);
+            @include dFlex($jc: center, $ai: center, $fd: row, $g: 24px);
             .btn-primary {
               @include btn(
                 $h: 49px,
@@ -187,6 +186,13 @@
     .reaction-infos {
       @include dFlex($jc: flex-start, $ai: flex-start, $fd: row, $g: 8px);
 
+      .new-reaction{
+        &:hover{
+          background-color: #FFFFFF;
+          border-radius: 20px;
+        }
+      }
+
       .reactions {
         @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 8px);
         flex-wrap: wrap;
@@ -248,6 +254,13 @@
   padding: 3px 15px;
   z-index: 9;
   @include dFlex($jc: center, $ai: center, $fd: row, $g: 5px);
+
+  img{
+    &:hover{
+      background-color: #ECEEFE;
+      border-radius: 20px;
+    }
+  }
 }
 
 .editMessageButton {

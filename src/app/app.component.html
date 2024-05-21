@@ -3,9 +3,11 @@
   <h2>Please turn your device</h2>
   <img src="assets/img/rotateScreen.png" />
 </div>
-} @else if (isDesktop) { 
-  <app-desktop-headline></app-desktop-headline>
-  <app-desktop-content></app-desktop-content>
-} @else {  
-  <router-outlet></router-outlet>
+} @else if (isDesktop) { @if(!isLoggedIn){
+<router-outlet></router-outlet>
+} @else {
+<app-desktop-headline></app-desktop-headline>
+<app-desktop-content></app-desktop-content>
+} } @else {
+<router-outlet></router-outlet>
 }
