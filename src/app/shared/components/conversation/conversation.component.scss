@@ -232,6 +232,10 @@
   }
 }
 
+.message{
+  max-width: 350px;
+}
+
 .reactionBar {
   background-color: #ffffff;
   position: absolute;
@@ -274,4 +278,6 @@
       color: #535af1;
     }
   }
+
 }
+

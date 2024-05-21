@@ -170,6 +170,19 @@ h1 {
 @media (min-width: 768px) {
   .container{
     height: calc(100vh - 200px);
-    background-color: red !important;
+    
+  }
+}
+
+//DESKTOP/////
+
+@media (min-width: 1120px) {
+  .container app-header-mobile {
+    display: none;
+  }
+
+  
+  .mdc-card{
+    box-shadow: unset;
   }
 }

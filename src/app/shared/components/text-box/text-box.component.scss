@@ -7,7 +7,6 @@
 
   form{
     @include dFlex($jc: center, $ai: flex-end, $fd: column, $g: 0);
-    max-width: 398px;
     width: 98%;
     margin: 0 16px;
   }
@@ -72,4 +71,5 @@ textarea{
     object-fit: contain;
   }
 
+ 
 }

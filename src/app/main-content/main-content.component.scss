@@ -170,3 +170,19 @@
 .scrollable-panel-content {
   padding-bottom: 64px
 }
+
+//DESKTOP/////
+
+@media (min-width: 1120px) {
+
+  .content-main{
+    height: 650px;
+    padding:unset;
+  }
+
+  .btn-edit-message{
+    position: absolute;
+    top: 10px;
+    left: -100px;
+  }
+}

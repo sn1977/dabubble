@@ -5,8 +5,7 @@
   padding: 0 20px 20px;
   box-sizing: border-box;
   background-color: #eceefe;
-  height: calc(100% - 120px);
-  margin: 0px;
+  height: 800px;
 }
 
 .mat-mdc-card-content{  
@@ -26,19 +25,8 @@
   flex: 1;
 }
 
-.workspace {   
-  width: 51.56%;
-  overflow: hidden;
-}
 
-.menu{
-  width: 100%;
-  max-width: 21.06%;
-  flex: 1;
-}
 
-.threads {  
-  width: 100%;
-  max-width: 25.26%;
-  min-width: 342px;  
-}
+
+
+
