@@ -172,7 +172,10 @@
       alt=""
       (click)="openEmojiPicker()"
     />
-    <img src="./assets/img/emojis/answer.svg" alt="" (click)="openThread()" />
+    
+    @if(isChannel == true){
+      <img src="./assets/img/emojis/answer.svg" alt="" (click)="openThread()" />
+    }
 
     @if(isMessageFromYou){
     <img
