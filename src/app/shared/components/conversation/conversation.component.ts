@@ -68,9 +68,9 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   answerCount: number = 0;
   lastAnswerTime: any;
   isMessageDisabled: boolean = true;
-  showEmojiSnackbarStefan: boolean = false;  
+  showEmojiSnackbarStefan: boolean = false;
+  savedMessage: string = '';
   @ViewChild('messageToEdit') messageToEdit!: ElementRef<HTMLTextAreaElement>;
-
 
   getCurrentDay() {
     const date = new Date();
@@ -322,11 +322,9 @@ export class ConversationComponent implements OnInit, AfterViewInit {
       this.isMessageDisabled = false;
       const setFocusMessage = this.messageToEdit.nativeElement;
       setFocusMessage.classList.add('edit-message');
-      // setFocusMessage.style.background = '#FFFFFF';
-      // setFocusMessage.style.color = '#686868';
-      // border radius 20px
 
       if (setFocusMessage.value) {
+        this.savedMessage = setFocusMessage.value;
         setTimeout(() => {
           this.showEditMessage = false;
           this.showReactionBar = false;
@@ -340,14 +338,15 @@ export class ConversationComponent implements OnInit, AfterViewInit {
 
   noChanges(){
     const setFocusMessage = this.messageToEdit.nativeElement;
-    
+    setFocusMessage.value = this.savedMessage;
+
       setTimeout(() => {
         this.showEditMessage = false;
         this.showReactionBar = false;
         this.isMessageDisabled = true;
         setFocusMessage.classList.remove('edit-message');
         }, 200);
-  }
+  }  
 
   changeMessage() {
     const colId = this.isChannel == true ? 'channels' : 'messages';

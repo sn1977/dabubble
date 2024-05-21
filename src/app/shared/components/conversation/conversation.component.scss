@@ -74,10 +74,9 @@
       form {
         width: 100%;
 
-        .edit-bar {
-          @include dFlex($jc: space-between, $ai: center, $fd: row, $g: 0);
+        .edit-bar {          
           .buttons {
-            @include dFlex($jc: center, $ai: center, $fd: row, $g: 32px);
+            @include dFlex($jc: center, $ai: center, $fd: row, $g: 24px);
             .btn-primary {
               @include btn(
                 $h: 49px,

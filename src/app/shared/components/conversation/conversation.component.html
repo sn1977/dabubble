@@ -60,22 +60,20 @@
           required
           (input)="adjustTextareaHeight(messageToEdit)"
           (change)="changeMessage(); adjustTextareaHeight(messageToEdit)"
-          (blur)="noChanges()"
+          
           >{{ channelMessage.text }}</textarea
         >
         @if(!isMessageDisabled){
         <div class="edit-bar">
           <!-- NOTE Sacha Fragen, wie der Picker für die Textarea genutzt werden kann -->
-          <img
+          <!-- <img
             src="./assets/img/emojis/add_reaction.svg"
             alt=""
             (click)="openEmojiPicker()"
-          />
+          /> -->
           <!-- NOTE Buttons verkleinern -->
           <div class="buttons">
-            <button class="btn-secondary pointer" type="button">
-              Abbrechen
-            </button>
+            <button class="btn-secondary pointer" type="button" (click)="doNotClose($event);noChanges()">Abbrechen</button>
             <button class="btn-primary pointer" type="submit">Speichern</button>
           </div>
         </div>
