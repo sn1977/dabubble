@@ -14,7 +14,6 @@
   [ngStyle]="{ 'flex-direction': isMessageFromYou ? 'row' : 'row-reverse' }"
   (mouseenter)="hovered = true; toggleReactionBar($event)"
   (mouseleave)="deleteHovered(); toggleReactionBar($event)"
-
 >
   <div class="avatar pointer">
     <img src="{{ this.user.avatar }}" alt="" />
@@ -47,38 +46,44 @@
       @if (isMessageFromYou) {
       <form ngNativeValidate>
         <textarea
-        class="message text-white"
-        [ngStyle]="{
-          'background-color': hovered ? '#797EF3' : '#797EF3',
-          'border-radius': isMessageFromYou
-            ? '0 30px 30px 30px'
-            : '30px 0 30px 30px'
-        }"
-        [disabled]="isMessageDisabled"
-        id="{{ channelMessage.messageId }}"
-        #messageToEdit
-        minlength="1"
-        required
-        (input)="adjustTextareaHeight(messageToEdit)"
-        (change)="changeMessage();adjustTextareaHeight(messageToEdit)"
-        (blur)="noChanges()"
-        >{{ channelMessage.text }}</textarea>
+          class="message text-white"
+          [ngStyle]="{
+            'background-color': hovered ? '#797EF3' : '#797EF3',
+            'border-radius': isMessageFromYou
+              ? '0 30px 30px 30px'
+              : '30px 0 30px 30px'
+          }"
+          [disabled]="isMessageDisabled"
+          id="{{ channelMessage.messageId }}"
+          #messageToEdit
+          minlength="1"
+          required
+          (input)="adjustTextareaHeight(messageToEdit)"
+          (change)="changeMessage(); adjustTextareaHeight(messageToEdit)"
+          (blur)="noChanges()"
+          >{{ channelMessage.text }}</textarea
+        >
         @if(!isMessageDisabled){
-          <div class="edit-bar">
-            <img
-      src="./assets/img/emojis/add_reaction.svg"
-      alt=""
-      (click)="openEmojiPicker()"
-    />
-    <div class="buttons">
-      <button class="btn-secondary pointer" type="button">Abbrechen</button>
-      <button class="btn-primary pointer" type="submit">Speichern</button>
-    </div>
+        <div class="edit-bar">
+          <!-- NOTE Sacha Fragen, wie der Picker für die Textarea genutzt werden kann -->
+          <img
+            src="./assets/img/emojis/add_reaction.svg"
+            alt=""
+            (click)="openEmojiPicker()"
+          />
+          <!-- NOTE Buttons verkleinern -->
+          <div class="buttons">
+            <button class="btn-secondary pointer" type="button">
+              Abbrechen
+            </button>
+            <button class="btn-primary pointer" type="submit">Speichern</button>
           </div>
+        </div>
         }
-      </form>      
+      </form>
       } @else {
-        <textarea class="message"
+      <textarea
+        class="message"
         [ngStyle]="{
           'background-color': hovered ? '#FFFFFF' : '#ECEEFE',
           'border-radius': isMessageFromYou
@@ -89,7 +94,8 @@
         [disabled]="true"
         (input)="adjustTextareaHeight(messageToEdit)"
         (change)="adjustTextareaHeight(messageToEdit)"
-        >{{ channelMessage.text }}</textarea>      
+        >{{ channelMessage.text }}</textarea
+      >
       } @if (channelMessage.attachment) {
       <div class="attachment-list">
         @for (item of channelMessage.attachment; track $index) { @if(item !==
@@ -97,14 +103,14 @@
         <img class="attachment" src="{{ item }}" />
         } }
       </div>
-      } @if(!isLoading && answerCount !== 0){
+      } @if(!isLoading && answerCount !== 0 && isChannel == true){
       <div
         class="thread-infos"
         [ngStyle]="{
           'flex-direction': isMessageFromYou ? 'row' : 'row-reverse'
         }"
       >
-        <a href="#" (click)="doNotClose($event);openThread()">
+        <a href="#" (click)="doNotClose($event); openThread()">
           {{ this.answerCount }} Antworten</a
         >
         <span
@@ -120,9 +126,11 @@
     <div class="reaction-infos" (click)="doNotClose($event)">
       <div class="reactions">
         <ng-container *ngFor="let reaction of channelMessage.reactions">
-          <div *ngIf="reaction.emoji" class="reaction-group pointer"
-          (mouseenter)="showEmojiSnackbarStefan = true"
-          (mouseleave)="showEmojiSnackbarStefan = false"
+          <div
+            *ngIf="reaction.emoji"
+            class="reaction-group pointer"
+            (mouseenter)="showEmojiSnackbarStefan = true"
+            (mouseleave)="showEmojiSnackbarStefan = false"
           >
             <span class="reaction-icon" (click)="toggleReaction(reaction)">{{
               reaction.emoji
@@ -132,14 +140,11 @@
             </div>
 
             @if(showEmojiSnackbarStefan){
-              <div class="reaction-snackbar">
-                {{
-                  reaction.emoji
-                }}
+            <div class="reaction-snackbar">
+              {{ reaction.emoji }}
               HARDCECODED hat reagiert
             </div>
-          }
-
+            }
           </div>
         </ng-container>
       </div>
@@ -156,7 +161,6 @@
 
   @if(showReactionBar){
   <div
-    
     class="reactionBar"
     [ngStyle]="{
       right: isMessageFromYou ? '5%' : 'unset',
@@ -165,7 +169,11 @@
   >
     <img src="./assets/img/emojis/check_mark.svg" alt="" />
     <img src="./assets/img/emojis/hands_up.svg" alt="" />
-    <img src="./assets/img/emojis/add_reaction.svg" alt="" (click)="openEmojiPicker()" />
+    <img
+      src="./assets/img/emojis/add_reaction.svg"
+      alt=""
+      (click)="openEmojiPicker()"
+    />
     <img src="./assets/img/emojis/answer.svg" alt="" (click)="openThread()" />
 
     @if(isMessageFromYou){
@@ -184,7 +192,9 @@
       left: isMessageFromYou ? 'unset' : '5%'
     }"
   >
-    <span (click)="editMessage($event, channelMessage.messageId)"> Nachricht bearbeiten </span>
+    <span (click)="editMessage($event, channelMessage.messageId)">
+      Nachricht bearbeiten
+    </span>
   </div>
   } }
 </div>
