@@ -188,3 +188,20 @@
   gap: 10px;
   margin: 10px;
 }
+@media (min-width: 768px) {
+  .container{
+    height: calc(100vh - 200px);
+    
+  }
+}
+
+//DESKTOP/////
+
+@media (min-width: 1120px) {
+  .container app-header-mobile {
+    display: none;
+  }
+  .mdc-card{
+    box-shadow: unset;
+  }
+}

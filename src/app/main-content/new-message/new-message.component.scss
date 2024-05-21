@@ -189,13 +189,4 @@
   margin: 10px;
 }
 
-//DESKTOP/////
 
-@media (min-width: 1120px) {
-  .container app-header-mobile {
-    display: none;
-  }
-  .mdc-card{
-    box-shadow: unset;
-  }
-}
