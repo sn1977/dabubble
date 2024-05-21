@@ -53,15 +53,25 @@
           'border-radius': isMessageFromYou
             ? '0 30px 30px 30px'
             : '30px 0 30px 30px'
-        }"        
+        }"
         [disabled]="isMessageDisabled"
         id="{{ channelMessage.messageId }}"
         #messageToEdit
         minlength="1"
         required
         (input)="adjustTextareaHeight(messageToEdit)"
-        (change)="changeMessage($event);adjustTextareaHeight(messageToEdit)"
+        (change)="changeMessage();adjustTextareaHeight(messageToEdit)"
+        (blur)="noChanges()"
         >{{ channelMessage.text }}</textarea>
+        @if(!isMessageDisabled){
+          <div class="edit-bar">
+            <div class="edit-bar-left">IMG</div>
+            <div class="edit-bar-right">
+              <button>Abbrechen</button>
+              <button>Speichern</button>
+            </div>
+          </div>
+        }
       </form>      
       } @else {
         <textarea class="message"

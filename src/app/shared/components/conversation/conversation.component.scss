@@ -17,7 +17,7 @@
   font-weight: 400;
   font-size: 1rem;
   line-height: 24.55px;
-  border: 1px solid #ADB0D9;
+  border: 1px solid #adb0d9;
   border-radius: 30px;
 }
 
@@ -71,11 +71,18 @@
         }
       }
 
-      form{
+      form {
         width: 100%;
+
+        .edit-bar {
+          @include dFlex($jc: space-between, $ai: center, $fd: row, $g: 0);
+          .edit-bar-right {
+            @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 32px);
+          }
+        }
       }
 
-      textarea{
+      textarea {
         overflow: hidden;
         resize: none;
         width: 100%;
@@ -94,6 +101,21 @@
         color: #000000;
       }
 
+      .edit-message {
+        background-color: #ffffff !important;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 15px;
+        font-family: "Nunito";
+        font-weight: 400;
+        font-size: 17px;
+        line-height: 23.19px;
+        color: #686868 !important;
+        border: 1px solid #adb0d9 !important;
+        border-radius: 20px !important;
+        outline: unset;
+      }
+
       .attachment-list {
         @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 8px);
         flex-wrap: wrap;
@@ -103,12 +125,12 @@
         height: 80px;
         width: 80px;
         object-fit: contain;
-        border: 1px solid #ADB0D9;
+        border: 1px solid #adb0d9;
         border-radius: 20px;
       }
 
       .text-white {
-        color: #FFFFFF;
+        color: #ffffff;
       }
 
       .thread-infos {
@@ -168,8 +190,8 @@
             color: #000000;
           }
 
-          .reaction-snackbar{
-            position: absolute;            
+          .reaction-snackbar {
+            position: absolute;
             z-index: 99;
             background-color: red;
             color: white;
@@ -181,26 +203,26 @@
   }
 
   &:hover {
-    background-color: #ECEEFE;
+    background-color: #eceefe;
   }
 }
 
 .reactionBar {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   position: absolute;
   top: -28px;
   height: 42px;
   min-width: 210px;
   max-width: 255px;
-  border: 1px solid #ADB0D9;
+  border: 1px solid #adb0d9;
   border-radius: 25px 25px 0px 25px;
   padding: 3px 15px;
   z-index: 9;
   @include dFlex($jc: center, $ai: center, $fd: row, $g: 5px);
 }
 
-.editMessageButton{
-  background-color: #FFFFFF;
+.editMessageButton {
+  background-color: #ffffff;
   position: absolute;
   top: 24px;
   left: 30px;
@@ -218,14 +240,13 @@
   text-align: left;
   @include dFlex($jc: center, $ai: center, $fd: row, $g: 0);
 
-  span{
+  span {
     padding: 4px 20px;
     border-radius: 20px;
-    &:hover{
-      background-color: #ECEEFE;
+    &:hover {
+      background-color: #eceefe;
       font-weight: 700;
-      color: #535AF1;
+      color: #535af1;
     }
   }
 }
-

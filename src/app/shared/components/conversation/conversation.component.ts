@@ -259,8 +259,10 @@ export class ConversationComponent implements OnInit, AfterViewInit {
     event.preventDefault();
     this.showReactionBar = !this.showReactionBar;
     if (!this.showReactionBar) {
-      this.showEditMessage = false;
+      const setFocusMessage = this.messageToEdit.nativeElement;
+      setFocusMessage.classList.remove('edit-message');
       this.isMessageDisabled = true;
+      this.showEditMessage = false;
     }
   }
 
@@ -311,9 +313,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
     if (id) {
       this.isMessageDisabled = false;
       const setFocusMessage = this.messageToEdit.nativeElement;
-      //NOTE - classList add und nach bearbeitung wieder entfernen
-      
-      // in die klasse aufnehmen!
+      setFocusMessage.classList.add('edit-message');
       // setFocusMessage.style.background = '#FFFFFF';
       // setFocusMessage.style.color = '#686868';
       // border radius 20px
@@ -330,22 +330,37 @@ export class ConversationComponent implements OnInit, AfterViewInit {
     }
   }
 
-  changeMessage(event: any): void {
+  noChanges(){
+    const setFocusMessage = this.messageToEdit.nativeElement;
+    
+      setTimeout(() => {
+        this.showEditMessage = false;
+        this.showReactionBar = false;
+        this.isMessageDisabled = true;
+        setFocusMessage.classList.remove('edit-message');
+        }, 200);
+  }
+
+  changeMessage() {
     const colId = this.isChannel == true ? 'channels' : 'messages';
     const docId = this.channelMessage.channelId;
     const messageId = this.channelMessage.messageId;
 
     if (messageId) {
-      const updateMessage = this.messageToEdit.nativeElement.value;
+      const setFocusMessage = this.messageToEdit.nativeElement;
       this.firestore.updateSingleMessageText(
         colId,
         docId,
         messageId,
-        updateMessage
+        setFocusMessage.value
       );
+      
+      setTimeout(() => {
+        setFocusMessage.classList.remove('edit-message');
+        this.isMessageDisabled = true;
+        this.showReactionBar = false;
+      }, 200);
     }
-    this.isMessageDisabled = true;
-    this.showReactionBar = false;
   }
 
   adjustTextareaHeight(textarea: HTMLTextAreaElement) {
