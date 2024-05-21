@@ -1,34 +1,41 @@
-<div>
-  <app-header-mobile></app-header-mobile>
-<!--    <header class="header-container">-->
-<!--        <div class="header-container">-->
-<!--            <img src="./../../assets/img/icon/arrow_back.svg" alt="" routerLink="">-->
-<!--            <img src="./../../assets/img/icon/Property 1=Default (1).svg" alt="">-->
-<!--        </div>-->
-<!--        <div>-->
-<!--            {{this.authService.activeUserAccount?.displayName}}-->
-<!--            <img class="header-img" (click)="openBottomSheet()" src="{{user.avatar}}">-->
-<!--        </div>-->
-<!--    </header>-->
-    <main>
-        <div class="mdc-card">
-            <div class="channel-box">
-                <h1 class="no-margin">Neue Nachricht</h1>
-            </div>
-            <input type="text" class="input-field-two" placeholder="An: #channel, oder @jemand ">
+<div class="container">
+    <app-header-mobile></app-header-mobile>
+  
+    <div class="mdc-card">
+      <div class="channel-box" (click)="openDirectMessageOverlay()">
+        <h1 class="no-margin">
+         <input type="" value="">
+        </h1>
+      </div>
+    </div>
+  
+    <div class="content">
+      <div
+        class="message-content"
+        #messageContent
+        style="overflow-y: scroll; height: 100%"
+      >
+        @for (chat of this.firestore.channelMessages; track
+        chat.id) {
+        <app-conversation [channelMessage]="chat" [isChannel]="false"></app-conversation>
+        }
+      </div>
+    </div>
+  
+    
+    <app-text-box [textBoxData]="textBoxData"></app-text-box>
+  
+    <div id="overlay3" class="overlay" (click)="closeOverlay('overlay3')">
+      <div class="overlay-profil">
+        <div class="profile-icon">
+          <img src="./assets/img/icon/account_circle.svg" alt="" />
+          <p class="no-margin">Profil</p>
         </div>
-
-        <div class="sticky-textbox">
-            <textarea placeholder="Schreibe eine Nachricht" class="input-field"></textarea>
-            <div class="icons">
-                <img src="./../../assets/img/icon/add.svg" alt="">
-                <div class="vertical-line"></div>
-                <img src="./../../assets/img/icon/smile.svg" alt="">
-                <img src="./../../assets/img/icon/email.svg" alt="">
-            </div>
-            <div class="send">
-                <img src="./../../assets/img/icon/send.svg" alt="">
-            </div>
+        <div class="profile-icon">
+          <img src="./assets/img/icon/logout.svg" alt="" />
+          <p class="no-margin">Log out</p>
         </div>
-    </main>
-</div>
+      </div>
+    </div>
+  </div>
+  
