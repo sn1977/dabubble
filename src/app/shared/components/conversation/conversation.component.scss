@@ -254,6 +254,9 @@
   padding: 3px 15px;
   z-index: 9;
   @include dFlex($jc: center, $ai: center, $fd: row, $g: 5px);
+  animation: slideFromRight10percent 60ms ease-in 1ms forwards;
+  transform: translateX(10%);
+  opacity: 1;
 
   img{
     &:hover{
