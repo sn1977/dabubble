@@ -16,6 +16,7 @@ import { TextBoxComponent } from '../../shared/components/text-box/text-box.comp
 import { DialogServiceService} from '../../shared/services/dialog-service.service';
 import { SearchUserComponent } from '../../shared/components/search-user/search-user.component';
 import { CommonModule } from '@angular/common';
+import { MatchMediaService } from '../../shared/services/match-media.service';
 
 @Component({
   selector: 'app-thread',
@@ -34,6 +35,7 @@ import { CommonModule } from '@angular/common';
 })
 export class ThreadComponent implements OnInit, AfterViewChecked{
   firestore = inject(FirebaseService);
+  matchMedia = inject(MatchMediaService);
   router = inject(Router);
   itemID: any = '';
   user: User = new User();
@@ -53,6 +55,7 @@ export class ThreadComponent implements OnInit, AfterViewChecked{
 
   @ViewChild('messageContent') messageContent!: ElementRef;
   previousMessageCount: number = 0;
+  isDesktop: boolean = false;
 
   constructor(
     private _bottomSheet: MatBottomSheet,
@@ -206,4 +209,16 @@ export class ThreadComponent implements OnInit, AfterViewChecked{
     this.dialogService.openDirectMessageDialog(user, itemId);
     this.closeOverlay('overlay1');
   }
+
+  closeThread(){
+    this.isDesktop = this.matchMedia.checkIsDesktop();
+    if(this.isDesktop === true){
+      console.log('true');      
+    }
+    else{
+      this.router.navigate(['/main']);
+    }
+
+  }
+
 }

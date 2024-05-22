@@ -23,6 +23,7 @@ import { EmojiSnackbarComponent } from '../emoji-snackbar/emoji-snackbar.compone
 import { PositionService } from '../../services/position.service';
 import { SnackbarOverlayService } from '../../services/snackbar-overlay.service';
 import { Router } from '@angular/router';
+import { MatchMediaService } from '../../services/match-media.service';
 
 @Component({
   selector: 'app-conversation',
@@ -50,6 +51,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
 
   firestore = inject(FirebaseService);
   router = inject(Router);
+  matchMedia = inject(MatchMediaService);
   authService = inject(AuthService);
   @Input() channelMessage!: ChannelMessage;
   @Input() isChannel!: boolean;
@@ -70,6 +72,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   isMessageDisabled: boolean = true;
   showEmojiSnackbarStefan: boolean = false;
   savedMessage: string = '';
+  isDesktop: boolean = false;
   @ViewChild('messageToEdit') messageToEdit!: ElementRef<HTMLTextAreaElement>;
 
   getCurrentDay() {
@@ -376,16 +379,20 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   }
 
   openThread(){
-    
-    const colId = this.isChannel == true ? 'channels' : 'messages';
     const docId = this.channelMessage.channelId;
-    const messageId = this.channelMessage.messageId;
-
-    // routerLink="/thread/{{ channelMessage.messageId }}"
-    
-    console.log(colId);
+    const messageId = this.channelMessage.messageId;    
     console.log(docId);
     console.log(messageId);
-    // this.router.navigate([path, docRefId]);
+    // check if it is desktop or not and set function-parameter    
+    this.isDesktop = this.matchMedia.checkIsDesktop();
+    if(this.isDesktop === true){
+      console.log('true');      
+    }
+    else{      
+      this.router.navigate(['/thread/', messageId]);      
+    }
   }
+
+  
+
 }

@@ -7,16 +7,16 @@
       (click)="openChannel($event, 'channel-edition')"
     >
       <h1 class="no-margin">
+        <span>Thread</span>
         <span>#</span>
-        <span>{{ channel.name }}</span>
+        <span>Entwicklerteam{{ channel.name }}</span>
       </h1>
-      <img src="./assets/img/icon/arrow_down.svg" alt=""/>
     </div>
-    <div>
+    <div>      
       <img
         class="pointer"
-        (click)="toggleOverlay('overlay1')"
-        src="./assets/img/icon/add_member.svg"
+        (click)="closeThread()"
+        src="./assets/img/icon/close.svg"
         alt=""
       />
     </div>

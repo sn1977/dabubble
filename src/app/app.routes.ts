@@ -16,7 +16,8 @@ import { ChooseAvatarComponent } from './main-content/auth/register/choose-avata
 import { ThreadComponent } from './main-content/thread/thread.component';
 
 export const routes: Routes = [  
-  { path: '', component: MainContentComponent },
+  // { path: '', component: MainContentComponent },
+  { path: '',   redirectTo: '/login', pathMatch: 'full' },
   { path: 'main', component: MainContentComponent },
   { path: 'imprint', component: ImprintComponent },
   { path: 'privacy-policy', component: PrivacyPolicyComponent },

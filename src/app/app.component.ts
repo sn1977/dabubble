@@ -8,6 +8,7 @@ import { AuthService } from './shared/services/auth.service';
 import { FirebaseService } from './shared/services/firebase.service';
 import { DesktopHeadlineComponent } from "./shared/components/desktop-headline/desktop-headline.component";
 import { DesktopContentComponent } from "./shared/components/desktop-content/desktop-content.component";
+import { MatchMediaService } from './shared/services/match-media.service';
 
 @Component({
     selector: 'app-root',
@@ -22,7 +23,7 @@ import { DesktopContentComponent } from "./shared/components/desktop-content/des
         HeaderMobileComponent,
         MainContentComponent,
         DesktopHeadlineComponent,
-        DesktopContentComponent
+        DesktopContentComponent,
     ]
 })
 export class AppComponent implements OnInit{
@@ -30,6 +31,7 @@ export class AppComponent implements OnInit{
   title = 'dabubble';
   authService = inject(AuthService);
   firestore = inject(FirebaseService);
+  matchMedia = inject(MatchMediaService);
   isMobileLandscapeOrientation: boolean = false;  
   isDesktop: boolean = false;
   isLoggedIn: boolean = false;
@@ -47,36 +49,8 @@ export class AppComponent implements OnInit{
         this.isLoggedIn = false;
       }
     })
-    this.isMobileLandscapeOrientation = this.checkIsMobileOrientation();
-    this.isDesktop = this.checkIsDesktop();
-
-  }
-
-
-  /**
-   * Check Orientation
-   * @returns boolean
-   */
-  checkIsMobileOrientation(){
-    if (
-      window.matchMedia('(orientation: landscape)').matches &&
-      window.matchMedia('(min-width: 320px)').matches &&
-      window.matchMedia('(max-width: 939px)').matches &&
-      window.innerWidth > window.innerHeight
-    ) {      
-      return true;
-    } else {      
-      return false;
-    }
-  }
-
-  checkIsDesktop(){
-    if (      
-      window.matchMedia('(min-width: 993px)').matches
-    ) {      
-      return true;
-    } else {      
-      return false;
-    }
-  }
+    
+    this.isMobileLandscapeOrientation = this.matchMedia.checkIsMobileOrientation();
+    this.isDesktop = this.matchMedia.checkIsDesktop();
+  }  
 }
