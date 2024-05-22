@@ -8,8 +8,8 @@
     >
       <h1 class="no-margin">
         <span>Thread</span>
-        <span>#</span>
-        <span>Entwicklerteam{{ channel.name }}</span>
+        <span class="subtitle">#</span>
+        <span class="subtitle">Entwicklerteam {{ channel.name }}</span>
       </h1>
     </div>
     <div>      
@@ -31,20 +31,9 @@
         @for (channelMessage of
           this.firestore.channelMessages; track channelMessage.id) {
           <app-conversation
-            [channelMessage]="channelMessage" [isChannel]="true"
+            [channelMessage]="channelMessage" [isChannel]="false" [isThread]="true"
           ></app-conversation>
         }
-      } @else {
-        <div class="channel-info">
-          <h1 class="no-margin">
-            <span>#</span>
-            <span>{{ channel.name }}</span>
-          </h1>
-          <p>
-            Du hast diesen Channel heute erstellt. Das ist der Anfang des Channels
-            {{ channel.name }}
-          </p>
-        </div>
       }
     </div>
   </div>

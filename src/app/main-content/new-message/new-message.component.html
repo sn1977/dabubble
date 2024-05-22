@@ -15,8 +15,10 @@
         style="overflow-y: scroll; height: 100%"
       >
         @for (chat of this.firestore.channelMessages; track
-        chat.id) {
-        <app-conversation [channelMessage]="chat" [isChannel]="false"></app-conversation>
+        chat.id) {        
+          <app-conversation
+            [channelMessage]="chat" [isChannel]="false" [isThread]="false"
+          ></app-conversation>
         }
       </div>
     </div>

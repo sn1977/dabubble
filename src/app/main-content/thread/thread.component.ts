@@ -1,4 +1,11 @@
-import { AfterViewChecked, Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewChecked,
+  Component,
+  ElementRef,
+  inject,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { BottomSheetComponent } from '../../shared/components/bottom-sheet/bottom-sheet.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
@@ -13,7 +20,7 @@ import { ConversationComponent } from '../../shared/components/conversation/conv
 import { HeaderMobileComponent } from '../../shared/components/header-mobile/header-mobile.component';
 import { HeaderStateService } from '../../shared/services/header-state.service';
 import { TextBoxComponent } from '../../shared/components/text-box/text-box.component';
-import { DialogServiceService} from '../../shared/services/dialog-service.service';
+import { DialogServiceService } from '../../shared/services/dialog-service.service';
 import { SearchUserComponent } from '../../shared/components/search-user/search-user.component';
 import { CommonModule } from '@angular/common';
 import { MatchMediaService } from '../../shared/services/match-media.service';
@@ -31,9 +38,9 @@ import { MatchMediaService } from '../../shared/services/match-media.service';
     SearchUserComponent,
   ],
   templateUrl: './thread.component.html',
-  styleUrl: './thread.component.scss'
+  styleUrl: './thread.component.scss',
 })
-export class ThreadComponent implements OnInit, AfterViewChecked{
+export class ThreadComponent implements OnInit, AfterViewChecked {
   firestore = inject(FirebaseService);
   matchMedia = inject(MatchMediaService);
   router = inject(Router);
@@ -45,7 +52,7 @@ export class ThreadComponent implements OnInit, AfterViewChecked{
   firebaseAuth = inject(Auth);
   authService = inject(AuthService);
   textBoxData: any = {
-    placeholder: 'Nachricht an: #',
+    placeholder: 'Antworten...',
     channelName: '',
     messageText: '',
     channelId: '',
@@ -73,11 +80,9 @@ export class ThreadComponent implements OnInit, AfterViewChecked{
     count: this.channel.count,
     newMessage: this.channel.newMessage,
     // allMembers: this.channel.allMembers
-    
   };
 
   addCountToChannelDocument(toggle: string) {
-
     const channel = new Channel({
       creator: this.channel.creator,
       description: this.channel.description,
@@ -86,9 +91,8 @@ export class ThreadComponent implements OnInit, AfterViewChecked{
       count: this.channel.count,
       newMessage: this.newMessage,
       // allMembers: this.channel.allMembers
-
     });
-    
+
     this.firestore.updateChannel(this.itemID, channel);
   }
 
@@ -96,12 +100,16 @@ export class ThreadComponent implements OnInit, AfterViewChecked{
     await this.waitForUserData();
     this.test();
 
-    this.newMessage = false; 
+    this.newMessage = false;
 
     this.route.paramMap.subscribe((paramMap) => {
       this.itemID = paramMap.get('id');
-      this.getItemValues('channels', this.itemID);      
-      this.firestore.getAllChannelMessages(this.itemID, this.textBoxData.collection, this.textBoxData.subcollection);
+      this.getItemValues('channels', this.itemID);
+      this.firestore.getAllChannelMessages(
+        this.itemID,
+        this.textBoxData.collection,
+        this.textBoxData.subcollection
+      );
     });
 
     this.headerStateService.setAlternativeHeader(true);
@@ -109,7 +117,7 @@ export class ThreadComponent implements OnInit, AfterViewChecked{
 
     setTimeout(() => {
       this.addCountToChannelDocument(this.itemID);
-   }, 1000)
+    }, 1000);
   }
 
   getItemValues(collection: string, itemID: string) {
@@ -121,7 +129,7 @@ export class ThreadComponent implements OnInit, AfterViewChecked{
     });
   }
 
-  setOldChannelValues(){
+  setOldChannelValues() {
     this.channelData = {
       creator: this.channel.creator,
       description: this.channel.description,
@@ -152,10 +160,10 @@ export class ThreadComponent implements OnInit, AfterViewChecked{
     try {
       this.messageContent.nativeElement.scrollTo({
         top: this.messageContent.nativeElement.scrollHeight,
-        behavior: 'smooth' // Hier wird smooth scrollen aktiviert
+        behavior: 'smooth', // Hier wird smooth scrollen aktiviert
       });
-    } catch(err) { }
-}
+    } catch (err) {}
+  }
 
   async waitForUserData(): Promise<void> {
     while (!this.authService.activeUserAccount) {
@@ -173,7 +181,6 @@ export class ThreadComponent implements OnInit, AfterViewChecked{
   }
 
   toggleOverlay(overlayId: string): void {
-
     const newOverlay = document.getElementById(overlayId);
     if (newOverlay) {
       newOverlay.style.display =
@@ -192,8 +199,6 @@ export class ThreadComponent implements OnInit, AfterViewChecked{
     this._bottomSheet.open(BottomSheetComponent);
   }
 
-
-
   openChannel(event: MouseEvent, path: string) {
     const docRefId = (event.currentTarget as HTMLElement).id;
     this.router.navigate(['/' + path + '/' + docRefId]);
@@ -210,15 +215,12 @@ export class ThreadComponent implements OnInit, AfterViewChecked{
     this.closeOverlay('overlay1');
   }
 
-  closeThread(){
+  closeThread() {
     this.isDesktop = this.matchMedia.checkIsDesktop();
-    if(this.isDesktop === true){
-      console.log('true');      
+    if (this.isDesktop === true) {
+      this.matchMedia.showThread = false;
+    } else {
+      history.back();
     }
-    else{
-      this.router.navigate(['/main']);
-    }
-
   }
-
 }

@@ -5,8 +5,11 @@ import { Injectable } from '@angular/core';
 })
 export class MatchMediaService {
 
+  showThread: boolean = false;
+  
   constructor() { }
 
+  
   /**
    * Check Orientation
    * @returns boolean
@@ -36,6 +39,6 @@ export class MatchMediaService {
     } else {      
       return false;
     }
-  }
+  }  
 
 }

@@ -16,9 +16,11 @@
     </mat-card-content>
   </mat-card>
 
-  <mat-card class="threads">
-    <mat-card-content>
-      <app-thread></app-thread>
-    </mat-card-content>
-  </mat-card>
+  @if(this.matchMedia.showThread === true){
+    <mat-card class="thread">
+      <mat-card-content>
+        <app-thread></app-thread>
+      </mat-card-content>
+    </mat-card>
+  }
 </div>

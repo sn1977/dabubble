@@ -36,7 +36,6 @@ import { MatchMediaService } from '../../services/match-media.service';
     EmojiPickerComponent, 
     FormsModule
   ],
-  encapsulation: ViewEncapsulation.None,
 })
 export class ConversationComponent implements OnInit, AfterViewInit {
   constructor(
@@ -55,6 +54,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   authService = inject(AuthService);
   @Input() channelMessage!: ChannelMessage;
   @Input() isChannel!: boolean;
+  @Input() isThread!: boolean;
   @Input() index!: number;
   user: User = new User();
   edit: boolean = false;
@@ -382,13 +382,12 @@ export class ConversationComponent implements OnInit, AfterViewInit {
     const docId = this.channelMessage.channelId;
     const messageId = this.channelMessage.messageId;    
     console.log(docId);
-    console.log(messageId);
-    // check if it is desktop or not and set function-parameter    
+    console.log(messageId);    
     this.isDesktop = this.matchMedia.checkIsDesktop();
     if(this.isDesktop === true){
-      console.log('true');      
+      this.matchMedia.showThread = true;
     }
-    else{      
+    else{
       this.router.navigate(['/thread/', messageId]);      
     }
   }

@@ -31,7 +31,7 @@
         @for (channelMessage of
           this.firestore.channelMessages; track channelMessage.id) {
           <app-conversation
-            [channelMessage]="channelMessage" [isChannel]="true"
+            [channelMessage]="channelMessage" [isChannel]="true" [isThread]="false"
           ></app-conversation>
         }
       } @else {

@@ -1,9 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { MainContentComponent } from '../../../main-content/main-content.component';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { RouterOutlet } from '@angular/router';
 import { ThreadComponent } from "../../../main-content/thread/thread.component";
+import { MatchMediaService } from '../../services/match-media.service';
 @Component({
     selector: 'app-desktop-content',
     standalone: true,
@@ -17,4 +18,6 @@ import { ThreadComponent } from "../../../main-content/thread/thread.component";
       ThreadComponent
     ]
 })
-export class DesktopContentComponent {}
+export class DesktopContentComponent {
+  matchMedia = inject(MatchMediaService);
+}
