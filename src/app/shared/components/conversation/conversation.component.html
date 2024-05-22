@@ -163,25 +163,21 @@
       left: isMessageFromYou ? 'unset' : '5%'
     }"
   >
-    <img src="./assets/img/emojis/check_mark2.svg" alt=""  (click)="addEmojiReaction('✅')"/>
-    <img src="./assets/img/emojis/raised_hands.svg" alt="" (click)="addEmojiReaction('🙌')"/>
-    <img
-      src="./assets/img/emojis/add_reaction.svg"
-      alt=""
-      (click)="openEmojiPicker()"
-    />
-
-    @if(isChannel == true){
-      <img src="./assets/img/emojis/answer.svg" alt="" (click)="openThread()" />
-    }
-
-    @if(isMessageFromYou){
-    <img
-      src="./assets/img/emojis/answer2.svg"
-      alt=""
-      (click)="toggleEditMessage($event); doNotClose($event)"
-    />
-    }
+  <div class="reaction-icon-small">
+    <img src="./assets/img/emojis/check_mark2.svg" alt=""  (click)="addEmojiReaction('✅')" />
+  </div>
+  <div class="reaction-icon-small">
+    <img src="./assets/img/emojis/raised_hands.svg" alt="" (click)="addEmojiReaction('🙌')" />
+  </div>
+  <img src="./assets/img/emojis/add_reaction.svg" alt="" (click)="openEmojiPicker()" />
+  
+  @if(isChannel == true){
+    <img src="./assets/img/emojis/answer.svg" alt="" (click)="openThread()" />
+  }
+  
+  @if(isMessageFromYou){
+    <img src="./assets/img/emojis/answer2.svg" alt="" (click)="toggleEditMessage($event); doNotClose($event)" />
+    }    
   </div>
   @if(showEditMessage){
   <div

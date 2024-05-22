@@ -74,7 +74,7 @@
       form {
         width: 100%;
 
-        .edit-bar {          
+        .edit-bar {
           .buttons {
             @include dFlex($jc: center, $ai: center, $fd: row, $g: 24px);
             .btn-primary {
@@ -186,9 +186,9 @@
     .reaction-infos {
       @include dFlex($jc: flex-start, $ai: flex-start, $fd: row, $g: 8px);
 
-      .new-reaction{
-        &:hover{
-          background-color: #FFFFFF;
+      .new-reaction {
+        &:hover {
+          background-color: #ffffff;
           border-radius: 20px;
         }
       }
@@ -238,7 +238,7 @@
   }
 }
 
-.message{
+.message {
   max-width: 350px;
 }
 
@@ -258,10 +258,26 @@
   transform: translateX(10%);
   opacity: 1;
 
-  img{
-    &:hover{
-      background-color: #ECEEFE;
-      border-radius: 20px;
+  .reaction-icon-small {
+    @include dFlex($jc: center, $ai: center, $fd: row, $g: 0);
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    &:hover {
+      background-color: #eceefe;
+    }
+    img {
+      height: 24px;
+      width: 24px;
+      object-fit: cover;
+    }
+  }
+
+  img {
+    object-fit: cover;
+    border-radius: 20px;
+    &:hover {
+      background-color: #eceefe;
     }
   }
 }
@@ -294,6 +310,4 @@
       color: #535af1;
     }
   }
-
 }
-
