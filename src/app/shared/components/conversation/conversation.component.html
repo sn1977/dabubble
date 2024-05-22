@@ -60,7 +60,7 @@
           required
           (input)="adjustTextareaHeight(messageToEdit)"
           (change)="changeMessage(); adjustTextareaHeight(messageToEdit)"
-          
+
           >{{ channelMessage.text }}</textarea
         >
         @if(!isMessageDisabled){
@@ -163,14 +163,14 @@
       left: isMessageFromYou ? 'unset' : '5%'
     }"
   >
-    <img src="./assets/img/emojis/check_mark.svg" alt="" />
-    <img src="./assets/img/emojis/hands_up.svg" alt="" />
+    <img src="./assets/img/emojis/check_mark2.svg" alt=""  (click)="addEmojiReaction('✅')"/>
+    <img src="./assets/img/emojis/raised_hands.svg" alt="" (click)="addEmojiReaction('🙌')"/>
     <img
       src="./assets/img/emojis/add_reaction.svg"
       alt=""
       (click)="openEmojiPicker()"
     />
-    
+
     @if(isChannel == true){
       <img src="./assets/img/emojis/answer.svg" alt="" (click)="openThread()" />
     }
