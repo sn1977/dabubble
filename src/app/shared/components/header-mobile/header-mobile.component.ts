@@ -7,11 +7,12 @@ import { User } from '../../../../models/user.class';
 import {CommonModule, Location} from '@angular/common';
 import {HeaderStateService} from '../../services/header-state.service';
 import { Router } from '@angular/router';
+import {DesktopOverlayComponent} from '../desktop-overlay/desktop-overlay.component';
 
 @Component({
   selector: 'app-header-mobile',
   standalone: true,
-  imports: [BottomSheetComponent, CommonModule],
+  imports: [BottomSheetComponent, CommonModule, DesktopOverlayComponent],
   templateUrl: './header-mobile.component.html',
   styleUrl: './header-mobile.component.scss',
 })
@@ -22,6 +23,7 @@ export class HeaderMobileComponent implements OnInit {
   @Input() alternativeHeader: boolean = false;
   @Input() isDesktop: boolean = false;
   hoverBack: boolean = false;
+  overlayVisible = false;
 
   constructor(private _bottomSheet: MatBottomSheet, private headerStateService: HeaderStateService, private _location: Location,  private router: Router) {}
 
@@ -51,14 +53,16 @@ export class HeaderMobileComponent implements OnInit {
   }
 
   openBottomSheet(): void {
-    const bottomSheetRef = this._bottomSheet.open(BottomSheetComponent, {
-      data: { user: this.user } // Übergabe des Benutzerobjekts an die BottomSheet
-    });
+    if (!this.isDesktop) {
+      const bottomSheetRef = this._bottomSheet.open(BottomSheetComponent, {
+        data: {user: this.user} // Übergabe des Benutzerobjekts an die BottomSheet
+      });
 
-    bottomSheetRef.afterDismissed().subscribe(result => {
-      // console.log('Bottom Sheet closed', result);
-      // Hier kannst du weitere Aktionen ausführen, nachdem die Bottom Sheet geschlossen wurde
-    });
+      bottomSheetRef.afterDismissed().subscribe(result => {
+        // console.log('Bottom Sheet closed', result);
+        // Hier kannst du weitere Aktionen ausführen, nachdem die Bottom Sheet geschlossen wurde
+      });
+    }
   }
 
   getItemValues(collection: string, itemID: string) {
@@ -71,5 +75,13 @@ export class HeaderMobileComponent implements OnInit {
     // this.router.navigate(['/']);
     this.router.navigate(['/main']);
     this.headerStateService.setAlternativeHeader(false);
+  }
+
+  openOverlay(): void {
+    if (this.isDesktop) {
+      this.overlayVisible = true;
+      console.log('Overlay opened');
+      console.log(this.overlayVisible);
+    }
   }
 }
