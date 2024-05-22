@@ -1,31 +1,37 @@
 <div
   class="content-header-mobile bg-c"
-  [ngStyle]="{ 'justify-content': isDesktop ? 'flex-end' : 'space-between' }"
+
+  [ngStyle]="{ 'justify-content': isDesktop ? 'flex-end' : 'space-around' }"
 >
-  @if(isDesktop){
-  {{ user.displayName }}
-  } @else { @if(!alternativeHeader){
+  @if (isDesktop) {
+    {{ user.displayName }}
+  } @else {
+    @if (!alternativeHeader) {
 
-  <div class="logo-header">
-    <img src="assets/img/mobile-logo.svg" />
-    <span class="logo-name">DABubble</span>
-  </div>
+      <div class="logo-header">
+        <img src="assets/img/mobile-logo.svg"/>
+        <span class="logo-name">DABubble</span>
+      </div>
 
-  } @else{
-  <div class="alternative-header">    
-    <img
-      [src]="
+    } @else {
+      <div class="alternative-header">
+        <img
+          [src]="
         hoverBack
           ? 'assets/img/icon/arrow_back_color.svg'
           : 'assets/img/icon/arrow_back.svg'
       "
-      (click)="onBack()"
-      (mouseenter)="hoverBack = true"
-      (mouseleave)="hoverBack = false"
-    />
-    <img src="assets/img/icon/Property 1=Default (1).svg" />
-  </div>
-  } }
+          (click)="onBack()"
+          (mouseenter)="hoverBack = true"
+          (mouseleave)="hoverBack = false"
+        />
+        <img src="assets/img/icon/Property 1=Default (1).svg"/>
+      </div>
+    }
+  }
 
-  <img class="header-img" (click)="openBottomSheet()" src="{{ user.avatar }}" />
+  <img class="header-img" (click)="openBottomSheet()" src="{{ user.avatar }}"/>
+<!--  <app-desktop-overlay [overlayVisible]="overlayVisible"></app-desktop-overlay>-->
+  <img *ngIf="isDesktop" (click)="openOverlay()" src="assets/img/icon/keyboard_arrow_down.svg"/>
 </div>
+<app-desktop-overlay *ngIf="overlayVisible"></app-desktop-overlay>

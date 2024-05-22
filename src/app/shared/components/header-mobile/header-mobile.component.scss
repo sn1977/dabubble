@@ -2,8 +2,8 @@
 
 .content-header-mobile {
   height: 80px;
-  padding: 0 16px;
-  @include dFlex($jc: space-between, $ai: center, $fd: row, $g: 30px);
+  padding: 0 0 0 16px;
+  @include dFlex($jc: space-around, $ai: center, $fd: row, $g: 20px);
 }
 
 .bg-c {
