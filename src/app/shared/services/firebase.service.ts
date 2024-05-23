@@ -280,23 +280,16 @@ export class FirebaseService {
     );
   }
 
-  getSingleMessageData(colId: string, docId: string, callback: () => void) {
-    // console.log(colId, docId);
-
+  async getSingleMessageData(colId: string, docId: string, callback: () => void) {
     this.singleMessageUnsubscribe = onSnapshot(
-      this.getSingleDocRef(colId, docId),
-      (element) => {
-        this.channelMessage = new ChannelMessage(
-           this.setChannelMessageObject(element.data(), element.id)
-        );
-
-        console.log(element.data(), element.id);
-        
-
-        callback();
-      }
-    );
-  }
+       this.getSingleDocRef(colId, docId),
+       (element) => {
+         const data = this.setChannelMessageObject(element.data(), element.id);
+         this.channelMessage = new ChannelMessage(data);
+         callback();
+       }
+     );
+   }
 
   async getAllChannelMessages(
     channelId: string,

@@ -83,7 +83,8 @@ export class ConversationComponent implements OnInit, AfterViewInit {
     this.currentDate = year + month + day;
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    await this.delay(200);
     this.getItemValuesProfile('users', this.channelMessage.creator);
     this.messageDate = this.channelMessage.createdAt;
     this.isMessageFromYou = this.authService.activeUserAccount.uid === this.channelMessage.creator;
@@ -91,6 +92,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   }
 
   async ngAfterViewInit() {
+    await this.delay(200);
     this.adjustTextareaHeight(this.messageToEdit.nativeElement);
     this.isLoading = true;
     await this.getAnswers();
@@ -154,7 +156,8 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   //   }
   // }
 
-  getItemValuesProfile(collection: string, itemID: string) {
+  async getItemValuesProfile(collection: string, itemID: string) {
+    await this.delay(200);
     this.firestore.getSingleItemData(collection, itemID, () => {
       this.user = new User(this.firestore.user);
     });
@@ -166,7 +169,8 @@ export class ConversationComponent implements OnInit, AfterViewInit {
     }
   }
 
-  testMap() {
+  async testMap() {
+    await this.delay(200);
     let channelMessageInstance = new ChannelMessage(this.channelMessage);
 
     channelMessageInstance.messageId = this.channelMessage.messageId;
@@ -290,6 +294,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   }
 
   async getAnswers() {
+    await this.delay(100);
     try {
       const data = await this.firestore.getThreadData(
         this.channelMessage.channelId,
@@ -341,7 +346,8 @@ export class ConversationComponent implements OnInit, AfterViewInit {
     }, 200);
   }
 
-  changeMessage() {
+  async changeMessage() {
+    await this.delay(100);
     const colId = this.isChannel == true ? 'channels' : 'messages';
     const docId = this.channelMessage.channelId;
     const messageId = this.channelMessage.messageId;
@@ -363,20 +369,24 @@ export class ConversationComponent implements OnInit, AfterViewInit {
     }
   }
 
-  adjustTextareaHeight(textarea: HTMLTextAreaElement) {
+  async adjustTextareaHeight(textarea: HTMLTextAreaElement) {
+    await this.delay(100);
     textarea.style.height = 'auto';
     textarea.style.height = textarea.scrollHeight + 'px';
   }
 
-  openThread() {
+  async openThread() {
+    this.matchMedia.showThread = false;
+    await this.delay(200);
+  
     const docId = this.channelMessage.channelId;
     const messageId = this.channelMessage.messageId;
     this.isDesktop = this.matchMedia.checkIsDesktop();
-
+  
     if (messageId) {
       this.matchMedia.channelId = docId;
       this.matchMedia.subID = messageId;
-
+  
       if (this.isDesktop === true) {
         this.matchMedia.showThread = true;
       } else {
@@ -385,5 +395,8 @@ export class ConversationComponent implements OnInit, AfterViewInit {
     }
   }
 
+  delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 
 }

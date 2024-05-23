@@ -47,7 +47,7 @@ export class ThreadComponent implements OnInit, AfterViewChecked {
   itemID: any = '';
   user: User = new User();
   channel: Channel = new Channel();
-  hallo: any = [];
+  channelMessage: ChannelMessage = new ChannelMessage();
   channelList: any = [];
   newMessage: boolean = false;
   firebaseAuth = inject(Auth);
@@ -95,20 +95,20 @@ export class ThreadComponent implements OnInit, AfterViewChecked {
       this.channel = new Channel(this.firestore.channel);
       this.textBoxData.channelName = this.channel.name;
       this.textBoxData.channelId = itemID;
-      this.setOldChannelValues();
+      //this.setOldChannelValues();
     });
   }
 
-  setOldChannelValues() {
-    this.channelData = {
-      creator: this.channel.creator,
-      description: this.channel.description,
-      member: this.channel.member,
-      name: this.channel.name,
-      count: this.channel.count,
-      newMessage: this.channel.newMessage,
-    };
-  }
+  // setOldChannelValues() {
+  //   this.channelData = {
+  //     creator: this.channel.creator,
+  //     description: this.channel.description,
+  //     member: this.channel.member,
+  //     name: this.channel.name,
+  //     count: this.channel.count,
+  //     newMessage: this.channel.newMessage,
+  //   };
+  // }
 
   async ngAfterViewInit() {
     this.previousMessageCount = this.getCurrentMessageCount();
@@ -116,6 +116,15 @@ export class ThreadComponent implements OnInit, AfterViewChecked {
     //await this.firestore.getSingleItemData('channels', docId: string, callback: () => void) {
     this.firestore.getSingleMessageData('channels', this.matchMedia.channelId + '/channelmessages/' + this.matchMedia.subID, () => {});
     
+    // messageId?: string;
+  // channelId: string;
+  // creator: string;
+  // createdAt?: any;
+  // text: string;
+  // // reactions?: { emoji: string; count: number }[];
+  // reactions: { emoji: string; users: string[] }[] = [];
+  // attachment?: string[];
+
   }
 
   ngAfterViewChecked() {

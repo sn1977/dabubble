@@ -109,7 +109,8 @@ export class NewChannelComponent implements OnInit, AfterViewChecked {
    }, 1000)
   }
 
-  getItemValues(collection: string, itemID: string) {
+  async getItemValues(collection: string, itemID: string) {
+    await this.delay(200);
     this.firestore.getSingleItemData(collection, itemID, () => {
       this.channel = new Channel(this.firestore.channel);
       this.textBoxData.channelName = this.channel.name;

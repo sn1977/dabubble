@@ -3,8 +3,7 @@ export class ChannelMessage {
   channelId: string;
   creator: string;
   createdAt?: any;
-  text: string;
-  // reactions?: { emoji: string; count: number }[];
+  text: string;  
   reactions: { emoji: string; users: string[] }[] = [];
   attachment?: string[];
 
@@ -16,7 +15,6 @@ export class ChannelMessage {
     this.text = obj ? obj.text : '';
     this.reactions = obj ? obj.reactions : [];
     this.attachment = obj ? obj.attachment : [];
-
   }
 
   public toJSON() {
