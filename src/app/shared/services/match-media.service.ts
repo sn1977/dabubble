@@ -5,7 +5,9 @@ import { Injectable } from '@angular/core';
 })
 export class MatchMediaService {
 
-  showThread: boolean = false;
+  showThread: boolean = false;  
+  channelId: string = '';
+  subID: string = '';
   
   constructor() { }
 

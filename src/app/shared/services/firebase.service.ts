@@ -272,27 +272,44 @@ export class FirebaseService {
     );
   }
 
+  getSingleMessageData(colId: string, docId: string, callback: () => void) {
+    
+  console.log(colId, docId);
+  
+    // this.singleItemUnsubscribe = onSnapshot(
+    //   this.getSingleDocRef(colId, docId),
+    //   (element) => {
+    //     if (collection === 'users') {
+    //       this.user = new User(this.setUserObject(element.data(), element.id));
+    //     }
+    //     if (collection === 'channels') {
+    //       this.channel = new Channel(
+    //         this.setMessageObject(element.data(), element.id)
+    //       );
+    //     }
+
+    //     callback();
+    //   }
+    // );
+  }
+
   async getAllChannelMessages(
     channelId: string,
     colID: string,
-    subcollection: string,
-    subID: string = ""
+    subcollection: string,    
   ) {
-    let ref;
-    if (subID) {
-      ref = collection(
-        this.firestore,
-        `${colID}/${channelId}/${subcollection}/${subID}`
-      );
-    } else {
-      ref = collection(
+    
+    const ref = collection(
         this.firestore,
         `${colID}/${channelId}/${subcollection}`
       );
-    }
+
     //console.log('Stefan: ', channelId, colID, subcollection, subID);
+    //Stefan:  aqZmyWrJ9h8G3R2anLOj channels channelmessages
+
 
     const querySnapshot = query(ref, orderBy('createdAt'));
+
     const unsubscribe = onSnapshot(querySnapshot, (snapshot) => {
       this.channelMessages = [];
       snapshot.forEach((doc) => {

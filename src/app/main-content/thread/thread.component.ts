@@ -11,7 +11,6 @@ import { BottomSheetComponent } from '../../shared/components/bottom-sheet/botto
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { Channel } from '../../../models/channel.class';
 import { FirebaseService } from '../../shared/services/firebase.service';
-import { ActivatedRoute } from '@angular/router';
 import { User } from '../../../models/user.class';
 import { NavigationService } from '../../shared/services/navigation.service';
 import { AuthService } from '../../shared/services/auth.service';
@@ -65,8 +64,7 @@ export class ThreadComponent implements OnInit, AfterViewChecked {
   isDesktop: boolean = false;
 
   constructor(
-    private _bottomSheet: MatBottomSheet,
-    private route: ActivatedRoute,
+    private _bottomSheet: MatBottomSheet,    
     public navigationService: NavigationService,
     private headerStateService: HeaderStateService,
     private dialogService: DialogServiceService
@@ -79,42 +77,16 @@ export class ThreadComponent implements OnInit, AfterViewChecked {
     name: this.channel.name,
     count: this.channel.count,
     newMessage: this.channel.newMessage,
-    // allMembers: this.channel.allMembers
   };
 
   async ngOnInit(): Promise<void> {
     await this.waitForUserData();
     this.test();
 
-    this.newMessage = false;
-
-    // this.route.paramMap.subscribe((paramMap) => {
-    //   this.itemID = paramMap.get('id');
-    //   this.getItemValues('channels', this.itemID);
-      
-    //   this.firestore.getAllChannelMessages(this.itemID, this.textBoxData.collection, this.textBoxData.subcollection);
-
-    //   // this.firestore.getAllChannelThreads(
-    //   //   this.textBoxData.subcollection,
-    //   //   this.itemID
-    //   // );
-    // });
-
-    this.route.queryParams.subscribe(params => {
-      const destination = params['destination'];
-      console.log(destination);
-      // Weiterverarbeitung von destination
-    });
-
+    this.newMessage = false;    
     this.headerStateService.setAlternativeHeader(true);
-    this.scrollToBottom();
-   
+    this.scrollToBottom();   
   }
-
-// Message
-///channels/aqZmyWrJ9h8G3R2anLOj/channelmessages/crCd8RlYYuAzQ92CnUjb
-// Thread
-///channels/aqZmyWrJ9h8G3R2anLOj/channelmessages/crCd8RlYYuAzQ92CnUjb/threads/S68akZjwGXCbQ0UwO77k
 
   getItemValues(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {
@@ -133,13 +105,19 @@ export class ThreadComponent implements OnInit, AfterViewChecked {
       name: this.channel.name,
       count: this.channel.count,
       newMessage: this.channel.newMessage,
-      // allMembers: this.channel.allMembers
     };
   }
 
-  ngAfterViewInit() {
+  async ngAfterViewInit() {
     this.previousMessageCount = this.getCurrentMessageCount();
+    
+    //await this.firestore.getAllChannelMessages(this.matchMedia.channelId, 'channels', 'channelmessages', this.matchMedia.subID);
+    //await this.firestore.getSingleItemData('channels', docId: string, callback: () => void) {
+    
+    
+    await this.firestore.getSingleMessageData('channels', 'aqZmyWrJ9h8G3R2anLOj/channelmessages/crCd8RlYYuAzQ92CnUjb', () => {});
   }
+
   ngAfterViewChecked() {
     const currentMessageCount = this.getCurrentMessageCount();
     if (currentMessageCount > this.previousMessageCount) {
@@ -156,14 +134,14 @@ export class ThreadComponent implements OnInit, AfterViewChecked {
     try {
       this.messageContent.nativeElement.scrollTo({
         top: this.messageContent.nativeElement.scrollHeight,
-        behavior: 'smooth', // Hier wird smooth scrollen aktiviert
+        behavior: 'smooth',
       });
     } catch (err) {}
   }
 
   async waitForUserData(): Promise<void> {
     while (!this.authService.activeUserAccount) {
-      await this.delay(100); // Wartezeit in Millisekunden, bevor erneut überprüft wird
+      await this.delay(100);
     }
   }
 
