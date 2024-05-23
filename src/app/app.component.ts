@@ -32,10 +32,10 @@ export class AppComponent implements OnInit{
   authService = inject(AuthService);
   firestore = inject(FirebaseService);
   matchMedia = inject(MatchMediaService);
-  isMobileLandscapeOrientation: boolean = false;  
+  isMobileLandscapeOrientation: boolean = false;
   isDesktop: boolean = false;
   isLoggedIn: boolean = false;
- 
+
   ngOnInit(): void {
     this.authService.user$.subscribe(user => {
       if(user){
@@ -49,8 +49,8 @@ export class AppComponent implements OnInit{
         this.isLoggedIn = false;
       }
     })
-    
+
     this.isMobileLandscapeOrientation = this.matchMedia.checkIsMobileOrientation();
     this.isDesktop = this.matchMedia.checkIsDesktop();
-  }  
+  }
 }
