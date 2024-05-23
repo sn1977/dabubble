@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {AuthService} from '../../services/auth.service';
 import {ProfilCardComponent} from '../../../main-content/profil-card/profil-card.component';
@@ -13,6 +13,7 @@ import {User} from '../../../../models/user.class';
 })
 export class DesktopOverlayComponent {
   @Input() user: User | undefined
+  @Output() closeOverlay = new EventEmitter<void>(); // Hier definieren wir die closeOverlay @Output() Eigenschaft
 
   constructor(private dialog: MatDialog, private authService: AuthService) {}
 
@@ -27,6 +28,8 @@ export class DesktopOverlayComponent {
     dialogRef.afterClosed().subscribe(result => {
       console.log('Der Dialog wurde geschlossen');
     });
+
+    this.closeOverlay.emit(); // Hier lösen wir das closeOverlay Ereignis aus
   }
 
   logout(): void {

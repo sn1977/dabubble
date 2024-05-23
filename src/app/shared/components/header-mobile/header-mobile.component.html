@@ -34,4 +34,4 @@
 <!--  <app-desktop-overlay [overlayVisible]="overlayVisible"></app-desktop-overlay>-->
   <img *ngIf="isDesktop" (click)="openOverlay()" src="assets/img/icon/keyboard_arrow_down.svg"/>
 </div>
-<app-desktop-overlay *ngIf="overlayVisible" [user]="user"></app-desktop-overlay>
+<app-desktop-overlay *ngIf="overlayVisible" [user]="user" (closeOverlay)="closeOverlay()"></app-desktop-overlay>
