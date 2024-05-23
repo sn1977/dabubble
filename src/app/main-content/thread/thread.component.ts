@@ -113,9 +113,7 @@ export class ThreadComponent implements OnInit, AfterViewChecked {
     
     //await this.firestore.getAllChannelMessages(this.matchMedia.channelId, 'channels', 'channelmessages', this.matchMedia.subID);
     //await this.firestore.getSingleItemData('channels', docId: string, callback: () => void) {
-    
-    
-    await this.firestore.getSingleMessageData('channels', 'aqZmyWrJ9h8G3R2anLOj/channelmessages/crCd8RlYYuAzQ92CnUjb', () => {});
+    this.firestore.getSingleMessageData('channels', this.matchMedia.channelId + '/channelmessages/' + this.matchMedia.subID, () => {});
   }
 
   ngAfterViewChecked() {
