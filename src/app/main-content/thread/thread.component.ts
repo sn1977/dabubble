@@ -82,43 +82,39 @@ export class ThreadComponent implements OnInit, AfterViewChecked {
     // allMembers: this.channel.allMembers
   };
 
-  addCountToChannelDocument(toggle: string) {
-    const channel = new Channel({
-      creator: this.channel.creator,
-      description: this.channel.description,
-      member: this.channel.member,
-      name: this.channel.name,
-      count: this.channel.count,
-      newMessage: this.newMessage,
-      // allMembers: this.channel.allMembers
-    });
-
-    this.firestore.updateChannel(this.itemID, channel);
-  }
-
   async ngOnInit(): Promise<void> {
     await this.waitForUserData();
     this.test();
 
     this.newMessage = false;
 
-    this.route.paramMap.subscribe((paramMap) => {
-      this.itemID = paramMap.get('id');
-      this.getItemValues('channels', this.itemID);
-      this.firestore.getAllChannelMessages(
-        this.itemID,
-        this.textBoxData.collection,
-        this.textBoxData.subcollection
-      );
+    // this.route.paramMap.subscribe((paramMap) => {
+    //   this.itemID = paramMap.get('id');
+    //   this.getItemValues('channels', this.itemID);
+      
+    //   this.firestore.getAllChannelMessages(this.itemID, this.textBoxData.collection, this.textBoxData.subcollection);
+
+    //   // this.firestore.getAllChannelThreads(
+    //   //   this.textBoxData.subcollection,
+    //   //   this.itemID
+    //   // );
+    // });
+
+    this.route.queryParams.subscribe(params => {
+      const destination = params['destination'];
+      console.log(destination);
+      // Weiterverarbeitung von destination
     });
 
     this.headerStateService.setAlternativeHeader(true);
     this.scrollToBottom();
-
-    setTimeout(() => {
-      this.addCountToChannelDocument(this.itemID);
-    }, 1000);
+   
   }
+
+// Message
+///channels/aqZmyWrJ9h8G3R2anLOj/channelmessages/crCd8RlYYuAzQ92CnUjb
+// Thread
+///channels/aqZmyWrJ9h8G3R2anLOj/channelmessages/crCd8RlYYuAzQ92CnUjb/threads/S68akZjwGXCbQ0UwO77k
 
   getItemValues(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {

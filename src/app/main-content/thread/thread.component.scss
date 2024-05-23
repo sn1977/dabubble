@@ -21,6 +21,30 @@
   overflow-y: auto;
   background-color: #ffffff;
   padding: 24px 16px 12px 16px;
+
+  .timeSeperator {
+    position: relative;
+    @include dFlex($jc: space-between, $ai: center, $fd: row, $g: 20px);
+    margin: 28px 0;    
+  }
+  
+  .timeSeperator span {
+    background-color: white;
+    height: 25px;
+    font-family: "Nunito";
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 24.55px;
+    color: #ADB0D9;
+  }
+
+  .line {
+    position: relative;    
+    width: auto;
+    flex: 1;
+    overflow-x: hidden;
+  }
+
 }
 
 .mdc-card {

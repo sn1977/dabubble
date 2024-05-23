@@ -86,17 +86,14 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.getItemValuesProfile('users', this.channelMessage.creator);
     this.messageDate = this.channelMessage.createdAt;
-    this.isMessageFromYou =
-      this.authService.activeUserAccount.uid === this.channelMessage.creator;
-    this.isLoading = true;
-    this.getAnswers();
-
-    //NOTE - @Sascha: Hier befüllen wir das noch leere Array mit den Daten aus der Datenbank
+    this.isMessageFromYou = this.authService.activeUserAccount.uid === this.channelMessage.creator;
     this.fillEmojiReactions();
   }
 
-  ngAfterViewInit() {
+  async ngAfterViewInit() {
     this.adjustTextareaHeight(this.messageToEdit.nativeElement);
+    this.isLoading = true;
+    await this.getAnswers();
   }
 
   ngOnDestroyy() {
@@ -381,14 +378,18 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   openThread(){
     const docId = this.channelMessage.channelId;
     const messageId = this.channelMessage.messageId;    
-    console.log(docId);
-    console.log(messageId);    
+    // console.log(docId);
+    // console.log(messageId);    
     this.isDesktop = this.matchMedia.checkIsDesktop();
     if(this.isDesktop === true){
       this.matchMedia.showThread = true;
     }
     else{
-      this.router.navigate(['/thread/', messageId]);      
+      const destination = docId + '/channelmessages/' + messageId + '/threads';
+      console.log(destination);
+      this.router.navigate(['/thread/'], { queryParams: { destination } });
+      //this.router.navigate(['/thread/', docId, '/channelmessages/', messageId, '/threads/']);      
+      // channels/aqZmyWrJ9h8G3R2anLOj/channelmessages/crCd8RlYYuAzQ92CnUjb/threads/S68akZjwGXCbQ0UwO77k
     }
   }
 

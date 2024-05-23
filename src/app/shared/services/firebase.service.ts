@@ -40,6 +40,7 @@ export class FirebaseService {
   userList: any = [];
   channelList: any = [];
   channelMessages: any = [];
+  channelThreads: any = [];
   message: DirectMessage = new DirectMessage();
   conversation: string | undefined;
   channelMessagesCount: number = 0;
@@ -274,12 +275,22 @@ export class FirebaseService {
   async getAllChannelMessages(
     channelId: string,
     colID: string,
-    subcollection: string
+    subcollection: string,
+    subID: string = ""
   ) {
-    const ref = collection(
-      this.firestore,
-      `${colID}/${channelId}/${subcollection}`
-    );
+    let ref;
+    if (subID) {
+      ref = collection(
+        this.firestore,
+        `${colID}/${channelId}/${subcollection}/${subID}`
+      );
+    } else {
+      ref = collection(
+        this.firestore,
+        `${colID}/${channelId}/${subcollection}`
+      );
+    }
+    //console.log('Stefan: ', channelId, colID, subcollection, subID);
 
     const querySnapshot = query(ref, orderBy('createdAt'));
     const unsubscribe = onSnapshot(querySnapshot, (snapshot) => {
@@ -292,6 +303,32 @@ export class FirebaseService {
       });
     });
     return unsubscribe;
+  }
+
+  async getAllChannelThreads(channelId: string, subcollection: string) {
+    const ref = collection(
+      this.firestore,
+      `channels/${channelId}/${subcollection}`
+    );
+
+    console.log(channelId);
+
+    ///channels/aqZmyWrJ9h8G3R2anLOj/channelmessages/crCd8RlYYuAzQ92CnUjb/threads/S68akZjwGXCbQ0UwO77k
+
+    // const querySnapshot = query(ref, orderBy('createdAt'));
+    // const unsubscribe = onSnapshot(querySnapshot, (snapshot) => {
+    //   this.channelThreads = [];
+    //   snapshot.forEach((doc) => {
+    //     this.channelThreads.push(
+    //       this.setChannelMessageObject(doc.data(), doc.id)
+    //     );
+    //     // console.log(doc.data(), doc.id);
+    //   });
+    // });
+
+    // console.log('Threads', this.channelThreads);
+
+    // return unsubscribe;
   }
 
   async getDirectMessages(sender: string, recipient: string) {

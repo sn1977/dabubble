@@ -22,20 +22,28 @@
     </div>
   </div>
   <div class="content">
+    <div>
+      bisherige message
+    </div>
+    <div class="timeSeperator">
+      <span>2 Antworten</span>      
+      <!-- <span>2 Antworten</span>       -->
+      <img class="line" src="./assets/img/auth/line.svg" alt="" />    
+    </div>
     <div
       class="message-content"
       #messageContent
       style="overflow-y: scroll; height: 100%"
     >
-      @if (this.firestore.channelMessages.length !== 0) {
-        @for (channelMessage of
-          this.firestore.channelMessages; track channelMessage.id) {
+      @if (this.firestore.channelThreads.length !== 0) {
+        @for (channelThread of
+          this.firestore.channelThreads; track channelThread.id) {
           <app-conversation
-            [channelMessage]="channelMessage" [isChannel]="false" [isThread]="true"
+            [channelMessage]="channelThread" [isChannel]="false" [isThread]="true"
           ></app-conversation>
         }
       }
-    </div>
+    </div>    
   </div>
 
   <app-text-box [textBoxData]="textBoxData"></app-text-box>
