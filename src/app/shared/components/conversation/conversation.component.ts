@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -8,22 +8,22 @@ import {
   ViewChild,
   inject,
 } from '@angular/core';
-import { ChannelMessage } from '../../../../models/channel-message.class';
-import { User } from '../../../../models/user.class';
-import { FirebaseService } from '../../services/firebase.service';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { EmojiPickerComponent } from '../emoji-picker/emoji-picker.component';
+import {ChannelMessage} from '../../../../models/channel-message.class';
+import {User} from '../../../../models/user.class';
+import {FirebaseService} from '../../services/firebase.service';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import {EmojiPickerComponent} from '../emoji-picker/emoji-picker.component';
 // import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
-import { FormsModule } from '@angular/forms';
-import { DateFormatService } from '../../services/date-format.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { ViewEncapsulation } from '@angular/core';
-import { EmojiSnackbarComponent } from '../emoji-snackbar/emoji-snackbar.component';
-import { PositionService } from '../../services/position.service';
-import { SnackbarOverlayService } from '../../services/snackbar-overlay.service';
-import { Router } from '@angular/router';
-import { MatchMediaService } from '../../services/match-media.service';
+import {AuthService} from '../../services/auth.service';
+import {FormsModule} from '@angular/forms';
+import {DateFormatService} from '../../services/date-format.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {ViewEncapsulation} from '@angular/core';
+import {EmojiSnackbarComponent} from '../emoji-snackbar/emoji-snackbar.component';
+import {PositionService} from '../../services/position.service';
+import {SnackbarOverlayService} from '../../services/snackbar-overlay.service';
+import {Router} from '@angular/router';
+import {MatchMediaService} from '../../services/match-media.service';
 
 @Component({
   selector: 'app-conversation',
@@ -31,9 +31,9 @@ import { MatchMediaService } from '../../services/match-media.service';
   templateUrl: './conversation.component.html',
   styleUrl: './conversation.component.scss',
   imports: [
-    CommonModule, 
-    MatDialogModule, 
-    EmojiPickerComponent, 
+    CommonModule,
+    MatDialogModule,
+    EmojiPickerComponent,
     FormsModule
   ],
 })
@@ -108,28 +108,6 @@ export class ConversationComponent implements OnInit, AfterViewInit {
     }
   }
 
-  // showEmojiSnackbar(emoji: string, user: string) {
-  //   this.snackBar.open(`${emoji} \n ${user} hat reagiert`, '', {
-  //     duration: 2000, // Die Dauer in Millisekunden, für die der Snackbar angezeigt wird
-  //   });
-  // }
-
-  // showEmojiSnackbar(emoji: string, user: string) {
-  //   this.snackBar.openFromComponent(EmojiSnackbarComponent, {
-  //     data: { emoji: emoji, user: user },
-  //     duration: 2000,
-  //     panelClass: ['custom-snackbar']
-  //   });
-  // }
-
-  // showEmojiSnackbar(emoji: string, user: string) {
-  //   this.setReactionGroupPosition();
-  //   this.snackBar.openFromComponent(EmojiSnackbarComponent, {
-  //     data: { emoji: emoji, user: user },
-  //     duration: 2500,
-  //   });
-  // }
-
   showEmojiSnackbar(emoji: string, user: string) {
     const reactionGroupDiv = document.querySelector('.reaction-group.pointer');
     if (reactionGroupDiv) {
@@ -139,6 +117,8 @@ export class ConversationComponent implements OnInit, AfterViewInit {
       this.snackbarOverlayService.open({
         // top: rect.top - snackbarHeight,
         // left: rect.right - snackbarWidth,
+        top: 200,
+        left: 200,
         emoji,
         user,
       });
@@ -149,17 +129,30 @@ export class ConversationComponent implements OnInit, AfterViewInit {
     }
   }
 
-  setReactionGroupPosition() {
-    const reactionGroupDiv = document.querySelector('.reaction-group .pointer');
-    if (reactionGroupDiv) {
-      const rect = reactionGroupDiv.getBoundingClientRect();
-      this.positionService.setPosition(rect.top, rect.left);
-    } else {
-      console.error(
-        'Element mit der Klasse "reaction-group pointer" wurde nicht gefunden'
-      );
-    }
-  }
+  // showEmojiSnackbar(emoji: string, user: string, event: MouseEvent) {
+  //   const clickedElement = event.target as HTMLElement;
+  //   const rect = clickedElement.getBoundingClientRect();
+  //   const snackbarHeight = 48; // Ersetzen Sie dies durch die tatsächliche Höhe Ihrer Snackbar
+  //   const snackbarWidth = 200; // Ersetzen Sie dies durch die tatsächliche Breite Ihrer Snackbar
+  //   this.snackbarOverlayService.open({
+  //     top: rect.top - snackbarHeight,
+  //     left: rect.right - snackbarWidth,
+  //     emoji,
+  //     user,
+  //   });
+  // }
+
+  // setReactionGroupPosition() {
+  //   const reactionGroupDiv = document.querySelector('.reaction-group .pointer');
+  //   if (reactionGroupDiv) {
+  //     const rect = reactionGroupDiv.getBoundingClientRect();
+  //     this.positionService.setPosition(rect.top, rect.left);
+  //   } else {
+  //     console.error(
+  //       'Element mit der Klasse "reaction-group pointer" wurde nicht gefunden'
+  //     );
+  //   }
+  // }
 
   getItemValuesProfile(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {
@@ -225,7 +218,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
     // Show the snackbar
     this.showEmojiSnackbar(
       selectedEmoji,
-      this.authService.activeUserAccount.displayName
+      this.authService.activeUserAccount.displayName,
     );
   }
 
@@ -257,10 +250,10 @@ export class ConversationComponent implements OnInit, AfterViewInit {
     this.updateReactionsInDatabase();
 
     // Show the snackbar
-    this.showEmojiSnackbar(
-      reaction.emoji,
-      this.authService.activeUserAccount.displayName
-    );
+      this.showEmojiSnackbar(
+        reaction.emoji,
+        this.authService.activeUserAccount.displayName,
+      );
   }
 
   toggleReactionBar(event: any): void {
@@ -336,17 +329,17 @@ export class ConversationComponent implements OnInit, AfterViewInit {
     }
   }
 
-  noChanges(){
+  noChanges() {
     const setFocusMessage = this.messageToEdit.nativeElement;
     setFocusMessage.value = this.savedMessage;
 
-      setTimeout(() => {
-        this.showEditMessage = false;
-        this.showReactionBar = false;
-        this.isMessageDisabled = true;
-        setFocusMessage.classList.remove('edit-message');
-        }, 200);
-  }  
+    setTimeout(() => {
+      this.showEditMessage = false;
+      this.showReactionBar = false;
+      this.isMessageDisabled = true;
+      setFocusMessage.classList.remove('edit-message');
+    }, 200);
+  }
 
   changeMessage() {
     const colId = this.isChannel == true ? 'channels' : 'messages';
@@ -361,7 +354,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
         messageId,
         setFocusMessage.value
       );
-      
+
       setTimeout(() => {
         setFocusMessage.classList.remove('edit-message');
         this.isMessageDisabled = true;
@@ -375,24 +368,22 @@ export class ConversationComponent implements OnInit, AfterViewInit {
     textarea.style.height = textarea.scrollHeight + 'px';
   }
 
-  openThread(){
+  openThread() {
     const docId = this.channelMessage.channelId;
-    const messageId = this.channelMessage.messageId;    
+    const messageId = this.channelMessage.messageId;
     this.isDesktop = this.matchMedia.checkIsDesktop();
-    
-    if(messageId){
+
+    if (messageId) {
       this.matchMedia.channelId = docId;
       this.matchMedia.subID = messageId;
-      
-      if(this.isDesktop === true){
+
+      if (this.isDesktop === true) {
         this.matchMedia.showThread = true;
-      }
-      else{      
+      } else {
         this.router.navigate(['/thread']);
       }
     }
   }
 
-  
 
 }

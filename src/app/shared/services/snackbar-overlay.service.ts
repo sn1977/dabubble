@@ -10,12 +10,14 @@ import { MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
 export class SnackbarOverlayService {
   constructor(private overlay: Overlay, private injector: Injector) {}
 
-  open({ emoji, user }: { emoji: string, user: string }) {
+  open({ emoji, user, top, left }: { emoji: string, user: string, top: number, left: number }) {
     const positionStrategy = this.overlay
       .position()
       .global()
-      .centerHorizontally()
-      .centerVertically();
+      // .centerHorizontally()
+      // .centerVertically();
+      .top(`${top}px`)
+      .left(`${left}px`);
 
     const overlayConfig = new OverlayConfig({
       hasBackdrop: false,
