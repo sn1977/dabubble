@@ -28,16 +28,19 @@
     <div
       class="message-content"
       #messageContent
-    >
-
-    @if (this.firestore.channelMessages.length !== 0) {
+    >   
+    <app-conversation
+            [channelMessage]="hallo" [isChannel]="true" [isThread]="false"
+          ></app-conversation>
+    
+    <!-- @if (this.firestore.channelMessage.length !== 0) {
         @for (channelMessage of
           this.firestore.channelMessages; track channelMessage.id) {
           <app-conversation
             [channelMessage]="channelMessage" [isChannel]="false" [isThread]="true"
           ></app-conversation>
         }
-      }
+      } -->
     </div>
 
     <div class="timeSeperator">
@@ -46,17 +49,17 @@
     </div>
     <div
       class="message-content"
-      #messageContent
+      #threadContent
       style="overflow-y: scroll; height: 100%"
     >
-      @if (this.firestore.channelThreads.length !== 0) {
+      <!-- @if (this.firestore.channelThreads.length !== 0) {
         @for (channelThread of
           this.firestore.channelThreads; track channelThread.id) {
-          <app-conversation
+          y<app-conversation
             [channelMessage]="channelThread" [isChannel]="false" [isThread]="true"
           ></app-conversation>
         }
-      }
+      } -->
     </div>    
   </div>
 

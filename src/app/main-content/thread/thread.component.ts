@@ -23,6 +23,7 @@ import { DialogServiceService } from '../../shared/services/dialog-service.servi
 import { SearchUserComponent } from '../../shared/components/search-user/search-user.component';
 import { CommonModule } from '@angular/common';
 import { MatchMediaService } from '../../shared/services/match-media.service';
+import { ChannelMessage } from '../../../models/channel-message.class';
 
 @Component({
   selector: 'app-thread',
@@ -46,6 +47,7 @@ export class ThreadComponent implements OnInit, AfterViewChecked {
   itemID: any = '';
   user: User = new User();
   channel: Channel = new Channel();
+  hallo: any = [];
   channelList: any = [];
   newMessage: boolean = false;
   firebaseAuth = inject(Auth);
@@ -111,9 +113,9 @@ export class ThreadComponent implements OnInit, AfterViewChecked {
   async ngAfterViewInit() {
     this.previousMessageCount = this.getCurrentMessageCount();
     
-    //await this.firestore.getAllChannelMessages(this.matchMedia.channelId, 'channels', 'channelmessages', this.matchMedia.subID);
     //await this.firestore.getSingleItemData('channels', docId: string, callback: () => void) {
     this.firestore.getSingleMessageData('channels', this.matchMedia.channelId + '/channelmessages/' + this.matchMedia.subID, () => {});
+    
   }
 
   ngAfterViewChecked() {

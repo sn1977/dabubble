@@ -37,6 +37,7 @@ export class FirebaseService {
   activeUser: any = [];
   user: User = new User();
   channel: Channel = new Channel();
+  channelMessage: ChannelMessage = new ChannelMessage();
   userList: any = [];
   channelList: any = [];
   channelMessages: any = [];
@@ -245,10 +246,17 @@ export class FirebaseService {
   }
 
   private singleItemUnsubscribe: Unsubscribe | undefined;
+  private singleMessageUnsubscribe: Unsubscribe | undefined;
 
   unsubscribeSingleUserData() {
     if (this.singleItemUnsubscribe) {
       this.singleItemUnsubscribe();
+    }
+  }
+
+  unsubscribeSingleMessageData() {
+    if (this.singleMessageUnsubscribe) {
+      this.singleMessageUnsubscribe();
     }
   }
 
@@ -273,40 +281,35 @@ export class FirebaseService {
   }
 
   getSingleMessageData(colId: string, docId: string, callback: () => void) {
-    
-  console.log(colId, docId);
-  
-    // this.singleItemUnsubscribe = onSnapshot(
-    //   this.getSingleDocRef(colId, docId),
-    //   (element) => {
-    //     if (collection === 'users') {
-    //       this.user = new User(this.setUserObject(element.data(), element.id));
-    //     }
-    //     if (collection === 'channels') {
-    //       this.channel = new Channel(
-    //         this.setMessageObject(element.data(), element.id)
-    //       );
-    //     }
+    // console.log(colId, docId);
 
-    //     callback();
-    //   }
-    // );
+    this.singleMessageUnsubscribe = onSnapshot(
+      this.getSingleDocRef(colId, docId),
+      (element) => {
+        this.channelMessage = new ChannelMessage(
+           this.setChannelMessageObject(element.data(), element.id)
+        );
+
+        console.log(element.data(), element.id);
+        
+
+        callback();
+      }
+    );
   }
 
   async getAllChannelMessages(
     channelId: string,
     colID: string,
-    subcollection: string,    
+    subcollection: string
   ) {
-    
     const ref = collection(
-        this.firestore,
-        `${colID}/${channelId}/${subcollection}`
-      );
+      this.firestore,
+      `${colID}/${channelId}/${subcollection}`
+    );
 
     //console.log('Stefan: ', channelId, colID, subcollection, subID);
     //Stefan:  aqZmyWrJ9h8G3R2anLOj channels channelmessages
-
 
     const querySnapshot = query(ref, orderBy('createdAt'));
 
