@@ -179,7 +179,7 @@ export class ChannelEditionComponent implements OnInit {
       console.log('Mitglied mit ID', id, 'wurde aus dem Array entfernt.');
       this.onSubmit('update');
     } else {
-      console.log('Mitglied mit ID', id, 'nicht im Array gefunden.');
+      //console.log('Mitglied mit ID', id, 'nicht im Array gefunden.');
     }
   }
   

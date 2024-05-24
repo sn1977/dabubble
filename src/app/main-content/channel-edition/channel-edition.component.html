@@ -12,8 +12,6 @@
         <div class="container" [style.border]="!isEditingChannelName ? '1px solid blue' : '1px solid #ADB0D9'">
             <div class="channel-name">
               <h1>Channel-Name</h1>
-              
-              
               @if(!isEditingChannelName){
                 <p id="description"># {{channel.name}}</p>
               }@else {
