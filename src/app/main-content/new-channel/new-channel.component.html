@@ -45,15 +45,17 @@
           ></app-conversation>
         }
       } @else {
-        <div class="channel-info">
-          <h1 class="no-margin">
-            <span>#</span>
-            <span>{{ channel.name }}</span>
-          </h1>
-          <p>
-            Du hast diesen Channel heute erstellt. Das ist der Anfang des Channels
-            {{ channel.name }}
-          </p>
+        <div class="placeholder">
+          <div class="channel-info">
+            <h1 class="no-margin">
+              <span>#</span>
+              <span>{{ channel.name }}</span>
+            </h1>
+            <p>
+              Du hast diesen Channel heute erstellt. Das ist der Anfang des Channels 
+              <span># {{ channel.name }}</span>              
+            </p>
+          </div>
         </div>
       }
     </div>

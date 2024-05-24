@@ -41,10 +41,17 @@ h1 {
   padding: 2px 0;
 }
 
+.placeholder{
+  @include dFlex($jc: flex-end, $ai: normal, $fd: column, $g: 10px);  
+  height: 100%;
+}
+
 .channel-info {  
   @include dFlex($jc: flex-start, $ai: flex-start, $fd: column, $g: 15px);
-  position: absolute;
-  bottom: 180px;
+  
+  p span {
+    color: #535AF1;
+  }
 }
 
 .no-margin{
