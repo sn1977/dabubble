@@ -26,6 +26,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { SearchResultsDialogComponent } from '../search-results-dialog/search-results-dialog.component';
 import { ChannelMessage } from '../../models/channel-message.class';
 import {SearchInputComponent} from './search-input/search-input.component';
+import { MatchMediaService } from '../shared/services/match-media.service';
 //import {SearchService} from '../shared/services/search-service.service';
 
 @Component({
@@ -57,6 +58,7 @@ export class MainContentComponent implements OnInit {
   firestore = inject(FirebaseService);
   router = inject(Router);
   authService = inject(AuthService);
+  matchMedia = inject(MatchMediaService);
   @Input() channelMessage!: ChannelMessage;
   @Input() isDesktop: boolean = false;
 
@@ -226,7 +228,12 @@ export class MainContentComponent implements OnInit {
     this.navigationService.navigate(['/add-channel']);
   }
 
-  openChannel(event: MouseEvent, path: string) {
+  openChannel(event: MouseEvent, path: string, name?: string) {
+
+    if(name){      
+      this.matchMedia.channelName = name;
+    }
+
     const docRefId = (event.currentTarget as HTMLElement).id;
     this.itemStateService.setItemId(docRefId);
     this.router.navigate([path, docRefId]);

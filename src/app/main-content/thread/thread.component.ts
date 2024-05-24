@@ -84,7 +84,6 @@ export class ThreadComponent implements OnInit, AfterViewChecked {
   async ngOnInit(): Promise<void> {
     await this.waitForUserData();
     this.test();
-
     this.newMessage = false;    
     this.headerStateService.setAlternativeHeader(true);
     this.scrollToBottom();
@@ -97,26 +96,11 @@ export class ThreadComponent implements OnInit, AfterViewChecked {
       this.channel = new Channel(this.firestore.channel);
       this.textBoxData.channelName = this.channel.name;
       this.textBoxData.channelId = itemID;
-      //this.setOldChannelValues();
     });
   }
 
-  // setOldChannelValues() {
-  //   this.channelData = {
-  //     creator: this.channel.creator,
-  //     description: this.channel.description,
-  //     member: this.channel.member,
-  //     name: this.channel.name,
-  //     count: this.channel.count,
-  //     newMessage: this.channel.newMessage,
-  //   };
-  // }
-
   async ngAfterViewInit() {
-    this.previousMessageCount = this.getCurrentMessageCount();
-    
-    // this.firestore.getSingleMessageData('channels', this.matchMedia.channelId + '/channelmessages/' + this.matchMedia.subID, () => {});
-    // this.firestore.getAllChannelThreads(this.matchMedia.channelId, 'channelmessages/crCd8RlYYuAzQ92CnUjb/threads');
+    this.previousMessageCount = this.getCurrentMessageCount();    
   }
 
   ngAfterViewChecked() {

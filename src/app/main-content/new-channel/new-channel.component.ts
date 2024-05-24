@@ -34,7 +34,7 @@ import { CommonModule } from '@angular/common';
 })
 export class NewChannelComponent implements OnInit, AfterViewChecked {
   firestore = inject(FirebaseService);
-  router = inject(Router);
+  router = inject(Router);  
   itemID: any = '';
   user: User = new User();
   channel: Channel = new Channel();
@@ -92,7 +92,6 @@ export class NewChannelComponent implements OnInit, AfterViewChecked {
   async ngOnInit(): Promise<void> {
     await this.waitForUserData();
     this.test();
-
     this.newMessage = false; 
 
     this.route.paramMap.subscribe((paramMap) => {
@@ -132,7 +131,7 @@ export class NewChannelComponent implements OnInit, AfterViewChecked {
   }
 
   ngAfterViewInit() {
-    this.previousMessageCount = this.getCurrentMessageCount();
+    this.previousMessageCount = this.getCurrentMessageCount();    
   }
   ngAfterViewChecked() {
     const currentMessageCount = this.getCurrentMessageCount();
