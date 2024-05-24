@@ -5,6 +5,7 @@
   background-color: white;
   padding: 40px 20px;
   @include dFlex($jc: flex-start, $ai: center, $fd: column, $g: 25px);
+  overflow: scroll;
 }
 
 .channel-header {
