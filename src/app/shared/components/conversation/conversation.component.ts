@@ -386,7 +386,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
 
     if (messageId) {
       this.matchMedia.channelId = docId;
-      this.matchMedia.subID = messageId;
+      this.matchMedia.subID = messageId;      
 
       if (this.isDesktop === true) {
         this.matchMedia.showThread = true;

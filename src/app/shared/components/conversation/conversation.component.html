@@ -163,15 +163,17 @@
       left: isMessageFromYou ? 'unset' : '5%'
     }"
   >
-  <div class="reaction-icon-small">
-    <img src="./assets/img/emojis/check_mark2.svg" alt=""  (click)="addEmojiReaction('✅')" />
-  </div>
-  <div class="reaction-icon-small">
-    <img src="./assets/img/emojis/raised_hands.svg" alt="" (click)="addEmojiReaction('🙌')" />
-  </div>
+  @if(this.matchMedia.showThread == false){
+    <div class="reaction-icon-small">
+      <img src="./assets/img/emojis/check_mark2.svg" alt=""  (click)="addEmojiReaction('✅')" />
+    </div>
+    <div class="reaction-icon-small">
+      <img src="./assets/img/emojis/raised_hands.svg" alt="" (click)="addEmojiReaction('🙌')" />
+    </div>
+  }
   <img src="./assets/img/emojis/add_reaction.svg" alt="" (click)="openEmojiPicker()" />
 
-  @if(isChannel == true){
+  @if(isChannel == true && !isMessageFromYou){
     <img src="./assets/img/emojis/answer.svg" alt="" (click)="openThread()" />
   }
 

@@ -8,7 +8,7 @@ export class MatchMediaService {
   showThread: boolean = false;  
   channelId: string = '';
   subID: string = '';
-  channelName: string = '';
+  channelName: string = '';  
   
   constructor() { }
 
