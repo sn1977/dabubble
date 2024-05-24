@@ -1,13 +1,13 @@
 <div class="container">
     <app-header-mobile></app-header-mobile>
-  
+
     <div class="mdc-card">
       <div class="channel-box" (click)="openDirectMessageOverlay()">
         <h1 class="no-margin">Neue Nachricht: </h1>
         <input type="" value="">
       </div>
     </div>
-  
+
     <div class="content">
       <div
         class="message-content"
@@ -15,17 +15,17 @@
         style="overflow-y: scroll; height: 100%"
       >
         @for (chat of this.firestore.channelMessages; track
-        chat.id) {        
+        chat.id) {
           <app-conversation
             [channelMessage]="chat" [isChannel]="false" [isThread]="false"
           ></app-conversation>
         }
       </div>
     </div>
-  
-    
+
+
     <app-text-box [textBoxData]="textBoxData"></app-text-box>
-  
+
     <div id="overlay3" class="overlay" (click)="closeOverlay('overlay3')">
       <div class="overlay-profil">
         <div class="profile-icon">
@@ -39,4 +39,3 @@
       </div>
     </div>
   </div>
-  

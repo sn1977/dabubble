@@ -74,6 +74,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   savedMessage: string = '';
   isDesktop: boolean = false;
   @ViewChild('messageToEdit') messageToEdit!: ElementRef<HTMLTextAreaElement>;
+  groupedMessages: { date: string, messages: ChannelMessage[] }[] = [];
 
   getCurrentDay() {
     const date = new Date();
@@ -111,7 +112,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   }
 
   showEmojiSnackbar(emoji: string, user: string) {
-    const reactionGroupDiv = document.querySelector('.reaction-group.pointer');
+    const reactionGroupDiv = document.querySelector('.reaction-snackbar');
     if (reactionGroupDiv) {
       const rect = reactionGroupDiv.getBoundingClientRect();
       const snackbarHeight = 48; // Ersetzen Sie dies durch die tatsächliche Höhe Ihrer Snackbar
@@ -169,8 +170,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
     }
   }
 
-  async testMap() {
-    await this.delay(200);
+  testMap() {
     let channelMessageInstance = new ChannelMessage(this.channelMessage);
 
     channelMessageInstance.messageId = this.channelMessage.messageId;
@@ -378,15 +378,15 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   async openThread() {
     this.matchMedia.showThread = false;
     await this.delay(200);
-  
+
     const docId = this.channelMessage.channelId;
     const messageId = this.channelMessage.messageId;
     this.isDesktop = this.matchMedia.checkIsDesktop();
-  
+
     if (messageId) {
       this.matchMedia.channelId = docId;
       this.matchMedia.subID = messageId;
-  
+
       if (this.isDesktop === true) {
         this.matchMedia.showThread = true;
       } else {
@@ -395,6 +395,27 @@ export class ConversationComponent implements OnInit, AfterViewInit {
     }
   }
 
+  groupMessagesByDate(messages: ChannelMessage[]): { date: string, messages: ChannelMessage[] }[] {
+    // Sort messages by date
+    messages.sort((a, b) => a.createdAt.seconds - b.createdAt.seconds);
+
+    // Group messages by date
+    const groupedMessages: { date: string, messages: ChannelMessage[] }[] = [];
+    let currentGroup: { date: string, messages: ChannelMessage[] } | null = null;
+
+    for (const message of messages) {
+      const messageDate = this.dateFormatService.formatDateYYYYMMDD(message.createdAt);
+
+      if (currentGroup && currentGroup.date === messageDate) {
+        currentGroup.messages.push(message);
+      } else {
+        currentGroup = { date: messageDate, messages: [message] };
+        groupedMessages.push(currentGroup);
+      }
+    }
+
+    return groupedMessages;
+  }
   delay(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
