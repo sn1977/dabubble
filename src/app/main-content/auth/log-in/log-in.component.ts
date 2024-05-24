@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../../shared/services/auth.service';
 import { Router, RouterLink } from '@angular/router';
+import { MatchMediaService } from '../../../shared/services/match-media.service';
 
 @Component({
   selector: 'app-log-in',
@@ -29,12 +30,12 @@ import { Router, RouterLink } from '@angular/router';
     FormsModule,
     MatIconModule,
     RouterLink,
-    CommonModule
+    CommonModule,
   ],
   templateUrl: './log-in.component.html',
   styleUrl: './log-in.component.scss',
 })
-export class LogInComponent{
+export class LogInComponent implements OnInit {
   contactData = {
     name: '',
     email: '',
@@ -42,24 +43,26 @@ export class LogInComponent{
   };
   http = inject(HttpClient);
   authService = inject(AuthService);
+  matchMedia = inject(MatchMediaService);
   router = inject(Router);
   errorMessage: string | null = null;
   playIntroAnimation: boolean = true;
   isDesktop: boolean = false;
+
+  ngOnInit(): void {
+    this.isDesktop = this.matchMedia.checkIsDesktop();
+  }
 
   onSubmit(): void {
     this.authService
       .login(this.contactData.email, this.contactData.password)
       .subscribe({
         next: () => {
-
-          if(this.isDesktop){
-            this.router.navigateByUrl('/new-channel/3O5ALftPMOVCKsMLhLLN');
-          } else{
-            // this.router.navigateByUrl('/');
+          if (this.isDesktop) {
+            this.router.navigateByUrl('/new-channel/Entwicklerteam');
+          } else {
             this.router.navigateByUrl('/main');
           }
-
         },
         error: (err) => {
           this.errorMessage = err.code;
@@ -76,8 +79,7 @@ export class LogInComponent{
     this.authService.googleAuth();
   }
 
-  anonymousLogin(){        
+  anonymousLogin() {
     this.authService.signInAnonymous();
   }
-
 }

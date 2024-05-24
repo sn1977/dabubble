@@ -2,6 +2,8 @@
 
 #toggleDiv {
   transition: transform 0.5s ease, width 0.5s ease;
+  max-width: 21.06%;
+  width: 100%;
 }
 
 .collapsed {
@@ -48,6 +50,12 @@
 .thread{
   height: 100%;
   flex: 1;
+}
+
+.thread{
+  width: 100%;
+  max-width: 25.26%;
+  min-width: 342px;
 }
 
 .logo{

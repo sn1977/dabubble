@@ -159,3 +159,20 @@ mat-card {
     }
   }
 }
+
+@media (max-width: 768px){
+
+  mat-card{
+    @include card($w: 100%, $h: auto, $br: 30px, $ptb: 35px, $plr: 16px);
+  }
+
+  form{
+    gap: 8px !important;
+
+    input[type=email]{
+      font-size: 0.9rem !important;
+    }
+
+  }
+
+}

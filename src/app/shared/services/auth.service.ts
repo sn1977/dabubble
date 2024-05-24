@@ -24,15 +24,17 @@ import { UserInterface } from '../interfaces/user.interface';
 import { Router } from '@angular/router';
 import { FirebaseService } from './firebase.service';
 import { User } from '../../../models/user.class';
+import { MatchMediaService } from './match-media.service';
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   firebaseAuth = inject(Auth);
+  matchMedia = inject(MatchMediaService);
   user$ = user(this.firebaseAuth);
   currentUserSig = signal<UserInterface | null | undefined>(undefined);
   user: User = new User();
-
+  isDesktop: boolean = false;
   provider = new GoogleAuthProvider();
   activeUserAccount: any = null;
 
@@ -53,6 +55,9 @@ export class AuthService {
     this.firebaseAuth.onAuthStateChanged(
       (user) => (this.activeUserAccount = user)
     );
+
+    this.isDesktop = this.matchMedia.checkIsDesktop();
+
   }
 
   googleAuth() {
@@ -71,8 +76,11 @@ export class AuthService {
           this.user.email = user.email ?? this.user.email;
           this.user.displayName = user.displayName ?? this.user.displayName;
           this.user.provider = 'google';
-          // this.router.navigateByUrl('');
-          this.router.navigateByUrl('/main');
+          if (this.isDesktop) {
+            this.router.navigateByUrl('/new-channel/Entwicklerteam');
+          } else {
+            this.router.navigateByUrl('/main');
+          }
           this.firebase.updateUser(this.user, this.user.id);
         }
       })
@@ -236,9 +244,12 @@ export class AuthService {
           this.user.displayName =
             response.user.displayName ?? this.user.displayName;
           this.user.provider = 'anonym';
-          this.user.isOnline = true;
-          // this.router.navigateByUrl('');
-          this.router.navigateByUrl('/main');
+          this.user.isOnline = true;          
+          if (this.isDesktop) {
+            this.router.navigateByUrl('/new-channel/Entwicklerteam');
+          } else {
+            this.router.navigateByUrl('/main');
+          }
           return this.firebase.updateUser(this.user, this.user.id);
         }
       })
