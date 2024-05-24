@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -15,7 +15,7 @@ import { MatchMediaService } from '../../shared/services/match-media.service';
   templateUrl: './add-channel.component.html',
   styleUrl: './add-channel.component.scss',
 })
-export class AddChannelComponent implements AfterViewInit{
+export class AddChannelComponent implements OnInit{
 
   allMembers: any[] = [
     {
@@ -88,27 +88,18 @@ export class AddChannelComponent implements AfterViewInit{
       
     });
     this.firestore.addChannel(channel);
-    console.log(this.allMembers);
-    
-    
-    
+    //console.log(this.allMembers);    
   }
 
-  constructor() {
-    console.log(this.allMembers);
+  constructor() {}
 
-  }
-  ngOnInit(): void {    
-    
+  ngOnInit(): void {
     this.isDesktop = this.matchMedia.checkIsDesktop();
-    console.log(this.isDesktop);
   }
 
-  ngAfterViewInit(): void {
-    this.isDesktop = this.matchMedia.checkIsDesktop();
-    console.log(this.isDesktop);    
-  }
-
+  // ngAfterViewInit(): void {
+  //   this.isDesktop = this.matchMedia.checkIsDesktop();    
+  // }
 
 
   addmember(event: MouseEvent, user: User) {

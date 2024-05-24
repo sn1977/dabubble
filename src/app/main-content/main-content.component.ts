@@ -102,16 +102,8 @@ export class MainContentComponent implements OnInit {
   async ngOnInit() {
     await this.listenForDataChanges();    
     this.dataService.searchWorkspace('');
-  }  
-
-  // listenForDataChanges() {
-  //   this.firestore.getChannels().subscribe((channels) => {
-  //     this.dataService.allChannels = channels;      
-  //   });
-  //   this.firestore.getUsers2().subscribe((users) => {
-  //     this.dataService.allUsers = this.sortUsers(users);
-  //   });
-  // }
+  }
+  
   async listenForDataChanges(): Promise<void> {
     const channelsPromise = firstValueFrom(this.firestore.getChannels());
     const usersPromise = firstValueFrom(this.firestore.getUsers2());
