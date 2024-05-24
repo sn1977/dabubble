@@ -27,7 +27,10 @@
   padding: 0 20px 20px;
   box-sizing: border-box;
   background-color: #eceefe;
-  // height: 800px;
+  
+  mat-card-content{
+    overflow: auto;
+  }
 }
 
 .mat-mdc-card-content{  
@@ -43,7 +46,7 @@
 
 .menu{
   height: calc(100vh - 150px);
-  overflow: auto;
+  overflow: hidden;
 }
 
 .workspace,

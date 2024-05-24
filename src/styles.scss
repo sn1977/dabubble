@@ -172,3 +172,24 @@ app-root{
   background-color: var(--mdc-snackbar-container-color) !important;
 }
 
+*{
+  scrollbar-width: thin;
+  scrollbar-color: #797EF3;
+}
+
+// 
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #797EF3;
+  border-radius: 2px;  
+}
+
+::-webkit-scrollbar-track {
+  background-color: #00000000;
+  border: 1px solid #00000000;
+}
