@@ -88,7 +88,7 @@ export class ThreadComponent implements OnInit, AfterViewChecked {
     this.headerStateService.setAlternativeHeader(true);
     this.scrollToBottom();
     this.firestore.getSingleMessageData('channels', this.matchMedia.channelId + '/channelmessages/' + this.matchMedia.subID, () => {});
-    this.firestore.getAllChannelThreads(this.matchMedia.channelId, 'channelmessages/crCd8RlYYuAzQ92CnUjb/threads');   
+    this.firestore.getAllChannelThreads(this.matchMedia.channelId, 'channelmessages/' + this.matchMedia.subID + '/threads');
   }
 
   getItemValues(collection: string, itemID: string) {
