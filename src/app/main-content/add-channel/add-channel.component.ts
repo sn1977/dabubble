@@ -15,31 +15,29 @@ import { MatchMediaService } from '../../shared/services/match-media.service';
   templateUrl: './add-channel.component.html',
   styleUrl: './add-channel.component.scss',
 })
-export class AddChannelComponent implements OnInit{
-
+export class AddChannelComponent implements OnInit {
   allMembers: any[] = [
     {
       avatar: 'http://localhost:4200/assets/img/characters/template2.svg',
-      count: 0,            
+      count: 0,
       displayName: 'Boss',
       email: 'boss@d.ch',
       isOnline: true,
       newMessage: false,
       provider: 'email',
-      selected: false
+      selected: false,
     },
     {
       avatar: 'http://localhost:4200/assets/img/characters/template1.svg',
-      count: 0,            
+      count: 0,
       displayName: 'Sekretärin',
       email: 'secretary@d.ch',
       isOnline: false,
       newMessage: false,
       provider: 'email',
-      selected: false
-    }
+      selected: false,
+    },
   ];
-  
 
   selectedUsers: User[] = [];
   userNames: string = '';
@@ -58,7 +56,7 @@ export class AddChannelComponent implements OnInit{
   matchMedia = inject(MatchMediaService);
   authService = inject(AuthService);
   isDesktop: boolean = false;
-  activeUser: any ='';
+  activeUser: any = '';
 
   channel: Channel = new Channel();
 
@@ -71,12 +69,9 @@ export class AddChannelComponent implements OnInit{
     user: '',
     count: '',
     newMessage: '',
-    
   };
 
-  
   onSubmit() {
-
     const channel = new Channel({
       creator: this.authService.activeUserId,
       description: this.channelData.description,
@@ -84,11 +79,9 @@ export class AddChannelComponent implements OnInit{
       allMembers: this.allMembers,
       name: this.channelData.name,
       count: this.channelData.count,
-      newMessage: this.channelData.newMessage
-      
+      newMessage: this.channelData.newMessage,
     });
     this.firestore.addChannel(channel);
-    //console.log(this.allMembers);    
   }
 
   constructor() {}
@@ -97,19 +90,14 @@ export class AddChannelComponent implements OnInit{
     this.isDesktop = this.matchMedia.checkIsDesktop();
   }
 
-  // ngAfterViewInit(): void {
-  //   this.isDesktop = this.matchMedia.checkIsDesktop();    
-  // }
-
-
   addmember(event: MouseEvent, user: User) {
-    const index = this.selectedUsers.findIndex((selectedUser) => selectedUser.id === user.id);
+    const index = this.selectedUsers.findIndex(
+      (selectedUser) => selectedUser.id === user.id
+    );
 
     if (index === -1) {
       this.selectedUsers.push(user);
       console.log(this.selectedUsers);
-      
-
     } else {
       this.selectedUsers.splice(index, 1);
     }
@@ -117,17 +105,21 @@ export class AddChannelComponent implements OnInit{
   }
 
   updateFormattedUserNames() {
-    this.userNames = this.selectedUsers.map(user => user.displayName).join(', ');
+    this.userNames = this.selectedUsers
+      .map((user) => user.displayName)
+      .join(', ');
   }
 
   removeUser(user: User) {
-    const index = this.selectedUsers.findIndex(selectedUser => selectedUser.id === user.id);
+    const index = this.selectedUsers.findIndex(
+      (selectedUser) => selectedUser.id === user.id
+    );
     if (index !== -1) {
       this.selectedUsers.splice(index, 1);
       this.updateFormattedUserNames();
     }
   }
-  
+
   searchQuery: string = '';
   onSearchInputChange(value: string) {
     this.searchQuery = value;
@@ -146,8 +138,7 @@ export class AddChannelComponent implements OnInit{
     this.overlayVisible = !this.overlayVisible;
   }
 
-  toggleInputField(inputId: string) {    
-
+  toggleInputField(inputId: string) {
     if (inputId === 'addSpecificMembers') {
       this.showInputField = !this.showInputField;
       this.showAddMember = false;
@@ -161,16 +152,12 @@ export class AddChannelComponent implements OnInit{
     }
   }
   toggleCheckbox(checkboxId: string): void {
-
     if (checkboxId === 'addAllMembers') {
       this.isAddAllMembersChecked = true;
       this.isAddSpecificMembersChecked = false;
-      this.showInputField = false; // Ensure input field is hidden when "Alle Mitglieder" selected
+      this.showInputField = false;
 
-      this.selectedUsers = this.selectedUsers.concat(
-        this.allMembers
-      );
-
+      this.selectedUsers = this.selectedUsers.concat(this.allMembers);
     } else if (checkboxId === 'addSpecificMembers') {
       this.selectedUsers = [];
 
