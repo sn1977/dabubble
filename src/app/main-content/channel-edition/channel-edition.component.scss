@@ -33,7 +33,7 @@ main {
   padding: 20px;
   width: 220px;
   border-radius: 10px;
-  border: 1px solid blue;
+  border: 1px solid #ADB0D9;
 
 }
 
@@ -72,16 +72,6 @@ main {
     background-color: white;
     margin-top:  20px;
     margin-bottom: 10px;
-    
-    .close{
-      @include dFlex($jc: center, $ai: center, $fd: row, $g: 0);
-      width: 40px;
-      height: 40px;
-      &:hover{
-        background-color: #ECEEFE;
-        border-radius: 20px;
-      }
-    }
   }
 
 .mdc-card {
@@ -306,4 +296,14 @@ main {
   display: flex;
   justify-content: flex-end;
   width: 100%;
+}
+
+.menu-icon-hover{
+  @include dFlex($jc: center, $ai: center, $fd: row, $g: 0);
+  width: 40px;
+  height: 40px;
+  &:hover{
+    background-color: #ECEEFE;
+    border-radius: 20px;
+  }
 }

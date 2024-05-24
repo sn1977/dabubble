@@ -2,14 +2,14 @@
     <div class="mdc-card">
         <div class="channel-header">
             <h1 class="no-margin"># {{ channel.name }}</h1>
-            <span class="close pointer">
+            <span class="menu-icon-hover pointer">
               <img src="./assets/img/icon/close.svg" alt="" [id]="itemID" (click)="openChannel($event, 'new-channel')">
             </span>            
         </div>
     </div>
     <form (ngSubmit)="onSubmit('update')" #contactForm="ngForm" ngNativeValidate>
     <main>
-        <div class="container" [style.border]="!isEditingChannelName ? '1px solid blue' : 'none'">
+        <div class="container" [style.border]="!isEditingChannelName ? '1px solid blue' : '1px solid #ADB0D9'">
             <div class="channel-name">
               <h1>Channel-Name</h1>
               
@@ -21,11 +21,13 @@
               }
             </div>
             <div class="edit-icon">
+              <span class="menu-icon-hover pointer">
               @if(!isEditingChannelName){
-                <img id="edit-icon-channel-name" src="./assets/img/icon/edit.svg" (click)="toggleEdit('channelName')">
-              } @else {
-                <img id="check-icon-channel-name" src="./assets/img/icon/check_circle.svg" (click)="onSubmit('channelName')">
-              }
+                  <img id="edit-icon-channel-name" src="./assets/img/icon/edit.svg" (click)="toggleEdit('channelName')">
+                } @else {                  
+                  <img id="check-icon-channel-name" src="./assets/img/icon/check_circle.svg" (click)="onSubmit('channelName')">                  
+                }
+              </span>
             </div>
           </div>
 
@@ -44,13 +46,13 @@
               </div>
             </div>
             <div class="edit-icon">
-
+              <span class="menu-icon-hover pointer">
               @if(!isEditingDescription){
                 <img id="edit-icon-description" src="./assets/img/icon/edit.svg" (click)="toggleEdit('channelDescription')">
               }@else {
                 <img id="check-icon-description" src="./assets/img/icon/check_circle.svg" (click)="onSubmit('channelDescription')">
               }
-
+              </span>
             </div>
           </div>
           <!-- Mitglieder von Firebase -->
