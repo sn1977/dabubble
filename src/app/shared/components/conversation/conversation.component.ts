@@ -218,6 +218,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
       });
     }
     console.log('Emoji-Reaktionen:', this.emojiReactions);
+    this.testMap();
 
     // Show the snackbar
     this.showEmojiSnackbar(
