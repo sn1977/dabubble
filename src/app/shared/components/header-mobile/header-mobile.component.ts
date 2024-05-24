@@ -1,12 +1,12 @@
-import {Component, inject, Input, OnInit} from '@angular/core';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { BottomSheetComponent } from '../bottom-sheet/bottom-sheet.component';
-import { AuthService } from '../../services/auth.service';
-import { FirebaseService } from '../../services/firebase.service';
-import { User } from '../../../../models/user.class';
+import {ChangeDetectorRef, Component, inject, Input, OnInit} from '@angular/core';
+import {MatBottomSheet} from '@angular/material/bottom-sheet';
+import {BottomSheetComponent} from '../bottom-sheet/bottom-sheet.component';
+import {AuthService} from '../../services/auth.service';
+import {FirebaseService} from '../../services/firebase.service';
+import {User} from '../../../../models/user.class';
 import {CommonModule, Location} from '@angular/common';
 import {HeaderStateService} from '../../services/header-state.service';
-import { Router } from '@angular/router';
+import {Router} from '@angular/router';
 import {DesktopOverlayComponent} from '../desktop-overlay/desktop-overlay.component';
 
 @Component({
@@ -24,8 +24,15 @@ export class HeaderMobileComponent implements OnInit {
   @Input() isDesktop: boolean = false;
   hoverBack: boolean = false;
   overlayVisible = false;
+  defaultImage: string = 'assets/img/icon/keyboard_arrow_down.svg';
+  hoverImage: string = 'assets/img/icon/keyboard_arrow_down_color.svg';
+  currentImage: string = this.defaultImage;
 
-  constructor(private _bottomSheet: MatBottomSheet, private headerStateService: HeaderStateService, private _location: Location,  private router: Router) {}
+  constructor(private _bottomSheet: MatBottomSheet,
+              private headerStateService: HeaderStateService,
+              private _location: Location, private router: Router,
+              private cd: ChangeDetectorRef) {
+  }
 
   async ngOnInit(): Promise<void> {
     await this.waitForUserData();
@@ -85,5 +92,7 @@ export class HeaderMobileComponent implements OnInit {
 
   closeOverlay(): void {
     this.overlayVisible = false; // Hier definieren wir die closeOverlay Methode
+    console.log('overlayVisible:', this.overlayVisible);
+    this.cd.detectChanges(); // Manually trigger change detection
   }
 }

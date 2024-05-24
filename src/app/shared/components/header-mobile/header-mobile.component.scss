@@ -4,6 +4,11 @@
   height: 80px;
   padding: 0 0 0 16px;
   @include dFlex($jc: space-around, $ai: center, $fd: row, $g: 20px);
+
+  &:hover {
+    cursor: pointer;
+    color: #797ef3;
+  }
 }
 
 .bg-c {
