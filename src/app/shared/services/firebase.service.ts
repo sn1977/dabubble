@@ -319,15 +319,16 @@ export class FirebaseService {
   }
 
   async getAllChannelThreads(channelId: string, subcollection: string) {
-    const ref = collection(
-      this.firestore,
-      `channels/${channelId}/${subcollection}`
-    );
+    
+    // const ref = collection(
+    //   this.firestore,
+    //   `channels/${channelId}/${subcollection}`
+    // );
 
     console.log(channelId);
 
-    ///channels/aqZmyWrJ9h8G3R2anLOj/channelmessages/crCd8RlYYuAzQ92CnUjb/threads/S68akZjwGXCbQ0UwO77k
-
+    ///channels/aqZmyWrJ9h8G3R2anLOj/channelmessages/crCd8RlYYuAzQ92CnUjb/threads
+    
     // const querySnapshot = query(ref, orderBy('createdAt'));
     // const unsubscribe = onSnapshot(querySnapshot, (snapshot) => {
     //   this.channelThreads = [];

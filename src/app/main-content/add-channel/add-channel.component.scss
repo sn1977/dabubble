@@ -15,6 +15,17 @@
   font-weight: 700;
   font-size: 24px;
   line-height: 32.74px;
+
+  .close{
+    @include dFlex($jc: center, $ai: center, $fd: row, $g: 0);
+    width: 40px;
+    height: 40px;
+    &:hover{
+      background-color: #ECEEFE;
+      border-radius: 20px;
+    }
+  }
+
 }
 
 h1,

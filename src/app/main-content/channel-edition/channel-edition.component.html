@@ -2,7 +2,9 @@
     <div class="mdc-card">
         <div class="channel-header">
             <h1 class="no-margin"># {{ channel.name }}</h1>
-            <img src="./assets/img/icon/close.svg" alt="" [id]="itemID" (click)="openChannel($event, 'new-channel')">
+            <span class="close pointer">
+              <img src="./assets/img/icon/close.svg" alt="" [id]="itemID" (click)="openChannel($event, 'new-channel')">
+            </span>            
         </div>
     </div>
     <form (ngSubmit)="onSubmit('update')" #contactForm="ngForm" ngNativeValidate>

@@ -10,7 +10,7 @@
     </div>
     <div>
       <img
-        class="pointer"
+        class="close pointer"
         (click)="closeThread()"
         src="./assets/img/icon/close.svg"
         alt=""
@@ -36,14 +36,14 @@
       #threadContent
       style="overflow-y: scroll; height: 100%"
     >
-      <!-- @if (this.firestore.channelThreads.length !== 0) {
+      @if (this.firestore.channelThreads.length !== 0) {
         @for (channelThread of
           this.firestore.channelThreads; track channelThread.id) {
           y<app-conversation
             [channelMessage]="channelThread" [isChannel]="false" [isThread]="true"
           ></app-conversation>
         }
-      } -->
+      }
     </div>
   </div>
 

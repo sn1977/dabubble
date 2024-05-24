@@ -73,6 +73,15 @@ main {
     margin-top:  20px;
     margin-bottom: 10px;
     
+    .close{
+      @include dFlex($jc: center, $ai: center, $fd: row, $g: 0);
+      width: 40px;
+      height: 40px;
+      &:hover{
+        background-color: #ECEEFE;
+        border-radius: 20px;
+      }
+    }
   }
 
 .mdc-card {

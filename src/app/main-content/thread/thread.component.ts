@@ -113,18 +113,11 @@ export class ThreadComponent implements OnInit, AfterViewChecked {
   async ngAfterViewInit() {
     this.previousMessageCount = this.getCurrentMessageCount();
     
-    //await this.firestore.getSingleItemData('channels', docId: string, callback: () => void) {
     this.firestore.getSingleMessageData('channels', this.matchMedia.channelId + '/channelmessages/' + this.matchMedia.subID, () => {});
     
-    // messageId?: string;
-  // channelId: string;
-  // creator: string;
-  // createdAt?: any;
-  // text: string;
-  // // reactions?: { emoji: string; count: number }[];
-  // reactions: { emoji: string; users: string[] }[] = [];
-  // attachment?: string[];
-
+    //async getAllChannelThreads(channelId: string, subcollection: string) {
+    this.firestore.getAllChannelThreads(this.matchMedia.channelId, '/channelmessages/crCd8RlYYuAzQ92CnUjb/threads');
+    ///channels/aqZmyWrJ9h8G3R2anLOj/channelmessages/crCd8RlYYuAzQ92CnUjb/threads
   }
 
   ngAfterViewChecked() {
