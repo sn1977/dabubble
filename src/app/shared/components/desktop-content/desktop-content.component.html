@@ -1,9 +1,12 @@
 <div class="content">
 
-  <mat-card class="menu">
+  <mat-card class="menu" id="toggleDiv" [ngClass]="{ 'collapsed': isCollapsed }">
     <mat-card-content>
       <div class="logo">
-        <img src="./assets/img/icon/Property 1=Default (1).svg" alt="">
+        <img src="./assets/img/icon/Property 1=Default (1).svg" alt="" (click)="toggleDiv()">
+      </div>
+      <div class="toggle" (click)="toggleDiv()">
+        Zurück
       </div>
       
       <app-main-content [isDesktop]="true"></app-main-content>

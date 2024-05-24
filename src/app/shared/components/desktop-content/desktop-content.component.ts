@@ -20,4 +20,10 @@ import { MatchMediaService } from '../../services/match-media.service';
 })
 export class DesktopContentComponent {
   matchMedia = inject(MatchMediaService);
+
+  isCollapsed = false;
+
+  toggleDiv() {
+    this.isCollapsed = !this.isCollapsed;
+  }
 }
