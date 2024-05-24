@@ -15,13 +15,18 @@
 .menu,
 .workspace,
 .thread{
-  height: 100%;
   border-radius: 30px;
   padding: 8px;
 }
 
+.menu{
+  height: calc(100vh - 150px);
+  overflow: auto;
+}
+
 .workspace,
 .thread{
+  height: 100%;
   flex: 1;
 }
 
