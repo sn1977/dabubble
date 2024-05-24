@@ -68,6 +68,10 @@
   margin-top: 4px;
 }
 
+mat-expansion-panel{
+  overflow: auto;
+}
+
 .user-name,
 .channel-name {
   padding-top: 16px;
