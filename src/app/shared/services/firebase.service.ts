@@ -280,16 +280,20 @@ export class FirebaseService {
     );
   }
 
-  async getSingleMessageData(colId: string, docId: string, callback: () => void) {
+  async getSingleMessageData(
+    colId: string,
+    docId: string,
+    callback: () => void
+  ) {
     this.singleMessageUnsubscribe = onSnapshot(
-       this.getSingleDocRef(colId, docId),
-       (element) => {
-         const data = this.setChannelMessageObject(element.data(), element.id);
-         this.channelMessage = new ChannelMessage(data);
-         callback();
-       }
-     );
-   }
+      this.getSingleDocRef(colId, docId),
+      (element) => {
+        const data = this.setChannelMessageObject(element.data(), element.id);
+        this.channelMessage = new ChannelMessage(data);
+        callback();
+      }
+    );
+  }
 
   async getAllChannelMessages(
     channelId: string,
@@ -300,9 +304,6 @@ export class FirebaseService {
       this.firestore,
       `${colID}/${channelId}/${subcollection}`
     );
-
-    //console.log('Stefan: ', channelId, colID, subcollection, subID);
-    //Stefan:  aqZmyWrJ9h8G3R2anLOj channels channelmessages
 
     const querySnapshot = query(ref, orderBy('createdAt'));
 
@@ -319,30 +320,25 @@ export class FirebaseService {
   }
 
   async getAllChannelThreads(channelId: string, subcollection: string) {
-    
-    // const ref = collection(
-    //   this.firestore,
-    //   `channels/${channelId}/${subcollection}`
-    // );
-
-    console.log(channelId);
-
-    ///channels/aqZmyWrJ9h8G3R2anLOj/channelmessages/crCd8RlYYuAzQ92CnUjb/threads
-    
-    // const querySnapshot = query(ref, orderBy('createdAt'));
-    // const unsubscribe = onSnapshot(querySnapshot, (snapshot) => {
-    //   this.channelThreads = [];
-    //   snapshot.forEach((doc) => {
-    //     this.channelThreads.push(
-    //       this.setChannelMessageObject(doc.data(), doc.id)
-    //     );
-    //     // console.log(doc.data(), doc.id);
-    //   });
-    // });
+    const ref = collection(
+      this.firestore,
+      `channels/${channelId}/${subcollection}`
+    );
+  
+    const querySnapshot = query(ref, orderBy('createdAt'));
+    const unsubscribe = onSnapshot(querySnapshot, (snapshot) => {
+      this.channelThreads = [];
+      snapshot.forEach((doc) => {
+        this.channelThreads.push(
+          this.setChannelMessageObject(doc.data(), doc.id)
+        );
+        // console.log(doc.data(), doc.id);
+      });
+    });
 
     // console.log('Threads', this.channelThreads);
 
-    // return unsubscribe;
+    return unsubscribe;
   }
 
   async getDirectMessages(sender: string, recipient: string) {

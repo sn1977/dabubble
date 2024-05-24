@@ -34,12 +34,12 @@
     <div
       class="message-content"
       #threadContent
-      style="overflow-y: scroll; height: 100%"
+      
     >
       @if (this.firestore.channelThreads.length !== 0) {
         @for (channelThread of
           this.firestore.channelThreads; track channelThread.id) {
-          y<app-conversation
+          <app-conversation
             [channelMessage]="channelThread" [isChannel]="false" [isThread]="true"
           ></app-conversation>
         }
