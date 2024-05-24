@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { AfterViewInit, Component, OnInit, inject } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { User } from '../../../models/user.class';
 import { Channel } from '../../../models/channel.class';
 import { AuthService } from '../../shared/services/auth.service';
+import { MatchMediaService } from '../../shared/services/match-media.service';
 @Component({
   selector: 'app-add-channel',
   standalone: true,
@@ -14,7 +15,7 @@ import { AuthService } from '../../shared/services/auth.service';
   templateUrl: './add-channel.component.html',
   styleUrl: './add-channel.component.scss',
 })
-export class AddChannelComponent {
+export class AddChannelComponent implements AfterViewInit{
 
   allMembers: any[] = [
     {
@@ -54,8 +55,9 @@ export class AddChannelComponent {
   isAddSpecificMembersChecked: boolean = false;
   firestore = inject(FirebaseService);
   router = inject(Router);
+  matchMedia = inject(MatchMediaService);
   authService = inject(AuthService);
-
+  isDesktop: boolean = false;
   activeUser: any ='';
 
   channel: Channel = new Channel();
@@ -96,8 +98,16 @@ export class AddChannelComponent {
     console.log(this.allMembers);
 
   }
+  ngOnInit(): void {    
+    
+    this.isDesktop = this.matchMedia.checkIsDesktop();
+    console.log(this.isDesktop);
+  }
 
-  
+  ngAfterViewInit(): void {
+    this.isDesktop = this.matchMedia.checkIsDesktop();
+    console.log(this.isDesktop);    
+  }
 
 
 
@@ -171,9 +181,6 @@ export class AddChannelComponent {
       );
 
     } else if (checkboxId === 'addSpecificMembers') {
-
-      
-
       this.selectedUsers = [];
 
       this.isAddAllMembersChecked = false;

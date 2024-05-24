@@ -1,12 +1,11 @@
 @import "../../styles/mixins.scss";
 
-
-  ::ng-deep html {
-    background-color: #FFFFFF;
-  }
+::ng-deep html {
+  background-color: #ffffff;
+}
 
 .bg-c {
-  @include bg-c(#FFFFFF);
+  @include bg-c(#ffffff);
   height: 100%;
 }
 
@@ -30,7 +29,7 @@
   padding-left: 16px;
 
   .plus-icon:hover {
-    background-color: #ECEEFE;
+    background-color: #eceefe;
     border-radius: 100%;
   }
 }
@@ -62,16 +61,24 @@
 .noUserFound,
 .user-name,
 .channel-name {
-  
   padding-top: 16px;
-  gap: 16px;
-  display: flex;
-  align-items: center;
   position: relative;
-  justify-content: space-between;
+
+  @include dFlex($jc: space-between, $ai: center, $fd: row, $g: 16px);
+
+  &:hover {    
+    background-color: #eceefe;
+    border-radius: 20px;
+  }
 
   span {
-    @include fontBold($fw: 400, $fs: 17px, $lh: 23.19px, $ta: center, $c: #000000);
+    @include fontBold(
+      $fw: 400,
+      $fs: 17px,
+      $lh: 23.19px,
+      $ta: center,
+      $c: #000000
+    );
   }
 
   img {
@@ -81,7 +88,8 @@
     object-fit: cover;
   }
 
-  .online-avatar, .offline-avatar {
+  .online-avatar,
+  .offline-avatar {
     position: absolute;
     bottom: 0;
     left: 32px;
@@ -89,29 +97,28 @@
     height: 14px;
   }
 }
-.pf{
+.pf {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
-
 }
 
-.flex{
+.flex {
   display: flex;
   gap: 5px;
 }
 
-.pop-up{
+.pop-up {
   background-color: rgb(221 1 1 / 70%);
-    height: 20px;
-    width: 20px;
-    display: flex;
-    justify-content: center;
-    border-radius: 10px;
+  height: 20px;
+  width: 20px;
+  display: flex;
+  justify-content: center;
+  border-radius: 10px;
 }
 
-.pop-up-color{
+.pop-up-color {
   color: white;
 }
 
@@ -136,7 +143,13 @@
   padding-top: 30px;
 
   span {
-    @include fontBold($fw: 400, $fs: 17px, $lh: 23.19px, $ta: center, $c: #535AF1);
+    @include fontBold(
+      $fw: 400,
+      $fs: 17px,
+      $lh: 23.19px,
+      $ta: center,
+      $c: #535af1
+    );
   }
 }
 
@@ -149,7 +162,7 @@
 //}
 
 .btn-edit-message {
-  @include bg-c(#444DF2);
+  @include bg-c(#444df2);
   width: 60px;
   height: 60px;
   -webkit-border-radius: 100%;
@@ -162,7 +175,6 @@
   fill: #ffffff;
 }
 
-
 .white-icon {
   color: white;
 }
@@ -174,13 +186,12 @@
 //DESKTOP/////
 
 @media (min-width: 1120px) {
-
-  .content-main{
+  .content-main {
     // height: 650px;
-    padding:unset;
+    padding: unset;
   }
 
-  .btn-edit-message{
+  .btn-edit-message {
     position: absolute;
     top: 25px;
     left: -90px;
