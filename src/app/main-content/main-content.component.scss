@@ -57,8 +57,17 @@
   }
 }
 
-.noChannelFound,
-.noUserFound,
+.nothingFound
+{
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16.8px;
+  color: #ed1e79;
+  height: 17px;
+  font-family: "Nunito", serif;
+  margin-top: 4px;
+}
+
 .user-name,
 .channel-name {
   padding-top: 16px;

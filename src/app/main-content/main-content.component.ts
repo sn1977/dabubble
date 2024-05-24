@@ -18,16 +18,15 @@ import { NavigationService } from '../shared/services/navigation.service';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../shared/services/auth.service';
 import { ItemStateService } from '../shared/services/item-state.service';
-import { Observable } from 'rxjs';
+import { firstValueFrom, lastValueFrom, Observable } from 'rxjs';
 import { Channel } from '../../models/channel.class';
 import { User } from '../../models/user.class';
 import { CommonModule, NgForOf, NgIf } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
-import { SearchResultsDialogComponent } from '../search-results-dialog/search-results-dialog.component';
 import { ChannelMessage } from '../../models/channel-message.class';
 import {SearchInputComponent} from './search-input/search-input.component';
 import { MatchMediaService } from '../shared/services/match-media.service';
-//import {SearchService} from '../shared/services/search-service.service';
+import { DataService } from '../shared/services/data.service';
 
 @Component({
   selector: 'app-main-content',
@@ -59,6 +58,8 @@ export class MainContentComponent implements OnInit {
   router = inject(Router);
   authService = inject(AuthService);
   matchMedia = inject(MatchMediaService);
+  dataService = inject(DataService);
+  
   @Input() channelMessage!: ChannelMessage;
   @Input() isDesktop: boolean = false;
 
@@ -95,26 +96,31 @@ export class MainContentComponent implements OnInit {
   constructor(
     public navigationService: NavigationService,
     private itemStateService: ItemStateService,
-    //private searchService: SearchService,
     private dialog: MatDialog
   ) {}
+  
+  async ngOnInit() {
+    await this.listenForDataChanges();    
+    this.dataService.searchWorkspace('');
+  }  
 
-  ngOnInit() {
-    this.listenForDataChanges();
-    //this.searchService.allChannels = []; // Beispieldaten oder Service-Aufrufe
-    //this.searchService.allUsers = [];
-  }
+  // listenForDataChanges() {
+  //   this.firestore.getChannels().subscribe((channels) => {
+  //     this.dataService.allChannels = channels;      
+  //   });
+  //   this.firestore.getUsers2().subscribe((users) => {
+  //     this.dataService.allUsers = this.sortUsers(users);
+  //   });
+  // }
+  async listenForDataChanges(): Promise<void> {
+    const channelsPromise = firstValueFrom(this.firestore.getChannels());
+    const usersPromise = firstValueFrom(this.firestore.getUsers2());
 
+    const channels = await channelsPromise;
+    const users = await usersPromise;
 
-
-  listenForDataChanges() {
-    this.firestore.getChannels().subscribe((channels) => {
-      this.allChannels = channels;
-    });
-    this.firestore.getUsers2().subscribe((users) => {
-      this.allUsers = this.sortUsers(users);
-      // console.log('Users geladen: ', this.allUsers);
-    });
+    this.dataService.allChannels = channels;
+    this.dataService.allUsers = this.sortUsers(users);
   }
 
   sortUsers(users: User[]): User[] {
@@ -123,85 +129,6 @@ export class MainContentComponent implements OnInit {
       if (b.id === this.authService.activeUserId) return 1;
       return 0;
     });
-  }
-
-  searchWorkspace(query: string) {
-    // console.log('Suchanfrage: ', query);
-    if (!query) {
-      this.filteredResults = [];
-      let erg = 0;
-      this.hideUserElements(query, erg);
-      this.hideChannelElements(query, erg);
-      return;
-    }
-    query = query.toLowerCase();
-
-    let channelMatches = this.allChannels
-      .filter((channel) => channel.name.toLowerCase().includes(query))
-      .map((channel) => ({ ...channel, type: 'channel' }));
-
-    let userMatches = this.allUsers
-      .filter(
-        (user) =>
-          user.displayName.toLowerCase().includes(query) ||
-          user.email.toLowerCase().includes(query)
-      )
-      .map((user) => ({ ...user, type: 'user' }));
-
-    this.filteredResults = [...channelMatches, ...userMatches];
-
-    let resultUser = 0;
-    let resultChannel = 0;
-    this.hideUserElements(query, resultUser);
-    this.hideChannelElements(query, resultChannel);
-  }
-
-  async hideUserElements(search: string, erg: number) {
-    this.noUserFound = false;
-
-    let filteredUsers = Array.from(
-      document.querySelectorAll('.user-name')
-    ) as HTMLElement[];
-
-    for (let i = 0; i < filteredUsers.length; i++) {
-      let element = filteredUsers[i];
-      let innerText = element.innerText;
-
-      if (innerText.toLowerCase().includes(search)) {
-        element.classList.remove('d-none');
-        erg++;
-      } else {
-        filteredUsers[i].classList.add('d-none');
-      }
-    }
-
-    if (erg == 0) {
-      this.noUserFound = true;
-    }
-  }
-
-  async hideChannelElements(search: string, erg: number) {
-    this.noChannelFound = false;
-
-    let filteredChannels = Array.from(
-      document.querySelectorAll('.channel-name')
-    ) as HTMLElement[];
-
-    for (let i = 0; i < filteredChannels.length; i++) {
-      let element = filteredChannels[i];
-      let innerText = element.innerText;
-
-      if (innerText.toLowerCase().includes(search)) {
-        element.classList.remove('d-none');
-        erg++;
-      } else {
-        filteredChannels[i].classList.add('d-none');
-      }
-    }
-
-    if (erg == 0) {
-      this.noChannelFound = true;
-    }
   }
 
   onPanelOpened(index: number) {

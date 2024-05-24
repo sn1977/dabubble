@@ -3,7 +3,7 @@
     type="text"
     name="text"
     [(ngModel)]="textData.text"
-    (ngModelChange)="searchWorkspace(textData.text)"
+    (ngModelChange)="this.dataService.searchWorkspace(textData.text)"
     [class.input-has-value]="inputHasValue"
     placeholder="Gehe zu..."
     required
