@@ -225,6 +225,7 @@ export class MainContentComponent implements OnInit {
   }
 
   navigateToAddChannel() {
+    this.matchMedia.showThread = false;
     this.navigationService.navigate(['/add-channel']);
   }
 
@@ -233,7 +234,7 @@ export class MainContentComponent implements OnInit {
     if(name){      
       this.matchMedia.channelName = name;
     }
-
+    this.matchMedia.showThread = false;
     const docRefId = (event.currentTarget as HTMLElement).id;
     this.itemStateService.setItemId(docRefId);
     this.router.navigate([path, docRefId]);

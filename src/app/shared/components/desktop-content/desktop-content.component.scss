@@ -1,11 +1,11 @@
 @import "../../../../styles/mixins.scss";
 
 .content {
-  @include dFlex($jc: center, $ai: center, $fd: row, $g: 20px);
+  @include dFlex($jc: center, $ai: flex-start, $fd: row, $g: 20px);
   padding: 0 20px 20px;
   box-sizing: border-box;
   background-color: #eceefe;
-  height: 800px;
+  // height: 800px;
 }
 
 .mat-mdc-card-content{  
