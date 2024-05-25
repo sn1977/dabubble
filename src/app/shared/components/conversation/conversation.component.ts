@@ -377,7 +377,8 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   }
 
   async openThread() {
-    this.matchMedia.showThread = false;
+    this.matchMedia.showThread = false;    
+    this.matchMedia.hideReactionIcons = false;
     await this.delay(200);
 
     const docId = this.channelMessage.channelId;
@@ -391,6 +392,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
       if (this.isDesktop === true) {
         this.matchMedia.showThread = true;
       } else {
+        this.matchMedia.hideReactionIcons = true;
         this.router.navigate(['/thread']);
       }
     }

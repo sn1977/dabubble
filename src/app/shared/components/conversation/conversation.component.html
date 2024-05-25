@@ -163,7 +163,8 @@
       left: isMessageFromYou ? 'unset' : '5%'
     }"
   >
-  @if(this.matchMedia.showThread == false){
+  
+  @if(this.matchMedia.hideReactionIcons == false){
     <div class="reaction-icon-small">
       <img src="./assets/img/emojis/check_mark2.svg" alt=""  (click)="addEmojiReaction('✅')" />
     </div>

@@ -3,6 +3,7 @@ import {
   Component,
   ElementRef,
   inject,
+  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -40,7 +41,7 @@ import { ChannelMessage } from '../../../models/channel-message.class';
   templateUrl: './thread.component.html',
   styleUrl: './thread.component.scss',
 })
-export class ThreadComponent implements OnInit, AfterViewChecked {
+export class ThreadComponent implements OnInit, AfterViewChecked, OnDestroy {
   firestore = inject(FirebaseService);
   matchMedia = inject(MatchMediaService);
   router = inject(Router);
@@ -71,6 +72,10 @@ export class ThreadComponent implements OnInit, AfterViewChecked {
     private headerStateService: HeaderStateService,
     private dialogService: DialogServiceService
   ) {}
+  
+  ngOnDestroy(): void {
+    this.matchMedia.hideReactionIcons = false;
+  }
 
   channelData = {
     creator: this.channel.creator,
@@ -89,15 +94,22 @@ export class ThreadComponent implements OnInit, AfterViewChecked {
     this.scrollToBottom();
     this.firestore.getSingleMessageData('channels', this.matchMedia.channelId + '/channelmessages/' + this.matchMedia.subID, () => {});
     this.firestore.getAllChannelThreads(this.matchMedia.channelId, 'channelmessages/' + this.matchMedia.subID + '/threads');
+
+    this.textBoxData.channelId = this.matchMedia.channelId;
+    this.textBoxData.subcollection = 'channelmessages/' + this.matchMedia.subID + '/threads';
+
   }
 
-  getItemValues(collection: string, itemID: string) {
-    this.firestore.getSingleItemData(collection, itemID, () => {
-      this.channel = new Channel(this.firestore.channel);
-      this.textBoxData.channelName = this.channel.name;
-      this.textBoxData.channelId = itemID;
-    });
-  }
+  // getItemValues(collection: string, itemID: string) {
+  //   this.firestore.getSingleItemData(collection, itemID, () => {
+  //     this.channel = new Channel(this.firestore.channel);
+  //     this.textBoxData.channelName = this.channel.name;
+  //     this.textBoxData.channelId = itemID;
+  //   });
+
+  //   console.log(this.channel);
+  //   console.log(this.textBoxData.channelId);
+  // }
 
   async ngAfterViewInit() {
     this.previousMessageCount = this.getCurrentMessageCount();    
