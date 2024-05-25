@@ -9,11 +9,23 @@
 <!--  }-->
 <!--</div>-->
 
-<div *ngIf="!isSameDayAsPrevious(channelMessage.createdAt)" class="timeSeperator">
+<!-- <div *ngIf="!isSameDayAsPrevious(channelMessage.createdAt)" class="timeSeperator">
   <img class="line" src="./assets/img/auth/line.svg" alt="" />
   <span *ngIf="currentDate == this.dateFormatService.formatDateYYYYMMDD(channelMessage.createdAt)">Heute</span>
   <span *ngIf="currentDate != this.dateFormatService.formatDateYYYYMMDD(channelMessage.createdAt)">{{ this.dateFormatService.formatDate(channelMessage.createdAt) }}</span>
-</div>
+</div> -->
+
+@if(!isSameDayAsPrevious(channelMessage.createdAt)){
+  <div class="timeSeperator">
+    <img class="line" src="./assets/img/auth/line.svg" alt="" />
+    @if(currentDate == this.dateFormatService.formatDateYYYYMMDD(channelMessage.createdAt)){
+      <span >Heute</span>
+    }@else {
+      <span>{{ this.dateFormatService.formatDate(channelMessage.createdAt) }}</span>
+    }
+    test
+  </div>
+}
 
 <div
   class="content-message"

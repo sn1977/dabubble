@@ -427,8 +427,8 @@ export class ConversationComponent implements OnInit, AfterViewInit {
 
   isSameDayAsPrevious(messageDate: string): boolean {
     const formattedMessageDate = this.dateFormatService.formatDateYYYYMMDD(messageDate);
-    console.log('formattedMessageDate:', formattedMessageDate);
-    console.log('previousMessageDate:', this.previousMessageDate);
+    // console.log('formattedMessageDate:', formattedMessageDate);
+    // console.log('previousMessageDate:', this.previousMessageDate);
 
     if (this.previousMessageDate === '') {
       this.previousMessageDate = formattedMessageDate;
