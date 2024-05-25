@@ -73,21 +73,21 @@ export class NewChannelComponent implements OnInit, AfterViewChecked {
     
   };
 
-  addCountToChannelDocument(toggle: string) {
+  // addCountToChannelDocument(toggle: string) {
 
-    const channel = new Channel({
-      creator: this.channel.creator,
-      description: this.channel.description,
-      member: this.channel.member,
-      name: this.channel.name,
-      count: this.channel.count,
-      newMessage: this.newMessage,
-      // allMembers: this.channel.allMembers
+  //   const channel = new Channel({
+  //     creator: this.channel.creator,
+  //     description: this.channel.description,
+  //     member: this.channel.member,
+  //     name: this.channel.name,
+  //     count: this.channel.count,
+  //     newMessage: this.newMessage,
+  //     // allMembers: this.channel.allMembers
 
-    });
+  //   });
     
-    this.firestore.updateChannel(this.itemID, channel);
-  }
+  //   this.firestore.updateChannel(this.itemID, channel);
+  // }
 
   async ngOnInit(): Promise<void> {
     await this.waitForUserData();
@@ -103,9 +103,9 @@ export class NewChannelComponent implements OnInit, AfterViewChecked {
     this.headerStateService.setAlternativeHeader(true);
     this.scrollToBottom();
 
-    setTimeout(() => {
-      this.addCountToChannelDocument(this.itemID);
-   }, 1000)
+  //   setTimeout(() => {
+  //     this.addCountToChannelDocument(this.itemID);
+  //  }, 1000)
   }
 
   async getItemValues(collection: string, itemID: string) {
@@ -114,21 +114,21 @@ export class NewChannelComponent implements OnInit, AfterViewChecked {
       this.channel = new Channel(this.firestore.channel);
       this.textBoxData.channelName = this.channel.name;
       this.textBoxData.channelId = itemID;
-      this.setOldChannelValues();
+      // this.setOldChannelValues();
     });
   }
 
-  setOldChannelValues(){
-    this.channelData = {
-      creator: this.channel.creator,
-      description: this.channel.description,
-      member: this.channel.member,
-      name: this.channel.name,
-      count: this.channel.count,
-      newMessage: this.channel.newMessage,
-      // allMembers: this.channel.allMembers
-    };
-  }
+  // setOldChannelValues(){
+  //   this.channelData = {
+  //     creator: this.channel.creator,
+  //     description: this.channel.description,
+  //     member: this.channel.member,
+  //     name: this.channel.name,
+  //     count: this.channel.count,
+  //     newMessage: this.channel.newMessage,
+  //     // allMembers: this.channel.allMembers
+  //   };
+  // }
 
   ngAfterViewInit() {
     this.previousMessageCount = this.getCurrentMessageCount();    

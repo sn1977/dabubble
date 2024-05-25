@@ -33,8 +33,7 @@
     </div>
     <div
       class="message-content"
-      #threadContent
-      
+      #threadContent      
     >
       @if (this.firestore.channelThreads.length !== 0) {
         @for (channelThread of
@@ -46,8 +45,7 @@
       }
     </div>
   </div>
-
-  <app-text-box [textBoxData]="textBoxData"></app-text-box>
+  <app-text-box style="margin-top: 10px;" [textBoxData]="textBoxData"></app-text-box>
 </div>
 
 <div id="overlay1" style="display: none" class="overlay">
