@@ -30,16 +30,16 @@
       @if (this.firestore.channelMessages.length !== 0) {
         @for (channelMessage of
           this.firestore.channelMessages; track channelMessage.id) {
-                    <div class="timeSeperator">
+                    <!-- <div class="timeSeperator">
                         <img class="line" src="./assets/img/auth/line.svg" alt="" />
 
-            <!--            @if (currentDate ==-->
-            <!--            this.dateFormatService.formatDateYYYYMMDD(channelMessage.createdAt)) {-->
+                       @if (currentDate ==
+                        this.dateFormatService.formatDateYYYYMMDD(channelMessage.createdAt)) {
                           <span>Heute</span>
-            <!--            } @else {-->
-            <!--              <span>{{ this.dateFormatService.formatDate(channelMessage.createdAt) }}</span>-->
-            <!--            }-->
-                      </div>
+                       } @else {
+                         <span>{{ this.dateFormatService.formatDate(channelMessage.createdAt) }}</span>
+                        }
+                      </div> -->
           <app-conversation
             [channelMessage]="channelMessage" [isChannel]="true" [isThread]="false"
           ></app-conversation>

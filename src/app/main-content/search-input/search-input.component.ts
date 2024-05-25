@@ -3,12 +3,15 @@ import {FormsModule} from '@angular/forms';
 import {Channel} from '../../../models/channel.class';
 import {User} from '../../../models/user.class';
 import { DataService } from '../../shared/services/data.service';
+import { MatchMediaService } from '../../shared/services/match-media.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-search-input',
   standalone: true,
   imports: [
-    FormsModule
+    FormsModule,
+    CommonModule
   ],
   templateUrl: './search-input.component.html',
   styleUrl: './search-input.component.scss'
@@ -16,7 +19,14 @@ import { DataService } from '../../shared/services/data.service';
 export class SearchInputComponent {
   textData = { text: '' };
   inputHasValue = false;
+  matchMedia = inject(MatchMediaService)
+  isDesktop: boolean = false;
 
   dataService = inject(DataService);
   @Output() search = new EventEmitter<string>(); 
+
+  constructor(){
+    this.isDesktop = this.matchMedia.checkIsDesktop();
+  }
+
 }
