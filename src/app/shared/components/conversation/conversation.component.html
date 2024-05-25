@@ -1,12 +1,18 @@
-<div class="timeSeperator">
-  <img class="line" src="./assets/img/auth/line.svg" alt="" />
+<!--<div class="timeSeperator">-->
+<!--  <img class="line" src="./assets/img/auth/line.svg" alt="" />-->
 
-  @if (currentDate ==
-  this.dateFormatService.formatDateYYYYMMDD(channelMessage.createdAt)) {
-  <span>Heute</span>
-  } @else {
-  <span>{{ this.dateFormatService.formatDate(channelMessage.createdAt) }}</span>
-  }
+<!--  @if (currentDate ==-->
+<!--  this.dateFormatService.formatDateYYYYMMDD(channelMessage.createdAt)) {-->
+<!--  <span>Heute</span>-->
+<!--  } @else {-->
+<!--  <span>{{ this.dateFormatService.formatDate(channelMessage.createdAt) }}</span>-->
+<!--  }-->
+<!--</div>-->
+
+<div *ngIf="!isSameDayAsPrevious(channelMessage.createdAt)" class="timeSeperator">
+  <img class="line" src="./assets/img/auth/line.svg" alt="" />
+  <span *ngIf="currentDate == this.dateFormatService.formatDateYYYYMMDD(channelMessage.createdAt)">Heute</span>
+  <span *ngIf="currentDate != this.dateFormatService.formatDateYYYYMMDD(channelMessage.createdAt)">{{ this.dateFormatService.formatDate(channelMessage.createdAt) }}</span>
 </div>
 
 <div
@@ -163,7 +169,7 @@
       left: isMessageFromYou ? 'unset' : '5%'
     }"
   >
-  
+
   @if(this.matchMedia.hideReactionIcons == false){
     <div class="reaction-icon-small">
       <img src="./assets/img/emojis/check_mark2.svg" alt=""  (click)="addEmojiReaction('✅')" />
@@ -196,3 +202,4 @@
   </div>
   } }
 </div>
+

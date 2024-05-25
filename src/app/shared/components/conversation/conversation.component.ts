@@ -46,6 +46,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
     private snackbarOverlayService: SnackbarOverlayService
   ) {
     this.getCurrentDay();
+    this.previousMessageDate = '';
   }
 
   firestore = inject(FirebaseService);
@@ -75,6 +76,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   isDesktop: boolean = false;
   @ViewChild('messageToEdit') messageToEdit!: ElementRef<HTMLTextAreaElement>;
   groupedMessages: { date: string, messages: ChannelMessage[] }[] = [];
+  previousMessageDate: string;
 
   getCurrentDay() {
     const date = new Date();
@@ -377,7 +379,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   }
 
   async openThread() {
-    this.matchMedia.showThread = false;    
+    this.matchMedia.showThread = false;
     this.matchMedia.hideReactionIcons = false;
     await this.delay(200);
 
@@ -387,7 +389,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
 
     if (messageId) {
       this.matchMedia.channelId = docId;
-      this.matchMedia.subID = messageId;      
+      this.matchMedia.subID = messageId;
 
       if (this.isDesktop === true) {
         this.matchMedia.showThread = true;
@@ -421,6 +423,22 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   }
   delay(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  isSameDayAsPrevious(messageDate: string): boolean {
+    const formattedMessageDate = this.dateFormatService.formatDateYYYYMMDD(messageDate);
+    console.log('formattedMessageDate:', formattedMessageDate);
+    console.log('previousMessageDate:', this.previousMessageDate);
+
+    if (this.previousMessageDate === '') {
+      this.previousMessageDate = formattedMessageDate;
+      return false;
+    } else if (this.previousMessageDate === formattedMessageDate) {
+      return true;
+    } else {
+      this.previousMessageDate = formattedMessageDate;
+      return false;
+    }
   }
 
 }
