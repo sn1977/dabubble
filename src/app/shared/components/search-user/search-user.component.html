@@ -9,7 +9,7 @@
         </div>
         <div class="checkbox-container">
           <input
-            type="checkbox"
+            type="radio"
             id="addAllMembers"
             [checked]="isAddAllMembersChecked"
             (change)="toggleCheckbox('addAllMembers')"
@@ -17,7 +17,7 @@
           <label for="addAllMembers">Alle Mitglieder von Office Team hinzufügen</label>          
           <br />
           <input
-            type="checkbox"
+            type="radio"
             id="addSpecificMembers"
             [checked]="isAddSpecificMembersChecked"
             (change)="toggleCheckbox('addSpecificMembers')"
