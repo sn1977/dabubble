@@ -127,6 +127,36 @@ export class ConversationComponent implements OnInit, AfterViewInit {
     }
   }
 
+  // showEmojiSnackbar(emoji: string) {
+  //   const reactionGroupDiv = document.querySelector('.reaction-snackbar');
+  //   if (reactionGroupDiv) {
+  //     const rect = reactionGroupDiv.getBoundingClientRect();
+  //     const snackbarHeight = 100; // Ersetzen Sie dies durch die tatsächliche Höhe Ihrer Snackbar
+  //     const snackbarWidth = 200; // Ersetzen Sie dies durch die tatsächliche Breite Ihrer Snackbar
+  //
+  //     // Finden Sie die Reaktion, die dem ausgewählten Emoji entspricht
+  //     const reaction = this.channelMessage.reactions.find(
+  //       (reaction) => reaction.emoji === emoji
+  //     );
+  //
+  //     if (reaction) {
+  //       // Erstellen Sie eine Zeichenkette mit allen Benutzernamen, die auf das Emoji reagiert haben
+  //       const usersString = reaction.users.join(', ');
+  //
+  //       this.snackbarOverlayService.open({
+  //         top: rect.top - snackbarHeight,
+  //         left: rect.left,
+  //         emoji,
+  //         user: usersString, // Zeigen Sie alle Benutzer an, die auf das Emoji reagiert haben
+  //       });
+  //     }
+  //   } else {
+  //     console.error(
+  //       'Element mit der Klasse "reaction-group pointer" wurde nicht gefunden'
+  //     );
+  //   }
+  // }
+
   async getItemValuesProfile(collection: string, itemID: string) {
     await this.delay(200);
     this.firestore.getSingleItemData(collection, itemID, () => {

@@ -311,7 +311,7 @@ export class FirebaseService {
       snapshot.forEach((doc) => {
         this.channelMessages.push(
           this.setChannelMessageObject(doc.data(), doc.id)
-        );        
+        );
       });
     });
     return unsubscribe;
@@ -322,14 +322,14 @@ export class FirebaseService {
       this.firestore,
       `channels/${channelId}/${subcollection}`
     );
-  
+
     const querySnapshot = query(ref, orderBy('createdAt'));
     const unsubscribe = onSnapshot(querySnapshot, (snapshot) => {
       this.channelThreads = [];
       snapshot.forEach((doc) => {
         this.channelThreads.push(
           this.setChannelMessageObject(doc.data(), doc.id)
-        );        
+        );
       });
     });
     return unsubscribe;
@@ -377,7 +377,7 @@ export class FirebaseService {
       .catch((err) => {
         console.error(err);
       })
-      .then((docRef) => {        
+      .then((docRef) => {
         this.conversation = docRef?.id;
       });
   }
