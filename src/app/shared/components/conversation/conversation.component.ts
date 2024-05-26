@@ -56,6 +56,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   @Input() channelMessage!: ChannelMessage;
   @Input() isChannel!: boolean;
   @Input() isThread!: boolean;
+  @Input() hideCompleteReactionBar: boolean = false;
   @Input() index!: number;
   user: User = new User();
   edit: boolean = false;
@@ -291,7 +292,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
     this.showEditMessage = !this.showEditMessage;
   }
 
-  editMessage(event: any, id?: string): void {
+  editMessage(id?: string): void {
     if (id) {
       this.isMessageDisabled = false;
       const setFocusMessage = this.messageToEdit.nativeElement;
@@ -325,6 +326,11 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   async changeMessage() {
     await this.delay(100);
     const colId = this.isChannel == true ? 'channels' : 'messages';
+
+    console.log('channel: ', this.isChannel);
+    console.log('thread: ', this.isThread);
+    
+
     const docId = this.channelMessage.channelId;
     const messageId = this.channelMessage.messageId;
 
