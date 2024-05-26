@@ -28,10 +28,7 @@ import { DirectMessage } from '../../../models/direct-message.class';
 @Injectable({
   providedIn: 'root',
 })
-export class FirebaseService {
-  collection(arg0: string) {
-    throw new Error('Method not implemented.');
-  }
+export class FirebaseService {  
   firestore: Firestore = inject(Firestore);
   router = inject(Router);
   activeUser: any = [];

@@ -16,21 +16,24 @@ import { TextBoxComponent } from '../../shared/components/text-box/text-box.comp
 import { DialogServiceService} from '../../shared/services/dialog-service.service';
 import { SearchUserComponent } from '../../shared/components/search-user/search-user.component';
 import { CommonModule } from '@angular/common';
+import { DateFormatService } from '../../shared/services/date-format.service';
+import { TimeSeperatorComponent } from "../../shared/components/time-seperator/time-seperator.component";
 
 @Component({
-  selector: 'app-new-channel',
-  standalone: true,
-  templateUrl: './new-channel.component.html',
-  styleUrl: './new-channel.component.scss',
-  imports: [
-    RouterLink,
-    BottomSheetComponent,
-    ConversationComponent,
-    HeaderMobileComponent,
-    TextBoxComponent,
-    CommonModule,
-    SearchUserComponent,
-  ],
+    selector: 'app-new-channel',
+    standalone: true,
+    templateUrl: './new-channel.component.html',
+    styleUrl: './new-channel.component.scss',
+    imports: [
+        RouterLink,
+        BottomSheetComponent,
+        ConversationComponent,
+        HeaderMobileComponent,
+        TextBoxComponent,
+        CommonModule,
+        SearchUserComponent,
+        TimeSeperatorComponent
+    ]
 })
 export class NewChannelComponent implements OnInit, AfterViewChecked {
   firestore = inject(FirebaseService);
@@ -59,7 +62,8 @@ export class NewChannelComponent implements OnInit, AfterViewChecked {
     private route: ActivatedRoute,
     public navigationService: NavigationService,
     private headerStateService: HeaderStateService,
-    private dialogService: DialogServiceService
+    private dialogService: DialogServiceService,
+    public dateFormatService: DateFormatService,
   ) {}
 
   channelData = {

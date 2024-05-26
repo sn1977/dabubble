@@ -71,12 +71,6 @@ export class TextBoxComponent implements AfterViewInit{
         attachment: [`${this.textBoxData.inputField}`],
       });
       
-      // Hier muss ich hin
-      //LINK - /channels/aqZmyWrJ9h8G3R2anLOj/channelmessages/crCd8RlYYuAzQ92CnUjb/threads
-      console.log('1', this.textBoxData.collection); // channels      - passt
-      console.log('2', message.channelId); // aqZmyWrJ9h8G3R2anLOj    - passt
-      console.log('3', this.textBoxData.subcollection); // channelmesssages      
-
       this.firestore.addChannelMessage(
          message,
          `${this.textBoxData.collection}/${message.channelId}/${this.textBoxData.subcollection}`
