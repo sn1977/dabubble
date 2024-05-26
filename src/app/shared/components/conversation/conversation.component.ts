@@ -39,7 +39,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
     private positionService: PositionService,
     private snackbarOverlayService: SnackbarOverlayService
   ) {
-    this.getCurrentDay();
+    // this.getCurrentDay();
     this.previousMessageDate = '';
   }
 
@@ -56,7 +56,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   edit: boolean = false;
   hovered: boolean = false;
   isMessageFromYou: boolean = false;
-  currentDate: any;
+  // currentDate: any;
   messageDate: any;
   emojiReactions: { emoji: string; users: string[] }[] = [];
   showReactionBar: boolean = false;
@@ -72,13 +72,13 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   groupedMessages: { date: string; messages: ChannelMessage[] }[] = [];
   previousMessageDate: string;
 
-  getCurrentDay() {
-    const date = new Date();
-    let day = date.getDate().toString().padStart(2, '0');
-    let month = (date.getMonth() + 1).toString().padStart(2, '0');
-    let year = date.getFullYear().toString();
-    this.currentDate = year + month + day;
-  }
+  // getCurrentDay() {
+  //   const date = new Date();
+  //   let day = date.getDate().toString().padStart(2, '0');
+  //   let month = (date.getMonth() + 1).toString().padStart(2, '0');
+  //   let year = date.getFullYear().toString();
+  //   this.currentDate = year + month + day;
+  // }
 
   async ngOnInit(): Promise<void> {
     await this.delay(200);

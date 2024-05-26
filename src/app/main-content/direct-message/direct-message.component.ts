@@ -1,4 +1,10 @@
-import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  inject,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { DirectMessageOverlayComponent } from '../direct-message-overlay/direct-message-overlay.component';
 import { MatDialog } from '@angular/material/dialog';
 import { NavigationService } from '../../shared/services/navigation.service';
@@ -14,6 +20,8 @@ import { HeaderStateService } from '../../shared/services/header-state.service';
 import { TextBoxComponent } from '../../shared/components/text-box/text-box.component';
 import { ConversationComponent } from '../../shared/components/conversation/conversation.component';
 import { Channel } from '../../../models/channel.class';
+import { DateFormatService } from '../../shared/services/date-format.service';
+import { TimeSeperatorComponent } from '../../shared/components/time-seperator/time-seperator.component';
 
 @Component({
   selector: 'app-direct-message',
@@ -23,7 +31,8 @@ import { Channel } from '../../../models/channel.class';
   imports: [
     HeaderMobileComponent, 
     TextBoxComponent, 
-    ConversationComponent
+    ConversationComponent,
+    TimeSeperatorComponent  
   ],
 })
 export class DirectMessageComponent implements OnInit {
@@ -43,7 +52,7 @@ export class DirectMessageComponent implements OnInit {
     channelId: '',
     collection: 'messages',
     subcollection: 'chat',
-  };  
+  };
 
   userData = {
     avatar: this.user.avatar,
@@ -53,15 +62,10 @@ export class DirectMessageComponent implements OnInit {
     provider: this.user.provider,
     selected: this.user.selected,
     count: this.user.count,
-    newMessage: this.user.newMessage
-
-    
+    newMessage: this.user.newMessage,
   };
 
-  
-
   addCountToChannelDocument(toggle: string) {
-
     const user = new User({
       avatar: this.user.avatar,
       email: this.user.email,
@@ -70,11 +74,10 @@ export class DirectMessageComponent implements OnInit {
       provider: this.user.provider,
       selected: this.user.selected,
       count: this.user.count,
-      newMessage: this.newMessage
+      newMessage: this.newMessage,
     });
 
-    
-    this.firestore.updateUser(user, this.itemID, );
+    this.firestore.updateUser(user, this.itemID);
   }
 
   constructor(
@@ -82,33 +85,37 @@ export class DirectMessageComponent implements OnInit {
     private navigationService: NavigationService,
     private _bottomSheet: MatBottomSheet,
     private route: ActivatedRoute,
-    private headerStateService: HeaderStateService
+    private headerStateService: HeaderStateService,
+    public dateFormatService: DateFormatService
   ) {}
 
   async ngOnInit(): Promise<void> {
     await this.waitForUserData();
     this.test();
-    this.newMessage = false;    
+    this.newMessage = false;
 
     this.route.paramMap.subscribe((paramMap) => {
       this.itemID = paramMap.get('id');
       this.getItemValues('users', this.itemID);
-  
     });
 
     setTimeout(() => {
       this.addCountToChannelDocument(this.itemID);
-   }, 1000)
+    }, 1000);
 
     await this.firestore.getDirectMessages(
       this.authService.activeUserAccount.uid,
-      this.itemID      
+      this.itemID
     );
-        
+
     this.textBoxData.channelId = this.firestore.conversation;
     this.textBoxData.placeholder = 'Nachricht an ' + this.user.displayName;
     this.headerStateService.setAlternativeHeader(true);
-    this.firestore.getAllChannelMessages(this.textBoxData.channelId, this.textBoxData.collection, this.textBoxData.subcollection);
+    this.firestore.getAllChannelMessages(
+      this.textBoxData.channelId,
+      this.textBoxData.collection,
+      this.textBoxData.subcollection
+    );
     this.scrollToBottom();
   }
 
@@ -119,7 +126,7 @@ export class DirectMessageComponent implements OnInit {
     });
   }
 
-  setOldUserlValues(){
+  setOldUserlValues() {
     this.userData = {
       avatar: this.user.avatar,
       email: this.user.email,
@@ -128,8 +135,7 @@ export class DirectMessageComponent implements OnInit {
       provider: this.user.provider,
       selected: this.user.selected,
       count: this.user.count,
-      newMessage: this.user.newMessage
-
+      newMessage: this.user.newMessage,
     };
   }
 
@@ -184,10 +190,10 @@ export class DirectMessageComponent implements OnInit {
     try {
       this.messageContent.nativeElement.scrollTo({
         top: this.messageContent.nativeElement.scrollHeight,
-        behavior: 'smooth' // Hier wird smooth scrollen aktiviert
+        behavior: 'smooth', // Hier wird smooth scrollen aktiviert
       });
-    } catch(err) { }
-}
+    } catch (err) {}
+  }
 
   goBack(): void {
     this.navigationService.goBack();
@@ -196,5 +202,4 @@ export class DirectMessageComponent implements OnInit {
   openBottomSheet(): void {
     this._bottomSheet.open(BottomSheetComponent);
   }
-
 }

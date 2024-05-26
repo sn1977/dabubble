@@ -26,11 +26,7 @@
       @if (this.firestore.channelMessages.length !== 0) { @for (channelMessage
       of this.firestore.channelMessages; track channelMessage.id) {
 
-      <app-time-seperator
-        [seperatorDate]="
-          this.dateFormatService.formatDate(channelMessage.createdAt)
-        "
-      ></app-time-seperator>
+      <app-time-seperator [seperatorDate]="channelMessage.createdAt"></app-time-seperator>
       <app-conversation
         [channelMessage]="channelMessage"
         [isChannel]="true"

@@ -1,4 +1,16 @@
 <div class="timeSeperator">
   <img class="line" src="./assets/img/auth/line.svg" alt="" />  
-  <span>{{seperatorDate}}</span>
+  
+  
+  <!-- {{this.dateFormatService.formatDateYYYYMMDD(seperatorDate)}} -->
+
+  @if (currentDate == this.dateFormatService.formatDateYYYYMMDD(seperatorDate)) {
+  <span>Heute</span>
+  } @else {  
+    <!-- <span>{{seperatorDate}}</span> -->
+
+    <span>{{ this.dateFormatService.formatDate(seperatorDate) }}</span>
+
+  }
+
 </div>

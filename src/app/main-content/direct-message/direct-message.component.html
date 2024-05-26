@@ -31,7 +31,9 @@
       style="overflow-y: scroll; height: 100%"
     >
       @for (chat of this.firestore.channelMessages; track
-      chat.id) {
+      chat.id) {        
+        <app-time-seperator [seperatorDate]="chat.createdAt"
+      ></app-time-seperator>
       <app-conversation [channelMessage]="chat" [isChannel]="false"></app-conversation>
       }
     </div>
