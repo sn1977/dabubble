@@ -117,13 +117,11 @@ export class ConversationComponent implements OnInit, AfterViewInit {
     const reactionGroupDiv = document.querySelector('.reaction-snackbar');
     if (reactionGroupDiv) {
       const rect = reactionGroupDiv.getBoundingClientRect();
-      const snackbarHeight = 48; // Ersetzen Sie dies durch die tatsächliche Höhe Ihrer Snackbar
+      const snackbarHeight = 100; // Ersetzen Sie dies durch die tatsächliche Höhe Ihrer Snackbar
       const snackbarWidth = 200; // Ersetzen Sie dies durch die tatsächliche Breite Ihrer Snackbar
       this.snackbarOverlayService.open({
-        // top: rect.top - snackbarHeight,
-        // left: rect.right - snackbarWidth,
-        top: 200,
-        left: 200,
+        top: rect.top - snackbarHeight,
+        left: rect.left,
         emoji,
         user,
       });
@@ -133,31 +131,6 @@ export class ConversationComponent implements OnInit, AfterViewInit {
       );
     }
   }
-
-  // showEmojiSnackbar(emoji: string, user: string, event: MouseEvent) {
-  //   const clickedElement = event.target as HTMLElement;
-  //   const rect = clickedElement.getBoundingClientRect();
-  //   const snackbarHeight = 48; // Ersetzen Sie dies durch die tatsächliche Höhe Ihrer Snackbar
-  //   const snackbarWidth = 200; // Ersetzen Sie dies durch die tatsächliche Breite Ihrer Snackbar
-  //   this.snackbarOverlayService.open({
-  //     top: rect.top - snackbarHeight,
-  //     left: rect.right - snackbarWidth,
-  //     emoji,
-  //     user,
-  //   });
-  // }
-
-  // setReactionGroupPosition() {
-  //   const reactionGroupDiv = document.querySelector('.reaction-group .pointer');
-  //   if (reactionGroupDiv) {
-  //     const rect = reactionGroupDiv.getBoundingClientRect();
-  //     this.positionService.setPosition(rect.top, rect.left);
-  //   } else {
-  //     console.error(
-  //       'Element mit der Klasse "reaction-group pointer" wurde nicht gefunden'
-  //     );
-  //   }
-  // }
 
   async getItemValuesProfile(collection: string, itemID: string) {
     await this.delay(200);
@@ -257,10 +230,10 @@ export class ConversationComponent implements OnInit, AfterViewInit {
     this.updateReactionsInDatabase();
 
     // Show the snackbar
-      this.showEmojiSnackbar(
-        reaction.emoji,
-        this.authService.activeUserAccount.displayName,
-      );
+    this.showEmojiSnackbar(
+      reaction.emoji,
+      this.authService.activeUserAccount.displayName,
+    );
   }
 
   toggleReactionBar(event: any): void {
@@ -414,13 +387,14 @@ export class ConversationComponent implements OnInit, AfterViewInit {
       if (currentGroup && currentGroup.date === messageDate) {
         currentGroup.messages.push(message);
       } else {
-        currentGroup = { date: messageDate, messages: [message] };
+        currentGroup = {date: messageDate, messages: [message]};
         groupedMessages.push(currentGroup);
       }
     }
 
     return groupedMessages;
   }
+
   delay(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
