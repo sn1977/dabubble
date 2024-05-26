@@ -45,7 +45,8 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
 
-      @for (channel of this.dataService.channelMatches; track $index) {
+      <!-- @for (channel of this.dataService.channelMatches; track $index) { -->
+      @for (channel of this.firestore.channelList; track $index) {
       <div
         class="channel-name"
         [id]="channel.id"
@@ -95,7 +96,8 @@
       </mat-expansion-panel-header>
 
       <div class="scrollable-panel-content">
-        @for (user of this.dataService.userMatches; track $index) {
+        @for (user of this.firestore.userList; track $index) {
+        <!-- @for (user of this.dataService.userMatches; track $index) { -->
         <div
           class="user-name"
           [id]="user.id"

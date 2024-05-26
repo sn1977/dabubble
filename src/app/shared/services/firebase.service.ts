@@ -36,7 +36,7 @@ export class FirebaseService {
   channel: Channel = new Channel();
   channelMessage: ChannelMessage = new ChannelMessage();
   userList: any = [];
-  channelList: any = [];
+  channelList: any = [];  
   channelMessages: any = [];
   channelThreads: any = [];
   message: DirectMessage = new DirectMessage();
@@ -210,7 +210,7 @@ export class FirebaseService {
 
   getChannel(): Channel[] {
     return this.channelList;
-  }
+  }  
 
   getSingleUser(): User[] {
     return this.activeUser;
@@ -381,7 +381,7 @@ export class FirebaseService {
 
   ngonDestroyy() {
     this.unsubUsers();
-    this.unsubChannel();
+    this.unsubChannel();    
   }
 
   async getEmojiReactions(
@@ -421,16 +421,6 @@ export class FirebaseService {
     );
     console.log(messageRef);
   }
-  //   const reactionKey = `reactions.${emoji}`; // Pfad zum spezifischen Emoji
-  //
-  //   // Verwendung von increment, um die Anzahl der Emojis zu erhöhen
-  //   await updateDoc(messageRef, {
-  //     [reactionKey]: increment(1)
-  //   }).catch((error) => {
-  //     console.error('Fehler beim Aktualisieren der Emoji-Reaktionen:', error);
-  //   });
-  //   console.log(channelId, messageId, user, emoji);
-  // }
 
   async getThreadData(
     channelId: string,

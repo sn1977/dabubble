@@ -101,7 +101,7 @@ export class MainContentComponent implements OnInit {
   
   async ngOnInit() {
     await this.listenForDataChanges();    
-    this.dataService.searchWorkspace('');
+    this.dataService.searchWorkspace('');    
   }
   
   async listenForDataChanges(): Promise<void> {
@@ -158,6 +158,4 @@ export class MainContentComponent implements OnInit {
     this.itemStateService.setItemId(docRefId);
     this.router.navigate([path, docRefId]);
   }
-
-
 }
