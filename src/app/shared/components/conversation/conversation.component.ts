@@ -13,7 +13,6 @@ import {User} from '../../../../models/user.class';
 import {FirebaseService} from '../../services/firebase.service';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import {EmojiPickerComponent} from '../emoji-picker/emoji-picker.component';
-// import { Router } from '@angular/router';
 import {AuthService} from '../../services/auth.service';
 import {FormsModule} from '@angular/forms';
 import {DateFormatService} from '../../services/date-format.service';
@@ -64,7 +63,6 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   isMessageFromYou: boolean = false;
   currentDate: any;
   messageDate: any;
-  //NOTE - @Sascha - hier starten wir immer mit einem leeren Array
   emojiReactions: { emoji: string; users: string[] }[] = [];
   showReactionBar: boolean = false;
   showEditMessage: boolean = false;
@@ -325,17 +323,40 @@ export class ConversationComponent implements OnInit, AfterViewInit {
 
   async changeMessage() {
     await this.delay(100);
-    const colId = this.isChannel == true ? 'channels' : 'messages';
-
-    console.log('channel: ', this.isChannel);
-    console.log('thread: ', this.isThread);
-    
-
+    const colId = this.isChannel == true ? 'channels' : 'messages';    
     const docId = this.channelMessage.channelId;
     const messageId = this.channelMessage.messageId;
 
+
     if (messageId) {
       const setFocusMessage = this.messageToEdit.nativeElement;
+
+      if(this.isThread){
+        
+        // console.log('channel: ', this.isChannel);
+    // console.log('thread: ', this.isThread);
+    
+
+    // das hab ich
+    // /channels/YkiUNj2QScJuWgZwrSL2/channelmessages/YkiUNj2QScJuWgZwrSL2
+
+    // das brauche ich    
+    // /channels/aqZmyWrJ9h8G3R2anLOj/channelmessages/crCd8RlYYuAzQ92CnUjb/threads/YkiUNj2QScJuWgZwrSL2
+    //this.channelMessage.channelId
+
+    // aqZxxxxxxxx
+    console.log(this.channelMessage.channelId);
+    console.log(this.channelMessage.messageId);
+
+    
+
+        console.log(
+          colId,
+          docId,
+          messageId,
+        );
+      }      
+
       this.firestore.updateSingleMessageText(
         colId,
         docId,

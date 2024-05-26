@@ -40,7 +40,7 @@
         @for (channelThread of
           this.firestore.channelThreads; track channelThread.id) {
           <app-conversation
-            [channelMessage]="channelThread" [isChannel]="false" [isThread]="true"
+            [channelMessage]="channelThread" [isChannel]="true" [isThread]="true"
           ></app-conversation>
         }
       }
