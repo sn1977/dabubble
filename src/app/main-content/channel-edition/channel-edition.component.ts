@@ -103,43 +103,31 @@ export class ChannelEditionComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.route.paramMap.subscribe(async (paramMap) => {
+    this.route.paramMap.subscribe(async (paramMap) => {      
       this.itemID = paramMap.get('id');
       this.getItemValues('channels', this.itemID);
-      await this.waitForUserData();
-      
+      await this.waitForUserData();      
     });
   }
 
   async waitForUserData(): Promise<void> {
     while (!this.authService.activeUserAccount) {
-      await this.delay(100); // Wartezeit in Millisekunden, bevor erneut überprüft wird
-      
+      await this.delay(100); // Wartezeit in Millisekunden, bevor erneut überprüft wird      
     }
   }
 
   delay(ms: number): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
-  
-
-  
+  }  
 
   getItemValues(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {
       this.channel = new Channel(this.firestore.channel);
-      this.getItemValuesTwo('users', this.channel.creator)
+      this.user = new User(this.firestore.user);
     });
     setTimeout(() => {
       this.setOldChannelValues();
     }, 1000)
-  }
-
-  getItemValuesTwo(collection: string, itemID: string) {
-    this.firestore.getSingleItemData(collection, itemID, () => {
-      this.user = new User(this.firestore.user);
-    });
   }
 
   setOldChannelValues(){
