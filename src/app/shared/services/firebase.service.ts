@@ -491,4 +491,19 @@ export class FirebaseService {
       text: updateMessage,
     });
   }
+
+  async updateSingleThreadMessage(
+    colId: string,
+    docId: string,
+    id: string,
+    updateMessage: string
+  ) {
+    const documentRef = doc(
+      this.getSingleDocRef(colId, docId),
+      id
+    );
+    await updateDoc(documentRef, {
+      text: updateMessage,
+    });
+  }
 }

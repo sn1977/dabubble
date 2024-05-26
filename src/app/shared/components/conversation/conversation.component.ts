@@ -1,4 +1,4 @@
-import {CommonModule} from '@angular/common';
+import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -8,33 +8,28 @@ import {
   ViewChild,
   inject,
 } from '@angular/core';
-import {ChannelMessage} from '../../../../models/channel-message.class';
-import {User} from '../../../../models/user.class';
-import {FirebaseService} from '../../services/firebase.service';
-import {MatDialog, MatDialogModule} from '@angular/material/dialog';
-import {EmojiPickerComponent} from '../emoji-picker/emoji-picker.component';
-import {AuthService} from '../../services/auth.service';
-import {FormsModule} from '@angular/forms';
-import {DateFormatService} from '../../services/date-format.service';
-import {MatSnackBar} from '@angular/material/snack-bar';
-import {ViewEncapsulation} from '@angular/core';
-import {EmojiSnackbarComponent} from '../emoji-snackbar/emoji-snackbar.component';
-import {PositionService} from '../../services/position.service';
-import {SnackbarOverlayService} from '../../services/snackbar-overlay.service';
-import {Router} from '@angular/router';
-import {MatchMediaService} from '../../services/match-media.service';
+import { ChannelMessage } from '../../../../models/channel-message.class';
+import { User } from '../../../../models/user.class';
+import { FirebaseService } from '../../services/firebase.service';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { EmojiPickerComponent } from '../emoji-picker/emoji-picker.component';
+import { AuthService } from '../../services/auth.service';
+import { FormsModule } from '@angular/forms';
+import { DateFormatService } from '../../services/date-format.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ViewEncapsulation } from '@angular/core';
+import { EmojiSnackbarComponent } from '../emoji-snackbar/emoji-snackbar.component';
+import { PositionService } from '../../services/position.service';
+import { SnackbarOverlayService } from '../../services/snackbar-overlay.service';
+import { Router } from '@angular/router';
+import { MatchMediaService } from '../../services/match-media.service';
 
 @Component({
   selector: 'app-conversation',
   standalone: true,
   templateUrl: './conversation.component.html',
   styleUrl: './conversation.component.scss',
-  imports: [
-    CommonModule,
-    MatDialogModule,
-    EmojiPickerComponent,
-    FormsModule
-  ],
+  imports: [CommonModule, MatDialogModule, EmojiPickerComponent, FormsModule],
 })
 export class ConversationComponent implements OnInit, AfterViewInit {
   constructor(
@@ -74,7 +69,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   savedMessage: string = '';
   isDesktop: boolean = false;
   @ViewChild('messageToEdit') messageToEdit!: ElementRef<HTMLTextAreaElement>;
-  groupedMessages: { date: string, messages: ChannelMessage[] }[] = [];
+  groupedMessages: { date: string; messages: ChannelMessage[] }[] = [];
   previousMessageDate: string;
 
   getCurrentDay() {
@@ -89,7 +84,8 @@ export class ConversationComponent implements OnInit, AfterViewInit {
     await this.delay(200);
     this.getItemValuesProfile('users', this.channelMessage.creator);
     this.messageDate = this.channelMessage.createdAt;
-    this.isMessageFromYou = this.authService.activeUserAccount.uid === this.channelMessage.creator;
+    this.isMessageFromYou =
+      this.authService.activeUserAccount.uid === this.channelMessage.creator;
     this.fillEmojiReactions();
   }
 
@@ -197,7 +193,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
     // Show the snackbar
     this.showEmojiSnackbar(
       selectedEmoji,
-      this.authService.activeUserAccount.displayName,
+      this.authService.activeUserAccount.displayName
     );
   }
 
@@ -231,7 +227,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
     // Show the snackbar
     this.showEmojiSnackbar(
       reaction.emoji,
-      this.authService.activeUserAccount.displayName,
+      this.authService.activeUserAccount.displayName
     );
   }
 
@@ -323,46 +319,31 @@ export class ConversationComponent implements OnInit, AfterViewInit {
 
   async changeMessage() {
     await this.delay(100);
-    const colId = this.isChannel == true ? 'channels' : 'messages';    
-    const docId = this.channelMessage.channelId;
+    const colId = this.isChannel == true ? 'channels' : 'messages';
+    let docId = this.channelMessage.channelId;
     const messageId = this.channelMessage.messageId;
-
 
     if (messageId) {
       const setFocusMessage = this.messageToEdit.nativeElement;
 
-      if(this.isThread){
-        
-        // console.log('channel: ', this.isChannel);
-    // console.log('thread: ', this.isThread);
-    
+      if (this.isThread) {
+        let docId = this.matchMedia.channelId;
+        let messageId = 'channelmessages/' + this.matchMedia.subID + '/threads/' + this.channelMessage.channelId;
 
-    // das hab ich
-    // /channels/YkiUNj2QScJuWgZwrSL2/channelmessages/YkiUNj2QScJuWgZwrSL2
-
-    // das brauche ich    
-    // /channels/aqZmyWrJ9h8G3R2anLOj/channelmessages/crCd8RlYYuAzQ92CnUjb/threads/YkiUNj2QScJuWgZwrSL2
-    //this.channelMessage.channelId
-
-    // aqZxxxxxxxx
-    console.log(this.channelMessage.channelId);
-    console.log(this.channelMessage.messageId);
-
-    
-
-        console.log(
+        this.firestore.updateSingleThreadMessage(
           colId,
           docId,
           messageId,
+          setFocusMessage.value
         );
-      }      
-
-      this.firestore.updateSingleMessageText(
-        colId,
-        docId,
-        messageId,
-        setFocusMessage.value
-      );
+      } else {
+        this.firestore.updateSingleMessageText(
+          colId,
+          docId,
+          messageId,
+          setFocusMessage.value
+        );
+      }
 
       setTimeout(() => {
         setFocusMessage.classList.remove('edit-message');
@@ -400,21 +381,26 @@ export class ConversationComponent implements OnInit, AfterViewInit {
     }
   }
 
-  groupMessagesByDate(messages: ChannelMessage[]): { date: string, messages: ChannelMessage[] }[] {
+  groupMessagesByDate(
+    messages: ChannelMessage[]
+  ): { date: string; messages: ChannelMessage[] }[] {
     // Sort messages by date
     messages.sort((a, b) => a.createdAt.seconds - b.createdAt.seconds);
 
     // Group messages by date
-    const groupedMessages: { date: string, messages: ChannelMessage[] }[] = [];
-    let currentGroup: { date: string, messages: ChannelMessage[] } | null = null;
+    const groupedMessages: { date: string; messages: ChannelMessage[] }[] = [];
+    let currentGroup: { date: string; messages: ChannelMessage[] } | null =
+      null;
 
     for (const message of messages) {
-      const messageDate = this.dateFormatService.formatDateYYYYMMDD(message.createdAt);
+      const messageDate = this.dateFormatService.formatDateYYYYMMDD(
+        message.createdAt
+      );
 
       if (currentGroup && currentGroup.date === messageDate) {
         currentGroup.messages.push(message);
       } else {
-        currentGroup = {date: messageDate, messages: [message]};
+        currentGroup = { date: messageDate, messages: [message] };
         groupedMessages.push(currentGroup);
       }
     }
@@ -423,11 +409,12 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   }
 
   delay(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
   isSameDayAsPrevious(messageDate: string): boolean {
-    const formattedMessageDate = this.dateFormatService.formatDateYYYYMMDD(messageDate);
+    const formattedMessageDate =
+      this.dateFormatService.formatDateYYYYMMDD(messageDate);
     console.log('formattedMessageDate:', formattedMessageDate);
     console.log('previousMessageDate:', this.previousMessageDate);
 
@@ -443,5 +430,4 @@ export class ConversationComponent implements OnInit, AfterViewInit {
       return false;
     }
   }
-
 }
