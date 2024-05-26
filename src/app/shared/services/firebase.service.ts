@@ -472,38 +472,30 @@ export class FirebaseService {
     });
   }
 
-  async updateSingleMessageText(
+  async updateMessage(
     colId: string,
     docId: string,
     id: string,
-    updateMessage: string
+    updateMessage: string,
+    isThread: boolean
   ) {
-    const collection = colId === 'channels' ? 'channels' : 'messages';
-    const subcollection =
-      collection === 'channels' ? 'channelmessages' : 'chat';
-
-    const documentRef = doc(
-      this.getSingleDocRef(collection, docId),
-      subcollection,
-      id
-    );
-    await updateDoc(documentRef, {
-      text: updateMessage,
-    });
-  }
-
-  async updateSingleThreadMessage(
-    colId: string,
-    docId: string,
-    id: string,
-    updateMessage: string
-  ) {
-    const documentRef = doc(
-      this.getSingleDocRef(colId, docId),
-      id
-    );
-    await updateDoc(documentRef, {
-      text: updateMessage,
-    });
+    let documentRef;
+  
+    if (isThread) {
+      documentRef = doc(
+        this.getSingleDocRef(colId, docId),
+        id
+      );
+    } else {
+      const collection = colId === 'channels' ? 'channels' : 'messages';
+      const subcollection =
+        collection === 'channels' ? 'channelmessages' : 'chat';
+  
+      documentRef = doc(
+        this.getSingleDocRef(collection, docId),
+        subcollection,
+        id
+      );
+    }
   }
 }

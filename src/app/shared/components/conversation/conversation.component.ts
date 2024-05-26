@@ -351,29 +351,30 @@ export class ConversationComponent implements OnInit, AfterViewInit {
     await this.delay(100);
     const colId = this.isChannel == true ? 'channels' : 'messages';
     let docId = this.channelMessage.channelId;
-    const messageId = this.channelMessage.messageId;
+    let messageId = this.channelMessage.messageId;
 
     if (messageId) {
       const setFocusMessage = this.messageToEdit.nativeElement;
+      let checkThread: boolean;
 
       if (this.isThread) {
-        let docId = this.matchMedia.channelId;
-        let messageId = 'channelmessages/' + this.matchMedia.subID + '/threads/' + this.channelMessage.channelId;
-
-        this.firestore.updateSingleThreadMessage(
-          colId,
-          docId,
-          messageId,
-          setFocusMessage.value
-        );
+        docId = this.matchMedia.channelId;
+        messageId =
+          'channelmessages/' +
+          this.matchMedia.subID +
+          '/threads/' +
+          this.channelMessage.channelId;
+        checkThread = true;
       } else {
-        this.firestore.updateSingleMessageText(
-          colId,
-          docId,
-          messageId,
-          setFocusMessage.value
-        );
+        checkThread = false;
       }
+      this.firestore.updateMessage(
+        colId,
+        docId,
+        messageId,
+        setFocusMessage.value,
+        checkThread
+      );
 
       setTimeout(() => {
         setFocusMessage.classList.remove('edit-message');
