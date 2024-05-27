@@ -273,6 +273,11 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   }
 
   updateReactionsInDatabase(): void {
+    
+    //NOTE - Todo Sascha
+    this.channelMessage.reactions = this.emojiReactions;
+    
+    
     let channelMessageInstance = new ChannelMessage(this.channelMessage);
     channelMessageInstance.messageId = this.channelMessage.messageId;
     channelMessageInstance.reactions = this.emojiReactions;
