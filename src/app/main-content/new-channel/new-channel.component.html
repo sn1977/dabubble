@@ -12,22 +12,26 @@
       </h1>
       <img src="./assets/img/icon/arrow_down.svg" alt="" />
     </div>
-    <div class="img-box">
-      <div *ngFor="let member of channel.member" style="margin-left: -20px;">
-        <div class="profil-img">
-          <img class="img-profil" src="{{ member.avatar }}" alt="" />
+    
+      <div class="img-box">
+        @if(isDesktop){
+        <div *ngFor="let member of channel.member" style="margin-left: -20px;">
+          <div class="profil-img">
+            <img class="img-profil" src="{{ member.avatar }}" alt="" />
+          </div>
         </div>
-      </div>
-    </div >
-
-    <div>
-      <img
-        class="pointer"
-        (click)="toggleOverlay('overlay1')"
-        src="./assets/img/icon/add_member.svg"
-        alt=""
-      />
-    </div>
+        }
+        <div style="margin-left: 10px;">
+          <img
+            class="pointer"
+            (click)="toggleOverlay('overlay1')"
+            src="./assets/img/icon/add_member.svg"
+            alt=""
+          />
+        </div>
+      </div >
+    
+    
   </div>
   <div class="content">
     <div class="message-content" #messageContent style="overflow-y: scroll">

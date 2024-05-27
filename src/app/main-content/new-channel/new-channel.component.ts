@@ -18,6 +18,7 @@ import { SearchUserComponent } from '../../shared/components/search-user/search-
 import { CommonModule } from '@angular/common';
 import { DateFormatService } from '../../shared/services/date-format.service';
 import { TimeSeperatorComponent } from "../../shared/components/time-seperator/time-seperator.component";
+import { MatchMediaService } from '../../shared/services/match-media.service';
 
 @Component({
     selector: 'app-new-channel',
@@ -45,6 +46,8 @@ export class NewChannelComponent implements OnInit, AfterViewChecked {
   newMessage: boolean = false;
   firebaseAuth = inject(Auth);
   authService = inject(AuthService);
+  isDesktop: boolean = false;
+  matchMedia = inject(MatchMediaService);
   textBoxData: any = {
     placeholder: 'Nachricht an #',
     channelName: '',
@@ -76,6 +79,7 @@ export class NewChannelComponent implements OnInit, AfterViewChecked {
   };
 
   async ngOnInit(): Promise<void> {
+    this.isDesktop = this.matchMedia.checkIsDesktop();
     await this.waitForUserData();
     this.test();
     this.newMessage = false; 
