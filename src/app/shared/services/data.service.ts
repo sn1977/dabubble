@@ -38,15 +38,18 @@ export class DataService {
   }
 
   containsPartialChannelValue(searchValue: string) {
-    return this.channelMatches.some((item: { name: string | string[] }) =>
-      item.name.includes(searchValue)
-    );
+    if (this.channelMatches) {
+      return this.channelMatches.some((item: { name: string | string[] }) =>
+        item.name.includes(searchValue)
+      );
+    }
   }
 
   containsPartialUserValue(searchValue: string) {
-    return this.userMatches.some(
-      (item: { displayName: string | string[] }) =>
+    if (this.userMatches) {
+      return this.userMatches.some((item: { displayName: string | string[] }) =>
         item.displayName.includes(searchValue)
-    );
+      );
+    }
   }
 }
