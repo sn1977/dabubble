@@ -12,6 +12,14 @@
       </h1>
       <img src="./assets/img/icon/arrow_down.svg" alt="" />
     </div>
+    <div class="img-box">
+      <div *ngFor="let member of channel.member" style="margin-left: -20px;">
+        <div class="profil-img">
+          <img class="img-profil" src="{{ member.avatar }}" alt="" />
+        </div>
+      </div>
+    </div >
+
     <div>
       <img
         class="pointer"

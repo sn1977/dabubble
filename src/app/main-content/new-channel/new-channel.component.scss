@@ -162,6 +162,7 @@ h1 {
     object-fit: cover;
   }
 
+
   .online-avatar,
   .offline-avatar {
     position: absolute;
@@ -178,6 +179,20 @@ h1 {
     font-weight: 700;
     color: #535af1;
   }
+}
+
+.img-box{
+  display: flex;
+}
+
+.profil-img{
+  img {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    object-fit: cover;
+  }
+
 }
 
 .height {

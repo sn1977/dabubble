@@ -74,7 +74,7 @@ mat-expansion-panel{
 
 .user-name,
 .channel-name {
-  padding-top: 16px;
+  padding: 10px;
   position: relative;
 
   @include dFlex($jc: space-between, $ai: center, $fd: row, $g: 16px);
