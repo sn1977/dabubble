@@ -24,6 +24,7 @@
 }
 
 
+
 .channel-box {
   display: flex;
   align-items: center;
@@ -31,11 +32,17 @@
   gap: 10px;
 }
 
+.input-div{
+  margin-bottom: 10px;
+}
+
 .mdc-card {
   @include dFlex($jc: space-between, $ai: center, $fd: row, $g: 20px);
   @include shadow-bottom();
   height: 78px;
   padding: 10px 16px;
+  justify-content: center !important;
+  gap: 0 !important;
 
   .channel-box {
     @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 15px);
@@ -156,6 +163,14 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
+.inputbox{
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 20px;
+  border: 1px solid black;
+  width: 200px;
+}
+
 .search-input {
   border: 1px solid blue;
   border-radius: 20px;
@@ -201,12 +216,12 @@
 
 //DESKTOP/////
 
-@media (min-width: 1120px) {
+@media (min-width: 450px) {
   .container app-header-mobile {
     display: none;
   }
   .mdc-card{
-    box-shadow: unset;
+    box-shadow: 0px 10px 10px -5px rgba(0, 0, 0, 0.08);
   }
 }
 

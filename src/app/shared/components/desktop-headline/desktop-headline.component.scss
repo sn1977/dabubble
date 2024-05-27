@@ -11,8 +11,6 @@
 .logo {
   @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 16px);
   width: 100%;
-  max-width: 21.06%;
-  height: 70px;
   flex: 1;
 
   img {
