@@ -72,6 +72,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   groupedMessages: { date: string; messages: ChannelMessage[] }[] = [];
   previousMessageDate: string;
 
+
   // getCurrentDay() {
   //   const date = new Date();
   //   let day = date.getDate().toString().padStart(2, '0');
@@ -126,36 +127,6 @@ export class ConversationComponent implements OnInit, AfterViewInit {
       );
     }
   }
-
-  // showEmojiSnackbar(emoji: string) {
-  //   const reactionGroupDiv = document.querySelector('.reaction-snackbar');
-  //   if (reactionGroupDiv) {
-  //     const rect = reactionGroupDiv.getBoundingClientRect();
-  //     const snackbarHeight = 100; // Ersetzen Sie dies durch die tatsächliche Höhe Ihrer Snackbar
-  //     const snackbarWidth = 200; // Ersetzen Sie dies durch die tatsächliche Breite Ihrer Snackbar
-  //
-  //     // Finden Sie die Reaktion, die dem ausgewählten Emoji entspricht
-  //     const reaction = this.channelMessage.reactions.find(
-  //       (reaction) => reaction.emoji === emoji
-  //     );
-  //
-  //     if (reaction) {
-  //       // Erstellen Sie eine Zeichenkette mit allen Benutzernamen, die auf das Emoji reagiert haben
-  //       const usersString = reaction.users.join(', ');
-  //
-  //       this.snackbarOverlayService.open({
-  //         top: rect.top - snackbarHeight,
-  //         left: rect.left,
-  //         emoji,
-  //         user: usersString, // Zeigen Sie alle Benutzer an, die auf das Emoji reagiert haben
-  //       });
-  //     }
-  //   } else {
-  //     console.error(
-  //       'Element mit der Klasse "reaction-group pointer" wurde nicht gefunden'
-  //     );
-  //   }
-  // }
 
   async getItemValuesProfile(collection: string, itemID: string) {
     await this.delay(200);
@@ -242,6 +213,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
 
   toggleReaction(reaction: { emoji: string; users: string[] }): void {
     console.log(reaction.users.indexOf(this.authService.activeUserAccount.uid));
+    console.log('toggleReaction called');
     const userIndex = reaction.users.indexOf(
       this.authService.activeUserAccount.uid
     );
@@ -273,11 +245,8 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   }
 
   updateReactionsInDatabase(): void {
-    
-    //NOTE - Todo Sascha
     this.channelMessage.reactions = this.emojiReactions;
-    
-    
+
     let channelMessageInstance = new ChannelMessage(this.channelMessage);
     channelMessageInstance.messageId = this.channelMessage.messageId;
     channelMessageInstance.reactions = this.emojiReactions;
