@@ -2,12 +2,10 @@ import { Injectable } from '@angular/core';
 import { Channel } from '../../../models/channel.class';
 import { User } from '../../../models/user.class';
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DataService {
-  
   allChannels: Channel[] = [];
   channelMatches: any;
   allUsers: User[] = [];
@@ -15,16 +13,16 @@ export class DataService {
   noUserFound: boolean = false;
   noChannelFound: boolean = false;
 
-  constructor() { }
+  constructor() {}
 
   async searchWorkspace(query: string) {
-    if (query == '') {      
+    if (query == '') {
       this.channelMatches = this.allChannels;
       this.userMatches = this.allUsers;
       return;
-    }    
-    
-    query = query.toLowerCase();   
+    }
+
+    query = query.toLowerCase();
 
     this.channelMatches = this.allChannels
       .filter((channel) => channel.name.toLowerCase().includes(query))
@@ -37,5 +35,18 @@ export class DataService {
           user.email.toLowerCase().includes(query)
       )
       .map((user) => ({ ...user, type: 'user' }));
+  }
+
+  containsPartialChannelValue(searchValue: string) {
+    return this.channelMatches.some((item: { name: string | string[] }) =>
+      item.name.includes(searchValue)
+    );
+  }
+
+  containsPartialUserValue(searchValue: string) {
+    return this.userMatches.some(
+      (item: { displayName: string | string[] }) =>
+        item.displayName.includes(searchValue)
+    );
   }
 }

@@ -101,7 +101,7 @@ export class MainContentComponent implements OnInit {
   
   async ngOnInit() {
     await this.listenForDataChanges();    
-    this.dataService.searchWorkspace('');    
+    this.dataService.searchWorkspace('');
   }
   
   async listenForDataChanges(): Promise<void> {
@@ -112,7 +112,8 @@ export class MainContentComponent implements OnInit {
     const users = await usersPromise;
 
     this.dataService.allChannels = channels;
-    this.dataService.allUsers = this.sortUsers(users);
+    // this.dataService.allUsers = this.sortUsers(users);
+    this.dataService.allUsers = users;
   }
 
   sortUsers(users: User[]): User[] {
