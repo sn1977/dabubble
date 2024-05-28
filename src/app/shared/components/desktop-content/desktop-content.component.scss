@@ -48,10 +48,16 @@ button{
   padding: 0 20px 20px;
   box-sizing: border-box;
   background-color: #eceefe;
+  justify-content: flex-start !important;
+
 }
 
 .mat-mdc-card-content{  
   padding-top: 28px;
+}
+
+.workspace{
+  max-width: 50% !important;
 }
 
 .menu,
@@ -59,6 +65,7 @@ button{
 .thread{
   border-radius: 30px;
   padding: 8px;
+  
 }
 
 .menu{
