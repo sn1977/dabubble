@@ -1,4 +1,12 @@
-import { AfterViewChecked, Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewChecked,
+  Component,
+  ElementRef,
+  inject,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { BottomSheetComponent } from '../../shared/components/bottom-sheet/bottom-sheet.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
@@ -13,32 +21,32 @@ import { ConversationComponent } from '../../shared/components/conversation/conv
 import { HeaderMobileComponent } from '../../shared/components/header-mobile/header-mobile.component';
 import { HeaderStateService } from '../../shared/services/header-state.service';
 import { TextBoxComponent } from '../../shared/components/text-box/text-box.component';
-import { DialogServiceService} from '../../shared/services/dialog-service.service';
+import { DialogServiceService } from '../../shared/services/dialog-service.service';
 import { SearchUserComponent } from '../../shared/components/search-user/search-user.component';
 import { CommonModule } from '@angular/common';
 import { DateFormatService } from '../../shared/services/date-format.service';
-import { TimeSeperatorComponent } from "../../shared/components/time-seperator/time-seperator.component";
+import { TimeSeperatorComponent } from '../../shared/components/time-seperator/time-seperator.component';
 import { MatchMediaService } from '../../shared/services/match-media.service';
 
 @Component({
-    selector: 'app-new-channel',
-    standalone: true,
-    templateUrl: './new-channel.component.html',
-    styleUrl: './new-channel.component.scss',
-    imports: [
-        RouterLink,
-        BottomSheetComponent,
-        ConversationComponent,
-        HeaderMobileComponent,
-        TextBoxComponent,
-        CommonModule,
-        SearchUserComponent,
-        TimeSeperatorComponent
-    ]
+  selector: 'app-new-channel',
+  standalone: true,
+  templateUrl: './new-channel.component.html',
+  styleUrl: './new-channel.component.scss',
+  imports: [
+    RouterLink,
+    BottomSheetComponent,
+    ConversationComponent,
+    HeaderMobileComponent,
+    TextBoxComponent,
+    CommonModule,
+    SearchUserComponent,
+    TimeSeperatorComponent,
+  ],
 })
 export class NewChannelComponent implements OnInit, AfterViewChecked {
   firestore = inject(FirebaseService);
-  router = inject(Router);  
+  router = inject(Router);
   itemID: any = '';
   user: User = new User();
   channel: Channel = new Channel();
@@ -66,7 +74,7 @@ export class NewChannelComponent implements OnInit, AfterViewChecked {
     public navigationService: NavigationService,
     private headerStateService: HeaderStateService,
     private dialogService: DialogServiceService,
-    public dateFormatService: DateFormatService,
+    public dateFormatService: DateFormatService
   ) {}
 
   channelData = {
@@ -75,23 +83,31 @@ export class NewChannelComponent implements OnInit, AfterViewChecked {
     member: this.channel.member,
     name: this.channel.name,
     count: this.channel.count,
-    newMessage: this.channel.newMessage,    
+    newMessage: this.channel.newMessage,
   };
 
   async ngOnInit(): Promise<void> {
     this.isDesktop = this.matchMedia.checkIsDesktop();
     await this.waitForUserData();
     this.test();
-    this.newMessage = false; 
+    this.newMessage = false;
 
     this.route.paramMap.subscribe((paramMap) => {
       this.itemID = paramMap.get('id');
-      this.getItemValues('channels', this.itemID);      
-      this.firestore.getAllChannelMessages(this.itemID, this.textBoxData.collection, this.textBoxData.subcollection);
+      this.getItemValues('channels', this.itemID);
+      this.firestore.getAllChannelMessages(
+        this.itemID,
+        this.textBoxData.collection,
+        this.textBoxData.subcollection
+      );
     });
 
     this.headerStateService.setAlternativeHeader(true);
-    this.scrollToBottom();
+    this.matchMedia.scrollToBottom = true;
+
+    setInterval(() => {
+      this.scrollToBottom();
+    }, 1000);
   }
 
   async getItemValues(collection: string, itemID: string) {
@@ -104,12 +120,12 @@ export class NewChannelComponent implements OnInit, AfterViewChecked {
   }
 
   ngAfterViewInit() {
-    this.previousMessageCount = this.getCurrentMessageCount();    
+    this.previousMessageCount = this.getCurrentMessageCount();
   }
+
   ngAfterViewChecked() {
     const currentMessageCount = this.getCurrentMessageCount();
     if (currentMessageCount > this.previousMessageCount) {
-      this.scrollToBottom();
       this.previousMessageCount = currentMessageCount;
     }
   }
@@ -120,13 +136,17 @@ export class NewChannelComponent implements OnInit, AfterViewChecked {
 
   async scrollToBottom() {
     await this.delay(200);
-    try {
-      this.messageContent.nativeElement.scrollTo({
-        top: this.messageContent.nativeElement.scrollHeight,
-        behavior: 'smooth'
-      });
-    } catch(err) { }
-}
+
+    if (this.matchMedia.scrollToBottom === true) {
+      try {
+        this.messageContent.nativeElement.scrollTo({
+          top: this.messageContent.nativeElement.scrollHeight,
+          behavior: 'smooth',
+        });
+      } catch (err) {}
+    }
+    this.matchMedia.scrollToBottom = false;
+  }
 
   async waitForUserData(): Promise<void> {
     while (!this.authService.activeUserAccount) {
@@ -144,7 +164,6 @@ export class NewChannelComponent implements OnInit, AfterViewChecked {
   }
 
   toggleOverlay(overlayId: string): void {
-
     const newOverlay = document.getElementById(overlayId);
     if (newOverlay) {
       newOverlay.style.display =
@@ -162,8 +181,6 @@ export class NewChannelComponent implements OnInit, AfterViewChecked {
   openBottomSheet(): void {
     this._bottomSheet.open(BottomSheetComponent);
   }
-
-
 
   openChannel(event: MouseEvent, path: string) {
     const docRefId = (event.currentTarget as HTMLElement).id;

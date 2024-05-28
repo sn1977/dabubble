@@ -112,14 +112,9 @@ export class DirectMessageComponent implements OnInit {
     );
 
     this.textBoxData.channelId = this.firestore.conversation;
-    // this.textBoxData.placeholder = 'Nachricht an ' + this.user.displayName;
     this.textBoxData.placeholder = 'Nachricht an ' + this.matchMedia.channelName;
-    this.headerStateService.setAlternativeHeader(true);
-    
-    // this.matchMedia.scrollToBottom = true;
-    // setInterval(() => {
-      this.scrollToBottom();
-    // }, 1000);
+    this.headerStateService.setAlternativeHeader(true);    
+    this.scrollToBottom();    
   }
 
   async getItemValues(collection: string, itemID: string) {
@@ -127,7 +122,6 @@ export class DirectMessageComponent implements OnInit {
     this.firestore.getSingleItemData(collection, itemID, () => {
       this.user = new User(this.firestore.user);
       this.textBoxData.channelName = this.channel.name;
-      // this.textBoxData.channelName = this.matchMedia.channelName;
       this.textBoxData.channelId = itemID;
     });
   }
@@ -180,16 +174,17 @@ export class DirectMessageComponent implements OnInit {
   }
 
   async scrollToBottom() {
-    // if(this.matchMedia.scrollToBottom){
-      await this.delay(200);
+    await this.delay(200);
+
+    if (this.matchMedia.scrollToBottom === true) {
       try {
         this.messageContent.nativeElement.scrollTo({
           top: this.messageContent.nativeElement.scrollHeight,
           behavior: 'smooth',
         });
       } catch (err) {}
-    // }
-    // this.matchMedia.scrollToBottom = false;
+    }
+    this.matchMedia.scrollToBottom = false;
   }
 
   goBack(): void {
