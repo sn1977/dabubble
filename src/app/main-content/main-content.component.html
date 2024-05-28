@@ -49,6 +49,7 @@
       @if(this.dataService.containsPartialChannelValue(channel.name)){
       <div
         class="channel-name"
+        [ngClass]="this.matchMedia.channelName == channel.name ? 'selected-menu-item' : ''"
         [id]="channel.id"
         (click)="openChannel($event, 'new-channel', channel.name)"
       >
@@ -100,6 +101,7 @@
         @if(this.dataService.containsPartialUserValue(user.displayName)){
         <div
           class="user-name"
+          [ngClass]="this.matchMedia.channelName == user.displayName ? 'selected-menu-item' : ''"
           [id]="user.id"          
           (click)="openChannel($event, 'message', user.displayName)"
         >
