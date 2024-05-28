@@ -118,11 +118,12 @@ export class NewChannelComponent implements OnInit, AfterViewChecked {
     return this.messageContent.nativeElement.children.length;
   }
 
-  scrollToBottom() {
+  async scrollToBottom() {
+    await this.delay(200);
     try {
       this.messageContent.nativeElement.scrollTo({
         top: this.messageContent.nativeElement.scrollHeight,
-        behavior: 'smooth' // Hier wird smooth scrollen aktiviert
+        behavior: 'smooth'
       });
     } catch(err) { }
 }

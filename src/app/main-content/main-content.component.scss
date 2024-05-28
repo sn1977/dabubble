@@ -35,9 +35,7 @@
 }
 
 .channel-headline {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+  @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 0);
   width: 100%;
 }
 
@@ -46,10 +44,8 @@
 }
 
 .channel-menu-headline {
-  display: flex;
-  align-items: center;
+  @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 10px);
   width: 100%;
-  gap: 10px;
 
   span {
     font-weight: 700;
@@ -57,8 +53,7 @@
   }
 }
 
-.nothingFound
-{
+.nothingFound {
   font-weight: 400;
   font-size: 14px;
   line-height: 16.8px;
@@ -68,14 +63,12 @@
   margin-top: 4px;
 }
 
-mat-expansion-panel{
+mat-expansion-panel {
   overflow: auto;
-  
 }
 
-mat-expansion-panel:last-child{
- margin-bottom: 110px !important;
-  
+mat-expansion-panel:last-child {
+  margin-bottom: 110px !important;
 }
 
 .user-name,
@@ -85,7 +78,7 @@ mat-expansion-panel:last-child{
 
   @include dFlex($jc: space-between, $ai: center, $fd: row, $g: 16px);
 
-  &:hover {    
+  &:hover {
     background-color: #eceefe;
     border-radius: 20px;
   }
@@ -116,11 +109,14 @@ mat-expansion-panel:last-child{
     height: 14px;
   }
 }
+
+.selected-menu-item {
+  background-color: #eceefe;
+  border-radius: 20px;
+}
+
 .pf {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
+  @include dFlex($jc: center, $ai: center, $fd: row, $g: 10px);  
 }
 
 .flex {
@@ -130,11 +126,11 @@ mat-expansion-panel:last-child{
 
 .pop-up {
   background-color: rgba(221, 1, 1, 0.7);
-    height: 20px;
-    padding: 3px;
-    display: flex;
-    justify-content: center;
-    border-radius: 10px;
+  height: 20px;
+  padding: 3px;  
+  display: flex;
+  justify-content: center;
+  border-radius: 10px;
 }
 
 .pop-up-color {
@@ -209,14 +205,11 @@ mat-expansion-panel:last-child{
     padding: unset;
   }
 
-  .btn-edit-message{
+  .btn-edit-message {
     position: absolute;
-  right: 16px;
-  top: 20px;
-  width: 45px;
-  height: 45px;
-
+    right: 16px;
+    top: 20px;
+    width: 45px;
+    height: 45px;
   }
-
-
 }

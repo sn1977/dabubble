@@ -22,6 +22,7 @@ import { ConversationComponent } from '../../shared/components/conversation/conv
 import { Channel } from '../../../models/channel.class';
 import { DateFormatService } from '../../shared/services/date-format.service';
 import { TimeSeperatorComponent } from '../../shared/components/time-seperator/time-seperator.component';
+import { MatchMediaService } from '../../shared/services/match-media.service';
 
 @Component({
   selector: 'app-direct-message',
@@ -44,6 +45,7 @@ export class DirectMessageComponent implements OnInit {
   channel: Channel = new Channel();
   authService = inject(AuthService);
   newMessage: boolean = false;
+  matchMedia = inject(MatchMediaService);
 
   textBoxData: any = {
     placeholder: 'Nachricht an ',
@@ -97,6 +99,7 @@ export class DirectMessageComponent implements OnInit {
     this.route.paramMap.subscribe((paramMap) => {
       this.itemID = paramMap.get('id');
       this.getItemValues('users', this.itemID);
+      this.firestore.getAllChannelMessages(this.itemID, this.textBoxData.collection,this.textBoxData.subcollection);
     });
 
     setTimeout(() => {
@@ -109,34 +112,21 @@ export class DirectMessageComponent implements OnInit {
     );
 
     this.textBoxData.channelId = this.firestore.conversation;
-    this.textBoxData.placeholder = 'Nachricht an ' + this.user.displayName;
+    // this.textBoxData.placeholder = 'Nachricht an ' + this.user.displayName;
+    this.textBoxData.placeholder = 'Nachricht an ' + this.matchMedia.channelName;
     this.headerStateService.setAlternativeHeader(true);
-    this.firestore.getAllChannelMessages(
-      this.textBoxData.channelId,
-      this.textBoxData.collection,
-      this.textBoxData.subcollection
-    );
+    
     this.scrollToBottom();
   }
 
-  getItemValues(collection: string, itemID: string) {
+  async getItemValues(collection: string, itemID: string) {
+    await this.delay(200);
     this.firestore.getSingleItemData(collection, itemID, () => {
       this.user = new User(this.firestore.user);
-      this.setOldUserlValues();
+      this.textBoxData.channelName = this.channel.name;
+      // this.textBoxData.channelName = this.matchMedia.channelName;
+      this.textBoxData.channelId = itemID;
     });
-  }
-
-  setOldUserlValues() {
-    this.userData = {
-      avatar: this.user.avatar,
-      email: this.user.email,
-      displayName: this.user.displayName,
-      isOnline: this.user.isOnline,
-      provider: this.user.provider,
-      selected: this.user.selected,
-      count: this.user.count,
-      newMessage: this.user.newMessage,
-    };
   }
 
   async waitForUserData(): Promise<void> {
@@ -186,11 +176,12 @@ export class DirectMessageComponent implements OnInit {
     });
   }
 
-  scrollToBottom() {
+  async scrollToBottom() {
+    await this.delay(200);
     try {
       this.messageContent.nativeElement.scrollTo({
         top: this.messageContent.nativeElement.scrollHeight,
-        behavior: 'smooth', // Hier wird smooth scrollen aktiviert
+        behavior: 'smooth',
       });
     } catch (err) {}
   }
