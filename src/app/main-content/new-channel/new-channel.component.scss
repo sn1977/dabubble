@@ -41,6 +41,7 @@
   padding: 0 16px;
 
   .channel-box {
+    min-width: 180px;
     @include dFlex($jc: flex-start, $ai: normal, $fd: row, $g: 15px);
   }
 }
@@ -214,7 +215,7 @@ h1 {
 
 //DESKTOP/////
 
-@media (min-width: 800px) {
+@media (min-width: 400px) {
   .container app-header-mobile {
     display: none;
   }
