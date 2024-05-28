@@ -119,24 +119,13 @@ export class DirectMessageComponent implements OnInit {
     this.scrollToBottom();
   }
 
-  getItemValues(collection: string, itemID: string) {
+  async getItemValues(collection: string, itemID: string) {
+    await this.delay(200);
     this.firestore.getSingleItemData(collection, itemID, () => {
       this.user = new User(this.firestore.user);
-      this.setOldUserlValues();
+      this.textBoxData.channelName = this.channel.name;
+      this.textBoxData.channelId = itemID;
     });
-  }
-
-  setOldUserlValues() {
-    this.userData = {
-      avatar: this.user.avatar,
-      email: this.user.email,
-      displayName: this.user.displayName,
-      isOnline: this.user.isOnline,
-      provider: this.user.provider,
-      selected: this.user.selected,
-      count: this.user.count,
-      newMessage: this.user.newMessage,
-    };
   }
 
   async waitForUserData(): Promise<void> {

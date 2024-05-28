@@ -154,6 +154,10 @@ export class MainContentComponent implements OnInit {
     if(name){      
       this.matchMedia.channelName = name;
     }
+
+    console.log(this.matchMedia.channelName);
+    
+
     this.matchMedia.showThread = false;
     const docRefId = (event.currentTarget as HTMLElement).id;
     this.itemStateService.setItemId(docRefId);

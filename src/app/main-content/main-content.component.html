@@ -100,8 +100,8 @@
         @if(this.dataService.containsPartialUserValue(user.displayName)){
         <div
           class="user-name"
-          [id]="user.id"
-          (click)="openChannel($event, 'message')"
+          [id]="user.id"          
+          (click)="openChannel($event, 'message', user.displayName)"
         >
           <div class="pf">
             <img src="{{ user.avatar }}" />
