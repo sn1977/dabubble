@@ -1,10 +1,11 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { MainContentComponent } from '../../../main-content/main-content.component';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { RouterOutlet } from '@angular/router';
 import { ThreadComponent } from "../../../main-content/thread/thread.component";
 import { MatchMediaService } from '../../services/match-media.service';
+import { Router, RouterLink } from '@angular/router';
 @Component({
     selector: 'app-desktop-content',
     standalone: true,
@@ -18,8 +19,15 @@ import { MatchMediaService } from '../../services/match-media.service';
       ThreadComponent
     ]
 })
-export class DesktopContentComponent {
+export class DesktopContentComponent implements OnInit {
   matchMedia = inject(MatchMediaService);
+  router = inject(Router);
+  isDesktop: boolean = false;
+
+  ngOnInit(): void {
+    this.isDesktop = this.matchMedia.checkIsDesktop();
+  }
+
 
   isCollapsed = false;
 

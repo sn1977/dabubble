@@ -13,8 +13,12 @@
   </mat-card>
 
   <mat-card class="workspace">
-    <mat-card-content>      
-      <router-outlet></router-outlet>
+    <mat-card-content>
+      @if (this.router.url === '/main') {
+        <p>Wähle ein Channel oder einen Chat</p>
+      }@else {
+        <router-outlet></router-outlet>
+      }
     </mat-card-content>
   </mat-card>
 
