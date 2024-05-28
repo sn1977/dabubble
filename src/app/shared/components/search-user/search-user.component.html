@@ -31,7 +31,7 @@
               <span>{{ user.displayName }}</span>
               <button (click)="removeUser(user)">X</button>
             </div>
-            <input type="text" id="input" class="input-field" name="selectedUser" placeholder="Leute suchen" (click)="toggleInputField('searchPeople')" (input)="onSearchInputChange($any($event.target).value)"
+            <input type="text" id="input" class="input-field" name="selectedUser" placeholder="Leute suchen" (click)="toggleInputField('searchPeople')" (input)="onSearchInputChange($any($event.target).value)" autocomplete="off"
             />
           </div>
           <div id="add-member" class="add-member" *ngIf="showAddMember">
