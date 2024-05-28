@@ -11,6 +11,7 @@ export class MatchMediaService {
   channelName: string = ''; 
   hideReactionIcons: boolean = false;
   scrollToBottom: boolean = true;
+  scrollToBottomThread: boolean = true;
   
   constructor() { }
 

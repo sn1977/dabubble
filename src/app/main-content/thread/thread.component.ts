@@ -62,7 +62,7 @@ export class ThreadComponent implements OnInit, AfterViewChecked, OnDestroy {
     subcollection: 'channelmessages',
   };
 
-  @ViewChild('messageContent') messageContent!: ElementRef;
+  @ViewChild('threadContent') threadContent!: ElementRef;
   previousMessageCount: number = 0;
   isDesktop: boolean = false;
 
@@ -97,19 +97,12 @@ export class ThreadComponent implements OnInit, AfterViewChecked, OnDestroy {
 
     this.textBoxData.channelId = this.matchMedia.channelId;
     this.textBoxData.subcollection = 'channelmessages/' + this.matchMedia.subID + '/threads';
-
+    
+    this.matchMedia.scrollToBottomThread = true;
+    setInterval(() => {
+      this.scrollToBottom();
+    }, 1000);
   }
-
-  // getItemValues(collection: string, itemID: string) {
-  //   this.firestore.getSingleItemData(collection, itemID, () => {
-  //     this.channel = new Channel(this.firestore.channel);
-  //     this.textBoxData.channelName = this.channel.name;
-  //     this.textBoxData.channelId = itemID;
-  //   });
-
-  //   console.log(this.channel);
-  //   console.log(this.textBoxData.channelId);
-  // }
 
   async ngAfterViewInit() {
     this.previousMessageCount = this.getCurrentMessageCount();    
@@ -117,23 +110,27 @@ export class ThreadComponent implements OnInit, AfterViewChecked, OnDestroy {
 
   ngAfterViewChecked() {
     const currentMessageCount = this.getCurrentMessageCount();
-    if (currentMessageCount > this.previousMessageCount) {
-      this.scrollToBottom();
+    if (currentMessageCount > this.previousMessageCount) {      
       this.previousMessageCount = currentMessageCount;
     }
   }
 
   getCurrentMessageCount(): number {
-    return this.messageContent.nativeElement.children.length;
+    return this.threadContent.nativeElement.children.length;
   }
 
-  scrollToBottom() {
-    try {
-      this.messageContent.nativeElement.scrollTo({
-        top: this.messageContent.nativeElement.scrollHeight,
-        behavior: 'smooth',
-      });
-    } catch (err) {}
+  async scrollToBottom() {
+    await this.delay(200);
+
+    if (this.matchMedia.scrollToBottomThread === true) {
+      try {
+        this.threadContent.nativeElement.scrollTo({
+          top: this.threadContent.nativeElement.scrollHeight,
+          behavior: 'smooth',
+        });
+      } catch (err) {}
+    }
+    this.matchMedia.scrollToBottomThread = false;
   }
 
   async waitForUserData(): Promise<void> {

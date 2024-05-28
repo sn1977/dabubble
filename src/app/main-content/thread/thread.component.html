@@ -18,24 +18,19 @@
     </div>
   </div>
   <div class="content">
-    <div class="message-content" #messageContent>
+    <div class="message-content" #threadContent style="overflow-y: scroll; height: 100%;">
       <app-conversation
         [channelMessage]="this.firestore.channelMessage"
         [isChannel]="false"
         [isThread]="false"
         [hideCompleteReactionBar]="true"
       ></app-conversation>
-      
-    </div>
 
     <div class="timeSeperator">
       <span>2 Antworten</span>
       <img class="line" src="./assets/img/auth/line.svg" alt="" />
     </div>
-    <div
-      class="message-content"
-      #threadContent      
-    >
+    
       @if (this.firestore.channelThreads.length !== 0) {
         @for (channelThread of
           this.firestore.channelThreads; track channelThread.id) {

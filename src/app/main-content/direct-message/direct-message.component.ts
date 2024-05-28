@@ -114,7 +114,9 @@ export class DirectMessageComponent implements OnInit {
     this.textBoxData.channelId = this.firestore.conversation;
     this.textBoxData.placeholder = 'Nachricht an ' + this.matchMedia.channelName;
     this.headerStateService.setAlternativeHeader(true);    
-    this.scrollToBottom();    
+    setInterval(() => {
+      this.scrollToBottom();
+    }, 1000);
   }
 
   async getItemValues(collection: string, itemID: string) {

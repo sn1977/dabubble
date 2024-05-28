@@ -58,7 +58,6 @@ export class TextBoxComponent implements AfterViewInit{
   onSubmit() {
     if (this.textBoxData.messageText != '') {
       this.textBoxData.subcollection;
-
       
       const message = new ChannelMessage({
         creator: this.authService.activeUserId,

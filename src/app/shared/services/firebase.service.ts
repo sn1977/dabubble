@@ -242,6 +242,7 @@ export class FirebaseService {
       .then((docRef) => {
         console.log('Document written with ID: ', docRef?.id);
         this.matchMedia.scrollToBottom = true;
+        this.matchMedia.scrollToBottomThread = true;
       });
   }
 
