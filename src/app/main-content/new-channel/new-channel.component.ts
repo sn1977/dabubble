@@ -180,4 +180,8 @@ export class NewChannelComponent implements OnInit, AfterViewChecked {
     this.dialogService.openDirectMessageDialog(user, itemId);
     this.closeOverlay('overlay1');
   }
+
+  get memberCount(): number {
+    return this.channel.member.length;
+  }
 }

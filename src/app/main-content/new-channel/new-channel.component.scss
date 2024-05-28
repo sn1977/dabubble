@@ -183,6 +183,13 @@ h1 {
 
 .img-box{
   display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.memberCount{
+  margin-bottom: 0;
+  margin-left: 10px;
 }
 
 .profil-img{
