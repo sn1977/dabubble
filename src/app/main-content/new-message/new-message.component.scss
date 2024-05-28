@@ -10,6 +10,11 @@
 @include card.core-styles;
 @import "../../../styles/mixins.scss";
 
+.h1{
+  font-size: 20px;
+  margin-bottom: 0;
+}
+
 .container {
   @include dFlex($jc: flex-start, $ai: normal, $fd: column, $g: 0);
   height: 100vh;
@@ -42,6 +47,7 @@
   height: 78px;
   padding: 10px 16px;
   justify-content: center !important;
+  flex-direction: column;
   gap: 0 !important;
 
   .channel-box {
@@ -210,6 +216,92 @@
   .container{
     height: calc(100vh - 200px);
     
+  }
+}
+
+.selected-users-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  padding: 8px;
+}
+
+.input-field{
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px;
+  border-radius: 40px;
+  border: 1px solid #adb0d9;
+}
+
+.add-member {
+  position: relative;
+  height: 100px;
+  width: 90%;
+  margin-left: 20px;
+
+  // looks
+  background-color: #fff;
+  padding: 10px;
+  font-size: 1.25em;
+  border-radius: 1rem;
+  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.3),
+    0 0.0625rem 0.125rem rgba(0, 0, 0, 0.2);
+}
+
+.scroll {
+  overflow: scroll;
+  height: 100px;
+}
+
+.channel-name {
+  padding: 10px;
+  gap: 16px;
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  span {
+    @include fontBold(
+      $fw: 400,
+      $fs: 17px,
+      $lh: 23.19px,
+      $ta: center,
+      $c: #000000
+    );
+  }
+
+  img {
+    width: 35px;
+    height: 35px;
+    border-radius: 100%;
+    object-fit: cover;
+  }
+
+  .online-avatar,
+  .offline-avatar {
+    position: absolute;
+    bottom: 8px;
+    left: 35px;
+    width: 14px;
+    height: 14px;
+  }
+}
+
+.pl-7 {
+  padding-left: 23px;
+}
+
+.space-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+
+  img {
+    width: 20px !important;
+    height: 20px !important;
   }
 }
 

@@ -14,6 +14,7 @@ import { HeaderStateService } from '../../shared/services/header-state.service';
 import { TextBoxComponent } from '../../shared/components/text-box/text-box.component';
 import { ConversationComponent } from '../../shared/components/conversation/conversation.component';
 import { Channel } from '../../../models/channel.class';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-new-message',
@@ -21,7 +22,8 @@ import { Channel } from '../../../models/channel.class';
   imports: [
     HeaderMobileComponent, 
     TextBoxComponent, 
-    ConversationComponent
+    ConversationComponent,
+    NgIf
   ],
   templateUrl: './new-message.component.html',
   styleUrl: './new-message.component.scss'
@@ -35,6 +37,8 @@ export class NewMessageComponent implements OnInit{
   channel: Channel = new Channel();
   authService = inject(AuthService);
   newMessage: boolean = false;
+  showInputField: boolean = false;
+  showAddMember: boolean = false;
 
   textBoxData: any = {
     placeholder: 'Nachricht an ',
@@ -196,5 +200,18 @@ export class NewMessageComponent implements OnInit{
   openBottomSheet(): void {
     this._bottomSheet.open(BottomSheetComponent);
   }
+
+  toggleInputField(inputId: string) {
+ if (inputId === 'searchPeople') {
+      if (this.showInputField) {
+        this.showAddMember = !this.showAddMember;
+      } else {
+        this.showInputField = true;
+        this.showAddMember = true;
+      }
+    }
+  }
+
+ 
 
 }
