@@ -116,7 +116,10 @@ export class DirectMessageComponent implements OnInit {
     this.textBoxData.placeholder = 'Nachricht an ' + this.matchMedia.channelName;
     this.headerStateService.setAlternativeHeader(true);
     
-    this.scrollToBottom();
+    // this.matchMedia.scrollToBottom = true;
+    // setInterval(() => {
+      this.scrollToBottom();
+    // }, 1000);
   }
 
   async getItemValues(collection: string, itemID: string) {
@@ -177,13 +180,16 @@ export class DirectMessageComponent implements OnInit {
   }
 
   async scrollToBottom() {
-    await this.delay(200);
-    try {
-      this.messageContent.nativeElement.scrollTo({
-        top: this.messageContent.nativeElement.scrollHeight,
-        behavior: 'smooth',
-      });
-    } catch (err) {}
+    // if(this.matchMedia.scrollToBottom){
+      await this.delay(200);
+      try {
+        this.messageContent.nativeElement.scrollTo({
+          top: this.messageContent.nativeElement.scrollHeight,
+          behavior: 'smooth',
+        });
+      } catch (err) {}
+    // }
+    // this.matchMedia.scrollToBottom = false;
   }
 
   goBack(): void {

@@ -24,6 +24,7 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { ChannelMessage } from '../../../models/channel-message.class';
 import { DirectMessage } from '../../../models/direct-message.class';
+import { MatchMediaService } from './match-media.service';
 
 @Injectable({
   providedIn: 'root',
@@ -42,6 +43,7 @@ export class FirebaseService {
   message: DirectMessage = new DirectMessage();
   conversation: string | undefined;
   channelMessagesCount: number = 0;
+  matchMedia = inject(MatchMediaService);
 
   unsubUsers;
   unsubChannel;

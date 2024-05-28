@@ -1,7 +1,5 @@
 import {Component, EventEmitter, Input, Output, inject} from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import {Channel} from '../../../models/channel.class';
-import {User} from '../../../models/user.class';
 import { DataService } from '../../shared/services/data.service';
 import { MatchMediaService } from '../../shared/services/match-media.service';
 import { CommonModule } from '@angular/common';
@@ -19,7 +17,7 @@ import { CommonModule } from '@angular/common';
 export class SearchInputComponent {
   textData = { text: '' };
   inputHasValue = false;
-  matchMedia = inject(MatchMediaService)
+  matchMedia = inject(MatchMediaService);
   isDesktop: boolean = false;
 
   dataService = inject(DataService);

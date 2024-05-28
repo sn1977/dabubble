@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Channel } from '../../../models/channel.class';
 import { User } from '../../../models/user.class';
+import { MatchMediaService } from './match-media.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +13,7 @@ export class DataService {
   userMatches: any;
   noUserFound: boolean = false;
   noChannelFound: boolean = false;
+  matchMedia = inject(MatchMediaService);
 
   constructor() {}
 
@@ -21,6 +23,7 @@ export class DataService {
       this.userMatches = this.allUsers;
       return;
     }
+    this.matchMedia.channelName = '';
 
     query = query.toLowerCase();
 

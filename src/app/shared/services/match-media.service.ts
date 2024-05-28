@@ -9,7 +9,8 @@ export class MatchMediaService {
   channelId: string = '';
   subID: string = '';
   channelName: string = ''; 
-  hideReactionIcons: boolean = false; 
+  hideReactionIcons: boolean = false;
+  scrollToBottom: boolean = true;
   
   constructor() { }
 
