@@ -190,7 +190,7 @@ mat-expansion-panel:last-child{
   border: none;
   position: absolute;
   right: 16px;
-  bottom: 48px;
+  bottom: 20px;
   fill: #ffffff;
 }
 
@@ -206,15 +206,17 @@ mat-expansion-panel:last-child{
 
 @media (min-width: 450px) {
   .content-main {
-    // height: 650px;
     padding: unset;
   }
 
-  .btn-edit-message {
+  .btn-edit-message{
     position: absolute;
-    top: 25px;
-    left: -90px;
-    height: 50px;
-    width: 50px;
+  right: 16px;
+  top: 20px;
+  width: 45px;
+  height: 45px;
+
   }
+
+
 }

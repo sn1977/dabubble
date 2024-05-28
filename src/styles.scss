@@ -151,6 +151,7 @@ app-root{
 .logo{
   height: 56px;
   @include dFlex($jc: center, $ai: center, $fd: row, $g: 12.8px);
+  justify-content: flex-start;
 
   img {
     height: 56px;
