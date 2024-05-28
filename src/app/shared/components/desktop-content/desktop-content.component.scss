@@ -23,13 +23,15 @@ button{
 #toggleDiv {
   transition: transform 0.5s ease, width 0.5s ease;
   max-width: 450px;
-  min-width: 1%;
+  min-width: 0%;
   width: 100%;
 }
 
 .collapsed {
-  width: 50px !important;
-  transform: translateX(-10px);
+  margin-top: 220px;
+  width: 0px !important;
+  height: 100px !important;
+  
   img{
     display: none;
   }
