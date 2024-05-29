@@ -11,6 +11,7 @@ body {
   padding: 0;
   box-sizing: border-box;
   font-family: 'Nunito', serif !important;
+  font-size: 18px;
   overflow: hidden;
   @include dFlex($jc: center, $ai: center, $fd: column, $g: 0px);
   background-color: #ECEEFE;
@@ -106,9 +107,9 @@ app-root{
   cursor: pointer;
 }
 
-.mat-mdc-card-content {
-  padding-left: 0 !important;
-}
+// .mat-mdc-card-content {
+//   padding-left: 0 !important;
+// }
 
 .mat-mdc-card-image {
   width: 200px;

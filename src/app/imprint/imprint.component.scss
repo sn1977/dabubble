@@ -24,11 +24,13 @@
 
 mat-card {
   position: relative;
-  @include dFlex($jc: center, $ai: center, $fd: column, $g: 20px);
-  @include card($w: 100%, $h: auto, $br: 30px, $ptb: 35px, $plr: 20px);
+  max-width: 676px;  
+  @include dFlex($jc: center, $ai: flex-start, $fd: column, $g: 20px);
+  @include card($w: 100%, $h: auto, $br: 30px, $ptb: 48px, $plr: 56px);
 
   .mat-mdc-card-header {
-    @include dFlex($jc: flex-start, $ai: center, $fd: column, $g: 15px);
+    width: 100%;
+    @include dFlex($jc: flex-start, $ai: flex-start, $fd: column, $g: 15px);
     padding: 0;
     margin-top: -8px;
 
@@ -52,11 +54,6 @@ mat-card {
       display: contents;
     }
   }
-}
-
-mat-card-content {
-  //width: 100%;
-  padding-left: 40px !important;
 }
 
 mat-card-title {

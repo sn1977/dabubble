@@ -231,7 +231,6 @@ mat-card {
   background: linear-gradient(#797ef3, #313ae5);
   height: 100vh;
   width: 100%;
-  // max-width: 1920px;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -286,6 +285,19 @@ mat-card {
     // animation: textAnimation 3s ease-out 1s forwards;
     color: #fff;
     opacity: 0;
+  }
+}
+
+.footer-login{
+  @include dFlex($jc: center, $ai: center, $fd: row, $g: 16px);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 21.6px;
+  color: #797ef3;
+  font-family: 'Figtree';
+  z-index: 0;
+  span{
+    padding: 10px 15px;
   }
 }
 

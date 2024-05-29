@@ -1,9 +1,30 @@
-<button class="workspace-menu" (click)="toggleDiv()">
-  <p>workspace Menü schliessen</p>
-</button>
-
 <div class="content">
-  <mat-card class="menu" id="toggleDiv" [ngClass]="{ 'collapsed': isCollapsed }">
+  <button class="workspace-menu pointer" 
+  [ngStyle]="{'left': isCollapsed ? '-119px' : '-131px' }"
+  (click)="toggleDiv()"
+  (mouseenter)="hovered = true"
+  (mouseleave)="deleteHovered()"
+  >
+  
+    @if(isCollapsed){
+      <p>Workspace-Menü öffnen</p>
+      @if(hovered){
+        <img src="./assets/img/icon/menu_open_hover.svg" alt="">
+      } @else {
+        <img src="./assets/img/icon/menu_open.svg" alt="">
+      }
+    }
+    @else{
+      <p>Workspace-Menü schließen</p>
+      @if(hovered){
+        <img src="./assets/img/icon/menu_close_hover.svg" alt="">
+      } @else {
+        <img src="./assets/img/icon/menu_close.svg" alt="">
+      }
+    }
+  </button>
+
+  <mat-card class="menu" id="toggleDiv" [ngStyle]="{'display': isCollapsed ? 'none' : 'flex' }">
     <mat-card-content>
       <div class="logo">
         <img src="./assets/img/icon/Property 1=Default (1).svg" alt="" >

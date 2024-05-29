@@ -1,28 +1,8 @@
 @import "../../../../styles/mixins.scss";
 
-button{
-  background-color: white;
-  padding: 5px;
-  
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  border-style: none;
-  box-shadow: 0px 10px 10px -5px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
-
-  p{
-    padding-top: 15px;
-  }
-  p:hover{
-    color: blue;
-
-  }
-}
-
 #toggleDiv {
   transition: transform 0.5s ease, width 0.5s ease;
-  max-width: 450px;
-  min-width: 0%;
+  max-width: 19.06%;
   width: 100%;
 }
 
@@ -30,18 +10,10 @@ button{
   margin-top: 220px;
   width: 0px !important;
   height: 100px !important;
-  
-  img{
+
+  img {
     display: none;
   }
-}
-
-.toggle{
-  position: absolute;
-  top: 200px;
-  left: 9px;
-  transform: rotate(-90deg);
-  cursor: pointer;
 }
 
 .content {
@@ -49,45 +21,38 @@ button{
   padding: 0 20px 20px;
   box-sizing: border-box;
   background-color: #eceefe;
-  justify-content: flex-start !important;
-
 }
 
-.mat-mdc-card-content{  
+.mat-mdc-card-content {
   padding-top: 28px;
-}
-
-.workspace{
-  max-width: 50% !important;
 }
 
 .menu,
 .workspace,
-.thread{
+.thread {
   border-radius: 30px;
   padding: 8px;
-  
 }
 
-.menu{
+.menu {
   height: calc(100vh - 150px);
   overflow: hidden;
 }
 
 .workspace,
-.thread{
+.thread {
   height: 100%;
   flex: 1;
 }
 
-.thread{
+.thread {
   width: 100%;
   max-width: 25.26%;
   min-width: 342px;
 }
 
-.logo{
-  img{
+.logo {
+  img {
     width: 300px;
   }
 }
@@ -96,15 +61,35 @@ app-header-mobile {
   display: none !important;
 }
 
-.workspace-menu{
+.workspace-menu {
+  @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 10px);
+  background-color: #ffffff;
+  padding: 23px 14px;
+  height: 60px;
   top: 50%;
   position: absolute;
-  left: -70px;
   transform: rotate(-90deg);
   z-index: 99;
+  border-radius: 0px 0px 30px 30px;
+  border-style: none;
+  box-shadow: 0px 10px 10px -5px rgba(0, 0, 0, 0.2);
+
+  font-family: Nunito;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 24px;
+  color: #000000;
+  
+  &:hover {
+    font-weight: 700;
+    color: #535af1;
+  }
+  
+  p {
+    margin: 0;
+  }
+
+  img {
+    transform: rotate(90deg);
+  }
 }
-
-
-
-
-

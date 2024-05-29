@@ -23,15 +23,19 @@ export class DesktopContentComponent implements OnInit {
   matchMedia = inject(MatchMediaService);
   router = inject(Router);
   isDesktop: boolean = false;
+  isCollapsed: boolean = false;
+  hovered: boolean = false;
 
   ngOnInit(): void {
     this.isDesktop = this.matchMedia.checkIsDesktop();
   }
 
-
-  isCollapsed = false;
-
   toggleDiv() {
     this.isCollapsed = !this.isCollapsed;
   }
+
+  deleteHovered(){
+    this.hovered = false;
+  }
+
 }
