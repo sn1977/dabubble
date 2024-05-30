@@ -143,8 +143,9 @@ export class MainContentComponent implements OnInit {
     event.stopPropagation(); // Verhindert, dass das Click-Event weiter zum mat-expansion-panel propagiert wird.
     this.navigateToAddChannel();
   }
-
+  
   navigateToAddChannel() {
+    this.matchMedia.channelName = '';
     this.matchMedia.showThread = false;
     this.navigationService.navigate(['/add-channel']);
   }

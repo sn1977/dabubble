@@ -88,7 +88,7 @@ mat-expansion-panel:last-child {
       $fw: 400,
       $fs: 17px,
       $lh: 23.19px,
-      $ta: center,
+      $ta: left,
       $c: #000000
     );
   }
@@ -154,8 +154,13 @@ mat-expansion-panel:last-child {
 
 .add-channel {
   @include dFlex($jc: start, $ai: center, $fd: row, $g: 12px);
-  padding-left: 20px;
-  padding-top: 30px;
+  padding: 10px 30px;
+  cursor: pointer;
+
+  &:hover{
+    background-color: #eceefe;
+    border-radius: 20px;
+  }
 
   span {
     @include fontBold(
