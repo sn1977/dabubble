@@ -41,7 +41,7 @@ export class NewMessageComponent implements OnInit{
   showAddMember: boolean = false;
 
   textBoxData: any = {
-    placeholder: 'Nachricht an ',
+    placeholder: 'Starte eine neue Nachricht ',
     channelName: '',
     messageText: '',
     channelId: '',
@@ -109,8 +109,7 @@ export class NewMessageComponent implements OnInit{
       this.itemID      
     );
         
-    this.textBoxData.channelId = this.firestore.conversation;
-    this.textBoxData.placeholder = 'Nachricht an ' + this.user.displayName;
+    this.textBoxData.channelId = this.firestore.conversation;    
     this.headerStateService.setAlternativeHeader(true);
     this.firestore.getAllChannelMessages(this.textBoxData.channelId, this.textBoxData.collection, this.textBoxData.subcollection);
     this.scrollToBottom();

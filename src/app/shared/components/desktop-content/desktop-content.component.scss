@@ -41,7 +41,7 @@
 
 .workspace,
 .thread {
-  height: 100%;
+  height: calc(100vh - 150px);
   flex: 1;
 }
 
@@ -52,8 +52,34 @@
 }
 
 .logo {
-  img {
-    width: 300px;
+  width: 100%;
+  @include dFlex($jc: space-between, $ai: center, $fd: row, $g: 0);
+
+  div {
+    @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 15px);
+
+    .workspace-logo {
+      height: 60px;
+    }
+
+    span{
+      font-family: Nunito;
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 32.74px;
+      text-align: left;
+      color: #000000;
+    }
+
+  }
+  .workspace-action-button {
+    height: 40px;
+    width: 40px;
+    cursor: pointer;
+    &:hover{
+      background: #ECEEFE;
+      border-radius: 50%;
+    }
   }
 }
 
@@ -79,12 +105,12 @@ app-header-mobile {
   font-weight: 500;
   line-height: 24px;
   color: #000000;
-  
+
   &:hover {
     font-weight: 700;
     color: #535af1;
   }
-  
+
   p {
     margin: 0;
   }

@@ -15,7 +15,8 @@ import { Router, RouterLink } from '@angular/router';
       MainContentComponent, 
       CommonModule, 
       MatCardModule, 
-      RouterOutlet, 
+      RouterOutlet,
+      RouterLink, 
       ThreadComponent
     ]
 })

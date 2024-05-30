@@ -27,7 +27,11 @@
   <mat-card class="menu" id="toggleDiv" [ngStyle]="{'display': isCollapsed ? 'none' : 'flex' }">
     <mat-card-content>
       <div class="logo">
-        <img src="./assets/img/icon/Property 1=Default (1).svg" alt="" >
+        <div>
+          <img class="workspace-logo" src="./assets/img/icon/workspace_logo.svg" alt="" >
+          <span>Devspace</span>
+        </div>
+        <img class="workspace-action-button" src="./assets/img/icon/edit_square.svg" alt="" routerLink="/new-message">
       </div>      
       <app-main-content [isDesktop]="true"></app-main-content>
     </mat-card-content>
@@ -37,8 +41,8 @@
     <mat-card-content>
       @if (this.router.url === '/main') {
         <h1>Willkommen bei der DABubble</h1>
-        <p>Wähle ein Channel oder einen Chat</p>
-        <p> Viel Spass beim Testen</p>
+        <p>Wähle einen Channel oder einen Chat</p>
+        <p>Viel Spass beim Testen</p>
         <p>Sascha, Stefan und Yannick</p>
       }@else {
         <router-outlet></router-outlet>
