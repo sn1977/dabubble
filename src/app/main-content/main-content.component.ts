@@ -149,11 +149,8 @@ export class MainContentComponent implements OnInit {
     this.navigationService.navigate(['/add-channel']);
   }
 
-  openChannel(event: MouseEvent, path: string, name?: string) {
-
-    if(name){      
-      this.matchMedia.channelName = name;
-    }
+  openChannel(event: MouseEvent, path: string, name: string) {
+    this.matchMedia.channelName = name;
     this.matchMedia.showThread = false;
     const docRefId = (event.currentTarget as HTMLElement).id;
     this.itemStateService.setItemId(docRefId);

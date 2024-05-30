@@ -103,7 +103,13 @@
         }"
       >
         <span class="answer" (click)="doNotClose($event); openThread()"
-          >{{ this.answerCount }} Antworten</span
+          >{{ this.answerCount }} 
+          @if(answerCount == 1){
+            Antwort
+          }@else {
+            Antworten
+          }
+          </span
         >
         <span
           class="last-thread"
