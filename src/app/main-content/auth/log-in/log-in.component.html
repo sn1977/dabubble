@@ -6,8 +6,8 @@
   
 
   @if(isDesktop){
-    <div class="logo-animated"
-    [ngClass]="{'logo-animated-start': playIntroAnimation}"
+    <div class="logo-animated-desktop"
+    [ngClass]="{'logo-animated-desktop-start': playIntroAnimation}"
     >
     <img src="./assets/img/auth/logo.svg" />
     <span>DABubble</span>
@@ -127,7 +127,7 @@
   @if(isDesktop){
     <div class="footer-login">
       <span class="pointer" routerLink="/imprint">Impressum</span>
-      <span class="pointer">Datenschutz</span>
+      <span class="pointer" routerLink="/privacy-policy">Datenschutz</span>
     </div>
   }@else {
     <div class="buttons" style="flex-direction: column">
