@@ -200,63 +200,28 @@ export class ConversationComponent implements OnInit, AfterViewInit {
     }
   }
 
-  // toggleReaction(reaction: { emoji: string; users: string[] }): void {
-  //   console.log(reaction.users.indexOf(this.authService.activeUserAccount.uid));
-  //   console.log('toggleReaction called');
-  //   const userIndex = reaction.users.indexOf(
-  //     this.authService.activeUserAccount.uid
-  //   );
-  //   if (userIndex === -1) {
-  //     // If the user has not reacted with this emoji yet, add them to the list
-  //     reaction.users.push(this.authService.activeUserAccount.uid);
-  //     console.log('User hinzugefügt');
-  //   } else {
-  //     // If the user has already reacted with this emoji, remove them from the list
-  //     reaction.users.splice(userIndex, 1);
-  //     console.log('User entfernt');
-  //   }
-  //   this.updateReactionsInDatabase();
-  //
-  //   // Show the snackbar
-  //   this.showEmojiSnackbar(
-  //     reaction.emoji,
-  //     this.authService.activeUserAccount.displayName
-  //   );
-  // }
-
   toggleReaction(reaction: { emoji: string; users: string[] }): void {
+    console.log(reaction.users.indexOf(this.authService.activeUserAccount.uid));
     console.log('toggleReaction called');
-    const userIndex = reaction.users.indexOf(this.authService.activeUserAccount.uid);
+    const userIndex = reaction.users.indexOf(
+      this.authService.activeUserAccount.uid
+    );
     if (userIndex === -1) {
       // If the user has not reacted with this emoji yet, add them to the list
-      setTimeout(() => {
-        reaction.users.push(this.authService.activeUserAccount.uid);
-        console.log('User hinzugefügt');
-        this.updateReactionsInDatabase();
-        // Show the snackbar
-        this.showEmojiSnackbar(reaction.emoji, this.authService.activeUserAccount.displayName);
-      }, 0);
+      reaction.users.push(this.authService.activeUserAccount.uid);
+      console.log('User hinzugefügt');
     } else {
       // If the user has already reacted with this emoji, remove them from the list
-      setTimeout(() => {
-        reaction.users.splice(userIndex, 1);
-        console.log('User entfernt');
-        this.updateReactionsInDatabase();
-        // Show the snackbar
-        this.showEmojiSnackbar(reaction.emoji, this.authService.activeUserAccount.displayName);
-      }, 0);
+      reaction.users.splice(userIndex, 1);
+      console.log('User entfernt');
     }
-  }
+    this.updateReactionsInDatabase();
 
-  toggleReactionBar(event: any): void {
-    event.preventDefault();
-    this.showReactionBar = !this.showReactionBar;
-    if (!this.showReactionBar) {
-      const setFocusMessage = this.messageToEdit.nativeElement;
-      setFocusMessage.classList.remove('edit-message');
-      this.isMessageDisabled = true;
-      this.showEditMessage = false;
-    }
+    // Show the snackbar
+    this.showEmojiSnackbar(
+      reaction.emoji,
+      this.authService.activeUserAccount.displayName
+    );
   }
 
   updateReactionsInDatabase(): void {
