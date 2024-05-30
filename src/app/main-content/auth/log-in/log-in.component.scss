@@ -331,19 +331,3 @@ mat-card {
   //   opacity: 0;
   // }
 }
-
-.footer-login{
-  @include dFlex($jc: center, $ai: center, $fd: row, $g: 16px);
-  font-size: 18px;
-  font-weight: 400;
-  line-height: 21.6px;
-  color: #797ef3;
-  font-family: 'Figtree';
-  z-index: 0;
-  span{
-    padding: 10px 15px;
-    &:hover{
-      color: #444df2;
-    }    
-  }
-}

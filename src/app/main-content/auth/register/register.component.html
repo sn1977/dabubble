@@ -112,6 +112,13 @@
     
   
   }@else {
-    <app-choose-avatar [contactData]="contactData"></app-choose-avatar>
+    <app-choose-avatar [contactData]="contactData"
+    
+    [ngStyle]="{'width': isDesktop ? '480px' : '100%'}"
+
+    ></app-choose-avatar>
+  }
+  @if(isDesktop){
+    <app-desktop-footer></app-desktop-footer>
   }
 </div>

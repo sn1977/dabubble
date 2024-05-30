@@ -15,25 +15,27 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../../shared/services/auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { MatchMediaService } from '../../../shared/services/match-media.service';
+import { DesktopFooterComponent } from "../../../shared/components/desktop-footer/desktop-footer.component";
 
 @Component({
-  selector: 'app-log-in',
-  standalone: true,
-  imports: [
-    MatCardModule,
-    MatDialogModule,
-    MatDialogContent,
-    MatDialogActions,
-    MatButtonModule,
-    MatInputModule,
-    MatFormFieldModule,
-    FormsModule,
-    MatIconModule,
-    RouterLink,
-    CommonModule,
-  ],
-  templateUrl: './log-in.component.html',
-  styleUrl: './log-in.component.scss',
+    selector: 'app-log-in',
+    standalone: true,
+    templateUrl: './log-in.component.html',
+    styleUrl: './log-in.component.scss',
+    imports: [
+        MatCardModule,
+        MatDialogModule,
+        MatDialogContent,
+        MatDialogActions,
+        MatButtonModule,
+        MatInputModule,
+        MatFormFieldModule,
+        FormsModule,
+        MatIconModule,
+        RouterLink,
+        CommonModule,
+        DesktopFooterComponent
+    ]
 })
 export class LogInComponent implements OnInit {
   contactData = {
