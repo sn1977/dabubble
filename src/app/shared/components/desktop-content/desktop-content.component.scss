@@ -62,7 +62,7 @@
       height: 60px;
     }
 
-    span{
+    span {
       font-family: Nunito;
       font-size: 24px;
       font-weight: 700;
@@ -70,14 +70,13 @@
       text-align: left;
       color: #000000;
     }
-
   }
   .workspace-action-button {
     height: 40px;
     width: 40px;
     cursor: pointer;
-    &:hover{
-      background: #ECEEFE;
+    &:hover {
+      background: #eceefe;
       border-radius: 50%;
     }
   }
@@ -118,4 +117,35 @@ app-header-mobile {
   img {
     transform: rotate(90deg);
   }
+}
+
+.welcome {
+  height: 80vh;
+  @include dFlex($jc: center, $ai: center, $fd: column, $g: 24px);
+  .headline {
+    font-family: Nunito;
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 32.74px;
+    text-align: left;
+    color: #444df2;
+  }
+
+  .description{
+    @include dFlex($jc: flex-start, $ai: center, $fd: column, $g: 10px);
+    font-family: Nunito;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 32.74px;
+    text-align: left;
+    color: #000000;
+  }
+
+  .tools{
+    @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 40px);
+    div{
+      @include dFlex($jc: flex-start, $ai: center, $fd: column, $g: 16px);
+    }
+  }
+
 }

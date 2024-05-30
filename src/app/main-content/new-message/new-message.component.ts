@@ -111,8 +111,7 @@ export class NewMessageComponent implements OnInit{
         
     this.textBoxData.channelId = this.firestore.conversation;    
     this.headerStateService.setAlternativeHeader(true);
-    this.firestore.getAllChannelMessages(this.textBoxData.channelId, this.textBoxData.collection, this.textBoxData.subcollection);
-    this.scrollToBottom();
+    this.firestore.getAllChannelMessages(this.textBoxData.channelId, this.textBoxData.collection, this.textBoxData.subcollection);    
   }
 
   getItemValues(collection: string, itemID: string) {
@@ -182,15 +181,6 @@ export class NewMessageComponent implements OnInit{
       data: { user: this.user, itemId: this.itemID },
     });
   }
-
-  scrollToBottom() {
-    try {
-      this.messageContent.nativeElement.scrollTo({
-        top: this.messageContent.nativeElement.scrollHeight,
-        behavior: 'smooth' // Hier wird smooth scrollen aktiviert
-      });
-    } catch(err) { }
-}
 
   goBack(): void {
     this.navigationService.goBack();
