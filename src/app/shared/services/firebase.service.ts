@@ -29,7 +29,7 @@ import { MatchMediaService } from './match-media.service';
 @Injectable({
   providedIn: 'root',
 })
-export class FirebaseService {  
+export class FirebaseService {
   firestore: Firestore = inject(Firestore);
   router = inject(Router);
   activeUser: any = [];
@@ -37,7 +37,7 @@ export class FirebaseService {
   channel: Channel = new Channel();
   channelMessage: ChannelMessage = new ChannelMessage();
   userList: any = [];
-  channelList: any = [];  
+  channelList: any = [];
   channelMessages: any = [];
   channelThreads: any = [];
   message: DirectMessage = new DirectMessage();
@@ -168,6 +168,24 @@ export class FirebaseService {
     // console.log(docId, channelData);
   }
 
+  // async updateDirectMessage(
+  //   docId: string | undefined,
+  //   messageId: string | undefined,
+  //   chatData: DirectMessage // Ersetzen Sie dies durch den tatsächlichen Typ Ihrer Direktnachricht
+  // ) {
+  //   console.log(`${docId}/chat/${messageId}`);
+  //
+  //   if (docId) {
+  //     let docRef = doc(
+  //       this.getChannelsRef(),
+  //       `${docId}/chat/${messageId}`
+  //     );
+  //     await updateDoc(docRef, chatData.toJSON()).catch((err) => {
+  //       console.log(err);
+  //     });
+  //   }
+  // }
+
   getChannels(): Observable<Channel[]> {
     return new Observable((observer) => {
       const unsubscribe = onSnapshot(
@@ -212,7 +230,7 @@ export class FirebaseService {
 
   getChannel(): Channel[] {
     return this.channelList;
-  }  
+  }
 
   getSingleUser(): User[] {
     return this.activeUser;
@@ -246,7 +264,7 @@ export class FirebaseService {
           this.matchMedia.scrollToBottom = true;
         } else {
           this.matchMedia.scrollToBottomThread = true;
-        }        
+        }
       });
   }
 
@@ -389,7 +407,7 @@ export class FirebaseService {
 
   ngonDestroyy() {
     this.unsubUsers();
-    this.unsubChannel();    
+    this.unsubChannel();
   }
 
   async getEmojiReactions(
@@ -475,7 +493,7 @@ export class FirebaseService {
     isThread: boolean
   ) {
     let documentRef;
-  
+
     if (isThread) {
       documentRef = doc(
         this.getSingleDocRef(colId, docId),
@@ -485,7 +503,7 @@ export class FirebaseService {
       const collection = colId === 'channels' ? 'channels' : 'messages';
       const subcollection =
         collection === 'channels' ? 'channelmessages' : 'chat';
-  
+
       documentRef = doc(
         this.getSingleDocRef(collection, docId),
         subcollection,

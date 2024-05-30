@@ -224,6 +224,17 @@ export class ConversationComponent implements OnInit, AfterViewInit {
     );
   }
 
+  toggleReactionBar(event: any): void {
+    event.preventDefault();
+    this.showReactionBar = !this.showReactionBar;
+    if (!this.showReactionBar) {
+      const setFocusMessage = this.messageToEdit.nativeElement;
+      setFocusMessage.classList.remove('edit-message');
+      this.isMessageDisabled = true;
+      this.showEditMessage = false;
+    }
+  }
+
   updateReactionsInDatabase(): void {
     this.channelMessage.reactions = this.emojiReactions;
 
