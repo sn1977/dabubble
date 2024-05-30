@@ -11,10 +11,7 @@ import {
   query,
   updateDoc,
   orderBy,
-  or,
   getDocs,
-  and,
-  increment,
   getDoc,
   limit,
 } from '@angular/fire/firestore';

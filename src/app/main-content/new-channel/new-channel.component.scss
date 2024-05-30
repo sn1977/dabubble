@@ -32,6 +32,15 @@
   .channel-box {
     min-width: 180px;
     @include dFlex($jc: flex-start, $ai: normal, $fd: row, $g: 15px);
+    padding: 8px 16px;
+
+    &:hover{
+      background-color: #eceefe;
+      border-radius: 30px;
+      font-weight: 700;
+      color: #535af1;
+    }
+
   }
 }
 
@@ -172,18 +181,34 @@ h1 {
 }
 
 .img-box{
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include dFlex($jc: center, $ai: center, $fd: row, $g: 0);  
+  &:hover{
+    background: #eceefe;
+    border-radius: 50px;
+  }
+
 }
 
 .memberCount{
   margin-bottom: 0;
   margin-left: 10px;
+  font-family: Nunito;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 27.28px;
+  text-align: left;
+}
+
+.add-img{
+  height: 39px;
+  width: 40px;
+  margin-left: 10px;
 }
 
 .profil-img{
+  @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 10px);
   img {
+    border: 2px solid #FFFFFF;
     width: 35px;
     height: 35px;
     border-radius: 100%;

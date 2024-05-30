@@ -13,9 +13,11 @@
       <img src="./assets/img/icon/arrow_down.svg" alt="" />
     </div>
     
-      <div class="img-box">
+      <div class="img-box pointer"
+      (click)="toggleOverlay('overlay1')"
+      >
         @if(isDesktop){
-       <div *ngFor="let member of channel.member" style="margin-left: -20px;">
+       <div *ngFor="let member of channel.member" style="margin-left: -12px;">
           <div class="profil-img">
             <img class="img-profil" src="{{ member.avatar }}" alt="" />
           </div>
@@ -23,10 +25,8 @@
         </div>
         <p class="memberCount">{{ memberCount }}</p>
         }
-        <div style="margin-left: 10px;">
-          <img
-            class="pointer"
-            (click)="toggleOverlay('overlay1')"
+        <div class="add-img">
+          <img                     
             src="./assets/img/icon/add_member.svg"
             alt=""
           />

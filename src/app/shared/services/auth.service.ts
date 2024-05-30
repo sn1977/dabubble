@@ -230,7 +230,7 @@ export class AuthService {
     signInAnonymously(auth)
       .then(async (response) => {
         await updateProfile(response.user, {
-          displayName: 'Anonym',
+          displayName: 'Gast',
           photoURL:
             'http://localhost:4200/assets/img/characters/template' +
             randomInt +
