@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Channel } from '../../../models/channel.class';
 import { User } from '../../../models/user.class';
 import { MatchMediaService } from './match-media.service';
+import { FirebaseService } from './firebase.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,13 +15,14 @@ export class DataService {
   noUserFound: boolean = false;
   noChannelFound: boolean = false;
   matchMedia = inject(MatchMediaService);
+  firestore = inject(FirebaseService);
 
   constructor() {}
 
   async searchWorkspace(query: string) {
     if (query == '') {
-      this.channelMatches = this.allChannels;
-      this.userMatches = this.allUsers;
+      this.channelMatches = this.firestore.channelList;
+      this.userMatches = this.firestore.userList;
       return;
     }
     this.matchMedia.channelName = '';

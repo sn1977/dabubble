@@ -45,7 +45,7 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
 
-      @for (channel of this.firestore.channelList; track $index) {
+      @for (channel of this.firestore.channelList; track $index) {        
       @if(this.dataService.containsPartialChannelValue(channel.name)){
       <div
         class="channel-name"

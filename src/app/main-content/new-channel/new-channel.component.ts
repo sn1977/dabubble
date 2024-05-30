@@ -26,6 +26,7 @@ import { CommonModule } from '@angular/common';
 import { DateFormatService } from '../../shared/services/date-format.service';
 import { TimeSeperatorComponent } from '../../shared/components/time-seperator/time-seperator.component';
 import { MatchMediaService } from '../../shared/services/match-media.service';
+import { DataService } from '../../shared/services/data.service';
 
 @Component({
   selector: 'app-new-channel',
@@ -55,6 +56,7 @@ export class NewChannelComponent implements OnInit, AfterViewChecked {
   authService = inject(AuthService);
   isDesktop: boolean = false;
   matchMedia = inject(MatchMediaService);
+  dataService = inject(DataService);
   textBoxData: any = {
     placeholder: 'Nachricht an #',
     channelName: '',
@@ -86,6 +88,7 @@ export class NewChannelComponent implements OnInit, AfterViewChecked {
   };
 
   async ngOnInit(): Promise<void> {
+    this.dataService.searchWorkspace('');
     this.isDesktop = this.matchMedia.checkIsDesktop();
     await this.waitForUserData();
     this.test();
