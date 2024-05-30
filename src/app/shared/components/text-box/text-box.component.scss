@@ -20,6 +20,10 @@
   border-radius: 20px;
   box-sizing: border-box;
   padding: 20px;  
+
+  &:hover{
+    border: 1px solid #444DF2;
+  }
 }
 
 .text-content{
@@ -69,7 +73,5 @@ textarea{
     height: 24px;
     width: 24px;
     object-fit: contain;
-  }
-
- 
+  } 
 }
