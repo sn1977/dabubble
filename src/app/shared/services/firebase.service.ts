@@ -70,7 +70,7 @@ export class FirebaseService {
   }
 
   subUserList() {
-    return onSnapshot(this.getUsersRef(), (list) => {
+    return onSnapshot(query(this.getUsersRef(), orderBy('displayName')), (list) => {
       this.userList = [];
       list.forEach((element) => {
         this.userList.push(this.setUserObject(element.data(), element.id));
@@ -79,7 +79,7 @@ export class FirebaseService {
   }
 
   subChannelList() {
-    return onSnapshot(this.getChannelsRef(), (list) => {
+    return onSnapshot(query(this.getChannelsRef(), orderBy('name')), (list) => {
       this.channelList = [];
       list.forEach((element) => {
         this.channelList.push(
