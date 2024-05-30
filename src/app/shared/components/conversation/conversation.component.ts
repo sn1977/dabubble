@@ -200,26 +200,52 @@ export class ConversationComponent implements OnInit, AfterViewInit {
     }
   }
 
+  // toggleReaction(reaction: { emoji: string; users: string[] }): void {
+  //   console.log(reaction.users.indexOf(this.authService.activeUserAccount.uid));
+  //   console.log('toggleReaction called');
+  //   const userIndex = reaction.users.indexOf(
+  //     this.authService.activeUserAccount.uid
+  //   );
+  //   if (userIndex === -1) {
+  //     // If the user has not reacted with this emoji yet, add them to the list
+  //     reaction.users.push(this.authService.activeUserAccount.uid);
+  //     console.log('User hinzugefügt');
+  //   } else {
+  //     // If the user has already reacted with this emoji, remove them from the list
+  //     reaction.users.splice(userIndex, 1);
+  //     console.log('User entfernt');
+  //   }
+  //   this.updateReactionsInDatabase();
+  //
+  //   // Show the snackbar
+  //   this.showEmojiSnackbar(
+  //     reaction.emoji,
+  //     this.authService.activeUserAccount.displayName
+  //   );
+  // }
+
   toggleReaction(reaction: { emoji: string; users: string[] }): void {
-    console.log(reaction.users.indexOf(this.authService.activeUserAccount.uid));
     console.log('toggleReaction called');
-    const userIndex = reaction.users.indexOf(
-      this.authService.activeUserAccount.uid
-    );
+    const userIndex = reaction.users.indexOf(this.authService.activeUserAccount.uid);
     if (userIndex === -1) {
       // If the user has not reacted with this emoji yet, add them to the list
-      reaction.users.push(this.authService.activeUserAccount.uid);
+      setTimeout(() => {
+        reaction.users.push(this.authService.activeUserAccount.uid);
+        console.log('User hinzugefügt');
+        this.updateReactionsInDatabase();
+        // Show the snackbar
+        this.showEmojiSnackbar(reaction.emoji, this.authService.activeUserAccount.displayName);
+      }, 0);
     } else {
       // If the user has already reacted with this emoji, remove them from the list
-      reaction.users.splice(userIndex, 1);
+      setTimeout(() => {
+        reaction.users.splice(userIndex, 1);
+        console.log('User entfernt');
+        this.updateReactionsInDatabase();
+        // Show the snackbar
+        this.showEmojiSnackbar(reaction.emoji, this.authService.activeUserAccount.displayName);
+      }, 0);
     }
-    this.updateReactionsInDatabase();
-
-    // Show the snackbar
-    this.showEmojiSnackbar(
-      reaction.emoji,
-      this.authService.activeUserAccount.displayName
-    );
   }
 
   toggleReactionBar(event: any): void {
@@ -375,53 +401,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
     }
   }
 
-  groupMessagesByDate(
-    messages: ChannelMessage[]
-  ): { date: string; messages: ChannelMessage[] }[] {
-    // Sort messages by date
-    messages.sort((a, b) => a.createdAt.seconds - b.createdAt.seconds);
-
-    // Group messages by date
-    const groupedMessages: { date: string; messages: ChannelMessage[] }[] = [];
-    let currentGroup: { date: string; messages: ChannelMessage[] } | null =
-      null;
-
-    for (const message of messages) {
-      const messageDate = this.dateFormatService.formatDateYYYYMMDD(
-        message.createdAt
-      );
-
-      if (currentGroup && currentGroup.date === messageDate) {
-        currentGroup.messages.push(message);
-      } else {
-        currentGroup = { date: messageDate, messages: [message] };
-        groupedMessages.push(currentGroup);
-      }
-    }
-
-    return groupedMessages;
-  }
-
   delay(ms: number) {
     return new Promise((resolve) => setTimeout(resolve, ms));
-  }
-
-  isSameDayAsPrevious(messageDate: string): boolean {
-    const formattedMessageDate =
-      this.dateFormatService.formatDateYYYYMMDD(messageDate);
-    console.log('formattedMessageDate:', formattedMessageDate);
-    console.log('previousMessageDate:', this.previousMessageDate);
-
-    if (this.previousMessageDate === '') {
-      this.previousMessageDate = formattedMessageDate;
-      return false;
-    } else if (this.previousMessageDate === formattedMessageDate) {
-      return true;
-    } else {
-      if (this.previousMessageDate !== formattedMessageDate) {
-        this.previousMessageDate = formattedMessageDate;
-      }
-      return false;
-    }
   }
 }
