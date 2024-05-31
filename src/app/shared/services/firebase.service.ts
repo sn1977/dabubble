@@ -66,12 +66,41 @@ export class FirebaseService {
     return doc(collection(this.firestore, colId), docId);
   }
 
+  // subUserList2() {
+  //   return onSnapshot(query(this.getUsersRef(), orderBy('displayName')), (list) => {
+  //     this.userList = [];
+  //     list.forEach((element) => {
+  //       this.userList.push(this.setUserObject(element.data(), element.id));
+  //     });
+  //   });
+  // }
+
   subUserList() {
+    const myName = 'dStefan Mailaccoun';  // Dein eigener Name
+    
+    
+    // const myName = this.matchMedia.displayName!;  // Dein eigener Name
+    // if(this.matchMedia.displayName){
+
+    //   // this.au\
+      
+    //   // console.log(this.auth.displayName);
+    // }
+    
     return onSnapshot(query(this.getUsersRef(), orderBy('displayName')), (list) => {
       this.userList = [];
       list.forEach((element) => {
         this.userList.push(this.setUserObject(element.data(), element.id));
       });
+  
+      // Finde den Index des Eintrags mit deinem Namen
+      const myIndex = this.userList.findIndex((user: { displayName: string | string[]; }) => user.displayName.includes(myName));
+      if (myIndex > -1) {
+        // Entferne den Eintrag mit deinem Namen aus der aktuellen Position
+        const myUser = this.userList.splice(myIndex, 1)[0];
+        // Füge den Eintrag mit deinem Namen an den Anfang der Liste
+        this.userList.unshift(myUser);
+      }
     });
   }
 
