@@ -60,11 +60,7 @@ export class LogInComponent implements OnInit {
       .login(this.contactData.email, this.contactData.password)
       .subscribe({
         next: () => {
-          if (this.isDesktop) {
-            this.router.navigateByUrl('/new-channel/Entwicklerteam');
-          } else {
             this.router.navigateByUrl('/main');
-          }
         },
         error: (err) => {
           this.errorMessage = err.code;
