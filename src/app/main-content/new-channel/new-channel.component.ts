@@ -102,14 +102,15 @@ export class NewChannelComponent implements OnInit, AfterViewChecked {
         this.textBoxData.collection,
         this.textBoxData.subcollection
       );
+    
+      this.headerStateService.setAlternativeHeader(true);
+      this.matchMedia.scrollToBottom = true;
+  
+      setInterval(() => {
+        this.scrollToBottom();
+      }, 1000);
     });
 
-    this.headerStateService.setAlternativeHeader(true);
-    this.matchMedia.scrollToBottom = true;
-
-    setInterval(() => {
-      this.scrollToBottom();
-    }, 1000);
   }
 
   async getItemValues(collection: string, itemID: string) {
