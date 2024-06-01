@@ -8,6 +8,7 @@ import {CommonModule, Location} from '@angular/common';
 import {HeaderStateService} from '../../services/header-state.service';
 import {Router} from '@angular/router';
 import {DesktopOverlayComponent} from '../desktop-overlay/desktop-overlay.component';
+import { MatchMediaService } from '../../services/match-media.service';
 
 @Component({
   selector: 'app-header-mobile',
@@ -19,6 +20,7 @@ import {DesktopOverlayComponent} from '../desktop-overlay/desktop-overlay.compon
 export class HeaderMobileComponent implements OnInit {
   firestore = inject(FirebaseService);
   authService = inject(AuthService);
+  matchMedia = inject(MatchMediaService);
   user: User = new User();
   @Input() alternativeHeader: boolean = false;
   @Input() isDesktop: boolean = false;
@@ -80,6 +82,8 @@ export class HeaderMobileComponent implements OnInit {
 
   onBack(): void {
     // this.router.navigate(['/']);
+    this.matchMedia.scrollToBottom = true;
+    this.matchMedia.scrollToBottomThread = true;
     this.router.navigate(['/main']);
     this.headerStateService.setAlternativeHeader(false);
   }
