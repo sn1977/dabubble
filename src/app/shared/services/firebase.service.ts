@@ -66,15 +66,6 @@ export class FirebaseService {
     return doc(collection(this.firestore, colId), docId);
   }
 
-  // subUserList2() {
-  //   return onSnapshot(query(this.getUsersRef(), orderBy('displayName')), (list) => {
-  //     this.userList = [];
-  //     list.forEach((element) => {
-  //       this.userList.push(this.setUserObject(element.data(), element.id));
-  //     });
-  //   });
-  // }
-
   subUserList() {
     return onSnapshot(query(this.getUsersRef(), orderBy('displayName')), (list) => {
       this.userList = [];
@@ -375,12 +366,6 @@ export class FirebaseService {
   }
 
   async getDirectMessages(sender: string, recipient: string) {
-    const querySnapshot = query(
-      this.getDirectMessageRef(),
-      where('sender', 'in', [sender, recipient]),
-      where('recipient', 'in', [sender, recipient])
-    );
-
     const querySnapshot1 = await getDocs(
       query(
         this.getDirectMessageRef(),

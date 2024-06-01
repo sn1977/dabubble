@@ -92,28 +92,34 @@ export class DirectMessageComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
-    await this.waitForUserData();
-    this.test();
-    this.newMessage = false;
-
     this.route.paramMap.subscribe((paramMap) => {
+
+      this.waitForUserData();
+      this.test();
+      this.newMessage = false;
+      console.log('new1');
+      console.log('new2');
+      
       this.itemID = paramMap.get('id');
       this.getItemValues('users', this.itemID);
       this.firestore.getAllChannelMessages(this.itemID, this.textBoxData.collection,this.textBoxData.subcollection);
+
+      this.firestore.getDirectMessages(
+        this.authService.activeUserAccount.uid,
+        this.itemID
+      );
+  
+      this.textBoxData.channelId = this.firestore.conversation;
+      this.textBoxData.placeholder = 'Nachricht an ' + this.matchMedia.channelName;
+      this.headerStateService.setAlternativeHeader(true);    
+
     });
 
-    setTimeout(() => {
-      this.addCountToChannelDocument(this.itemID);
-    }, 1000);
+    // setTimeout(() => {
+    //   this.addCountToChannelDocument(this.itemID);
+    // }, 1000);
 
-    await this.firestore.getDirectMessages(
-      this.authService.activeUserAccount.uid,
-      this.itemID
-    );
-
-    this.textBoxData.channelId = this.firestore.conversation;
-    this.textBoxData.placeholder = 'Nachricht an ' + this.matchMedia.channelName;
-    this.headerStateService.setAlternativeHeader(true);    
+    
     setInterval(() => {
       this.scrollToBottom();
     }, 1000);
