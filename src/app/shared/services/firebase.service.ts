@@ -76,31 +76,11 @@ export class FirebaseService {
   // }
 
   subUserList() {
-    const myName = 'dStefan Mailaccoun';  // Dein eigener Name
-    
-    
-    // const myName = this.matchMedia.displayName!;  // Dein eigener Name
-    // if(this.matchMedia.displayName){
-
-    //   // this.au\
-      
-    //   // console.log(this.auth.displayName);
-    // }
-    
     return onSnapshot(query(this.getUsersRef(), orderBy('displayName')), (list) => {
       this.userList = [];
       list.forEach((element) => {
         this.userList.push(this.setUserObject(element.data(), element.id));
-      });
-  
-      // Finde den Index des Eintrags mit deinem Namen
-      const myIndex = this.userList.findIndex((user: { displayName: string | string[]; }) => user.displayName.includes(myName));
-      if (myIndex > -1) {
-        // Entferne den Eintrag mit deinem Namen aus der aktuellen Position
-        const myUser = this.userList.splice(myIndex, 1)[0];
-        // Füge den Eintrag mit deinem Namen an den Anfang der Liste
-        this.userList.unshift(myUser);
-      }
+      });      
     });
   }
 
@@ -180,7 +160,10 @@ export class FirebaseService {
     messageId: string,
     channelData: ChannelMessage
   ) {
-    console.log(`${docId}/channelmessages/${messageId}`);
+    // console.log(`${docId}/channelmessages/${messageId}`);
+
+    console.log(channelData);
+    
 
     if (docId) {
       let docRef = doc(
@@ -189,6 +172,13 @@ export class FirebaseService {
       );
       await updateDoc(docRef, channelData.toJSON()).catch((err) => {
         console.log(err);
+        console.log('test1');
+      }).then((err) => {
+        console.warn('warn', err);
+        
+      })
+      .finally(() => {
+        console.log('test2');
       });
     }
     // console.log(docId, channelData);

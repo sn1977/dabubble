@@ -82,6 +82,7 @@ export class AddChannelComponent implements OnInit {
       newMessage: this.channelData.newMessage,
     });
     this.firestore.addChannel(channel);
+    this.matchMedia.channelName = channel.name;
   }
 
   constructor() {}

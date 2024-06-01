@@ -22,6 +22,20 @@ export class DataService {
   async searchWorkspace(query: string) {
     if (query == '') {
       this.channelMatches = this.firestore.channelList;
+
+      // console.log(this.authService.activeUserAccount.displayName;);
+      
+      
+      const myName = 'Donal Duck';  // Dein eigener Name
+      // Finde den Index des Eintrags mit deinem Namen
+      const myIndex = this.firestore.userList.findIndex((user: { displayName: string | string[]; }) => user.displayName.includes(myName));
+      if (myIndex > -1) {
+        // Entferne den Eintrag mit deinem Namen aus der aktuellen Position
+        const myUser = this.firestore.userList.splice(myIndex, 1)[0];
+        // Füge den Eintrag mit deinem Namen an den Anfang der Liste
+        this.firestore.userList.unshift(myUser);
+      }
+      
       this.userMatches = this.firestore.userList;
       return;
     }

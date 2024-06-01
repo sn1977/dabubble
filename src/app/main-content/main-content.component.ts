@@ -85,6 +85,7 @@ export class MainContentComponent implements OnInit {
   ];
 
   textData = { text: '' };
+  user: User = new User();
 
   inputHasValue = false;
   allChannels: Channel[] = [];
@@ -102,6 +103,7 @@ export class MainContentComponent implements OnInit {
   async ngOnInit() {
     await this.listenForDataChanges();    
     this.dataService.searchWorkspace('');
+    this.getItemValues('users', this.authService.activeUserId);
   }
   
   async listenForDataChanges(): Promise<void> {
@@ -114,6 +116,12 @@ export class MainContentComponent implements OnInit {
     this.dataService.allChannels = channels;
     // this.dataService.allUsers = this.sortUsers(users);
     this.dataService.allUsers = users;
+  }
+
+  getItemValues(collection: string, itemID: string) {
+    this.firestore.getSingleItemData(collection, itemID, () => {
+      this.user = new User(this.firestore.user);
+    });
   }
 
   sortUsers(users: User[]): User[] {
