@@ -2,6 +2,7 @@ import {
   Component,
   ElementRef,
   inject,
+  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -23,6 +24,7 @@ import { Channel } from '../../../models/channel.class';
 import { DateFormatService } from '../../shared/services/date-format.service';
 import { TimeSeperatorComponent } from '../../shared/components/time-seperator/time-seperator.component';
 import { MatchMediaService } from '../../shared/services/match-media.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-direct-message',
@@ -36,7 +38,7 @@ import { MatchMediaService } from '../../shared/services/match-media.service';
     TimeSeperatorComponent  
   ],
 })
-export class DirectMessageComponent implements OnInit {
+export class DirectMessageComponent implements OnInit, OnDestroy {
   @ViewChild('messageContent') messageContent!: ElementRef;
   firestore = inject(FirebaseService);
   router = inject(Router);
@@ -46,6 +48,8 @@ export class DirectMessageComponent implements OnInit {
   authService = inject(AuthService);
   newMessage: boolean = false;
   matchMedia = inject(MatchMediaService);
+  routeSubscription: Subscription | undefined;
+  intervalId: any;
 
   textBoxData: any = {
     placeholder: 'Nachricht an ',
@@ -91,31 +95,86 @@ export class DirectMessageComponent implements OnInit {
     public dateFormatService: DateFormatService
   ) {}
 
+  // async ngOnInit(): Promise<void> {
+  //   this.waitForUserData();
+
+  //   this.route.paramMap.subscribe(async (paramMap) => {
+  //     this.test();
+  //     this.newMessage = false;
+  //     this.itemID = paramMap.get('id');
+  //     this.getItemValues('users', this.itemID);
+      
+  //     if (this.authService.activeUserAccount) {
+  //       this.firestore.getDirectMessages(
+  //         this.authService.activeUserAccount.uid,
+  //         this.itemID
+  //       );
+  //     }
+
+  //     await this.delay(700);
+  //     if(this.firestore.conversation){
+  //       this.textBoxData.channelId = this.firestore.conversation;
+  //       await this.firestore.getAllChannelMessages(this.firestore.conversation, this.textBoxData.collection, this.textBoxData.subcollection);
+  //     }
+
+  //     this.textBoxData.placeholder = 'Nachricht an ' + this.matchMedia.channelName;
+  //     this.headerStateService.setAlternativeHeader(true);
+
+  //     setInterval(() => {
+  //       this.scrollToBottom();
+  //     }, 1000);
+  //   });    
+  // }
+
   async ngOnInit(): Promise<void> {
-    this.route.paramMap.subscribe((paramMap) => {
-      this.waitForUserData();
+    this.waitForUserData();
+
+    this.routeSubscription = this.route.paramMap.subscribe(async (paramMap) => {
       this.test();
       this.newMessage = false;
       this.itemID = paramMap.get('id');
       this.getItemValues('users', this.itemID);
-      this.firestore.getAllChannelMessages(this.itemID, this.textBoxData.collection,this.textBoxData.subcollection);
 
-      if(this.authService.activeUserAccount){
-
-        this.firestore.getDirectMessages(
+      if (this.authService.activeUserAccount) {
+        await this.firestore.getDirectMessages(
           this.authService.activeUserAccount.uid,
           this.itemID
-          );
-        }
-  
-      this.textBoxData.channelId = this.firestore.conversation;
-      this.textBoxData.placeholder = 'Nachricht an ' + this.matchMedia.channelName;
-      this.headerStateService.setAlternativeHeader(true);    
+        );
+      }
 
-      setInterval(() => {
-        this.scrollToBottom();
-      }, 1000);
-    });    
+      await this.delay(700);
+
+      if (this.firestore.conversation) {
+        this.textBoxData.channelId = this.firestore.conversation;
+        this.firestore.getAllChannelMessages(
+          this.firestore.conversation,
+          this.textBoxData.collection,
+          this.textBoxData.subcollection
+        );
+      }
+
+      this.textBoxData.placeholder = 'Nachricht an ' + this.matchMedia.channelName;
+      this.headerStateService.setAlternativeHeader(true);
+
+      // Setze ein Intervall zum automatischen Scrollen
+      this.setupScrollToBottom();
+    });
+  }
+
+  ngOnDestroy(): void {
+    // Aufräumen, wenn die Komponente zerstört wird
+    if (this.routeSubscription) {
+      this.routeSubscription.unsubscribe();
+    }
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+  }
+
+  private setupScrollToBottom(): void {
+    this.intervalId = setInterval(() => {
+      this.scrollToBottom();
+    }, 1000);
   }
 
   async getItemValues(collection: string, itemID: string) {
@@ -129,7 +188,7 @@ export class DirectMessageComponent implements OnInit {
 
   async waitForUserData(): Promise<void> {
     while (!this.authService.activeUserAccount) {
-      await this.delay(100);
+      await this.delay(100);      
     }
   }
 

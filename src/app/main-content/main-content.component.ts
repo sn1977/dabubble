@@ -152,6 +152,7 @@ export class MainContentComponent implements OnInit {
   openChannel(event: MouseEvent, path: string, name: string) {
     this.matchMedia.channelName = name;
     this.matchMedia.showThread = false;
+    this.firestore.conversation = '';
     const docRefId = (event.currentTarget as HTMLElement).id;
     this.itemStateService.setItemId(docRefId);
     this.router.navigate([path, docRefId]);

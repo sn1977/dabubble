@@ -14,6 +14,7 @@ import {
   getDocs,
   getDoc,
   limit,
+  DocumentReference,
 } from '@angular/fire/firestore';
 import { User } from '../../../models/user.class';
 import { Channel } from '../../../models/channel.class';
@@ -67,12 +68,15 @@ export class FirebaseService {
   }
 
   subUserList() {
-    return onSnapshot(query(this.getUsersRef(), orderBy('displayName')), (list) => {
-      this.userList = [];
-      list.forEach((element) => {
-        this.userList.push(this.setUserObject(element.data(), element.id));
-      });      
-    });
+    return onSnapshot(
+      query(this.getUsersRef(), orderBy('displayName')),
+      (list) => {
+        this.userList = [];
+        list.forEach((element) => {
+          this.userList.push(this.setUserObject(element.data(), element.id));
+        });
+      }
+    );
   }
 
   subChannelList() {
@@ -151,11 +155,6 @@ export class FirebaseService {
     messageId: string,
     channelData: ChannelMessage
   ) {
-    // console.log(`${docId}/channelmessages/${messageId}`);
-
-    console.log(channelData);
-    
-
     if (docId) {
       let docRef = doc(
         this.getChannelsRef(),
@@ -163,35 +162,9 @@ export class FirebaseService {
       );
       await updateDoc(docRef, channelData.toJSON()).catch((err) => {
         console.log(err);
-        console.log('test1');
-      }).then((err) => {
-        console.warn('warn', err);
-        
-      })
-      .finally(() => {
-        console.log('test2');
       });
     }
-    // console.log(docId, channelData);
   }
-
-  // async updateDirectMessage(
-  //   docId: string | undefined,
-  //   messageId: string | undefined,
-  //   chatData: DirectMessage // Ersetzen Sie dies durch den tatsächlichen Typ Ihrer Direktnachricht
-  // ) {
-  //   console.log(`${docId}/chat/${messageId}`);
-  //
-  //   if (docId) {
-  //     let docRef = doc(
-  //       this.getChannelsRef(),
-  //       `${docId}/chat/${messageId}`
-  //     );
-  //     await updateDoc(docRef, chatData.toJSON()).catch((err) => {
-  //       console.log(err);
-  //     });
-  //   }
-  // }
 
   getChannels(): Observable<Channel[]> {
     return new Observable((observer) => {
@@ -206,8 +179,6 @@ export class FirebaseService {
         },
         (err) => observer.error(err)
       );
-
-      // Cleanup on unsubscribe
       return { unsubscribe };
     });
   }
@@ -225,8 +196,6 @@ export class FirebaseService {
         },
         (err) => observer.error(err)
       );
-
-      // Cleanup on unsubscribe
       return { unsubscribe };
     });
   }
@@ -246,7 +215,7 @@ export class FirebaseService {
   async addChannel(item: Channel) {
     if (typeof item.creator === 'undefined') {
       console.error('Fehler: Creator ist undefined.');
-      return; // Beendet die Funktion vorzeitig, wenn 'creator' undefined ist
+      return;
     }
 
     await addDoc(this.getChannelsRef(), item.toJSON())
@@ -267,7 +236,7 @@ export class FirebaseService {
       .then((docRef) => {
         console.log('Document written with ID: ', docRef?.id);
 
-        if(!this.matchMedia.showThread){
+        if (!this.matchMedia.showThread) {
           this.matchMedia.scrollToBottom = true;
         } else {
           this.matchMedia.scrollToBottomThread = true;
@@ -325,85 +294,112 @@ export class FirebaseService {
     );
   }
 
-  async getAllChannelMessages(
+  getAllChannelMessages(
     channelId: string,
     colID: string,
     subcollection: string
-  ) {
+  ): Unsubscribe {
     const ref = collection(
       this.firestore,
       `${colID}/${channelId}/${subcollection}`
     );
-
     const querySnapshot = query(ref, orderBy('createdAt'));
-    const unsubscribe = onSnapshot(querySnapshot, (snapshot) => {
-      this.channelMessages = [];
-      snapshot.forEach((doc) => {
-        this.channelMessages.push(
-          this.setChannelMessageObject(doc.data(), doc.id)
-        );
-      });
-    });
+
+    const unsubscribe = onSnapshot(
+      querySnapshot,
+      (snapshot) => {
+        this.channelMessages = [];
+        snapshot.forEach((doc) => {
+          this.channelMessages.push(
+            this.setChannelMessageObject(doc.data(), doc.id)
+          );
+        });
+      },
+      (error) => {
+        console.error('Error fetching snapshot: ', error);
+      }
+    );
+
     return unsubscribe;
   }
 
-  async getAllChannelThreads(channelId: string, subcollection: string) {
+  getAllChannelThreads(channelId: string, subcollection: string): Unsubscribe {
     const ref = collection(
       this.firestore,
       `channels/${channelId}/${subcollection}`
     );
-
     const querySnapshot = query(ref, orderBy('createdAt'));
-    const unsubscribe = onSnapshot(querySnapshot, (snapshot) => {
-      this.channelThreads = [];
-      snapshot.forEach((doc) => {
-        this.channelThreads.push(
-          this.setChannelMessageObject(doc.data(), doc.id)
-        );
-      });
-    });
+
+    const unsubscribe = onSnapshot(
+      querySnapshot,
+      (snapshot) => {
+        this.channelThreads = [];
+        snapshot.forEach((doc) => {
+          this.channelThreads.push(
+            this.setChannelMessageObject(doc.data(), doc.id)
+          );
+        });
+      },
+      (error) => {
+        console.error('Error fetching snapshot: ', error);
+      }
+    );
+
     return unsubscribe;
   }
 
-  async getDirectMessages(sender: string, recipient: string) {
-    const querySnapshot1 = await getDocs(
-      query(
-        this.getDirectMessageRef(),
-        where('sender', '==', sender),
-        where('recipient', '==', recipient)
-      )
-    );
+  async getDirectMessages(sender: string, recipient: string): Promise<void> {
+    try {
+      const directMessageRef = this.getDirectMessageRef();
 
-    const querySnapshot2 = await getDocs(
-      query(
-        this.getDirectMessageRef(),
-        where('sender', '==', recipient),
-        where('recipient', '==', sender)
-      )
-    );
+      const query1 = getDocs(
+        query(
+          directMessageRef,
+          where('sender', '==', sender),
+          where('recipient', '==', recipient)
+        )
+      );
 
-    const combinedResults = querySnapshot1.docs.concat(querySnapshot2.docs);
+      const query2 = getDocs(
+        query(
+          directMessageRef,
+          where('sender', '==', recipient),
+          where('recipient', '==', sender)
+        )
+      );
 
-    combinedResults.forEach((doc) => {
-      this.conversation = doc.id;
-    });
+      const [querySnapshot1, querySnapshot2] = await Promise.all([
+        query1,
+        query2,
+      ]);
 
-    if (combinedResults.length === 0) {
-      await this.createDirectMessage(sender, recipient);
+      const combinedResults = [...querySnapshot1.docs, ...querySnapshot2.docs];
+
+      combinedResults.forEach((doc) => {
+        this.conversation = doc.id;
+      });
+
+      if (combinedResults.length === 0) {
+        await this.createDirectMessage(sender, recipient);
+      }
+    } catch (error) {
+      console.error('Error getting direct messages:', error);
     }
   }
 
-  async createDirectMessage(sender: string, recipient: string) {
-    await addDoc(this.getDirectMessageRef(), {
-      sender: sender,
-      recipient: recipient,
-    })
-      .catch((err) => {
-        console.error(err);
-      })
-      .then((docRef) => {
-        this.conversation = docRef?.id;
-      });
+  async createDirectMessage(sender: string, recipient: string): Promise<void> {
+    try {
+      const docRef: DocumentReference = await addDoc(
+        this.getDirectMessageRef(),
+        {
+          sender: sender,
+          recipient: recipient,
+        }
+      );
+      this.conversation = docRef.id;
+    } catch (err) {
+      console.error('Error creating direct message:', err);
+    }
   }
 
   ngonDestroyy() {
@@ -496,10 +492,7 @@ export class FirebaseService {
     let documentRef;
 
     if (isThread) {
-      documentRef = doc(
-        this.getSingleDocRef(colId, docId),
-        id
-      );
+      documentRef = doc(this.getSingleDocRef(colId, docId), id);
     } else {
       const collection = colId === 'channels' ? 'channels' : 'messages';
       const subcollection =
