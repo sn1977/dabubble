@@ -175,6 +175,8 @@ export class AuthService {
     if (currentUser) {
       this.user.id = currentUser.uid ?? this.user.id;
       this.user.isOnline = false;
+      this.matchMedia.channelName = '';
+      this.matchMedia.showThread = false;
       this.firebase.updateUser(this.user, this.user.id);
     }
 
