@@ -154,7 +154,7 @@ mat-expansion-panel:last-child {
 
 .add-channel {
   @include dFlex($jc: start, $ai: center, $fd: row, $g: 12px);
-  padding: 10px 30px;
+  padding: 10px 5px;
   cursor: pointer;
 
   &:hover{
@@ -217,4 +217,9 @@ mat-expansion-panel:last-child {
     width: 45px;
     height: 45px;
   }
+
+  mat-expansion-panel:last-child {
+    margin-bottom: 10px !important;
+  }
+
 }

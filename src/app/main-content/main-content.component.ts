@@ -113,22 +113,13 @@ export class MainContentComponent implements OnInit {
     const channels = await channelsPromise;
     const users = await usersPromise;
 
-    this.dataService.allChannels = channels;
-    // this.dataService.allUsers = this.sortUsers(users);
+    this.dataService.allChannels = channels;    
     this.dataService.allUsers = users;
   }
 
   getItemValues(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {
       this.user = new User(this.firestore.user);
-    });
-  }
-
-  sortUsers(users: User[]): User[] {
-    return users.sort((a, b) => {
-      if (a.id === this.authService.activeUserId) return -1;
-      if (b.id === this.authService.activeUserId) return 1;
-      return 0;
     });
   }
 
