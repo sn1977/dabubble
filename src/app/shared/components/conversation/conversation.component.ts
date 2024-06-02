@@ -23,6 +23,7 @@ import { PositionService } from '../../services/position.service';
 import { SnackbarOverlayService } from '../../services/snackbar-overlay.service';
 import { Router } from '@angular/router';
 import { MatchMediaService } from '../../services/match-media.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-conversation',
@@ -47,6 +48,10 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   matchMedia = inject(MatchMediaService);
   authService = inject(AuthService);
   @Input() channelMessage!: ChannelMessage;
+  @Input() channelID: string | undefined;
+  @Input() messageID: string | undefined;
+  // message: ChannelMessage = new ChannelMessage();
+  channelMessage2: ChannelMessage = new ChannelMessage();
   @Input() isChannel!: boolean;
   @Input() isThread!: boolean;
   @Input() hideCompleteReactionBar: boolean = false;
@@ -69,6 +74,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   @ViewChild('messageToEdit') messageToEdit!: ElementRef<HTMLTextAreaElement>;
   groupedMessages: { date: string; messages: ChannelMessage[] }[] = [];
   previousMessageDate: string;
+  routeSubscription: Subscription | undefined;
 
   async ngOnInit(): Promise<void> {
     await this.delay(200);
@@ -77,6 +83,43 @@ export class ConversationComponent implements OnInit, AfterViewInit {
     this.isMessageFromYou =
       this.authService.activeUserAccount.uid === this.channelMessage.creator;
     this.fillEmojiReactions();
+
+    if (this.messageID !== undefined) {
+      let docRef = this.channelID + '/channelmessages/' + this.messageID;
+      // if(this.isThread){
+      //   docRef = docRef + '/threads/';
+      // }
+
+      console.log(docRef);
+      
+
+    // if (this.channelMessage.messageId !== undefined) {
+    //   const docRef =
+    //     this.channelMessage.channelId +
+    //     '/channelmessages/' +
+    //     this.channelMessage.messageId;      
+
+    this.routeSubscription = this.firestore.getChannelData(docRef).subscribe((data) => {
+        console.log('Game Data in Component:', data);
+        this.channelMessage.messageId = data['messageId'];
+        this.channelMessage.channelId = data['channelId'];
+        this.channelMessage.creator = data['creator'];
+        this.channelMessage.createdAt = data['createdAt'];
+        this.channelMessage.text = data['text'];
+        this.channelMessage.reactions = data['reactions'];
+        this.channelMessage.attachment = data['attachment'];
+
+
+        // this.message.messageId = data['messageId'];
+        // this.message.channelId = data['channelId'];
+        // this.message.creator = data['creator'];
+        // this.message.createdAt = data['createdAt'];
+        // this.message.text = data['text'];
+        // this.message.reactions = data['reactions'];
+        // this.message.attachment = data['attachment'];
+
+      });
+    }
   }
 
   async ngAfterViewInit() {
@@ -88,6 +131,9 @@ export class ConversationComponent implements OnInit, AfterViewInit {
 
   ngOnDestroyy() {
     this.isLoading = true;
+    if (this.routeSubscription) {
+      this.routeSubscription.unsubscribe();
+    }    
   }
 
   fillEmojiReactions() {

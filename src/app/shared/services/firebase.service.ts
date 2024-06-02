@@ -15,6 +15,7 @@ import {
   getDoc,
   limit,
   DocumentReference,
+  DocumentData,
 } from '@angular/fire/firestore';
 import { User } from '../../../models/user.class';
 import { Channel } from '../../../models/channel.class';
@@ -505,4 +506,19 @@ export class FirebaseService {
       );
     }
   }
+
+  // Stefan
+  getChannelData(channelId: string): Observable<DocumentData> {
+    const docRef = this.getSingleDocRef('channels', channelId);
+
+    return new Observable<DocumentData>((observer) => {
+      const unsubscribe2 = onSnapshot(docRef, (snapshot) => {
+        const data = snapshot.data();
+        observer.next(data);
+      });
+
+      return () => unsubscribe2();
+    });
+  }
+
 }
