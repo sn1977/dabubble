@@ -5,14 +5,14 @@
 <div class="content">
   
 
-  @if(isDesktop){
+  <!-- @if(isDesktop){
     <div class="logo-animated-desktop"
     [ngClass]="{'logo-animated-desktop-start': playIntroAnimation}"
     >
     <img src="./assets/img/auth/logo.svg" />
     <span>DABubble</span>
   </div>
-  }@else {
+  }@else { -->
     <div class="logo-animated"
   [ngClass]="{'logo-animated-start': playIntroAnimation}"
   >
@@ -22,7 +22,7 @@
     [ngStyle]="{ 'right': isDesktop ? 'unset' : '40%' }"
     >DABubble</span>
   </div>
-  }
+  <!-- } -->
 
 
   <mat-card>

@@ -84,20 +84,20 @@ export class ConversationComponent implements OnInit, AfterViewInit {
       this.authService.activeUserAccount.uid === this.channelMessage.creator;
     this.fillEmojiReactions();
 
-    if (this.messageID !== undefined) {
-      let docRef = this.channelID + '/channelmessages/' + this.messageID;
-      // if(this.isThread){
-      //   docRef = docRef + '/threads/';
-      // }
+    // if (this.channelMessage.messageId !== undefined) {
+    //   let docRef = this.channelID + '/channelmessages/' + this.channelMessage.messageId;
+    //   // if(this.isThread){
+    //   //   docRef = docRef + '/threads/';
+    //   // }
 
-      console.log(docRef);
+    //   console.log(docRef);
       
 
-    // if (this.channelMessage.messageId !== undefined) {
-    //   const docRef =
-    //     this.channelMessage.channelId +
-    //     '/channelmessages/' +
-    //     this.channelMessage.messageId;      
+    if (this.channelMessage.messageId !== undefined) {
+      const docRef =
+        this.channelMessage.channelId +
+        '/channelmessages/' +
+        this.channelMessage.messageId;      
 
     this.routeSubscription = this.firestore.getChannelData(docRef).subscribe((data) => {
         console.log('Game Data in Component:', data);
