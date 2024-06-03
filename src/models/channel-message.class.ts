@@ -6,6 +6,7 @@ export class ChannelMessage {
   text: string;  
   reactions: { emoji: string; users: string[] }[] = [];
   attachment?: string[];
+  threads: string[];
 
 
   constructor(obj?: any) {
@@ -15,6 +16,7 @@ export class ChannelMessage {
     this.text = obj ? obj.text : '';
     this.reactions = obj ? obj.reactions : [];
     this.attachment = obj ? obj.attachment : [];
+    this.threads = obj ? obj.threads : [];
   }
 
   public toJSON() {
@@ -25,7 +27,7 @@ export class ChannelMessage {
       text: this.text,
       reactions: this.reactions,
       attachment: this.attachment,
-
+      threads: this.threads,
     };
   }
 }

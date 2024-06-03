@@ -2,7 +2,7 @@ import {ChangeDetectorRef, Component, ElementRef, inject, Input, OnInit, ViewChi
 import {MatBottomSheet} from '@angular/material/bottom-sheet';
 import {BottomSheetComponent} from '../bottom-sheet/bottom-sheet.component';
 import {AuthService} from '../../services/auth.service';
-import {FirebaseService} from '../../services/firebase.service';
+import {FirestoreService} from '../../services/firestore.service';
 import {User} from '../../../../models/user.class';
 import {CommonModule, Location} from '@angular/common';
 import {HeaderStateService} from '../../services/header-state.service';
@@ -18,7 +18,7 @@ import { MatchMediaService } from '../../services/match-media.service';
   styleUrl: './header-mobile.component.scss',
 })
 export class HeaderMobileComponent implements OnInit {
-  firestore = inject(FirebaseService);
+  firestore = inject(FirestoreService);
   authService = inject(AuthService);
   matchMedia = inject(MatchMediaService);
   user: User = new User();

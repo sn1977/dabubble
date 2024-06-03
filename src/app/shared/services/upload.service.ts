@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { FirebaseService } from './firebase.service';
 import {  
   getDownloadURL,
   getStorage,
@@ -11,7 +10,7 @@ import {
   providedIn: 'root',
 })
 export class UploadService {
-  constructor(private firebase: FirebaseService) {}
+  constructor() {}
 
   uploadFile(file: File, filedate: number, folder: string): Promise<string> {
     return new Promise<string>((resolve, reject) => {

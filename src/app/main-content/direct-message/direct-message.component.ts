@@ -11,7 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { NavigationService } from '../../shared/services/navigation.service';
 import { BottomSheetComponent } from '../../shared/components/bottom-sheet/bottom-sheet.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { FirebaseService } from '../../shared/services/firebase.service';
+import { FirestoreService } from '../../shared/services/firestore.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../../../models/user.class';
 import { AuthService } from '../../shared/services/auth.service';
@@ -40,7 +40,7 @@ import { Subscription } from 'rxjs';
 })
 export class DirectMessageComponent implements OnInit, OnDestroy {
   @ViewChild('messageContent') messageContent!: ElementRef;
-  firestore = inject(FirebaseService);
+  firestore = inject(FirestoreService);
   router = inject(Router);
   itemID: any = '';
   user: User = new User();

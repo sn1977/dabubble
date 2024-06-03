@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { FirebaseService } from '../../services/firebase.service';
+import { FirestoreService } from '../../services/firestore.service';
 import { CommonModule } from '@angular/common';
 import { User } from '../../../../models/user.class';
 import { Channel } from '../../../../models/channel.class';
@@ -30,7 +30,7 @@ export class SearchUserComponent {
   showGeneralInputField: boolean = false
   isAddAllMembersChecked: boolean = false;
   isAddSpecificMembersChecked: boolean = false;
-  firestore = inject(FirebaseService);
+  firestore = inject(FirestoreService);
   router = inject(Router);
   authService = inject(AuthService);
   itemID: any = '';

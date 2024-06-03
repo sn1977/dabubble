@@ -19,7 +19,7 @@ import {
 } from '@angular/fire/firestore';
 import { User } from '../../../models/user.class';
 import { Channel } from '../../../models/channel.class';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { ChannelMessage } from '../../../models/channel-message.class';
 import { DirectMessage } from '../../../models/direct-message.class';
@@ -28,7 +28,7 @@ import { MatchMediaService } from './match-media.service';
 @Injectable({
   providedIn: 'root',
 })
-export class FirebaseService {
+export class FirestoreService {
   firestore: Firestore = inject(Firestore);
   router = inject(Router);
   activeUser: any = [];
@@ -43,9 +43,9 @@ export class FirebaseService {
   conversation: string | undefined;
   channelMessagesCount: number = 0;
   matchMedia = inject(MatchMediaService);
-
+  
   unsubUsers;
-  unsubChannel;
+  unsubChannel;  
 
   constructor() {
     this.unsubUsers = this.subUserList();
@@ -127,6 +127,7 @@ export class FirebaseService {
       text: obj.text,
       reactions: obj.reactions,
       attachment: obj.attachment,
+      threads: obj.threads,
     };
   }
 
@@ -241,6 +242,7 @@ export class FirebaseService {
           this.matchMedia.scrollToBottom = true;
         } else {
           this.matchMedia.scrollToBottomThread = true;
+          console.log('erhöhen um +1');          
         }
       });
   }
@@ -507,18 +509,16 @@ export class FirebaseService {
     }
   }
 
-  // Stefan
   getChannelData(channelId: string): Observable<DocumentData> {
     const docRef = this.getSingleDocRef('channels', channelId);
 
     return new Observable<DocumentData>((observer) => {
-      const unsubscribe2 = onSnapshot(docRef, (snapshot) => {
+      const unsubscribe = onSnapshot(docRef, (snapshot) => {
         const data = snapshot.data();
         observer.next(data);
       });
 
-      return () => unsubscribe2();
+      return () => unsubscribe();
     });
   }
-
 }

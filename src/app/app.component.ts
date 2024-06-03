@@ -5,7 +5,7 @@ import { LogInComponent } from './main-content/auth/log-in/log-in.component';
 import { HeaderMobileComponent } from './shared/components/header-mobile/header-mobile.component';
 import { MainContentComponent } from './main-content/main-content.component';
 import { AuthService } from './shared/services/auth.service';
-import { FirebaseService } from './shared/services/firebase.service';
+import { FirestoreService } from './shared/services/firestore.service';
 import { DesktopHeadlineComponent } from "./shared/components/desktop-headline/desktop-headline.component";
 import { DesktopContentComponent } from "./shared/components/desktop-content/desktop-content.component";
 import { MatchMediaService } from './shared/services/match-media.service';
@@ -30,7 +30,7 @@ export class AppComponent implements OnInit{
 
   title = 'dabubble';
   authService = inject(AuthService);
-  firestore = inject(FirebaseService);
+  firestore = inject(FirestoreService);
   matchMedia = inject(MatchMediaService);
   isMobileLandscapeOrientation: boolean = false;
   isDesktop: boolean = false;

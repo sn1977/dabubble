@@ -10,7 +10,7 @@ import { Router, RouterLink } from '@angular/router';
 import { BottomSheetComponent } from '../../shared/components/bottom-sheet/bottom-sheet.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { Channel } from '../../../models/channel.class';
-import { FirebaseService } from '../../shared/services/firebase.service';
+import { FirestoreService } from '../../shared/services/firestore.service';
 import { ActivatedRoute } from '@angular/router';
 import { User } from '../../../models/user.class';
 import { NavigationService } from '../../shared/services/navigation.service';
@@ -45,7 +45,7 @@ import { DataService } from '../../shared/services/data.service';
   ],
 })
 export class NewChannelComponent implements OnInit, AfterViewChecked {
-  firestore = inject(FirebaseService);
+  firestore = inject(FirestoreService);
   router = inject(Router);
   itemID: any = '';
   user: User = new User();

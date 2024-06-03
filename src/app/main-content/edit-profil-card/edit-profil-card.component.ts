@@ -5,7 +5,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatButton} from '@angular/material/button';
 import {User} from '../../../models/user.class';
-import {FirebaseService} from '../../shared/services/firebase.service';
+import {FirestoreService} from '../../shared/services/firestore.service';
 import {AuthService} from '../../shared/services/auth.service';
 
 @Component({
@@ -37,7 +37,7 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
   inputHasValue = false;
 
   constructor(
-    private firebaseService: FirebaseService,
+    private firestore: FirestoreService,
     public dialogRef: MatDialogRef<EditProfilCardComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { user: User }) {
     console.log('Übergebene Benutzerdaten:', this.data.user);
@@ -61,14 +61,14 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.firebaseService.subUserList();  // Abonniere die Benutzerliste
+    this.firestore.subUserList();  // Abonniere die Benutzerliste
 
     this.nameData.name = this.data.user.displayName || '';
     this.emailData.email = this.data.user.email || '';
   }
 
   ngOnDestroy() {
-    this.firebaseService.unsubUsers();  // Beende das Abonnement
+    this.firestore.unsubUsers();  // Beende das Abonnement
   }
 
   saveProfile(): void {
@@ -76,7 +76,7 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
     this.data.user.displayName = this.nameData.name || this.data.user.displayName;
     this.data.user.email = this.emailData.email || this.data.user.email;
 
-    this.firebaseService.updateUser(this.data.user, this.authService.activeUserAccount.uid).then(() => {
+    this.firestore.updateUser(this.data.user, this.authService.activeUserAccount.uid).then(() => {
       this.dialogRef.close();
     }).catch(error => {
       console.error('Fehler beim Aktualisieren des Profils:', error);

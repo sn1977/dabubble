@@ -1,5 +1,5 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
-import { FirebaseService } from '../shared/services/firebase.service';
+import { FirestoreService } from '../shared/services/firestore.service';
 import { HeaderMobileComponent } from '../shared/components/header-mobile/header-mobile.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -54,7 +54,7 @@ import { DataService } from '../shared/services/data.service';
   styleUrl: './main-content.component.scss',
 })
 export class MainContentComponent implements OnInit {
-  firestore = inject(FirebaseService);
+  firestore = inject(FirestoreService);
   router = inject(Router);
   authService = inject(AuthService);
   matchMedia = inject(MatchMediaService);

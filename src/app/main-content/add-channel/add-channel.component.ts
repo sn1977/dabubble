@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { FirebaseService } from '../../shared/services/firebase.service';
+import { FirestoreService } from '../../shared/services/firestore.service';
 import { CommonModule } from '@angular/common';
 import { User } from '../../../models/user.class';
 import { Channel } from '../../../models/channel.class';
@@ -51,7 +51,7 @@ export class AddChannelComponent implements OnInit {
   showAddMember: boolean = false;
   isAddAllMembersChecked: boolean = false;
   isAddSpecificMembersChecked: boolean = false;
-  firestore = inject(FirebaseService);
+  firestore = inject(FirestoreService);
   router = inject(Router);
   matchMedia = inject(MatchMediaService);
   authService = inject(AuthService);

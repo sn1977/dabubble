@@ -22,7 +22,7 @@ import {
 import { Observable, from, BehaviorSubject } from 'rxjs';
 import { UserInterface } from '../interfaces/user.interface';
 import { Router } from '@angular/router';
-import { FirebaseService } from './firebase.service';
+import { FirestoreService } from './firestore.service';
 import { User } from '../../../models/user.class';
 import { MatchMediaService } from './match-media.service';
 @Injectable({
@@ -41,7 +41,7 @@ export class AuthService {
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
 
-  constructor(private router: Router, private firebase: FirebaseService) {
+  constructor(private router: Router, private firestore: FirestoreService) {
     this.resultGoogleAuth();
 
     authState(this.firebaseAuth).subscribe((user) => {
@@ -77,7 +77,7 @@ export class AuthService {
           this.user.displayName = user.displayName ?? this.user.displayName;
           this.user.provider = 'google';
           this.router.navigateByUrl('/main');
-          this.firebase.updateUser(this.user, this.user.id);
+          this.firestore.updateUser(this.user, this.user.id);
         }
       })
       .catch((error) => {
@@ -85,19 +85,6 @@ export class AuthService {
         const errorMessage = error.message;
       });
   }
-
-  // persistence(email: string, password: string) {
-  //   const auth = getAuth();
-  //   setPersistence(auth, browserSessionPersistence)
-  //     .then(() => {
-  //       //return signInWithRedirect(auth, this.provider);
-  //       return signInWithEmailAndPassword(auth, email, password);
-  //     })
-  //     .catch((error) => {
-  //       const errorCode = error.code;
-  //       const errorMessage = error.message;
-  //     });
-  // }
 
   register(
     email: string,
@@ -123,7 +110,7 @@ export class AuthService {
         this.user.displayName = username ?? this.user.displayName;
         this.user.isOnline = true;
         this.user.provider = 'email';
-        this.firebase.updateUser(this.user, this.user.id);
+        this.firestore.updateUser(this.user, this.user.id);
       }
     });
     return from(promise);
@@ -146,27 +133,9 @@ export class AuthService {
           currentUser.displayName ?? this.user.displayName;
         this.user.isOnline = true;
         this.user.provider = 'email';
-        this.firebase.updateUser(this.user, this.user.id);
+        this.firestore.updateUser(this.user, this.user.id);
       }
     });
-
-    // setPersistence(auth, browserSessionPersistence)
-    //   .then(() => {
-    //     // Existing and future Auth states are now persisted in the current
-    //     // session only. Closing the window would clear any existing state even
-    //     // if a user forgets to sign out.
-    //     // ...
-    //     // New sign-in will be persisted with session persistence.
-    //     return signInWithEmailAndPassword(auth, email, password);
-    //   })
-    //   .catch((error) => {
-    //     // Handle Errors here.
-    //     const errorCode = error.code;
-    //     const errorMessage = error.message;
-    //   });
-
-    // this.persistence(email, password);
-
     return from(promise);
   }
 
@@ -177,7 +146,7 @@ export class AuthService {
       this.user.isOnline = false;
       this.matchMedia.channelName = '';
       this.matchMedia.showThread = false;
-      this.firebase.updateUser(this.user, this.user.id);
+      this.firestore.updateUser(this.user, this.user.id);
     }
 
     return new Promise<void>((resolve, reject) => {
@@ -224,11 +193,12 @@ export class AuthService {
 
   signInAnonymous() {
     const randomInt = Math.floor(Math.random() * 6) + 1;
+    const randomUserNumber = Math.floor(Math.random() * 301);
     const auth = getAuth();
     signInAnonymously(auth)
       .then(async (response) => {
-        await updateProfile(response.user, {
-          displayName: 'Gast',
+        await updateProfile(response.user, {          
+          displayName: `Gast #${randomUserNumber}`,
           photoURL:
             'http://localhost:4200/assets/img/characters/template' +
             randomInt +
@@ -244,7 +214,7 @@ export class AuthService {
           this.user.provider = 'anonym';
           this.user.isOnline = true;
           this.router.navigateByUrl('/main');
-          return this.firebase.updateUser(this.user, this.user.id);
+          return this.firestore.updateUser(this.user, this.user.id);
         }
       })
       .catch((error) => {

@@ -11,7 +11,7 @@ import { Router, RouterLink } from '@angular/router';
 import { BottomSheetComponent } from '../../shared/components/bottom-sheet/bottom-sheet.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { Channel } from '../../../models/channel.class';
-import { FirebaseService } from '../../shared/services/firebase.service';
+import { FirestoreService } from '../../shared/services/firestore.service';
 import { User } from '../../../models/user.class';
 import { NavigationService } from '../../shared/services/navigation.service';
 import { AuthService } from '../../shared/services/auth.service';
@@ -42,7 +42,7 @@ import { ChannelMessage } from '../../../models/channel-message.class';
   styleUrl: './thread.component.scss',
 })
 export class ThreadComponent implements OnInit, AfterViewChecked, OnDestroy {
-  firestore = inject(FirebaseService);
+  firestore = inject(FirestoreService);
   matchMedia = inject(MatchMediaService);
   router = inject(Router);
   itemID: any = '';

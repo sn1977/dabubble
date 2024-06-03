@@ -7,7 +7,7 @@ import {MatButton} from '@angular/material/button';
 import {User} from '../../../models/user.class';
 import {OnlineStatusPipe} from '../../pipes/online-status.pipe';
 import {AuthService} from '../../shared/services/auth.service';
-import {FirebaseService} from '../../shared/services/firebase.service';
+import {FirestoreService} from '../../shared/services/firestore.service';
 import {ItemStateService} from '../../shared/services/item-state.service';
 
 
@@ -30,7 +30,7 @@ export class DirectMessageOverlayComponent implements OnInit {
 
   user: User = new User();
   authService = inject(AuthService);
-  firestore = inject(FirebaseService);
+  firestore = inject(FirestoreService);
   itemId: string | null = '';
 
   constructor(

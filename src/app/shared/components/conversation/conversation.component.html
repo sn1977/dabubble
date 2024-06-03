@@ -49,7 +49,8 @@
           required
           (input)="adjustTextareaHeight(messageToEdit)"
           (change)="changeMessage(); adjustTextareaHeight(messageToEdit)"
-          >{{ channelMessage.text }}</textarea
+          >{{ channelMessage.text }}          
+          </textarea
         >
         @if(!isMessageDisabled){
         <div class="edit-bar">
@@ -86,7 +87,7 @@
         [disabled]="true"
         (input)="adjustTextareaHeight(messageToEdit)"
         (change)="adjustTextareaHeight(messageToEdit)"
-        >{{ channelMessage.text }}</textarea
+        >{{ channelMessage.text }} </textarea
       >
       } @if (channelMessage.attachment) {
       <div class="attachment-list">
@@ -95,7 +96,9 @@
         <img class="attachment" src="{{ item }}" />
         } }
       </div>
-      } @if(!isLoading && answerCount !== 0 && isChannel == true){
+      } 
+      <!-- @if(!isLoading && channelMessage.threads.length !== 0 && isChannel == true){ -->
+      @if(channelMessage.threads.length !== 0){
       <div
         class="thread-infos"
         [ngStyle]="{
@@ -103,8 +106,9 @@
         }"
       >
         <span class="answer" (click)="doNotClose($event); openThread()"
-          >{{ this.answerCount }} 
-          @if(answerCount == 1){
+          >
+          {{ channelMessage.threads.length }} 
+          @if(channelMessage.threads.length == 1){
             Antwort
           }@else {
             Antworten

@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { FirebaseService } from '../../shared/services/firebase.service';
+import { FirestoreService } from '../../shared/services/firestore.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Channel } from '../../../models/channel.class';
 import { User } from '../../../models/user.class';
@@ -20,7 +20,7 @@ export class ChannelEditionComponent implements OnInit {
   router = inject(Router);
   itemID: any = '';
   user: User = new User();
-  firestore = inject(FirebaseService);
+  firestore = inject(FirestoreService);
   authService = inject(AuthService);
   channel: Channel = new Channel();
   isEditingChannelName: boolean = false;

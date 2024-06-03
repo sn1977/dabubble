@@ -3,8 +3,7 @@ import {AfterViewInit, Component, ElementRef, Input, ViewChild, inject} from '@a
 import {FormsModule} from '@angular/forms';
 import {ChannelMessage} from '../../../../models/channel-message.class';
 import {AuthService} from '../../services/auth.service';
-import {FirebaseService} from '../../services/firebase.service';
-import {ActivatedRoute} from '@angular/router';
+import { FirestoreService } from '../../services/firestore.service';
 import {UploadService} from '../../services/upload.service';
 import {serverTimestamp} from '@angular/fire/firestore';
 import {EmojiEvent} from '@ctrl/ngx-emoji-mart/ngx-emoji';
@@ -21,7 +20,7 @@ import {EmojiPickerComponent} from '../emoji-picker/emoji-picker.component';
 })
 export class TextBoxComponent implements AfterViewInit{
   authService = inject(AuthService);
-  firestore = inject(FirebaseService);
+  firestore = inject(FirestoreService);
   reactions = [];
   selectedFiles: FileList | undefined;
   filedate: number | undefined;
@@ -38,7 +37,6 @@ export class TextBoxComponent implements AfterViewInit{
   send_hovered: boolean = false;
 
   constructor(
-    private route: ActivatedRoute,
     private uploadService: UploadService,
     private dialog: MatDialog
   ) {}
@@ -68,6 +66,7 @@ export class TextBoxComponent implements AfterViewInit{
         collection: this.textBoxData.collection,
         subcollection: this.textBoxData.subcollection,
         attachment: [`${this.textBoxData.inputField}`],
+        threads: [],
       });
       
       this.firestore.addChannelMessage(
@@ -134,6 +133,7 @@ export class TextBoxComponent implements AfterViewInit{
   adjustTextareaHeight(textarea: HTMLTextAreaElement) {    
     textarea.style.height = 'auto';    
     textarea.style.height = textarea.scrollHeight + 'px';
+    textarea.focus();
   }
 
   resetTextareaHeight(){

@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Channel } from '../../../models/channel.class';
 import { User } from '../../../models/user.class';
 import { MatchMediaService } from './match-media.service';
-import { FirebaseService } from './firebase.service';
+import { FirestoreService } from './firestore.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +15,7 @@ export class DataService {
   noUserFound: boolean = false;
   noChannelFound: boolean = false;
   matchMedia = inject(MatchMediaService);
-  firestore = inject(FirebaseService);
+  firestore = inject(FirestoreService);
 
   constructor() {}
 
