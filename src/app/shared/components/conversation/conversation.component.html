@@ -95,7 +95,6 @@
         } }
       </div>
       } 
-      <!-- @if(!isLoading && channelMessage.threads.length !== 0 && isChannel == true){ -->
       @if(channelMessage.threads.length !== 0){
       <div
         class="thread-infos"
@@ -125,22 +124,21 @@
     @if(channelMessage.reactions.length > 0){
     <div class="reaction-infos" (click)="doNotClose($event)">
       <div class="reactions">
-        <ng-container *ngFor="let reaction of channelMessage.reactions">
-          <!-- @if(getUserReactionCount(reaction.emoji) > 0){ -->
+        <ng-container *ngFor="let reaction of channelMessage.reactions">          
             <div
             *ngIf="reaction.emoji"
             class="reaction-group pointer"
             (mouseenter)="showEmojiSnackbarStefan = true"
-            (mouseleave)="showEmojiSnackbarStefan = false"
+            (mouseleave)="showEmojiSnackbarStefan = false; deleteHovered()"
+            (click)="toggleReaction(reaction); toggleReactionBar($event)"
             >
-            <span class="reaction-icon" (click)="toggleReaction(reaction)">{{
+            <span class="reaction-icon">{{
               reaction.emoji
             }}</span>
             <div class="reaction-count">
               {{ getUserReactionCount(reaction.emoji) }}
             </div>
           </div>
-        <!-- } -->
         </ng-container>
       </div>
       <img
