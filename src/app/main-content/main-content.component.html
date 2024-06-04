@@ -3,196 +3,185 @@
 }
 
 <div
-  class="content-main bg-c"
-  [ngStyle]="{
-    'max-height': isDesktop ? 'calc(100vh - 120px)' : 'calc(100vh - 80px)'
-  }"
->
-  @if(!isDesktop){
-  <app-search-input
-    (search)="this.dataService.searchWorkspace($event)"
-  ></app-search-input>
-  }
+    class="content-main bg-c"
+    [ngStyle]="{
+        'max-height': isDesktop ? 'calc(100vh - 120px)' : 'calc(100vh - 80px)'
+    }">
+    @if(!isDesktop){
+    <app-search-input
+        (search)="this.dataService.searchWorkspace($event)"></app-search-input>
+    }
 
-  <mat-accordion [multi]="true">
-    <mat-expansion-panel
-      hideToggle
-      class="bs-none"
-      [expanded]="panels[0].expanded"
-      (opened)="onPanelOpened(0)"
-      (closed)="onPanelClosed(0)"
-    >
-      <mat-expansion-panel-header class="p-0">
-        <mat-panel-title class="channel-menu m-0">
-          <div class="channel-headline jc-sb">
-            <div class="channel-headline">
-              <div>
-                <img [src]="panels[0].arrowImagePath" />
-              </div>
-              <div class="channel-menu-headline">
-                <img [src]="panels[0].iconPath" />
-                <span [style.color]="panels[0].titleColor">{{
-                  panels[0].title
-                }}</span>
-              </div>
+    <mat-accordion [multi]="true">
+        <mat-expansion-panel
+            #panel
+            hideToggle
+            class="bs-none"
+            [expanded]="panels[0].expanded"
+            (opened)="onPanelOpened(panel, 0)"
+            (closed)="onPanelClosed(panel, 0)">
+            <mat-expansion-panel-header class="p-0">
+                <mat-panel-title class="channel-menu m-0">
+                    <div class="channel-headline jc-sb">
+                        <div class="channel-headline">
+                            <div>
+                                <img [src]="panels[0].arrowImagePath" />
+                            </div>
+                            <div class="channel-menu-headline">
+                                <img [src]="panels[0].iconPath" />
+                                <span [style.color]="panels[0].titleColor">{{
+                                    panels[0].title
+                                }}</span>
+                            </div>
+                        </div>
+                        <img
+                            class="plus-icon"
+                            src="./assets/img/icon/add.png"
+                            (click)="onAddClick($event)" />
+                    </div>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            @for (channel of this.firestore.channelList; track $index) {
+            @if(this.dataService.containsPartialChannelValue(channel.name)){
+            <div
+                class="channel-name"
+                [ngClass]="
+                    this.matchMedia.channelName == channel.name
+                        ? 'selected-menu-item'
+                        : ''
+                "
+                [id]="channel.id"
+                (click)="openChannel($event, 'new-channel', channel.name)">
+                <div class="pf">
+                    <span class="channel-tag">#</span>
+                    <span>{{ channel.name }}</span>
+                </div>
             </div>
-            <img
-              class="plus-icon"
-              src="./assets/img/icon/add.png"
-              (click)="onAddClick($event)"
-            />
-          </div>
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-
-      @for (channel of this.firestore.channelList; track $index) {
-      @if(this.dataService.containsPartialChannelValue(channel.name)){
-      <div
-        class="channel-name"
-        [ngClass]="
-          this.matchMedia.channelName == channel.name
-            ? 'selected-menu-item'
-            : ''
-        "
-        [id]="channel.id"
-        (click)="openChannel($event, 'new-channel', channel.name)"
-      >
-        <div class="pf">
-          <span class="channel-tag">#</span>
-          <span>{{ channel.name }}</span>
-        </div>
-      </div>
-      } } @if(this.dataService.channelMatches == 0){
-      <div class="nothingFound">
-        <span class="channel-tag"></span>
-        <span>Kein Channel gefunden</span>
-      </div>
-      }
-
-      <div class="add-channel" (click)="navigateToAddChannel()">
-        <img src="./assets/img/icon/add_circle.png" />
-        <span>Channel hinzufügen</span>
-      </div>
-    </mat-expansion-panel>
-
-    <mat-expansion-panel
-      hideToggle
-      class="bs-none"
-      [expanded]="panels[1].expanded"
-      (opened)="onPanelOpened(1)"
-      (closed)="onPanelClosed(1)"
-    >
-      <mat-expansion-panel-header class="p-0">
-        <mat-panel-title class="channel-menu m-0">
-          <div class="channel-headline jc-sb">
-            <div class="channel-headline">
-              <div>
-                <img [src]="panels[1].arrowImagePath" />
-              </div>
-              <div class="channel-menu-headline">
-                <img [src]="panels[1].iconPath" />
-                <span [style.color]="panels[1].titleColor">{{
-                  panels[1].title
-                }}</span>
-              </div>
+            } } @if(this.dataService.channelMatches == 0){
+            <div class="nothingFound">
+                <span class="channel-tag"></span>
+                <span>Kein Channel gefunden</span>
             </div>
-          </div>
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-
-      <div class="scrollable-panel-content">
-        <div
-          class="user-name"
-          [ngClass]="
-            this.matchMedia.channelName == authService.activeUserAccount
-              ? 'selected-menu-item'
-              : ''
-          "
-          [id]="authService.activeUserId"
-          (click)="
-            openChannel(
-              $event,
-              'message',
-              authService.activeUserAccount.displayName
-            )
-          "
-        >
-          <div class="pf">
-            <img src="{{ this.user.avatar }}" />
-
-            @if(this.user.isOnline){
-            <img
-              src="./assets/img/characters/online.svg"
-              alt="Online"
-              class="online-avatar"
-            />
-            }@else {
-            <img
-              src="./assets/img/characters/offline.svg"
-              alt="Offline"
-              class="offline-avatar"
-            />
             }
-            <span
-              >{{user.displayName}}
-              <span> (Du)</span>
-            </span>
-          </div>          
-        </div>
 
-        @for (user of this.firestore.userList; track $index) { @if(user.id !==
-        authService.activeUserId){
-        @if(this.dataService.containsPartialUserValue(user.displayName)){
-        <div
-          class="user-name"
-          [ngClass]="
-            this.matchMedia.channelName == user.displayName
-              ? 'selected-menu-item'
-              : ''
-          "
-          [id]="user.id"
-          (click)="openChannel($event, 'message', user.displayName)"
-        >
-          <div class="pf">
-            <img src="{{ user.avatar }}" />
+            <div class="add-channel" (click)="navigateToAddChannel()">
+                <img src="./assets/img/icon/add_circle.png" />
+                <span>Channel hinzufügen</span>
+            </div>
+        </mat-expansion-panel>
 
-            @if(user.isOnline){
-            <img
-              src="./assets/img/characters/online.svg"
-              alt="Online"
-              class="online-avatar"
-            />
-            }@else {
-            <img
-              src="./assets/img/characters/offline.svg"
-              alt="Offline"
-              class="offline-avatar"
-            />
-            }
-            <span
-              >{{ user.displayName }}              
-            </span>
-          </div>
-          <!-- <div class="flex">
+        <mat-expansion-panel
+            #panel
+            hideToggle
+            class="bs-none"
+            [expanded]="panels[1].expanded"
+            (opened)="onPanelOpened(panel, 1)"
+            (closed)="onPanelClosed(panel, 1)">
+            <mat-expansion-panel-header class="p-0">
+                <mat-panel-title class="channel-menu m-0">
+                    <div class="channel-headline jc-sb">
+                        <div class="channel-headline">
+                            <div>
+                                <img [src]="panels[1].arrowImagePath" />
+                            </div>
+                            <div class="channel-menu-headline">
+                                <img [src]="panels[1].iconPath" />
+                                <span [style.color]="panels[1].titleColor">{{
+                                    panels[1].title
+                                }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div class="scrollable-panel-content">
+                <div
+                    class="user-name"
+                    [ngClass]="
+                        this.matchMedia.channelName ==
+                        authService.activeUserAccount
+                            ? 'selected-menu-item'
+                            : ''
+                    "
+                    [id]="authService.activeUserId"
+                    (click)="
+                        openChannel(
+                            $event,
+                            'message',
+                            authService.activeUserAccount.displayName
+                        )
+                    ">
+                    <div class="pf">
+                        <img src="{{ this.user.avatar }}" />
+
+                        @if(this.user.isOnline){
+                        <img
+                            src="./assets/img/characters/online.svg"
+                            alt="Online"
+                            class="online-avatar" />
+                        }@else {
+                        <img
+                            src="./assets/img/characters/offline.svg"
+                            alt="Offline"
+                            class="offline-avatar" />
+                        }
+                        <span
+                            >{{ user.displayName }}
+                            <span> (Du)</span>
+                        </span>
+                    </div>
+                </div>
+
+                @for (user of this.firestore.userList; track $index) {
+                @if(user.id !== authService.activeUserId){
+                @if(this.dataService.containsPartialUserValue(user.displayName)){
+                <div
+                    class="user-name"
+                    [ngClass]="
+                        this.matchMedia.channelName == user.displayName
+                            ? 'selected-menu-item'
+                            : ''
+                    "
+                    [id]="user.id"
+                    (click)="openChannel($event, 'message', user.displayName)">
+                    <div class="pf">
+                        <img src="{{ user.avatar }}" />
+
+                        @if(user.isOnline){
+                        <img
+                            src="./assets/img/characters/online.svg"
+                            alt="Online"
+                            class="online-avatar" />
+                        }@else {
+                        <img
+                            src="./assets/img/characters/offline.svg"
+                            alt="Offline"
+                            class="offline-avatar" />
+                        }
+                        <span>{{ user.displayName }} </span>
+                    </div>
+                    <!-- <div class="flex">
             <div class="pop-up">
               <p class="pop-up-color">Neue Nachricht</p>
             </div>
           </div> -->
-        </div>
-        } } } @if(this.dataService.userMatches == 0){
-        <div class="nothingFound">
-          <span class="user-tag"></span>
-          <span>Kein User gefunden</span>
-        </div>
-        }
-      </div>
-    </mat-expansion-panel>
-  </mat-accordion>
-  @if(!isDesktop){
-  <div class="btn-position">
-    <button mat-fab class="btn-edit-message" routerLink="/new-message">
-      <mat-icon class="white-icon"> edit_square </mat-icon>
-    </button>
-  </div>
-  }
+                </div>
+                } } } @if(this.dataService.userMatches == 0){
+                <div class="nothingFound">
+                    <span class="user-tag"></span>
+                    <span>Kein User gefunden</span>
+                </div>
+                }
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+    @if(!isDesktop){
+    <div class="btn-position">
+        <button mat-fab class="btn-edit-message" routerLink="/new-message">
+            <mat-icon class="white-icon"> edit_square </mat-icon>
+        </button>
+    </div>
+    }
 </div>

@@ -123,7 +123,7 @@ export class MainContentComponent implements OnInit {
     });
   }
 
-  onPanelOpened(index: number) {
+ /*  onPanelOpened(index: number) {
     this.panels[index].expanded = true;
     this.panels[index].arrowImagePath = 'assets/img/icon/arrow_drop_down.png';
     this.panels[index].iconPath = this.panels[index].iconPathOpened;
@@ -136,6 +136,27 @@ export class MainContentComponent implements OnInit {
       'assets/img/icon/arrow_drop_down_color.png';
     this.panels[index].iconPath = this.panels[index].iconPathClosed;
     this.panels[index].titleColor = '#535AF1'; // Farbe, wenn geschlossen
+  } */
+
+  onPanelOpened(panel: MatExpansionPanel, index: number) {
+    this.panels[index].expanded = true;
+    this.panels[index].arrowImagePath = 'assets/img/icon/arrow_drop_down.png';
+    this.panels[index].iconPath = this.panels[index].iconPathOpened;
+    this.panels[index].titleColor = '#000000'; // Farbe, wenn geöffnet
+    // panel._body.nativeElement.classList.remove('no-overflow');
+    // panel._body.nativeElement.classList.remove('hide-scrollbar');
+    panel._body.nativeElement.classList.remove('hide-overflow');
+  }
+  
+  onPanelClosed(panel: MatExpansionPanel, index: number) {
+    this.panels[index].expanded = false;
+    this.panels[index].arrowImagePath =
+      'assets/img/icon/arrow_drop_down_color.png';
+    this.panels[index].iconPath = this.panels[index].iconPathClosed;
+    this.panels[index].titleColor = '#535AF1'; // Farbe, wenn geschlossen
+    // panel._body.nativeElement.classList.add('no-overflow');
+    // panel._body.nativeElement.classList.add('hide-scrollbar');
+    panel._body.nativeElement.classList.add('hide-overflow');
   }
 
   onAddClick(event: MouseEvent): void {

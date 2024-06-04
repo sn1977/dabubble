@@ -67,6 +67,37 @@ mat-expansion-panel {
   overflow: auto;
 }
 
+.hide-overflow {
+  overflow: hidden !important;
+}
+
+/* mat-expansion-panel {
+  &.no-overflow {
+    overflow: hidden;
+  }
+
+  &.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  &.hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+} */
+
+/* mat-expansion-panel {
+  &.hide-scrollbar {
+    scrollbar-width: 0;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+      width: 0;
+    }
+  }
+} */
+
+
 mat-expansion-panel:last-child {
   margin-bottom: 110px !important;
 }
