@@ -11,7 +11,7 @@
 @import "../../../styles/mixins.scss";
 
 .h1{
-  font-size: 20px;
+  font-size: 1.111rem;
   margin-bottom: 0;
 }
 
@@ -88,7 +88,7 @@
 }
 .profile-box-info {
   font-family: Nunito;
-  font-size: 20px;
+  font-size: 1.111rem;
   font-weight: 400;
   line-height: 27.28px;
   text-align: left;
@@ -253,7 +253,7 @@
 .scroll {
   overflow: scroll;
   height: 100px;
-  font-size: 15px;
+  font-size: 0.833rem;
 }
 
 .channel-name {
@@ -266,7 +266,7 @@
   span {
     @include fontBold(
       $fw: 400,
-      $fs: 17px,
+      $fs: 0.944rem,
       $lh: 23.19px,
       $ta: center,
       $c: #000000

@@ -17,10 +17,10 @@
     padding-left: 24px;
     border-radius: 30px;
     box-sizing: content-box;
-    @include fontBold($fw: 400, $fs: 17px, $lh: 32px, $ta: left, $c: #686868);
+    @include fontBold($fw: 400, $fs: 0.944rem, $lh: 32px, $ta: left, $c: #686868);
 
     &::placeholder {
-      @include fontBold($fw: 400, $fs: 17px, $lh: 32px, $ta: left, $c: #686868);
+      @include fontBold($fw: 400, $fs: 0.944rem, $lh: 32px, $ta: left, $c: #686868);
     }
   }
 

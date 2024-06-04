@@ -49,13 +49,13 @@
 
   span {
     font-weight: 700;
-    font-size: 20px;
+    font-size: 1.111rem;
   }
 }
 
 .nothingFound {
   font-weight: 400;
-  font-size: 14px;
+  font-size: 0.778rem;
   line-height: 16.8px;
   color: #ed1e79;
   height: 17px;
@@ -170,7 +170,7 @@ mat-expansion-panel:last-child {
 
 .user-tag,
 .channel-tag {
-  font-size: 24px !important;
+  font-size: 1.333rem !important;
   font-weight: bold !important;
   font-family: "Nunito", serif;
 }
