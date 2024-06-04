@@ -55,7 +55,6 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   hovered: boolean = false;
   isMessageFromYou: boolean = false;
   messageDate: any;
-  emojiReactions: { emoji: string; users: string[] }[] = [];
   showReactionBar: boolean = false;
   showEditMessage: boolean = false;
   isLoading: boolean = true;
@@ -66,17 +65,14 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   savedMessage: string = '';
   isDesktop: boolean = false;
   @ViewChild('messageToEdit') messageToEdit!: ElementRef<HTMLTextAreaElement>;
-  // groupedMessages: { date: string; messages: ChannelMessage[] }[] = [];
   previousMessageDate: string;
   routeSubscription: Subscription | undefined;
 
   async ngOnInit(): Promise<void> {
     await this.delay(200);
     this.getItemValuesProfile('users', this.channelMessage.creator);
-    this.messageDate = this.channelMessage.createdAt;
     this.isMessageFromYou =
       this.authService.activeUserAccount.uid === this.channelMessage.creator;
-    this.fillEmojiReactions();    
     
    if (this.channelMessage.messageId !== undefined) {
       const docRef =
@@ -85,7 +81,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
         this.channelMessage.messageId;      
 
     this.routeSubscription = this.firestore.getChannelData(docRef).subscribe((data) => {
-        console.log('Game Data in Component:', data);
+        console.log('Message Data in Component:', data);
         // this.channelMessage.messageId = data['messageId'];
         // this.channelMessage.channelId = data['channelId'];
         this.channelMessage.creator = data['creator'];
@@ -94,6 +90,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
         this.channelMessage.reactions = data['reactions'];
         this.channelMessage.attachment = data['attachment'];
         this.channelMessage.threads = data['threads'];
+        this.fillEmojiReactions();
       });
     }
   }
@@ -112,11 +109,15 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   }
 
   fillEmojiReactions() {
-    if (this.channelMessage.reactions) {
-      this.emojiReactions = this.emojiReactions.concat(
-        this.channelMessage.reactions
-      );
-    }
+
+    const filterEmojisWithUsers = (data: any[]) => {
+      return data.filter(entry => entry.users.length > 0);
+  };
+  
+  const filteredData = filterEmojisWithUsers(this.channelMessage.reactions);
+  
+    this.channelMessage.reactions = filteredData;
+    this.saveMessage();
   }
 
   showEmojiSnackbar(emoji: string, user: string) {
@@ -151,25 +152,6 @@ export class ConversationComponent implements OnInit, AfterViewInit {
     }
   }
 
-  testMap() {
-    let channelMessageInstance = new ChannelMessage(this.channelMessage);
-
-    channelMessageInstance.messageId = this.channelMessage.messageId;
-    channelMessageInstance.reactions = this.emojiReactions;
-
-    // Update the channel message in Firestore with the new reactions
-    if (
-      channelMessageInstance.messageId &&
-      channelMessageInstance.messageId !== ''
-    ) {
-      this.firestore.updateChannelMessage(
-        channelMessageInstance.channelId,
-        channelMessageInstance.messageId,
-        channelMessageInstance
-      );
-    }
-  }
-
   openEmojiPicker(): void {
     const dialogRef = this.dialog.open(EmojiPickerComponent, {
       width: '400px',
@@ -180,46 +162,45 @@ export class ConversationComponent implements OnInit, AfterViewInit {
       console.log('Empfangenes Emoji:', selectedEmoji);
       this.addEmojiReaction(selectedEmoji);
       dialogRef.close();
-      this.testMap();
     });
   }
 
   addEmojiReaction(selectedEmoji: string) {
-    const existingEmoji = this.emojiReactions.find(
-      (e) => e.emoji === selectedEmoji
+    const existingEmoji = this.channelMessage.reactions.find(
+        (e) => e.emoji === selectedEmoji
     );
+    const userId = this.authService.activeUserAccount.uid;
+    
     if (existingEmoji) {
-      // Add the user to the list of users who reacted with this emoji
-      existingEmoji.users.push(this.authService.activeUserAccount.uid);
+        if (!existingEmoji.users.includes(userId)) {
+            existingEmoji.users.push(userId);
+        }
     } else {
-      // If the emoji does not exist yet, create a new entry with the user
-      this.emojiReactions.push({
-        emoji: selectedEmoji,
-        users: [this.authService.activeUserAccount.uid],
-      });
+        this.channelMessage.reactions.push({
+            emoji: selectedEmoji,
+            users: [userId],
+        });
     }
-    console.log('Emoji-Reaktionen:', this.emojiReactions);
-    this.testMap();
 
-    // Show the snackbar
+    this.saveMessage();
+
     this.showEmojiSnackbar(
-      selectedEmoji,
-      this.authService.activeUserAccount.displayName
+        selectedEmoji,
+        this.authService.activeUserAccount.displayName
     );
-  }
+}
 
-  getUserReactionCount(selectedEmoji: string): number {
-    const existingEmoji = this.emojiReactions.find(
-      (e) => e.emoji === selectedEmoji
+getUserReactionCount(selectedEmoji: string): number {
+    const existingEmoji = this.channelMessage.reactions.find(
+        (e) => e.emoji === selectedEmoji
     );
     if (existingEmoji && existingEmoji.users) {
-      // Zählt die Anzahl der Reaktionen des aktuellen Benutzers auf das Emoji
-      return existingEmoji.users.length;
+        const uniqueUsers = new Set(existingEmoji.users);
+        return uniqueUsers.size;
     } else {
-      // Wenn das Emoji noch nicht existiert, ist die Anzahl der Reaktionen 0
-      return 0;
+        return 0;
     }
-  }
+}
 
   toggleReaction(reaction: { emoji: string; users: string[] }): void {
     console.log(reaction.users.indexOf(this.authService.activeUserAccount.uid));
@@ -228,17 +209,15 @@ export class ConversationComponent implements OnInit, AfterViewInit {
       this.authService.activeUserAccount.uid
     );
     if (userIndex === -1) {
-      // If the user has not reacted with this emoji yet, add them to the list
       reaction.users.push(this.authService.activeUserAccount.uid);
       console.log('User hinzugefügt');
     } else {
-      // If the user has already reacted with this emoji, remove them from the list
       reaction.users.splice(userIndex, 1);
       console.log('User entfernt');
     }
-    this.updateReactionsInDatabase();
+        
+    this.saveMessage();
 
-    // Show the snackbar
     this.showEmojiSnackbar(
       reaction.emoji,
       this.authService.activeUserAccount.displayName
@@ -253,26 +232,6 @@ export class ConversationComponent implements OnInit, AfterViewInit {
       setFocusMessage.classList.remove('edit-message');
       this.isMessageDisabled = true;
       this.showEditMessage = false;
-    }
-  }
-
-  updateReactionsInDatabase(): void {
-    this.channelMessage.reactions = this.emojiReactions;
-
-    let channelMessageInstance = new ChannelMessage(this.channelMessage);
-    channelMessageInstance.messageId = this.channelMessage.messageId;
-    channelMessageInstance.reactions = this.emojiReactions;
-
-    // Update the channel message in Firestore with the new reactions
-    if (
-      channelMessageInstance.messageId &&
-      channelMessageInstance.messageId !== ''
-    ) {
-      this.firestore.updateChannelMessage(
-        channelMessageInstance.channelId,
-        channelMessageInstance.messageId,
-        channelMessageInstance
-      );
     }
   }
 
@@ -352,7 +311,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   saveMessage() {
     if (this.channelMessage.messageId !== undefined) {      
       this.firestore.saveMessageData('channels', this.channelMessage.channelId, this.channelMessage.messageId, this.channelMessage);
-    }
+    }    
   }
 
   async adjustTextareaHeight(textarea: HTMLTextAreaElement) {
