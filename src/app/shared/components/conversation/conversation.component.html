@@ -52,14 +52,9 @@
           >{{ channelMessage.text }}</textarea>
         @if(!isMessageDisabled){
         <div class="edit-bar">
-          <!-- NOTE Sacha Fragen, wie der Picker für die Textarea genutzt werden kann -->
-          <!-- <img
-            src="./assets/img/emojis/add_reaction.svg"
-            alt=""
-            (click)="openEmojiPicker()"
-          /> -->
-          <!-- NOTE Buttons verkleinern -->
-          <div class="buttons">
+          <div class="buttons"
+          [ngStyle]="{ 'justify-content': isMessageFromYou ? 'flex-start' : 'flex-end' }"
+          >
             <button
               class="btn-secondary pointer"
               type="button"
@@ -128,9 +123,9 @@
             <div
             *ngIf="reaction.emoji"
             class="reaction-group pointer"
-            (mouseenter)="showEmojiSnackbarStefan = true"
-            (mouseleave)="showEmojiSnackbarStefan = false; deleteHovered()"
-            (click)="toggleReaction(reaction); toggleReactionBar($event)"
+            (mouseenter)="showEmojiSnackbarTile = true"
+            (mouseleave)="showEmojiSnackbarTile = false"
+            (click)="toggleReaction(reaction)"
             >
             <span class="reaction-icon">{{
               reaction.emoji

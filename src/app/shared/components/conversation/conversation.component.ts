@@ -45,7 +45,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   router = inject(Router);
   matchMedia = inject(MatchMediaService);
   authService = inject(AuthService);
-  @Input() channelMessage!: ChannelMessage;  
+  @Input() channelMessage!: ChannelMessage;
   @Input() isChannel!: boolean;
   @Input() isThread!: boolean;
   @Input() hideCompleteReactionBar: boolean = false;
@@ -57,11 +57,10 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   messageDate: any;
   showReactionBar: boolean = false;
   showEditMessage: boolean = false;
-  isLoading: boolean = true;
   answerCount: number = 0;
   lastAnswerTime: any;
   isMessageDisabled: boolean = true;
-  showEmojiSnackbarStefan: boolean = false;
+  showEmojiSnackbarTile: boolean = false;
   savedMessage: string = '';
   isDesktop: boolean = false;
   @ViewChild('messageToEdit') messageToEdit!: ElementRef<HTMLTextAreaElement>;
@@ -73,55 +72,55 @@ export class ConversationComponent implements OnInit, AfterViewInit {
     this.getItemValuesProfile('users', this.channelMessage.creator);
     this.isMessageFromYou =
       this.authService.activeUserAccount.uid === this.channelMessage.creator;
-    
-   if (this.channelMessage.messageId !== undefined) {
+
+      if (this.channelMessage.messageId !== undefined) {
       const docRef =
         this.channelMessage.channelId +
         '/channelmessages/' +
-        this.channelMessage.messageId;      
+        this.channelMessage.messageId;
 
-    this.routeSubscription = this.firestore.getChannelData(docRef).subscribe((data) => {
-        console.log('Message Data in Component:', data);
-        // this.channelMessage.messageId = data['messageId'];
-        // this.channelMessage.channelId = data['channelId'];
-        this.channelMessage.creator = data['creator'];
-        this.channelMessage.createdAt = data['createdAt'];
-        this.channelMessage.text = data['text'];
-        this.channelMessage.reactions = data['reactions'];
-        this.channelMessage.attachment = data['attachment'];
-        this.channelMessage.threads = data['threads'];
-        this.fillEmojiReactions();
-      });
+      this.routeSubscription = this.firestore
+        .getChannelData(docRef)
+        .subscribe((data) => {
+          console.log('Message Data in Component:', data);
+          // this.channelMessage.messageId = data['messageId'];
+          // this.channelMessage.channelId = data['channelId'];
+          this.channelMessage.creator = data['creator'];
+          this.channelMessage.createdAt = data['createdAt'];
+          this.channelMessage.text = data['text'];
+          this.channelMessage.reactions = data['reactions'];
+          this.channelMessage.attachment = data['attachment'];
+          this.channelMessage.threads = data['threads'];
+          this.adjustTextareaHeight(this.messageToEdit.nativeElement);
+          this.fillEmojiReactions();
+        });
     }
   }
 
   async ngAfterViewInit() {
     await this.delay(200);
     this.adjustTextareaHeight(this.messageToEdit.nativeElement);
-    this.isLoading = true;    
   }
 
   ngOnDestroyy() {
-    this.isLoading = true;
     if (this.routeSubscription) {
       this.routeSubscription.unsubscribe();
-    }    
+    }
   }
 
   fillEmojiReactions() {
-
     const filterEmojisWithUsers = (data: any[]) => {
-      return data.filter(entry => entry.users.length > 0);
-  };
-  
-  const filteredData = filterEmojisWithUsers(this.channelMessage.reactions);
-  
+      return data.filter((entry) => entry.users.length > 0);
+    };
+
+    const filteredData = filterEmojisWithUsers(this.channelMessage.reactions);
+
     this.channelMessage.reactions = filteredData;
     this.saveMessage();
   }
 
   showEmojiSnackbar(emoji: string, user: string) {
-    const reactionGroupDiv = document.querySelector('.reaction-snackbar');
+    const reactionGroupDiv = document.querySelector('.reaction-group');
     if (reactionGroupDiv) {
       const rect = reactionGroupDiv.getBoundingClientRect();
       const snackbarHeight = 100; // Ersetzen Sie dies durch die tatsächliche Höhe Ihrer Snackbar
@@ -159,7 +158,6 @@ export class ConversationComponent implements OnInit, AfterViewInit {
     });
 
     dialogRef.componentInstance.emojiSelect.subscribe((selectedEmoji) => {
-      console.log('Empfangenes Emoji:', selectedEmoji);
       this.addEmojiReaction(selectedEmoji);
       dialogRef.close();
     });
@@ -167,55 +165,50 @@ export class ConversationComponent implements OnInit, AfterViewInit {
 
   addEmojiReaction(selectedEmoji: string) {
     const existingEmoji = this.channelMessage.reactions.find(
-        (e) => e.emoji === selectedEmoji
+      (e) => e.emoji === selectedEmoji
     );
     const userId = this.authService.activeUserAccount.uid;
-    
+
     if (existingEmoji) {
-        if (!existingEmoji.users.includes(userId)) {
-            existingEmoji.users.push(userId);
-        }
+      if (!existingEmoji.users.includes(userId)) {
+        existingEmoji.users.push(userId);
+      }
     } else {
-        this.channelMessage.reactions.push({
-            emoji: selectedEmoji,
-            users: [userId],
-        });
+      this.channelMessage.reactions.push({
+        emoji: selectedEmoji,
+        users: [userId],
+      });
     }
 
     this.saveMessage();
 
     this.showEmojiSnackbar(
-        selectedEmoji,
-        this.authService.activeUserAccount.displayName
+      selectedEmoji,
+      this.authService.activeUserAccount.displayName
     );
-}
+  }
 
-getUserReactionCount(selectedEmoji: string): number {
+  getUserReactionCount(selectedEmoji: string): number {
     const existingEmoji = this.channelMessage.reactions.find(
-        (e) => e.emoji === selectedEmoji
+      (e) => e.emoji === selectedEmoji
     );
     if (existingEmoji && existingEmoji.users) {
-        const uniqueUsers = new Set(existingEmoji.users);
-        return uniqueUsers.size;
+      const uniqueUsers = new Set(existingEmoji.users);
+      return uniqueUsers.size;
     } else {
-        return 0;
+      return 0;
     }
-}
+  }
 
-  toggleReaction(reaction: { emoji: string; users: string[] }): void {
-    console.log(reaction.users.indexOf(this.authService.activeUserAccount.uid));
-    console.log('toggleReaction called');
+  toggleReaction(reaction: { emoji: string; users: string[] }): void {    
     const userIndex = reaction.users.indexOf(
       this.authService.activeUserAccount.uid
     );
     if (userIndex === -1) {
       reaction.users.push(this.authService.activeUserAccount.uid);
-      console.log('User hinzugefügt');
     } else {
       reaction.users.splice(userIndex, 1);
-      console.log('User entfernt');
-    }
-        
+    }    
     this.saveMessage();
 
     this.showEmojiSnackbar(
@@ -257,8 +250,6 @@ getUserReactionCount(selectedEmoji: string): number {
           this.showReactionBar = false;
           this.messageToEdit.nativeElement.focus();
         }, 200);
-      } else {
-        console.log('nicht gefunden');
       }
     }
   }
@@ -275,28 +266,11 @@ getUserReactionCount(selectedEmoji: string): number {
     }, 200);
   }
 
-  async changeMessage() {
-    await this.delay(100);
-    const colId = this.isChannel == true ? 'channels' : 'messages';
-    let docId = this.channelMessage.channelId;
+  async changeMessage() {    
     let messageId = this.channelMessage.messageId;
 
     if (messageId) {
       const setFocusMessage = this.messageToEdit.nativeElement;
-      let checkThread: boolean;
-
-      if (this.isThread) {
-        docId = this.matchMedia.channelId;
-        messageId =
-          'channelmessages/' +
-          this.matchMedia.subID +
-          '/threads/' +
-          this.channelMessage.channelId;
-        checkThread = true;
-      } else {
-        checkThread = false;
-      }
-
       this.channelMessage.text = setFocusMessage.value;
       this.saveMessage();
 
@@ -309,9 +283,14 @@ getUserReactionCount(selectedEmoji: string): number {
   }
 
   saveMessage() {
-    if (this.channelMessage.messageId !== undefined) {      
-      this.firestore.saveMessageData('channels', this.channelMessage.channelId, this.channelMessage.messageId, this.channelMessage);
-    }    
+    if (this.channelMessage.messageId !== undefined) {
+      this.firestore.saveMessageData(
+        'channels',
+        this.channelMessage.channelId,
+        this.channelMessage.messageId,
+        this.channelMessage
+      );
+    }
   }
 
   async adjustTextareaHeight(textarea: HTMLTextAreaElement) {

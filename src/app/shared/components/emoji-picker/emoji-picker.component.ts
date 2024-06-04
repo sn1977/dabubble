@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import {Emoji, EmojiEvent} from '@ctrl/ngx-emoji-mart/ngx-emoji';
+import { EmojiEvent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 
 @Component({
@@ -16,8 +16,7 @@ export class EmojiPickerComponent {
 
   onEmojiSelect(event: EmojiEvent) {
     if (event.emoji && event.emoji.unified) {
-      const emojiUnicode = this.convertToNative(event.emoji.unified);
-      console.log('Ausgewähltes Emoji:', emojiUnicode);
+      const emojiUnicode = this.convertToNative(event.emoji.unified);      
       this.emojiSelect.emit(emojiUnicode);
     }
   }
