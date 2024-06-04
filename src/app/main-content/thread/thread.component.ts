@@ -92,9 +92,8 @@ export class ThreadComponent implements OnInit, AfterViewChecked, OnDestroy {
     this.newMessage = false;    
     this.headerStateService.setAlternativeHeader(true);
     this.scrollToBottom();
-    this.firestore.getSingleMessageData('channels', this.matchMedia.channelId + '/channelmessages/' + this.matchMedia.subID, () => {});
-    this.firestore.getAllChannelThreads(this.matchMedia.channelId, 'channelmessages/' + this.matchMedia.subID + '/threads');
-
+    // this.firestore.getSingleMessageData('channels', this.matchMedia.channelId + '/channelmessages/' + this.matchMedia.subID, () => {});
+    // this.firestore.getAllChannelThreads(this.matchMedia.channelId, 'channelmessages/' + this.matchMedia.subID + '/threads');
     this.textBoxData.channelId = this.matchMedia.channelId;
     this.textBoxData.subcollection = 'channelmessages/' + this.matchMedia.subID + '/threads';
     

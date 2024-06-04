@@ -49,9 +49,7 @@
           required
           (input)="adjustTextareaHeight(messageToEdit)"
           (change)="changeMessage(); adjustTextareaHeight(messageToEdit)"
-          >{{ channelMessage.text }}          
-          </textarea
-        >
+          >{{ channelMessage.text }}</textarea>
         @if(!isMessageDisabled){
         <div class="edit-bar">
           <!-- NOTE Sacha Fragen, wie der Picker für die Textarea genutzt werden kann -->

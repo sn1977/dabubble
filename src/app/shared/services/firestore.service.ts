@@ -282,20 +282,20 @@ export class FirestoreService {
     );
   }
 
-  async getSingleMessageData(
-    colId: string,
-    docId: string,
-    callback: () => void
-  ) {
-    this.singleMessageUnsubscribe = onSnapshot(
-      this.getSingleDocRef(colId, docId),
-      (element) => {
-        const data = this.setChannelMessageObject(element.data(), element.id);
-        this.channelMessage = new ChannelMessage(data);
-        callback();
-      }
-    );
-  }
+  // async getSingleMessageData(
+  //   colId: string,
+  //   docId: string,
+  //   callback: () => void
+  // ) {
+  //   this.singleMessageUnsubscribe = onSnapshot(
+  //     this.getSingleDocRef(colId, docId),
+  //     (element) => {
+  //       const data = this.setChannelMessageObject(element.data(), element.id);
+  //       this.channelMessage = new ChannelMessage(data);
+  //       callback();
+  //     }
+  //   );
+  // }
 
   getAllChannelMessages(
     channelId: string,
@@ -314,31 +314,6 @@ export class FirestoreService {
         this.channelMessages = [];
         snapshot.forEach((doc) => {
           this.channelMessages.push(
-            this.setChannelMessageObject(doc.data(), doc.id)
-          );
-        });
-      },
-      (error) => {
-        console.error('Error fetching snapshot: ', error);
-      }
-    );
-
-    return unsubscribe;
-  }
-
-  getAllChannelThreads(channelId: string, subcollection: string): Unsubscribe {
-    const ref = collection(
-      this.firestore,
-      `channels/${channelId}/${subcollection}`
-    );
-    const querySnapshot = query(ref, orderBy('createdAt'));
-
-    const unsubscribe = onSnapshot(
-      querySnapshot,
-      (snapshot) => {
-        this.channelThreads = [];
-        snapshot.forEach((doc) => {
-          this.channelThreads.push(
             this.setChannelMessageObject(doc.data(), doc.id)
           );
         });
@@ -448,65 +423,12 @@ export class FirestoreService {
     console.log(messageRef);
   }
 
-  async getThreadData(
-    channelId: string,
-    messageId: string | undefined
-  ): Promise<{ threadCount: number; newestCreatedAt: any }> {
-    return new Promise((resolve, reject) => {
-      const threadsRef = collection(
-        this.getChannelsRef(),
-        `${channelId}/channelmessages/${messageId}/threads`
-      );
-
-      onSnapshot(
-        threadsRef,
-        (snapshot) => {
-          const threadCount = snapshot.size;
-          const newestThreadQuery = query(
-            threadsRef,
-            orderBy('createdAt', 'desc'),
-            limit(1)
-          );
-          onSnapshot(
-            newestThreadQuery,
-            (newestSnapshot) => {
-              let newestCreatedAt = null;
-              if (!newestSnapshot.empty) {
-                const newestThreadDoc = newestSnapshot.docs[0];
-                newestCreatedAt = newestThreadDoc.data()['createdAt'];
-              }
-              resolve({ threadCount, newestCreatedAt });
-            },
-            reject
-          );
-        },
-        reject
-      );
+  async saveMessageData(colId: string, docId: string, messageId: string, item: object) {    
+    const messageDoc = docId + '/channelmessages/' + messageId;    
+    const docRef = this.getSingleDocRef(colId, messageDoc);
+    await updateDoc(docRef, item).catch((err) => {
+       console.log(err);    
     });
-  }
-
-  async updateMessage(
-    colId: string,
-    docId: string,
-    id: string,
-    updateMessage: string,
-    isThread: boolean
-  ) {
-    let documentRef;
-
-    if (isThread) {
-      documentRef = doc(this.getSingleDocRef(colId, docId), id);
-    } else {
-      const collection = colId === 'channels' ? 'channels' : 'messages';
-      const subcollection =
-        collection === 'channels' ? 'channelmessages' : 'chat';
-
-      documentRef = doc(
-        this.getSingleDocRef(collection, docId),
-        subcollection,
-        id
-      );
-    }
   }
 
   getChannelData(channelId: string): Observable<DocumentData> {

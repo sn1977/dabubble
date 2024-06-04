@@ -45,9 +45,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   router = inject(Router);
   matchMedia = inject(MatchMediaService);
   authService = inject(AuthService);
-  @Input() channelMessage!: ChannelMessage;
-  @Input() channelID: string | undefined;
-  @Input() messageID: string | undefined;
+  @Input() channelMessage!: ChannelMessage;  
   @Input() isChannel!: boolean;
   @Input() isThread!: boolean;
   @Input() hideCompleteReactionBar: boolean = false;
@@ -68,7 +66,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   savedMessage: string = '';
   isDesktop: boolean = false;
   @ViewChild('messageToEdit') messageToEdit!: ElementRef<HTMLTextAreaElement>;
-  groupedMessages: { date: string; messages: ChannelMessage[] }[] = [];
+  // groupedMessages: { date: string; messages: ChannelMessage[] }[] = [];
   previousMessageDate: string;
   routeSubscription: Subscription | undefined;
 
@@ -339,19 +337,21 @@ export class ConversationComponent implements OnInit, AfterViewInit {
       } else {
         checkThread = false;
       }
-      this.firestore.updateMessage(
-        colId,
-        docId,
-        messageId,
-        setFocusMessage.value,
-        checkThread
-      );
+
+      this.channelMessage.text = setFocusMessage.value;
+      this.saveMessage();
 
       setTimeout(() => {
         setFocusMessage.classList.remove('edit-message');
         this.isMessageDisabled = true;
         this.showReactionBar = false;
       }, 200);
+    }
+  }
+
+  saveMessage() {
+    if (this.channelMessage.messageId !== undefined) {      
+      this.firestore.saveMessageData('channels', this.channelMessage.channelId, this.channelMessage.messageId, this.channelMessage);
     }
   }
 
