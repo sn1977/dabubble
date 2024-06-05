@@ -26,7 +26,7 @@ mat-card {
   position: relative;
   max-width: 60vw;
   height: 70vh !important;
-  overflow: scroll;
+  overflow: auto;
   @include dFlex($jc: flex-start, $ai: flex-start, $fd: column, $g: 20px);
   @include card($w: 100%, $h: auto, $br: 30px, $ptb: 48px, $plr: 56px);
 
@@ -35,7 +35,7 @@ mat-card {
     @include dFlex($jc: flex-start, $ai: flex-start, $fd: column, $g: 15px);
     padding: 0;
     margin-top: -8px;
-    overflow: scroll;
+    // overflow: scroll;
 
     mat-card-title {
       @include fontBold(
@@ -47,7 +47,7 @@ mat-card {
       );
     }
 
-    mat-card-subtitle {
+    .test {
       @include dFlex($jc: flex-start, $ai: flex-start, $fd: column, $g: 15px);
       font-family: "Nunito", serif;
       font-weight: 400;
@@ -74,7 +74,7 @@ mat-card-title {
   display: flex;
 }
 
-mat-card-subtitle {
+/* mat-card-subtitle {
   font-family: "Nunito", serif;
   font-weight: 400;
   font-size: 1.111rem;
@@ -82,7 +82,7 @@ mat-card-subtitle {
   text-align: center;
   color: #000;
   display: contents;
-}
+} */
 
 .menu-hover{
   width: 40px;
@@ -92,3 +92,15 @@ mat-card-subtitle {
     border-radius: 50px;
   }
 }
+
+/* app.component.scss */
+.content {
+  height: 100%;
+  overflow-x: hidden;
+}
+
+  .content {
+  scrollbar-width: thin;
+  scrollbar-color: #797EF3 #fff;
+}
+
