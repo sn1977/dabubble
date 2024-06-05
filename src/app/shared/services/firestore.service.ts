@@ -16,6 +16,7 @@ import {
   limit,
   DocumentReference,
   DocumentData,
+  increment,
 } from '@angular/fire/firestore';
 import { User } from '../../../models/user.class';
 import { Channel } from '../../../models/channel.class';
@@ -43,9 +44,9 @@ export class FirestoreService {
   conversation: string | undefined;
   channelMessagesCount: number = 0;
   matchMedia = inject(MatchMediaService);
-  
+
   unsubUsers;
-  unsubChannel;  
+  unsubChannel;
 
   constructor() {
     this.unsubUsers = this.subUserList();
@@ -66,6 +67,13 @@ export class FirestoreService {
 
   getSingleDocRef(colId: string, docId: string) {
     return doc(collection(this.firestore, colId), docId);
+  }
+
+  getChannelThreadsRef(channelId: string, messageId: string) {
+    return collection(
+      this.firestore,
+      `channels/${channelId}/channelmessages/${messageId}/threads`
+    );
   }
 
   subUserList() {
@@ -128,6 +136,7 @@ export class FirestoreService {
       reactions: obj.reactions,
       attachment: obj.attachment,
       threads: obj.threads,
+      lastUpdate: obj.lastUpdate,
     };
   }
 
@@ -242,7 +251,7 @@ export class FirestoreService {
           this.matchMedia.scrollToBottom = true;
         } else {
           this.matchMedia.scrollToBottomThread = true;
-          console.log('erhöhen um +1');          
+          console.log('erhöhen um +1');
         }
       });
   }
@@ -281,21 +290,6 @@ export class FirestoreService {
       }
     );
   }
-
-  // async getSingleMessageData(
-  //   colId: string,
-  //   docId: string,
-  //   callback: () => void
-  // ) {
-  //   this.singleMessageUnsubscribe = onSnapshot(
-  //     this.getSingleDocRef(colId, docId),
-  //     (element) => {
-  //       const data = this.setChannelMessageObject(element.data(), element.id);
-  //       this.channelMessage = new ChannelMessage(data);
-  //       callback();
-  //     }
-  //   );
-  // }
 
   getAllChannelMessages(
     channelId: string,
@@ -423,13 +417,29 @@ export class FirestoreService {
     console.log(messageRef);
   }
 
-  async saveMessageData(colId: string, docId: string, messageId: string, item: object) {    
-    const messageDoc = docId + '/channelmessages/' + messageId;    
+  async saveMessageData(
+    colId: string,
+    docId: string,
+    messageId: string,
+    item: object
+  ) {
+    const messageDoc = docId + '/channelmessages/' + messageId;
     const docRef = this.getSingleDocRef(colId, messageDoc);
     await updateDoc(docRef, item).catch((err) => {
-       console.log(err);    
+      console.log(err);
     });
   }
+
+  // async updateCounter(){
+  //   const washingtonRef = doc(db, "cities", "DC");
+  
+  //   // Atomically increment the population of the city by 50.
+  //   await updateDoc(washingtonRef, {
+  //     threads: increment(1),
+  //     lastUpdate: serverTimestamp(),
+  //   });
+  // }
+
 
   getChannelData(channelId: string): Observable<DocumentData> {
     const docRef = this.getSingleDocRef('channels', channelId);
@@ -439,6 +449,33 @@ export class FirestoreService {
         const data = snapshot.data();
         observer.next(data);
       });
+
+      return () => unsubscribe();
+    });
+  }
+
+  // Methode, um auf die Subcollection 'threads' zuzugreifen und sie zu überwachen
+  getThreadsData(
+    channelId: string,
+    messageId: string
+  ): Observable<DocumentData[]> {
+    const threadsRef = this.getChannelThreadsRef(channelId, messageId);
+    const threadsQuery = query(threadsRef);
+
+    return new Observable<DocumentData[]>((observer) => {
+      const unsubscribe = onSnapshot(
+        threadsQuery,
+        (snapshot) => {
+          const threadsData: DocumentData[] = [];
+          snapshot.forEach((doc) => {
+            threadsData.push(doc.data());
+          });
+          observer.next(threadsData);
+        },
+        (error) => {
+          observer.error(error);
+        }
+      );
 
       return () => unsubscribe();
     });

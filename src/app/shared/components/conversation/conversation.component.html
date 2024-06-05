@@ -90,7 +90,7 @@
         } }
       </div>
       } 
-      @if(channelMessage.threads.length !== 0){
+      @if(channelMessage.threads !== 0){
       <div
         class="thread-infos"
         [ngStyle]="{
@@ -99,8 +99,8 @@
       >
         <span class="answer" (click)="doNotClose($event); openThread()"
           >
-          {{ channelMessage.threads.length }} 
-          @if(channelMessage.threads.length == 1){
+          {{ channelMessage.threads }} 
+          @if(channelMessage.threads == 1){
             Antwort
           }@else {
             Antworten
@@ -111,7 +111,7 @@
           class="last-thread"
           [ngStyle]="{ color: hovered ? '#000000' : '#686868' }"
           >Letzte Antwort
-          {{ this.dateFormatService.formatTime(this.lastAnswerTime) }}
+          {{ this.dateFormatService.formatTime(channelMessage.lastUpdate) }}
         </span>
       </div>
       }

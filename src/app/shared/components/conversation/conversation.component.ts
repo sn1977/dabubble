@@ -46,6 +46,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   matchMedia = inject(MatchMediaService);
   authService = inject(AuthService);
   @Input() channelMessage!: ChannelMessage;
+  subChannelMessage: ChannelMessage = new ChannelMessage();
   @Input() isChannel!: boolean;
   @Input() isThread!: boolean;
   @Input() hideCompleteReactionBar: boolean = false;
@@ -56,16 +57,16 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   isMessageFromYou: boolean = false;
   messageDate: any;
   showReactionBar: boolean = false;
-  showEditMessage: boolean = false;
-  answerCount: number = 0;
-  lastAnswerTime: any;
+  showEditMessage: boolean = false;    
   isMessageDisabled: boolean = true;
   showEmojiSnackbarTile: boolean = false;
   savedMessage: string = '';
   isDesktop: boolean = false;
   @ViewChild('messageToEdit') messageToEdit!: ElementRef<HTMLTextAreaElement>;
   previousMessageDate: string;
-  routeSubscription: Subscription | undefined;
+  mainCollection: Subscription | undefined;
+  subCollection: Subscription | undefined;
+  threadsCount: number = 0;
 
   async ngOnInit(): Promise<void> {
     await this.delay(200);
@@ -73,28 +74,31 @@ export class ConversationComponent implements OnInit, AfterViewInit {
     this.isMessageFromYou =
       this.authService.activeUserAccount.uid === this.channelMessage.creator;
 
-      if (this.channelMessage.messageId !== undefined) {
-      const docRef =
-        this.channelMessage.channelId +
-        '/channelmessages/' +
-        this.channelMessage.messageId;
-
-      this.routeSubscription = this.firestore
-        .getChannelData(docRef)
-        .subscribe((data) => {
-          console.log('Message Data in Component:', data);
-          // this.channelMessage.messageId = data['messageId'];
-          // this.channelMessage.channelId = data['channelId'];
-          this.channelMessage.creator = data['creator'];
-          this.channelMessage.createdAt = data['createdAt'];
-          this.channelMessage.text = data['text'];
-          this.channelMessage.reactions = data['reactions'];
-          this.channelMessage.attachment = data['attachment'];
-          this.channelMessage.threads = data['threads'];
-          this.adjustTextareaHeight(this.messageToEdit.nativeElement);
-          this.fillEmojiReactions();
-        });
+    if (this.channelMessage.messageId !== undefined) {
+      const docRef = this.channelMessage.channelId + '/channelmessages/' + this.channelMessage.messageId;
+      this.getAllChannelMessageData(docRef);
+      //this.delay(1000);
+      //this.getAllThreadData(this.channelMessage.channelId, this.channelMessage.messageId!);
     }
+  }
+
+  getAllChannelMessageData(docRef: string) {
+    this.mainCollection = this.firestore
+      .getChannelData(docRef)
+      .subscribe((data) => {
+        console.log('MainCollection Data in Component:', data);
+        this.channelMessage.messageId = data['messageId'];
+        this.channelMessage.channelId = data['channelId'];
+        this.channelMessage.creator = data['creator'];
+        this.channelMessage.createdAt = data['createdAt'];
+        this.channelMessage.text = data['text'];
+        this.channelMessage.reactions = data['reactions'];
+        this.channelMessage.attachment = data['attachment'];
+        this.channelMessage.threads = data['threads'];
+        this.channelMessage.lastUpdate = data['lastUpdate'];
+        this.adjustTextareaHeight(this.messageToEdit.nativeElement);
+        this.fillEmojiReactions();
+      });
   }
 
   async ngAfterViewInit() {
@@ -102,9 +106,35 @@ export class ConversationComponent implements OnInit, AfterViewInit {
     this.adjustTextareaHeight(this.messageToEdit.nativeElement);
   }
 
-  ngOnDestroyy() {
-    if (this.routeSubscription) {
-      this.routeSubscription.unsubscribe();
+  getAllThreadData(channelId: string, messageId: string) {
+    console.log('klappt');
+
+    this.subCollection = this.firestore
+      .getThreadsData(channelId, messageId)
+      .subscribe((threadsData) => {
+        console.log('SubCollection Data in Component:', threadsData);
+        this.threadsCount = threadsData.length;
+
+        // this.channelMessage.messageId = data['messageId'];
+        // this.channelMessage.channelId = data['channelId'];
+        // this.subChannelMessage.creator = threadsData['creator'];
+        // this.subChannelMessage.createdAt = threadsData['createdAt'];
+        // this.subChannelMessage.text = threadsData['text'];
+        // this.subChannelMessage.reactions = threadsData['reactions'];
+        // this.subChannelMessage.attachment = threadsData['attachment'];
+        //this.subChannelMessage.threads = threadsData['threads'];
+        // this.adjustTextareaHeight(this.messageToEdit.nativeElement);
+        // this.fillEmojiReactions();
+      });
+  }
+
+  ngOnDestroy() {
+    if (this.mainCollection) {
+      this.mainCollection.unsubscribe();
+    }
+
+    if (this.subCollection) {
+      this.subCollection.unsubscribe();
     }
   }
 
@@ -200,7 +230,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
     }
   }
 
-  toggleReaction(reaction: { emoji: string; users: string[] }): void {    
+  toggleReaction(reaction: { emoji: string; users: string[] }): void {
     const userIndex = reaction.users.indexOf(
       this.authService.activeUserAccount.uid
     );
@@ -208,7 +238,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
       reaction.users.push(this.authService.activeUserAccount.uid);
     } else {
       reaction.users.splice(userIndex, 1);
-    }    
+    }
     this.saveMessage();
 
     this.showEmojiSnackbar(
@@ -266,7 +296,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
     }, 200);
   }
 
-  async changeMessage() {    
+  async changeMessage() {
     let messageId = this.channelMessage.messageId;
 
     if (messageId) {

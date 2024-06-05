@@ -66,7 +66,8 @@ export class TextBoxComponent implements AfterViewInit{
         collection: this.textBoxData.collection,
         subcollection: this.textBoxData.subcollection,
         attachment: [`${this.textBoxData.inputField}`],
-        threads: [],
+        threads: 0,
+        lastUpdate: ''
       });
       
       this.firestore.addChannelMessage(
