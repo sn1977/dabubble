@@ -1,4 +1,4 @@
-import {Component, OnInit, inject, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit, inject, ViewEncapsulation, OnDestroy} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { LogInComponent } from './main-content/auth/log-in/log-in.component';
@@ -26,7 +26,7 @@ import { MatchMediaService } from './shared/services/match-media.service';
         DesktopContentComponent,
     ]
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit, OnDestroy {
 
   title = 'dabubble';
   authService = inject(AuthService);
@@ -35,6 +35,8 @@ export class AppComponent implements OnInit{
   isMobileLandscapeOrientation: boolean = false;
   isDesktop: boolean = false;
   isLoggedIn: boolean = false;
+
+  constructor(private matchMediaService: MatchMediaService) {}
 
   ngOnInit(): void {
     this.authService.user$.subscribe(user => {
@@ -50,6 +52,15 @@ export class AppComponent implements OnInit{
       }
     })
 
+    window.addEventListener('resize', this.onResize.bind(this));
+    this.onResize(); // Initial check when component mounts
+  }
+
+  ngOnDestroy(): void {
+    window.removeEventListener('resize', this.onResize.bind(this));
+  }
+
+  onResize(event?: UIEvent): void {
     this.isMobileLandscapeOrientation = this.matchMedia.checkIsMobileOrientation();
     this.isDesktop = this.matchMedia.checkIsDesktop();
   }
