@@ -331,3 +331,29 @@ mat-card {
   //   opacity: 0;
   // }
 }
+
+.newDABubble {
+  position: absolute;
+  top: 75px;
+  left: 24px;
+  width: 90%;
+  height: 200px;
+  display: flex;
+  // justify-content: flex-end;
+  flex-direction: column;
+  gap: 25px;
+
+  span {
+    display: flex;
+    justify-content: flex-end;
+    font-family: "Nunito";
+    font-size: 1rem;
+    font-weight: 400;
+    color: #000;
+  }
+
+  :nth-last-child(1) {
+   color: #797EF3;
+   cursor: pointer;
+  }
+}

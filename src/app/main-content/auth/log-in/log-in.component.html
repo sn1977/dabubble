@@ -4,6 +4,7 @@
 
 <div class="content">
   
+  
 
   <!-- @if(isDesktop){
     <div class="logo-animated-desktop"
@@ -26,7 +27,7 @@
 
 
   <mat-card>
-    <mat-card-header>
+        <mat-card-header>
       <div class="headline">
         <mat-card-title>Anmeldung</mat-card-title>
         <mat-card-subtitle>
@@ -126,6 +127,10 @@
 
   @if(isDesktop){
     <app-desktop-footer></app-desktop-footer>
+    <div class="newDABubble">
+      <span>Neu bei DABubble?</span>
+      <span class="btn-secondary pointer" routerLink="/register" routerLinkActive="router-link-active">Konto erstellen</span>
+    </div>
   }@else {
     <div class="buttons" style="flex-direction: column">
       <span>Neu bei DABubble?</span>
