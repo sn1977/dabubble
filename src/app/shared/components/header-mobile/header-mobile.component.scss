@@ -42,3 +42,10 @@ app-desktop-overlay{
   top: 80px;
   right: 305px;
 }
+
+@media (min-width: 431px) {
+  .content-header-mobile {
+    justify-content: space-between !important;
+    padding-right: 8px;
+  }
+}
