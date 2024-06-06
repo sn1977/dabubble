@@ -430,7 +430,7 @@ export class FirestoreService {
     });
   }
 
-  // async updateCounter(){
+  // async updateThreadCounter(){
   //   const washingtonRef = doc(db, "cities", "DC");
   
   //   // Atomically increment the population of the city by 50.
@@ -454,30 +454,4 @@ export class FirestoreService {
     });
   }
 
-  // Methode, um auf die Subcollection 'threads' zuzugreifen und sie zu überwachen
-  getThreadsData(
-    channelId: string,
-    messageId: string
-  ): Observable<DocumentData[]> {
-    const threadsRef = this.getChannelThreadsRef(channelId, messageId);
-    const threadsQuery = query(threadsRef);
-
-    return new Observable<DocumentData[]>((observer) => {
-      const unsubscribe = onSnapshot(
-        threadsQuery,
-        (snapshot) => {
-          const threadsData: DocumentData[] = [];
-          snapshot.forEach((doc) => {
-            threadsData.push(doc.data());
-          });
-          observer.next(threadsData);
-        },
-        (error) => {
-          observer.error(error);
-        }
-      );
-
-      return () => unsubscribe();
-    });
-  }
 }

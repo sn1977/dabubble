@@ -46,7 +46,6 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   matchMedia = inject(MatchMediaService);
   authService = inject(AuthService);
   @Input() channelMessage!: ChannelMessage;
-  subChannelMessage: ChannelMessage = new ChannelMessage();
   @Input() isChannel!: boolean;
   @Input() isThread!: boolean;
   @Input() hideCompleteReactionBar: boolean = false;
@@ -77,8 +76,6 @@ export class ConversationComponent implements OnInit, AfterViewInit {
     if (this.channelMessage.messageId !== undefined) {
       const docRef = this.channelMessage.channelId + '/channelmessages/' + this.channelMessage.messageId;
       this.getAllChannelMessageData(docRef);
-      //this.delay(1000);
-      //this.getAllThreadData(this.channelMessage.channelId, this.channelMessage.messageId!);
     }
   }
 
@@ -87,7 +84,6 @@ export class ConversationComponent implements OnInit, AfterViewInit {
       .getChannelData(docRef)
       .subscribe((data) => {
         console.log('MainCollection Data in Component:', data);
-        this.channelMessage.messageId = data['messageId'];
         this.channelMessage.channelId = data['channelId'];
         this.channelMessage.creator = data['creator'];
         this.channelMessage.createdAt = data['createdAt'];
@@ -104,28 +100,6 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   async ngAfterViewInit() {
     await this.delay(200);
     this.adjustTextareaHeight(this.messageToEdit.nativeElement);
-  }
-
-  getAllThreadData(channelId: string, messageId: string) {
-    console.log('klappt');
-
-    this.subCollection = this.firestore
-      .getThreadsData(channelId, messageId)
-      .subscribe((threadsData) => {
-        console.log('SubCollection Data in Component:', threadsData);
-        this.threadsCount = threadsData.length;
-
-        // this.channelMessage.messageId = data['messageId'];
-        // this.channelMessage.channelId = data['channelId'];
-        // this.subChannelMessage.creator = threadsData['creator'];
-        // this.subChannelMessage.createdAt = threadsData['createdAt'];
-        // this.subChannelMessage.text = threadsData['text'];
-        // this.subChannelMessage.reactions = threadsData['reactions'];
-        // this.subChannelMessage.attachment = threadsData['attachment'];
-        //this.subChannelMessage.threads = threadsData['threads'];
-        // this.adjustTextareaHeight(this.messageToEdit.nativeElement);
-        // this.fillEmojiReactions();
-      });
   }
 
   ngOnDestroy() {
@@ -268,6 +242,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   }
 
   editMessage(id?: string): void {
+    
     if (id) {
       this.isMessageDisabled = false;
       const setFocusMessage = this.messageToEdit.nativeElement;
