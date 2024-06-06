@@ -145,7 +145,7 @@ export class MainContentComponent implements OnInit {
     this.panels[index].titleColor = '#000000'; // Farbe, wenn geöffnet
     // panel._body.nativeElement.classList.remove('no-overflow');
     // panel._body.nativeElement.classList.remove('hide-scrollbar');
-    panel._body.nativeElement.classList.remove('hide-overflow');
+    // panel._body.nativeElement.classList.remove('hide-overflow');
   }
   
   onPanelClosed(panel: MatExpansionPanel, index: number) {
@@ -156,7 +156,7 @@ export class MainContentComponent implements OnInit {
     this.panels[index].titleColor = '#535AF1'; // Farbe, wenn geschlossen
     // panel._body.nativeElement.classList.add('no-overflow');
     // panel._body.nativeElement.classList.add('hide-scrollbar');
-    panel._body.nativeElement.classList.add('hide-overflow');
+    // panel._body.nativeElement.classList.add('hide-overflow');
   }
 
   onAddClick(event: MouseEvent): void {
