@@ -13,10 +13,10 @@ import {
   orderBy,
   getDocs,
   getDoc,
-  limit,
   DocumentReference,
   DocumentData,
   increment,
+  serverTimestamp,  
 } from '@angular/fire/firestore';
 import { User } from '../../../models/user.class';
 import { Channel } from '../../../models/channel.class';
@@ -29,7 +29,7 @@ import { MatchMediaService } from './match-media.service';
 @Injectable({
   providedIn: 'root',
 })
-export class FirestoreService {
+export class FirestoreService {  
   firestore: Firestore = inject(Firestore);
   router = inject(Router);
   activeUser: any = [];
@@ -136,7 +136,7 @@ export class FirestoreService {
       reactions: obj.reactions,
       attachment: obj.attachment,
       threads: obj.threads,
-      lastUpdate: obj.lastUpdate,
+      timestamp: obj.timestamp,
     };
   }
 
@@ -239,7 +239,26 @@ export class FirestoreService {
       });
   }
 
-  async addChannelMessage(message: ChannelMessage, docRef: string) {
+  // async addChannelMessage(message: ChannelMessage, docRef: string, type?: string) {
+  //   await addDoc(collection(this.firestore, docRef), message.toJSON())
+  //     .catch((err) => {
+  //       console.error(err);
+  //     })
+  //     .then((docRef) => {
+  //       console.log('Document written with ID: ', docRef?.id);
+
+  //       if (!this.matchMedia.showThread) {
+  //         this.matchMedia.scrollToBottom = true;
+  //       } else {
+  //         this.matchMedia.scrollToBottomThread = true;          
+  //         if(type === 'thread'){
+  //           this.updateThreadCounter();
+  //         }
+  //       }
+  //     });
+  // }
+
+  async addChannelMessage(message: ChannelMessage, docRef: string, type?: string) {
     await addDoc(collection(this.firestore, docRef), message.toJSON())
       .catch((err) => {
         console.error(err);
@@ -250,14 +269,19 @@ export class FirestoreService {
         if (!this.matchMedia.showThread) {
           this.matchMedia.scrollToBottom = true;
         } else {
-          this.matchMedia.scrollToBottomThread = true;
-          console.log('erhöhen um +1');
+          this.matchMedia.scrollToBottomThread = true;          
+          if(type === 'thread'){
+            this.updateThreadCounter();
+          }
         }
       });
   }
 
+  //message, this.textBoxData.collection, message.channelId, this.textBoxData.subcollection, type
+
   private singleItemUnsubscribe: Unsubscribe | undefined;
   private singleMessageUnsubscribe: Unsubscribe | undefined;
+  private singleChannelUnsubscribe: Unsubscribe | undefined;
 
   unsubscribeSingleUserData() {
     if (this.singleItemUnsubscribe) {
@@ -268,6 +292,12 @@ export class FirestoreService {
   unsubscribeSingleMessageData() {
     if (this.singleMessageUnsubscribe) {
       this.singleMessageUnsubscribe();
+    }
+  }
+
+  unsubscribeSingleChannelData() {
+    if (this.singleChannelUnsubscribe) {
+      this.singleChannelUnsubscribe();
     }
   }
 
@@ -430,16 +460,22 @@ export class FirestoreService {
     });
   }
 
-  // async updateThreadCounter(){
-  //   const washingtonRef = doc(db, "cities", "DC");
-  
-  //   // Atomically increment the population of the city by 50.
-  //   await updateDoc(washingtonRef, {
-  //     threads: increment(1),
-  //     lastUpdate: serverTimestamp(),
-  //   });
-  // }
+  async updateThreadCounter(){    
+    const ThreadsRef = doc(this.getChannelsRef(), this.matchMedia.channelId + '/channelmessages/' + this.matchMedia.subID);
+    await updateDoc(ThreadsRef, {
+       threads: increment(1),
+       timestamp: serverTimestamp()
+    });
 
+//     const docRef = doc(db, 'objects', 'some-id');
+
+// // Update the timestamp field with the value from the server
+// const updateTimestamp = await updateDoc(docRef, {
+//     timestamp: serverTimestamp()
+// });
+
+
+  }
 
   getChannelData(channelId: string): Observable<DocumentData> {
     const docRef = this.getSingleDocRef('channels', channelId);

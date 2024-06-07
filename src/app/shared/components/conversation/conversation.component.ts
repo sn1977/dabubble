@@ -4,6 +4,7 @@ import {
   Component,
   ElementRef,
   Input,
+  OnDestroy,
   OnInit,
   ViewChild,
   inject,
@@ -30,7 +31,7 @@ import { FirestoreService } from '../../services/firestore.service';
   styleUrl: './conversation.component.scss',
   imports: [CommonModule, MatDialogModule, EmojiPickerComponent, FormsModule],
 })
-export class ConversationComponent implements OnInit, AfterViewInit {
+export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private dialog: MatDialog,
     public dateFormatService: DateFormatService,
@@ -64,7 +65,6 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   @ViewChild('messageToEdit') messageToEdit!: ElementRef<HTMLTextAreaElement>;
   previousMessageDate: string;
   mainCollection: Subscription | undefined;
-  subCollection: Subscription | undefined;
   threadsCount: number = 0;
 
   async ngOnInit(): Promise<void> {
@@ -75,27 +75,23 @@ export class ConversationComponent implements OnInit, AfterViewInit {
 
     if (this.channelMessage.messageId !== undefined) {
       const docRef = this.channelMessage.channelId + '/channelmessages/' + this.channelMessage.messageId;
-      this.getAllChannelMessageData(docRef);
-    }
-  }
-
-  getAllChannelMessageData(docRef: string) {
-    this.mainCollection = this.firestore
+      this.mainCollection = this.firestore
       .getChannelData(docRef)
       .subscribe((data) => {
         console.log('MainCollection Data in Component:', data);
-        this.channelMessage.channelId = data['channelId'];
+        // this.channelMessage.channelId = data['channelId'];
         this.channelMessage.creator = data['creator'];
         this.channelMessage.createdAt = data['createdAt'];
         this.channelMessage.text = data['text'];
         this.channelMessage.reactions = data['reactions'];
         this.channelMessage.attachment = data['attachment'];
         this.channelMessage.threads = data['threads'];
-        this.channelMessage.lastUpdate = data['lastUpdate'];
+        //this.channelMessage.timestamp = data['timestamp'];        
         this.adjustTextareaHeight(this.messageToEdit.nativeElement);
         this.fillEmojiReactions();
       });
-  }
+    }
+  }  
 
   async ngAfterViewInit() {
     await this.delay(200);
@@ -105,10 +101,6 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   ngOnDestroy() {
     if (this.mainCollection) {
       this.mainCollection.unsubscribe();
-    }
-
-    if (this.subCollection) {
-      this.subCollection.unsubscribe();
     }
   }
 

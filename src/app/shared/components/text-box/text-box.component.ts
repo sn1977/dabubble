@@ -56,24 +56,32 @@ export class TextBoxComponent implements AfterViewInit{
   onSubmit() {
     if (this.textBoxData.messageText != '') {
       this.textBoxData.subcollection;
-      
+      let type: string | undefined;
       const message = new ChannelMessage({
         creator: this.authService.activeUserId,
         text: this.textBoxData.messageText,
         channelId: this.textBoxData.channelId,
         createdAt: serverTimestamp(),
         reactions: (this.textBoxData.reactions = this.reactions),
-        collection: this.textBoxData.collection,
-        subcollection: this.textBoxData.subcollection,
+        // collection: this.textBoxData.collection,
+        // subcollection: this.textBoxData.subcollection,
         attachment: [`${this.textBoxData.inputField}`],
         threads: 0,
-        lastUpdate: ''
+        timestamp: serverTimestamp(),
       });
       
+      if(this.textBoxData.subcollection != 'channelmessages'){
+        type = 'thread';
+      }
+      
       this.firestore.addChannelMessage(
-         message,
-         `${this.textBoxData.collection}/${message.channelId}/${this.textBoxData.subcollection}`
+          message,
+          `${this.textBoxData.collection}/${message.channelId}/${this.textBoxData.subcollection}`, type
       );
+
+    //   this.firestore.addChannelMessage(
+    //     message, this.textBoxData.collection, message.channelId, this.textBoxData.subcollection, type
+    //  );
 
       this.textBoxData.inputField = '';
       this.selectedFiles = undefined;

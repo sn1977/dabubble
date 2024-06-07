@@ -7,7 +7,7 @@ export class ChannelMessage {
   reactions: { emoji: string; users: string[] }[] = [];
   attachment?: string[];
   threads: number;
-  lastUpdate?: any;
+  timestamp?: any;
 
 
   constructor(obj?: any) {
@@ -18,7 +18,7 @@ export class ChannelMessage {
     this.reactions = obj ? obj.reactions : [];
     this.attachment = obj ? obj.attachment : [];
     this.threads = obj ? obj.threads : 0;
-    this.lastUpdate = obj ? obj.lastUpdate : '';
+    this.timestamp = obj ? obj.timestamp : '';
   }
 
   public toJSON() {
@@ -30,7 +30,7 @@ export class ChannelMessage {
       reactions: this.reactions,
       attachment: this.attachment,
       threads: this.threads,
-      lastUpdate: this.lastUpdate,
+      timestamp: this.timestamp,
     };
   }
 }

@@ -3,6 +3,7 @@ import {
   Component,
   ElementRef,
   inject,
+  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -27,6 +28,7 @@ import { DateFormatService } from '../../shared/services/date-format.service';
 import { TimeSeperatorComponent } from '../../shared/components/time-seperator/time-seperator.component';
 import { MatchMediaService } from '../../shared/services/match-media.service';
 import { DataService } from '../../shared/services/data.service';
+import { ChannelMessage } from '../../../models/channel-message.class';
 
 @Component({
   selector: 'app-new-channel',
@@ -44,12 +46,15 @@ import { DataService } from '../../shared/services/data.service';
     TimeSeperatorComponent,
   ],
 })
-export class NewChannelComponent implements OnInit, AfterViewChecked {
+export class NewChannelComponent
+  implements OnInit, AfterViewChecked, OnDestroy
+{
   firestore = inject(FirestoreService);
   router = inject(Router);
   itemID: any = '';
   user: User = new User();
   channel: Channel = new Channel();
+  channelMessages: ChannelMessage = new ChannelMessage();
   channelList: any = [];
   newMessage: boolean = false;
   firebaseAuth = inject(Auth);
@@ -96,21 +101,48 @@ export class NewChannelComponent implements OnInit, AfterViewChecked {
 
     this.route.paramMap.subscribe((paramMap) => {
       this.itemID = paramMap.get('id');
-      this.getItemValues('channels', this.itemID);
-      this.firestore.getAllChannelMessages(
-        this.itemID,
-        this.textBoxData.collection,
-        this.textBoxData.subcollection
-      );
-    
-      this.headerStateService.setAlternativeHeader(true);
-      this.matchMedia.scrollToBottom = true;
-  
-      setInterval(() => {
-        this.scrollToBottom();
-      }, 1000);
+      this.firestore.getSingleItemData('channels', this.itemID, () => {
+        this.channel = new Channel(this.firestore.channel);
+        this.textBoxData.channelName = this.channel.name;
+
+        this.firestore.channelMessages = [];
+        this.firestore.getAllChannelMessages(
+          this.itemID,
+          this.textBoxData.collection,
+          this.textBoxData.subcollection
+        );
+        this.textBoxData.channelName = this.channel.name;
+        this.textBoxData.channelId = this.itemID;
+        this.headerStateService.setAlternativeHeader(true);
+        this.matchMedia.scrollToBottom = true;
+        setInterval(() => {
+          this.scrollToBottom();
+        }, 1000);
+      });
     });
 
+    // this.route.paramMap.subscribe((paramMap) => {
+    //   this.itemID = paramMap.get('id');
+    //   this.getItemValues('channels', this.itemID);
+    //   // debugger
+
+    //   this.firestore.getAllChannelMessages(
+    //     this.itemID,
+    //     this.textBoxData.collection,
+    //     this.textBoxData.subcollection
+    //   );
+    // this.delay(1000);
+    // console.log(this.firestore.channelMessages);
+    //   this.headerStateService.setAlternativeHeader(true);
+    //   this.matchMedia.scrollToBottom = true;
+    //   setInterval(() => {
+    //     this.scrollToBottom();
+    //   }, 1000);
+    // });
+  }
+
+  ngOnDestroy() {
+    this.firestore.unsubscribeSingleChannelData();
   }
 
   async getItemValues(collection: string, itemID: string) {
