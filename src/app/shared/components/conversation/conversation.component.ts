@@ -57,7 +57,7 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
   isMessageFromYou: boolean = false;
   messageDate: any;
   showReactionBar: boolean = false;
-  showEditMessage: boolean = false;    
+  showEditMessage: boolean = false;
   isMessageDisabled: boolean = true;
   showEmojiSnackbarTile: boolean = false;
   savedMessage: string = '';
@@ -65,7 +65,6 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('messageToEdit') messageToEdit!: ElementRef<HTMLTextAreaElement>;
   previousMessageDate: string;
   mainCollection: Subscription | undefined;
-  threadsCount: number = 0;
 
   async ngOnInit(): Promise<void> {
     await this.delay(200);
@@ -74,24 +73,26 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
       this.authService.activeUserAccount.uid === this.channelMessage.creator;
 
     if (this.channelMessage.messageId !== undefined) {
-      const docRef = this.channelMessage.channelId + '/channelmessages/' + this.channelMessage.messageId;
+      const docRef =
+        this.channelMessage.channelId +
+        '/channelmessages/' +
+        this.channelMessage.messageId;
       this.mainCollection = this.firestore
-      .getChannelData(docRef)
-      .subscribe((data) => {
-        console.log('MainCollection Data in Component:', data);
-        // this.channelMessage.channelId = data['channelId'];
-        this.channelMessage.creator = data['creator'];
-        this.channelMessage.createdAt = data['createdAt'];
-        this.channelMessage.text = data['text'];
-        this.channelMessage.reactions = data['reactions'];
-        this.channelMessage.attachment = data['attachment'];
-        this.channelMessage.threads = data['threads'];
-        //this.channelMessage.timestamp = data['timestamp'];        
-        this.adjustTextareaHeight(this.messageToEdit.nativeElement);
-        this.fillEmojiReactions();
-      });
+        .getChannelData(docRef)
+        .subscribe((data) => {
+          //console.log('MainCollection Data in Component:', data);
+          // this.channelMessage.channelId = data['channelId'];
+          this.channelMessage.creator = data['creator'];
+          this.channelMessage.createdAt = data['createdAt'];
+          this.channelMessage.text = data['text'];
+          this.channelMessage.reactions = data['reactions'];
+          this.channelMessage.attachment = data['attachment'];
+          this.channelMessage.threads = data['threads'];
+          this.adjustTextareaHeight(this.messageToEdit.nativeElement);
+          this.fillEmojiReactions();
+        });
     }
-  }  
+  }
 
   async ngAfterViewInit() {
     await this.delay(200);
@@ -234,7 +235,6 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   editMessage(id?: string): void {
-    
     if (id) {
       this.isMessageDisabled = false;
       const setFocusMessage = this.messageToEdit.nativeElement;

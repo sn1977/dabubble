@@ -135,8 +135,7 @@ export class FirestoreService {
       text: obj.text,
       reactions: obj.reactions,
       attachment: obj.attachment,
-      threads: obj.threads,
-      timestamp: obj.timestamp,
+      threads: obj.threads
     };
   }
 
@@ -239,31 +238,12 @@ export class FirestoreService {
       });
   }
 
-  // async addChannelMessage(message: ChannelMessage, docRef: string, type?: string) {
-  //   await addDoc(collection(this.firestore, docRef), message.toJSON())
-  //     .catch((err) => {
-  //       console.error(err);
-  //     })
-  //     .then((docRef) => {
-  //       console.log('Document written with ID: ', docRef?.id);
-
-  //       if (!this.matchMedia.showThread) {
-  //         this.matchMedia.scrollToBottom = true;
-  //       } else {
-  //         this.matchMedia.scrollToBottomThread = true;          
-  //         if(type === 'thread'){
-  //           this.updateThreadCounter();
-  //         }
-  //       }
-  //     });
-  // }
-
   async addChannelMessage(message: ChannelMessage, docRef: string, type?: string) {
     await addDoc(collection(this.firestore, docRef), message.toJSON())
       .catch((err) => {
         console.error(err);
       })
-      .then((docRef) => {
+      .then(async (docRef) => {
         console.log('Document written with ID: ', docRef?.id);
 
         if (!this.matchMedia.showThread) {
@@ -271,13 +251,11 @@ export class FirestoreService {
         } else {
           this.matchMedia.scrollToBottomThread = true;          
           if(type === 'thread'){
-            this.updateThreadCounter();
+            await this.updateThreadCounter();
           }
         }
       });
   }
-
-  //message, this.textBoxData.collection, message.channelId, this.textBoxData.subcollection, type
 
   private singleItemUnsubscribe: Unsubscribe | undefined;
   private singleMessageUnsubscribe: Unsubscribe | undefined;
@@ -462,10 +440,12 @@ export class FirestoreService {
 
   async updateThreadCounter(){    
     const ThreadsRef = doc(this.getChannelsRef(), this.matchMedia.channelId + '/channelmessages/' + this.matchMedia.subID);
+    
     await updateDoc(ThreadsRef, {
        threads: increment(1),
-       timestamp: serverTimestamp()
+       timestampLastThread: serverTimestamp()
     });
+
 
 //     const docRef = doc(db, 'objects', 'some-id');
 

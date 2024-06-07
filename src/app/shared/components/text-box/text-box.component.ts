@@ -62,12 +62,9 @@ export class TextBoxComponent implements AfterViewInit{
         text: this.textBoxData.messageText,
         channelId: this.textBoxData.channelId,
         createdAt: serverTimestamp(),
-        reactions: (this.textBoxData.reactions = this.reactions),
-        // collection: this.textBoxData.collection,
-        // subcollection: this.textBoxData.subcollection,
+        reactions: (this.textBoxData.reactions = this.reactions),        
         attachment: [`${this.textBoxData.inputField}`],
-        threads: 0,
-        timestamp: serverTimestamp(),
+        threads: 0,        
       });
       
       if(this.textBoxData.subcollection != 'channelmessages'){
@@ -78,10 +75,6 @@ export class TextBoxComponent implements AfterViewInit{
           message,
           `${this.textBoxData.collection}/${message.channelId}/${this.textBoxData.subcollection}`, type
       );
-
-    //   this.firestore.addChannelMessage(
-    //     message, this.textBoxData.collection, message.channelId, this.textBoxData.subcollection, type
-    //  );
 
       this.textBoxData.inputField = '';
       this.selectedFiles = undefined;
