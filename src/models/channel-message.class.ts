@@ -7,7 +7,6 @@ export class ChannelMessage {
   reactions: { emoji: string; users: string[] }[] = [];
   attachment?: string[];
   threads: number;
-  // timestamp?: { seconds: number; nanoseconds: number; };
 
   constructor(obj?: any) {
     this.channelId = obj ? obj.channelId : '';
@@ -28,7 +27,6 @@ export class ChannelMessage {
       reactions: this.reactions,
       attachment: this.attachment,
       threads: this.threads,
-      // timestamp: this.timestamp,
     };
   }
 }

@@ -111,8 +111,7 @@
           class="last-thread"
           [ngStyle]="{ color: hovered ? '#000000' : '#686868' }"
           >Letzte Antwort
-          <!-- {{ this.dateFormatService.formatTime(channelMessage.timestamp) }} -->
-          Fehlt noch
+          {{ this.dateFormatService.formatTime(timestampLastThread) }}
         </span>
       </div>
       }

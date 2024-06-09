@@ -445,16 +445,6 @@ export class FirestoreService {
        threads: increment(1),
        timestampLastThread: serverTimestamp()
     });
-
-
-//     const docRef = doc(db, 'objects', 'some-id');
-
-// // Update the timestamp field with the value from the server
-// const updateTimestamp = await updateDoc(docRef, {
-//     timestamp: serverTimestamp()
-// });
-
-
   }
 
   getChannelData(channelId: string): Observable<DocumentData> {

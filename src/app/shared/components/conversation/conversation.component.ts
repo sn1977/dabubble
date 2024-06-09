@@ -23,6 +23,7 @@ import { Router } from '@angular/router';
 import { MatchMediaService } from '../../services/match-media.service';
 import { Subscription } from 'rxjs';
 import { FirestoreService } from '../../services/firestore.service';
+import { Timestamp } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-conversation',
@@ -65,6 +66,7 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('messageToEdit') messageToEdit!: ElementRef<HTMLTextAreaElement>;
   previousMessageDate: string;
   mainCollection: Subscription | undefined;
+  timestampLastThread: any;
 
   async ngOnInit(): Promise<void> {
     await this.delay(200);
@@ -80,7 +82,7 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
       this.mainCollection = this.firestore
         .getChannelData(docRef)
         .subscribe((data) => {
-          //console.log('MainCollection Data in Component:', data);
+          console.log('MainCollection Data in Component:', data);
           // this.channelMessage.channelId = data['channelId'];
           this.channelMessage.creator = data['creator'];
           this.channelMessage.createdAt = data['createdAt'];
@@ -90,6 +92,7 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
           this.channelMessage.threads = data['threads'];
           this.adjustTextareaHeight(this.messageToEdit.nativeElement);
           this.fillEmojiReactions();
+          this.timestampLastThread = data['timestampLastThread'];
         });
     }
   }
