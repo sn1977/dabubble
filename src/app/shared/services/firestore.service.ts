@@ -328,11 +328,11 @@ export class FirestoreService {
     return unsubscribe;
   }
 
-  getAllChannelThreads(
+  async getAllChannelThreads(
     channelId: string,
     colID: string,
     subcollection: string
-  ): Unsubscribe {
+  ): Promise<Unsubscribe> {
     const ref = collection(
       this.firestore,
       `${colID}/${channelId}/${subcollection}`
@@ -488,5 +488,21 @@ export class FirestoreService {
       return () => unsubscribe();
     });
   }
+
+  async getSingleMessageData(
+    colId: string,
+    docId: string,
+    callback: () => void
+  ) {
+    this.singleMessageUnsubscribe = onSnapshot(
+      this.getSingleDocRef(colId, docId),
+      (element) => {
+        const data = this.setChannelMessageObject(element.data(), element.id);
+        this.channelMessage = new ChannelMessage(data);
+        callback();
+      }
+    );
+  }
+
 
 }

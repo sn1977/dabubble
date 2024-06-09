@@ -50,6 +50,7 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() isChannel!: boolean;
   @Input() isThread!: boolean;
   @Input() hideCompleteReactionBar: boolean = false;
+  @Input() hideThreadInfos: boolean = false;
   @Input() index!: number;
   user: User = new User();
   edit: boolean = false;
@@ -81,7 +82,7 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
       this.mainCollection = this.firestore
         .getChannelData(docRef)
         .subscribe((data) => {
-          console.log('MainCollection Data in Component:', data);
+          // console.log('MainCollection Data in Component:', data);
           // this.channelMessage.channelId = data['channelId'];
           this.channelMessage.creator = data['creator'];
           this.channelMessage.createdAt = data['createdAt'];
@@ -94,13 +95,7 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
           this.fillEmojiReactions();
           this.timestampLastThread = data['timestampLastThread'];
           this.matchMedia.scrollToBottom = true;
-          this.matchMedia.scrollToBottomThread = true;
-          
-          // if(this.channelMessage.type === 'message'){
-            //   this.matchMedia.scrollToBottom = true;
-          // } else if(this.channelMessage.type === 'thread'){
-          //   this.matchMedia.scrollToBottomThread = true;
-          // }
+          this.matchMedia.scrollToBottomThread = true;          
         });
     }
   }

@@ -90,7 +90,7 @@
         } }
       </div>
       } 
-      @if(channelMessage.threads !== 0){
+      @if(channelMessage.threads !== 0 && hideThreadInfos === false){
       <div
         class="thread-infos"
         [ngStyle]="{

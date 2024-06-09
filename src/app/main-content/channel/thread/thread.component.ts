@@ -91,8 +91,8 @@ export class ThreadComponent implements OnInit, OnDestroy {
     this.newMessage = false;    
     this.headerStateService.setAlternativeHeader(true);
     this.scrollToBottom();
-    // this.firestore.getSingleMessageData('channels', this.matchMedia.channelId + '/channelmessages/' + this.matchMedia.subID, () => {});
-    this.firestore.getAllChannelThreads(this.matchMedia.channelId, 'channels', 'channelmessages/' + this.matchMedia.subID + '/threads');
+    await this.firestore.getSingleMessageData('channels', this.matchMedia.channelId + '/channelmessages/' + this.matchMedia.subID, () => {});
+    await this.firestore.getAllChannelThreads(this.matchMedia.channelId, 'channels', 'channelmessages/' + this.matchMedia.subID + '/threads');
     this.textBoxData.channelId = this.matchMedia.channelId;
     this.textBoxData.subcollection = 'channelmessages/' + this.matchMedia.subID + '/threads';
     
@@ -101,21 +101,6 @@ export class ThreadComponent implements OnInit, OnDestroy {
       this.scrollToBottom();
     }, 1000);
   }
-
-  // async ngAfterViewInit() {
-  //   this.previousMessageCount = this.getCurrentMessageCount();    
-  // }
-
-  // ngAfterViewChecked() {
-  //   const currentMessageCount = this.getCurrentMessageCount();
-  //   if (currentMessageCount > this.previousMessageCount) {      
-  //     this.previousMessageCount = currentMessageCount;
-  //   }
-  // }
-
-  // getCurrentMessageCount(): number {
-  //   return this.threadContent.nativeElement.children.length;
-  // }
 
   async scrollToBottom() {
     await this.delay(200);
