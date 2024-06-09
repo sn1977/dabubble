@@ -109,7 +109,7 @@
                     (click)="
                         openChannel(
                             $event,
-                            'message',
+                            'direct-message',
                             authService.activeUserAccount.displayName
                         )
                     ">
@@ -145,7 +145,7 @@
                             : ''
                     "
                     [id]="user.id"
-                    (click)="openChannel($event, 'message', user.displayName)">
+                    (click)="openChannel($event, 'direct-message', user.displayName)">
                     <div class="pf">
                         <img src="{{ user.avatar }}" />
 

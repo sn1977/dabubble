@@ -3,7 +3,7 @@ import { MainContentComponent } from '../../../main-content/main-content.compone
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { RouterOutlet } from '@angular/router';
-import { ThreadComponent } from "../../../main-content/thread/thread.component";
+import { ThreadComponent } from "../../../main-content/channel/thread/thread.component";
 import { MatchMediaService } from '../../services/match-media.service';
 import { Router, RouterLink } from '@angular/router';
 @Component({

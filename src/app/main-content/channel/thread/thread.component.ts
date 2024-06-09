@@ -7,23 +7,23 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { BottomSheetComponent } from '../../shared/components/bottom-sheet/bottom-sheet.component';
+import { BottomSheetComponent } from '../../../shared/components/bottom-sheet/bottom-sheet.component';
 // import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { Channel } from '../../../models/channel.class';
-import { FirestoreService } from '../../shared/services/firestore.service';
-import { User } from '../../../models/user.class';
-import { NavigationService } from '../../shared/services/navigation.service';
-import { AuthService } from '../../shared/services/auth.service';
+import { Channel } from '../../../../models/channel.class';
+import { FirestoreService } from '../../../shared/services/firestore.service';
+import { User } from '../../../../models/user.class';
+import { NavigationService } from '../../../shared/services/navigation.service';
+import { AuthService } from '../../../shared/services/auth.service';
 import { Auth } from '@angular/fire/auth';
-import { ConversationComponent } from '../../shared/components/conversation/conversation.component';
-import { HeaderMobileComponent } from '../../shared/components/header-mobile/header-mobile.component';
-import { HeaderStateService } from '../../shared/services/header-state.service';
-import { TextBoxComponent } from '../../shared/components/text-box/text-box.component';
+import { ConversationComponent } from '../../../shared/components/conversation/conversation.component';
+import { HeaderMobileComponent } from '../../../shared/components/header-mobile/header-mobile.component';
+import { HeaderStateService } from '../../../shared/services/header-state.service';
+import { TextBoxComponent } from '../../../shared/components/text-box/text-box.component';
 // import { DialogServiceService } from '../../shared/services/dialog-service.service';
-import { SearchUserComponent } from '../../shared/components/search-user/search-user.component';
+import { SearchUserComponent } from '../../../shared/components/search-user/search-user.component';
 import { CommonModule } from '@angular/common';
-import { MatchMediaService } from '../../shared/services/match-media.service';
-import { ChannelMessage } from '../../../models/channel-message.class';
+import { MatchMediaService } from '../../../shared/services/match-media.service';
+import { ChannelMessage } from '../../../../models/channel-message.class';
 
 @Component({
   selector: 'app-thread',

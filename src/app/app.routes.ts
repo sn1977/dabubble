@@ -9,14 +9,13 @@ import { ChannelComponent } from './main-content/channel/channel.component';
 import { IsAdminGuard } from './shared/services/authguard.service';
 import { SendEmailComponent } from './main-content/auth/send-email/send-email.component';
 import { ResetPasswordComponent } from './main-content/auth/reset-password/reset-password.component';
-import { DirectMessageComponent } from './main-content/direct-message/direct-message.component';
 import { NewMessageComponent } from './main-content/new-message/new-message.component';
 import { ChannelEditionComponent } from './main-content/channel/channel-edition/channel-edition.component';
 import { ChooseAvatarComponent } from './main-content/auth/register/choose-avatar/choose-avatar.component';
-import { ThreadComponent } from './main-content/thread/thread.component';
+import { ThreadComponent } from './main-content/channel/thread/thread.component';
+import { DirectMessageComponent } from './main-content/direct-message/direct-message.component';
 
-export const routes: Routes = [  
-  // { path: '', component: MainContentComponent },
+export const routes: Routes = [
   { path: '',   redirectTo: '/login', pathMatch: 'full' },
   { path: 'main', component: MainContentComponent },
   { path: 'imprint', component: ImprintComponent },
@@ -27,9 +26,8 @@ export const routes: Routes = [
   { path: 'login', component: LogInComponent },
   { path: 'send-email', component: SendEmailComponent },
   { path: 'reset-password', component: ResetPasswordComponent },  
-  { path: 'channel/:id', component: ChannelComponent },
-  { path: 'message', component: DirectMessageComponent },
-  { path: 'message/:id', component: DirectMessageComponent },
+  { path: 'channel/:id', component: ChannelComponent },  
+  { path: 'direct-message/:id', component: DirectMessageComponent },
   { path: 'new-message', component: NewMessageComponent},
   { path: 'channel-edition/:id', component: ChannelEditionComponent},  
   { path: 'thread', component: ThreadComponent},

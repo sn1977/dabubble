@@ -8,7 +8,7 @@
 @include dialog.core-styles;
 @include textfield.core-styles;
 @include card.core-styles;
-@import "../../../styles/mixins.scss";
+@import "../../../../styles/mixins.scss";
 
 .container {
   @include dFlex($jc: flex-start, $ai: normal, $fd: column, $g: 0);
