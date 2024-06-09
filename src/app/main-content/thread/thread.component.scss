@@ -59,6 +59,22 @@
   }
 }
 
+.menu-icon-hover{
+  @include dFlex($jc: center, $ai: center, $fd: row, $g: 0);
+  height: 34px;
+  width: 34px;
+
+  img{
+    height: 24px;
+    width: 24px;
+  }
+
+  &:hover{
+    background: #eceefe;
+    border-radius: 50px;
+  }
+}
+
 h1 {
   @include dFlex($jc: flex-start, $ai: normal, $fd: row, $g: 10px);
   margin-block-start: 0em;

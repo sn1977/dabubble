@@ -82,7 +82,7 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
       this.mainCollection = this.firestore
         .getChannelData(docRef)
         .subscribe((data) => {
-          console.log('MainCollection Data in Component:', data);
+          //console.log('MainCollection Data in Component:', data);
           // this.channelMessage.channelId = data['channelId'];
           this.channelMessage.creator = data['creator'];
           this.channelMessage.createdAt = data['createdAt'];
