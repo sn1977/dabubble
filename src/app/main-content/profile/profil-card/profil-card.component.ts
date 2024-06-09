@@ -6,7 +6,7 @@ import {NgOptimizedImage} from '@angular/common';
 import {EditProfilCardComponent} from '../edit-profil-card/edit-profil-card.component';
 import {user} from '@angular/fire/auth';
 import {User} from '../../../../models/user.class';
-import {OnlineStatusPipe} from '../../../pipes/online-status.pipe';
+import {OnlineStatusPipe} from '../../../shared/pipes/online-status.pipe';
 
 @Component({
   selector: 'app-profil-card',

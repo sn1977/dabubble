@@ -23,7 +23,6 @@ import { Router } from '@angular/router';
 import { MatchMediaService } from '../../services/match-media.service';
 import { Subscription } from 'rxjs';
 import { FirestoreService } from '../../services/firestore.service';
-import { Timestamp } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-conversation',

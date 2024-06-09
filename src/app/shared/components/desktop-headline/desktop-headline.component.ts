@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import { HeaderMobileComponent } from "../header-mobile/header-mobile.component";
-import {SearchInputComponent} from '../../../main-content/search-input/search-input.component';
+import {SearchInputComponent} from '../search-input/search-input.component';
 
 @Component({
     selector: 'app-desktop-headline',

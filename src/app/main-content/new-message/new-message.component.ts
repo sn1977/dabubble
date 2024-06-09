@@ -1,5 +1,5 @@
 import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
-import { DirectMessageOverlayComponent } from '../direct-message-overlay/direct-message-overlay.component';
+import { DirectMessageOverlayComponent } from '../direct-message/direct-message-overlay/direct-message-overlay.component';
 import { MatDialog } from '@angular/material/dialog';
 import { NavigationService } from '../../shared/services/navigation.service';
 import { BottomSheetComponent } from '../../shared/components/bottom-sheet/bottom-sheet.component';

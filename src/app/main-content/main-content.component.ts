@@ -24,7 +24,7 @@ import { User } from '../../models/user.class';
 import { CommonModule, NgForOf, NgIf } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ChannelMessage } from '../../models/channel-message.class';
-import {SearchInputComponent} from './search-input/search-input.component';
+import {SearchInputComponent} from '../shared/components/search-input/search-input.component';
 import { MatchMediaService } from '../shared/services/match-media.service';
 import { DataService } from '../shared/services/data.service';
 

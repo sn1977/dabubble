@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, Output, inject} from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import { DataService } from '../../shared/services/data.service';
-import { MatchMediaService } from '../../shared/services/match-media.service';
+import { DataService } from '../../services/data.service';
+import { MatchMediaService } from '../../services/match-media.service';
 import { CommonModule } from '@angular/common';
 
 @Component({

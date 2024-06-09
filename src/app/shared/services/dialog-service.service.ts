@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DirectMessageOverlayComponent} from '../../main-content/direct-message-overlay/direct-message-overlay.component';
+import { DirectMessageOverlayComponent} from '../../main-content/direct-message/direct-message-overlay/direct-message-overlay.component';
 import {User} from '../../../models/user.class';
 
 @Injectable({
