@@ -26,7 +26,7 @@ export class DesktopOverlayComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('Der Dialog wurde geschlossen');
+      // console.log('Der Dialog wurde geschlossen');
     });
 
     this.closeOverlay.emit(); // Hier lösen wir das closeOverlay Ereignis aus

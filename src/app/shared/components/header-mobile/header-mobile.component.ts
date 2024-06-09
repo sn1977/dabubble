@@ -90,13 +90,13 @@ export class HeaderMobileComponent implements OnInit {
 
   openOverlay(): void {
     if (this.isDesktop) {
-      this.overlayVisible = true; // Hier setzen wir die overlayVisible Eigenschaft auf true
+      this.overlayVisible = !this.overlayVisible;      
     }
   }
 
   closeOverlay(): void {
     this.overlayVisible = false; // Hier definieren wir die closeOverlay Methode
-    console.log('overlayVisible:', this.overlayVisible);
+    // console.log('overlayVisible:', this.overlayVisible);
     this.cd.detectChanges(); // Manually trigger change detection
   }
 }
