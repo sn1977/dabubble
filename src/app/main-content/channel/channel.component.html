@@ -39,7 +39,7 @@
   </div>
   <div class="content">
     <div class="message-content" #messageContent style="overflow-y: scroll; height: 100%;">
-      @if (this.firestore.channelMessages.length !== 0) {       
+      @if (this.firestore.channelMessages.length !== 0) {
         @for (channelMessage of this.firestore.channelMessages; let i = $index; track channelMessage.id) {
           @if(i === 0 || (this.dateFormatService.formatDateYYYYMMDD(channelMessage.createdAt) !== this.dateFormatService.formatDateYYYYMMDD(firestore.channelMessages[i - 1].createdAt))){
             <app-time-seperator [seperatorDate]="channelMessage.createdAt"></app-time-seperator>

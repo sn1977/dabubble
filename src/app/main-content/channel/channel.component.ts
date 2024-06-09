@@ -31,10 +31,10 @@ import { DataService } from '../../shared/services/data.service';
 import { ChannelMessage } from '../../../models/channel-message.class';
 
 @Component({
-  selector: 'app-new-channel',
+  selector: 'app-channel',
   standalone: true,
-  templateUrl: './new-channel.component.html',
-  styleUrl: './new-channel.component.scss',
+  templateUrl: './channel.component.html',
+  styleUrl: './channel.component.scss',
   imports: [
     RouterLink,
     BottomSheetComponent,
@@ -46,7 +46,7 @@ import { ChannelMessage } from '../../../models/channel-message.class';
     TimeSeperatorComponent,
   ],
 })
-export class NewChannelComponent
+export class ChannelComponent
   implements OnInit, AfterViewChecked, OnDestroy
 {
   firestore = inject(FirestoreService);
@@ -120,25 +120,6 @@ export class NewChannelComponent
         }, 1000);
       });
     });
-
-    // this.route.paramMap.subscribe((paramMap) => {
-    //   this.itemID = paramMap.get('id');
-    //   this.getItemValues('channels', this.itemID);
-    //   // debugger
-
-    //   this.firestore.getAllChannelMessages(
-    //     this.itemID,
-    //     this.textBoxData.collection,
-    //     this.textBoxData.subcollection
-    //   );
-    // this.delay(1000);
-    // console.log(this.firestore.channelMessages);
-    //   this.headerStateService.setAlternativeHeader(true);
-    //   this.matchMedia.scrollToBottom = true;
-    //   setInterval(() => {
-    //     this.scrollToBottom();
-    //   }, 1000);
-    // });
   }
 
   ngOnDestroy() {
@@ -185,7 +166,7 @@ export class NewChannelComponent
 
   async waitForUserData(): Promise<void> {
     while (!this.authService.activeUserAccount) {
-      await this.delay(100); // Wartezeit in Millisekunden, bevor erneut überprüft wird
+      await this.delay(100);
     }
   }
 

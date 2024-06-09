@@ -82,7 +82,7 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
       this.mainCollection = this.firestore
         .getChannelData(docRef)
         .subscribe((data) => {
-          //console.log('MainCollection Data in Component:', data);
+          console.log('MainCollection Data in Component:', data);
           // this.channelMessage.channelId = data['channelId'];
           this.channelMessage.creator = data['creator'];
           this.channelMessage.createdAt = data['createdAt'];
@@ -90,9 +90,18 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
           this.channelMessage.reactions = data['reactions'];
           this.channelMessage.attachment = data['attachment'];
           this.channelMessage.threads = data['threads'];
+          // this.channelMessage.type = data['type'];
           this.adjustTextareaHeight(this.messageToEdit.nativeElement);
           this.fillEmojiReactions();
           this.timestampLastThread = data['timestampLastThread'];
+          this.matchMedia.scrollToBottom = true;
+          this.matchMedia.scrollToBottomThread = true;
+          
+          // if(this.channelMessage.type === 'message'){
+            //   this.matchMedia.scrollToBottom = true;
+          // } else if(this.channelMessage.type === 'thread'){
+          //   this.matchMedia.scrollToBottomThread = true;
+          // }
         });
     }
   }

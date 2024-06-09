@@ -328,6 +328,35 @@ export class FirestoreService {
     return unsubscribe;
   }
 
+  getAllChannelThreads(
+    channelId: string,
+    colID: string,
+    subcollection: string
+  ): Unsubscribe {
+    const ref = collection(
+      this.firestore,
+      `${colID}/${channelId}/${subcollection}`
+    );
+    const querySnapshot = query(ref, orderBy('createdAt'));
+
+    const unsubscribe = onSnapshot(
+      querySnapshot,
+      (snapshot) => {
+        this.channelThreads = [];
+        snapshot.forEach((doc) => {
+          this.channelThreads.push(
+            this.setChannelMessageObject(doc.data(), doc.id)
+          );
+        });
+      },
+      (error) => {
+        console.error('Error fetching snapshot: ', error);
+      }
+    );
+
+    return unsubscribe;
+  }
+
   async getDirectMessages(sender: string, recipient: string): Promise<void> {
     try {
       const directMessageRef = this.getDirectMessageRef();

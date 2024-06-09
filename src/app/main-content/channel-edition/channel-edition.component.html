@@ -3,7 +3,7 @@
         <div class="channel-header">
             <h1 class="no-margin"># {{ channel.name }}</h1>
             <span class="menu-icon-hover pointer">
-              <img src="./assets/img/icon/close.svg" alt="" [id]="itemID" (click)="openChannel($event, 'new-channel')">
+              <img src="./assets/img/icon/close.svg" alt="" [id]="itemID" (click)="openChannel($event, 'channel')">
             </span>            
         </div>
     </div>
@@ -84,7 +84,7 @@
         </div>
 
         <div class="btn-pos">                        
-          <button class="add-button" [id]="itemID" (click)="openChannel($event, 'new-channel')">Channel Verlassen</button>
+          <button class="add-button" [id]="itemID" (click)="openChannel($event, 'channel')">Channel Verlassen</button>
       </div>
         <div class="space">
         </div>

@@ -29,20 +29,17 @@
       <img class="line" src="./assets/img/auth/line.svg" alt="" />
     </div>
     
-      @if (this.firestore.channelThreads.length !== 0) {
-        @for (channelThread of
-          this.firestore.channelThreads; track channelThread.id) {
-          <app-conversation
-            [channelMessage]="channelThread" [isChannel]="true" [isThread]="true"
-          ></app-conversation>
-        }
+    @if (this.firestore.channelThreads.length !== 0) {
+      @for (channelMessage of this.firestore.channelThreads; let i = $index; track channelMessage.id) {
+        <app-conversation [channelMessage]="channelMessage" [isChannel]="false" [isThread]="true"></app-conversation>
       }
+    }
     </div>
   </div>
   <app-text-box style="margin-top: 10px;" [textBoxData]="textBoxData"></app-text-box>
 </div>
 
-<div id="overlay1" style="display: none" class="overlay">
+<!-- <div id="overlay1" style="display: none" class="overlay">
   <div class="overlay-content">
     <div class="display-flex">
       <h1 class="no-margin">Mitglieder</h1>
@@ -87,4 +84,4 @@
 
 <div id="overlay" style="display: none" class="overlay">
   <app-search-user></app-search-user>
-</div>
+</div> -->
