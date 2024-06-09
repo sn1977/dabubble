@@ -4,14 +4,14 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
 import { MainContentComponent } from './main-content/main-content.component';
 import { RegisterComponent } from './main-content/auth/register/register.component';
 import { LogInComponent } from './main-content/auth/log-in/log-in.component';
-import { AddChannelComponent } from './main-content/add-channel/add-channel.component';
+import { AddChannelComponent } from './main-content/channel/add-channel/add-channel.component';
 import { ChannelComponent } from './main-content/channel/channel.component';
 import { IsAdminGuard } from './shared/services/authguard.service';
 import { SendEmailComponent } from './main-content/auth/send-email/send-email.component';
 import { ResetPasswordComponent } from './main-content/auth/reset-password/reset-password.component';
 import { DirectMessageComponent } from './main-content/direct-message/direct-message.component';
 import { NewMessageComponent } from './main-content/new-message/new-message.component';
-import { ChannelEditionComponent } from './main-content/channel-edition/channel-edition.component';
+import { ChannelEditionComponent } from './main-content/channel/channel-edition/channel-edition.component';
 import { ChooseAvatarComponent } from './main-content/auth/register/choose-avatar/choose-avatar.component';
 import { ThreadComponent } from './main-content/thread/thread.component';
 

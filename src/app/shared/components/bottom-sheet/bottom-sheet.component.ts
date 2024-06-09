@@ -5,7 +5,7 @@ import {MatListModule} from '@angular/material/list';
 import {MatButtonModule} from '@angular/material/button';
 import {MatLine} from '@angular/material/core';
 import {MatIcon} from '@angular/material/icon';
-import {ProfilCardComponent} from '../../../main-content/profil-card/profil-card.component';
+import {ProfilCardComponent} from '../../../main-content/profile/profil-card/profil-card.component';
 import {MatDialog} from '@angular/material/dialog';
 import {AuthService} from '../../services/auth.service';
 import {User} from '../../../../models/user.class';

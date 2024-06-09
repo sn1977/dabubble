@@ -2,7 +2,7 @@ import {Component, inject, Inject, OnInit} from '@angular/core';
 import {MatCard, MatCardActions, MatCardContent, MatCardImage} from '@angular/material/card';
 import {NgOptimizedImage} from '@angular/common';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {EditProfilCardComponent} from '../edit-profil-card/edit-profil-card.component';
+import {EditProfilCardComponent} from '../profile/edit-profil-card/edit-profil-card.component';
 import {MatButton} from '@angular/material/button';
 import {User} from '../../../models/user.class';
 import {OnlineStatusPipe} from '../../pipes/online-status.pipe';

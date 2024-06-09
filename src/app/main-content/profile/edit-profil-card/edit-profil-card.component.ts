@@ -4,9 +4,9 @@ import {NgOptimizedImage} from '@angular/common';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatButton} from '@angular/material/button';
-import {User} from '../../../models/user.class';
-import {FirestoreService} from '../../shared/services/firestore.service';
-import {AuthService} from '../../shared/services/auth.service';
+import {User} from '../../../../models/user.class';
+import {FirestoreService} from '../../../shared/services/firestore.service';
+import {AuthService} from '../../../shared/services/auth.service';
 
 @Component({
   selector: 'app-edit-profil-card',

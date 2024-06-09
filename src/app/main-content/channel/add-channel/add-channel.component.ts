@@ -2,12 +2,12 @@ import { Component, OnInit, inject } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { FirestoreService } from '../../shared/services/firestore.service';
+import { FirestoreService } from '../../../shared/services/firestore.service';
 import { CommonModule } from '@angular/common';
-import { User } from '../../../models/user.class';
-import { Channel } from '../../../models/channel.class';
-import { AuthService } from '../../shared/services/auth.service';
-import { MatchMediaService } from '../../shared/services/match-media.service';
+import { User } from '../../../../models/user.class';
+import { Channel } from '../../../../models/channel.class';
+import { AuthService } from '../../../shared/services/auth.service';
+import { MatchMediaService } from '../../../shared/services/match-media.service';
 @Component({
   selector: 'app-add-channel',
   standalone: true,

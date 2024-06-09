@@ -5,8 +5,8 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog
 import {NgOptimizedImage} from '@angular/common';
 import {EditProfilCardComponent} from '../edit-profil-card/edit-profil-card.component';
 import {user} from '@angular/fire/auth';
-import {User} from '../../../models/user.class';
-import {OnlineStatusPipe} from '../../pipes/online-status.pipe';
+import {User} from '../../../../models/user.class';
+import {OnlineStatusPipe} from '../../../pipes/online-status.pipe';
 
 @Component({
   selector: 'app-profil-card',

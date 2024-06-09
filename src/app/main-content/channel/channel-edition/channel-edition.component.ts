@@ -1,12 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { FirestoreService } from '../../shared/services/firestore.service';
+import { FirestoreService } from '../../../shared/services/firestore.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { Channel } from '../../../models/channel.class';
-import { User } from '../../../models/user.class';
-import { AuthService } from '../../shared/services/auth.service';
+import { Channel } from '../../../../models/channel.class';
+import { User } from '../../../../models/user.class';
+import { AuthService } from '../../../shared/services/auth.service';
 import { CommonModule } from '@angular/common';
-import { SearchUserComponent } from '../../shared/components/search-user/search-user.component';
+import { SearchUserComponent } from '../../../shared/components/search-user/search-user.component';
 
 @Component({
   selector: 'app-channel-edition',

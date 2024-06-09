@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {AuthService} from '../../services/auth.service';
-import {ProfilCardComponent} from '../../../main-content/profil-card/profil-card.component';
+import {ProfilCardComponent} from '../../../main-content/profile/profil-card/profil-card.component';
 import {User} from '../../../../models/user.class';
 
 @Component({
