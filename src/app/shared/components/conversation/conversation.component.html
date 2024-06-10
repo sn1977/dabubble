@@ -116,7 +116,7 @@
       </div>
       }
     </div>
-    @if(channelMessage.reactions.length > 0){
+    @if(channelMessage.reactions.length > 0 && !hideCompleteReactionBar){
     <div class="reaction-infos" (click)="doNotClose($event)">
       <div class="reactions">
         <ng-container *ngFor="let reaction of channelMessage.reactions">          

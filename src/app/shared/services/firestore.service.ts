@@ -416,43 +416,43 @@ export class FirestoreService {
     this.unsubChannel();
   }
 
-  async getEmojiReactions(
-    channelId: string,
-    messageId: string | undefined
-  ): Promise<any> {
-    if (!messageId) {
-      console.log('messageId is undefined');
-      return [];
-    }
+  // async getEmojiReactions(
+  //   channelId: string,
+  //   messageId: string | undefined
+  // ): Promise<any> {
+  //   if (!messageId) {
+  //     console.log('messageId is undefined');
+  //     return [];
+  //   }
 
-    const docRef = doc(
-      this.firestore,
-      `channels/${channelId}/messages`,
-      messageId
-    );
-    const docSnap = await getDoc(docRef);
+  //   const docRef = doc(
+  //     this.firestore,
+  //     `channels/${channelId}/messages`,
+  //     messageId
+  //   );
+  //   const docSnap = await getDoc(docRef);
 
-    if (!docSnap.exists() || !docSnap.data()) {
-      console.log('No such document!');
-      return [];
-    }
+  //   if (!docSnap.exists() || !docSnap.data()) {
+  //     console.log('No such document!');
+  //     return [];
+  //   }
 
-    return docSnap.data()['reactions'];
-  }
+  //   return docSnap.data()['reactions'];
+  // }
 
-  async updateEmojiReactions(
-    channelId: string,
-    messageId: string,
-    user: string,
-    emoji: string
-  ) {
-    const messageRef = doc(
-      this.firestore,
-      `channels/${channelId}/messages`,
-      messageId
-    );
-    console.log(messageRef);
-  }
+  // async updateEmojiReactions(
+  //   channelId: string,
+  //   messageId: string,
+  //   user: string,
+  //   emoji: string
+  // ) {
+  //   const messageRef = doc(
+  //     this.firestore,
+  //     `channels/${channelId}/messages`,
+  //     messageId
+  //   );
+  //   console.log(messageRef);
+  // }
 
   async saveMessageData(
     colId: string,

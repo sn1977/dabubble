@@ -83,19 +83,19 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
         .getChannelData(docRef)
         .subscribe((data) => {
           // console.log('MainCollection Data in Component:', data);
-          // this.channelMessage.channelId = data['channelId'];
-          this.channelMessage.creator = data['creator'];
-          this.channelMessage.createdAt = data['createdAt'];
-          this.channelMessage.text = data['text'];
-          this.channelMessage.reactions = data['reactions'];
-          this.channelMessage.attachment = data['attachment'];
-          this.channelMessage.threads = data['threads'];
-          // this.channelMessage.type = data['type'];
-          this.adjustTextareaHeight(this.messageToEdit.nativeElement);
-          this.fillEmojiReactions();
-          this.timestampLastThread = data['timestampLastThread'];
-          this.matchMedia.scrollToBottom = true;
-          this.matchMedia.scrollToBottomThread = true;          
+          if(data !== undefined){
+            this.channelMessage.creator = data['creator'];
+            this.channelMessage.createdAt = data['createdAt'];
+            this.channelMessage.text = data['text'];
+            this.channelMessage.reactions = data['reactions'];
+            this.channelMessage.attachment = data['attachment'];
+            this.channelMessage.threads = data['threads'];          
+            this.adjustTextareaHeight(this.messageToEdit.nativeElement);
+            this.fillEmojiReactions();
+            this.timestampLastThread = data['timestampLastThread'];
+            this.matchMedia.scrollToBottom = true;
+            this.matchMedia.scrollToBottomThread = true;          
+          }
         });
     }
   }
