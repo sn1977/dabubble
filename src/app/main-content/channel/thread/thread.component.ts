@@ -8,7 +8,6 @@ import {
 } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { BottomSheetComponent } from '../../../shared/components/bottom-sheet/bottom-sheet.component';
-// import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { Channel } from '../../../../models/channel.class';
 import { FirestoreService } from '../../../shared/services/firestore.service';
 import { User } from '../../../../models/user.class';
@@ -19,7 +18,6 @@ import { ConversationComponent } from '../../../shared/components/conversation/c
 import { HeaderMobileComponent } from '../../../shared/components/header-mobile/header-mobile.component';
 import { HeaderStateService } from '../../../shared/services/header-state.service';
 import { TextBoxComponent } from '../../../shared/components/text-box/text-box.component';
-// import { DialogServiceService } from '../../shared/services/dialog-service.service';
 import { SearchUserComponent } from '../../../shared/components/search-user/search-user.component';
 import { CommonModule } from '@angular/common';
 import { MatchMediaService } from '../../../shared/services/match-media.service';
@@ -66,10 +64,8 @@ export class ThreadComponent implements OnInit, OnDestroy {
   isDesktop: boolean = false;
 
   constructor(
-    // private _bottomSheet: MatBottomSheet,    
     public navigationService: NavigationService,
     private headerStateService: HeaderStateService,
-    // private dialogService: DialogServiceService
   ) {}
   
   ngOnDestroy(): void {
@@ -131,40 +127,11 @@ export class ThreadComponent implements OnInit, OnDestroy {
     this.getItemValuesProfile('users', id);
   }
 
-  // toggleOverlay(overlayId: string): void {
-  //   const newOverlay = document.getElementById(overlayId);
-  //   if (newOverlay) {
-  //     newOverlay.style.display =
-  //       newOverlay.style.display === 'none' ? 'block' : 'none';
-  //   }
-  // }
-
-  // closeOverlay(overlayId: string): void {
-  //   const overlay = document.getElementById(overlayId) as HTMLElement;
-  //   if (overlay) {
-  //     overlay.style.display = 'none';
-  //   }
-  // }
-
-  // openBottomSheet(): void {
-  //   this._bottomSheet.open(BottomSheetComponent);
-  // }
-
-  // openChannel(event: MouseEvent, path: string) {
-  //   const docRefId = (event.currentTarget as HTMLElement).id;
-  //   this.router.navigate(['/' + path + '/' + docRefId]);
-  // }
-
   getItemValuesProfile(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {
       this.user = new User(this.firestore.user);
     });
   }
-
-  // openDialog(user: User, itemId: string) {
-  //   this.dialogService.openDirectMessageDialog(user, itemId);
-  //   this.closeOverlay('overlay1');
-  // }
 
   closeThread() {
     this.isDesktop = this.matchMedia.checkIsDesktop();

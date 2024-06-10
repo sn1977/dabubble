@@ -123,7 +123,7 @@ export class ChannelComponent
   }
 
   ngOnDestroy() {
-    this.firestore.unsubscribeSingleChannelData();
+    this.textBoxData.placeholder = 'HALLO';
   }
 
   async getItemValues(collection: string, itemID: string) {

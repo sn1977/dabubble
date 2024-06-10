@@ -287,6 +287,10 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
 
   saveMessage() {
     if (this.channelMessage.messageId !== undefined) {
+      if(this.isThread){
+        this.channelMessage.messageId = this.matchMedia.subID + '/threads/' + this.channelMessage.messageId;
+      }
+
       this.firestore.saveMessageData(
         'channels',
         this.channelMessage.channelId,

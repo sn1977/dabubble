@@ -12,7 +12,6 @@ import {
   updateDoc,
   orderBy,
   getDocs,
-  getDoc,
   DocumentReference,
   DocumentData,
   increment,
@@ -160,21 +159,21 @@ export class FirestoreService {
     }
   }
 
-  async updateChannelMessage(
-    docId: string,
-    messageId: string,
-    channelData: ChannelMessage
-  ) {
-    if (docId) {
-      let docRef = doc(
-        this.getChannelsRef(),
-        `${docId}/channelmessages/${messageId}`
-      );
-      await updateDoc(docRef, channelData.toJSON()).catch((err) => {
-        console.log(err);
-      });
-    }
-  }
+  // async updateChannelMessage(
+  //   docId: string,
+  //   messageId: string,
+  //   channelData: ChannelMessage
+  // ) {
+  //   if (docId) {
+  //     let docRef = doc(
+  //       this.getChannelsRef(),
+  //       `${docId}/channelmessages/${messageId}`
+  //     );
+  //     await updateDoc(docRef, channelData.toJSON()).catch((err) => {
+  //       console.log(err);
+  //     });
+  //   }
+  // }
 
   getChannels(): Observable<Channel[]> {
     return new Observable((observer) => {
@@ -258,8 +257,7 @@ export class FirestoreService {
   }
 
   private singleItemUnsubscribe: Unsubscribe | undefined;
-  private singleMessageUnsubscribe: Unsubscribe | undefined;
-  private singleChannelUnsubscribe: Unsubscribe | undefined;
+  private singleMessageUnsubscribe: Unsubscribe | undefined;  
 
   unsubscribeSingleUserData() {
     if (this.singleItemUnsubscribe) {
@@ -270,12 +268,6 @@ export class FirestoreService {
   unsubscribeSingleMessageData() {
     if (this.singleMessageUnsubscribe) {
       this.singleMessageUnsubscribe();
-    }
-  }
-
-  unsubscribeSingleChannelData() {
-    if (this.singleChannelUnsubscribe) {
-      this.singleChannelUnsubscribe();
     }
   }
 
@@ -416,61 +408,23 @@ export class FirestoreService {
     this.unsubChannel();
   }
 
-  // async getEmojiReactions(
-  //   channelId: string,
-  //   messageId: string | undefined
-  // ): Promise<any> {
-  //   if (!messageId) {
-  //     console.log('messageId is undefined');
-  //     return [];
-  //   }
-
-  //   const docRef = doc(
-  //     this.firestore,
-  //     `channels/${channelId}/messages`,
-  //     messageId
-  //   );
-  //   const docSnap = await getDoc(docRef);
-
-  //   if (!docSnap.exists() || !docSnap.data()) {
-  //     console.log('No such document!');
-  //     return [];
-  //   }
-
-  //   return docSnap.data()['reactions'];
-  // }
-
-  // async updateEmojiReactions(
-  //   channelId: string,
-  //   messageId: string,
-  //   user: string,
-  //   emoji: string
-  // ) {
-  //   const messageRef = doc(
-  //     this.firestore,
-  //     `channels/${channelId}/messages`,
-  //     messageId
-  //   );
-  //   console.log(messageRef);
-  // }
-
   async saveMessageData(
     colId: string,
     docId: string,
     messageId: string,
     item: object
   ) {
-    const messageDoc = docId + '/channelmessages/' + messageId;
-    const docRef = this.getSingleDocRef(colId, messageDoc);
-    await updateDoc(docRef, item).catch((err) => {
-      console.log(err);
+      const messageDoc = docId + '/channelmessages/' + messageId;
+      const docRef = this.getSingleDocRef(colId, messageDoc);
+      await updateDoc(docRef, item).catch((err) => {
+        console.log(err);
     });
   }
 
   async updateThreadCounter(){    
-    const ThreadsRef = doc(this.getChannelsRef(), this.matchMedia.channelId + '/channelmessages/' + this.matchMedia.subID);
+    const threadsRef = doc(this.getChannelsRef(), this.matchMedia.channelId + '/channelmessages/' + this.matchMedia.subID);
     
-    await updateDoc(ThreadsRef, {
+    await updateDoc(threadsRef, {
        threads: increment(1),
        timestampLastThread: serverTimestamp()
     });
