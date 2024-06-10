@@ -1,15 +1,22 @@
-import {CommonModule} from '@angular/common';
-import {AfterViewInit, Component, ElementRef, Input, ViewChild, inject} from '@angular/core';
-import {FormsModule} from '@angular/forms';
-import {ChannelMessage} from '../../../../models/channel-message.class';
-import {AuthService} from '../../services/auth.service';
+import { CommonModule } from '@angular/common';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Input,
+  ViewChild,
+  inject,
+} from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { ChannelMessage } from '../../../../models/channel-message.class';
+import { AuthService } from '../../services/auth.service';
 import { FirestoreService } from '../../services/firestore.service';
-import {UploadService} from '../../services/upload.service';
-import {serverTimestamp} from '@angular/fire/firestore';
-import {EmojiEvent} from '@ctrl/ngx-emoji-mart/ngx-emoji';
-import {PickerComponent} from '@ctrl/ngx-emoji-mart';
-import {MatDialog} from '@angular/material/dialog';
-import {EmojiPickerComponent} from '../emoji-picker/emoji-picker.component';
+import { UploadService } from '../../services/upload.service';
+import { serverTimestamp } from '@angular/fire/firestore';
+import { EmojiEvent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
+import { PickerComponent } from '@ctrl/ngx-emoji-mart';
+import { MatDialog } from '@angular/material/dialog';
+import { EmojiPickerComponent } from '../emoji-picker/emoji-picker.component';
 
 @Component({
   selector: 'app-text-box',
@@ -18,7 +25,7 @@ import {EmojiPickerComponent} from '../emoji-picker/emoji-picker.component';
   templateUrl: './text-box.component.html',
   styleUrl: './text-box.component.scss',
 })
-export class TextBoxComponent implements AfterViewInit{
+export class TextBoxComponent implements AfterViewInit {
   authService = inject(AuthService);
   firestore = inject(FirestoreService);
   reactions = [];
@@ -26,6 +33,7 @@ export class TextBoxComponent implements AfterViewInit{
   filedate: number | undefined;
   errorMessage: string | null = null;
   openEmojiPicker: boolean = false;
+  maxSizeReached: boolean = false;
 
   @Input() textBoxData: any;
   @ViewChild('messageText') messageText!: ElementRef<HTMLTextAreaElement>;
@@ -42,7 +50,7 @@ export class TextBoxComponent implements AfterViewInit{
   ) {}
 
   addEmoji(event: EmojiEvent) {
-    const {emoji} = event;
+    const { emoji } = event;
     this.textBoxData.messageText += emoji.native;
   }
 
@@ -62,24 +70,25 @@ export class TextBoxComponent implements AfterViewInit{
         text: this.textBoxData.messageText,
         channelId: this.textBoxData.channelId,
         createdAt: serverTimestamp(),
-        reactions: (this.textBoxData.reactions = this.reactions),        
+        reactions: (this.textBoxData.reactions = this.reactions),
         attachment: [`${this.textBoxData.inputField}`],
-        threads: 0,        
+        threads: 0,
       });
-      
-      if(this.textBoxData.subcollection != 'channelmessages'){
+
+      if (this.textBoxData.subcollection != 'channelmessages') {
         type = 'thread';
       }
-      
+
       this.firestore.addChannelMessage(
-          message,
-          `${this.textBoxData.collection}/${message.channelId}/${this.textBoxData.subcollection}`, type
+        message,
+        `${this.textBoxData.collection}/${message.channelId}/${this.textBoxData.subcollection}`,
+        type
       );
 
       this.textBoxData.inputField = '';
       this.selectedFiles = undefined;
       this.textBoxData.messageText = '';
-      this.resetTextareaHeight();      
+      this.resetTextareaHeight();
     }
   }
 
@@ -98,7 +107,8 @@ export class TextBoxComponent implements AfterViewInit{
   uploadSingleFile() {
     if (this.selectedFiles) {
       let file = this.selectedFiles.item(0);
-      if (file) {
+      if (file?.size && file?.size <= 500000) {
+        this.maxSizeReached = false;        
         this.filedate = new Date().getTime();
         this.uploadService
           .uploadFile(file, this.filedate, 'attachments')
@@ -108,6 +118,8 @@ export class TextBoxComponent implements AfterViewInit{
           .catch((error) => {
             this.errorMessage = error.code;
           });
+      } else {
+        this.maxSizeReached = true;
       }
     }
   }
@@ -118,9 +130,8 @@ export class TextBoxComponent implements AfterViewInit{
       height: '300px',
     });
 
-
     dialogRef.componentInstance.emojiSelect.subscribe((event: string) => {
-      this.addEmoji({emoji: {native: event}} as EmojiEvent); // Konvertieren Sie den empfangenen String in ein EmojiEvent Objekt
+      this.addEmoji({ emoji: { native: event } } as EmojiEvent); // Konvertieren Sie den empfangenen String in ein EmojiEvent Objekt
       dialogRef.close();
     });
   }
@@ -131,15 +142,14 @@ export class TextBoxComponent implements AfterViewInit{
     this.adjustTextareaHeight(textarea);
   }
 
-  adjustTextareaHeight(textarea: HTMLTextAreaElement) {    
-    textarea.style.height = 'auto';    
+  adjustTextareaHeight(textarea: HTMLTextAreaElement) {
+    textarea.style.height = 'auto';
     textarea.style.height = textarea.scrollHeight + 'px';
     textarea.focus();
   }
 
-  resetTextareaHeight(){
+  resetTextareaHeight() {
     const textarea = this.messageText.nativeElement;
     textarea.style.height = this.initialHeight;
   }
-
 }
