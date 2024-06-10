@@ -30,7 +30,7 @@
             <input
               type="file"
               (change)="detectFile($event)"
-              accept="image/*"
+              accept="image/*,application/pdf"
               name="inputField"
               id="inputField"
             >
@@ -42,7 +42,11 @@
           </label>
 
           @if (this.selectedFiles && !this.maxSizeReached) {
-            <img class="preview" src="{{ this.textBoxData.inputField }}"/>
+            @if(this.fileType !== 'application/pdf'){
+              <img class="preview" src="{{ this.textBoxData.inputField }}"/>
+            } @else{              
+              <img class="preview" src="./assets/img/icon/pdf.png" alt="">
+            }
           }
 
           <div class="vertical-line"></div>

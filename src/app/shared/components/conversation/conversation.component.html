@@ -86,7 +86,12 @@
       <div class="attachment-list">
         @for (item of channelMessage.attachment; track $index) { @if(item !==
         'undefined' && item !== ''){
-        <img class="attachment" src="{{ item }}" alt="Foto"/>
+
+          @if(this.fileType){
+            <a href="{{ item }}" target="_blank" title="{{ item | filename }}"><img class="attachment" src="{{ item }}" alt="Foto"/></a>
+          }@else {
+            <a href="{{ item }}" target="_blank" title="{{ item | filename }}"><img class="attachment" src="./assets/img/icon/pdf.png" alt="">{{ item | filename }}</a>
+          }
         } }
       </div>
       } 

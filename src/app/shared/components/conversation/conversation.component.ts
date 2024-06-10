@@ -23,13 +23,14 @@ import { Router } from '@angular/router';
 import { MatchMediaService } from '../../services/match-media.service';
 import { Subscription } from 'rxjs';
 import { FirestoreService } from '../../services/firestore.service';
+import { FilenamePipe } from '../../pipes/filename.pipe';
 
 @Component({
   selector: 'app-conversation',
   standalone: true,
   templateUrl: './conversation.component.html',
   styleUrl: './conversation.component.scss',
-  imports: [CommonModule, MatDialogModule, EmojiPickerComponent, FormsModule],
+  imports: [CommonModule, MatDialogModule, EmojiPickerComponent, FormsModule, FilenamePipe],
 })
 export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
@@ -67,6 +68,7 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
   previousMessageDate: string;
   mainCollection: Subscription | undefined;
   timestampLastThread: any;
+  fileType: boolean = false;
 
   async ngOnInit(): Promise<void> {
     await this.delay(200);
@@ -89,6 +91,12 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
             this.channelMessage.text = data['text'];
             this.channelMessage.reactions = data['reactions'];
             this.channelMessage.attachment = data['attachment'];
+
+            if(this.channelMessage.attachment){
+              this.fileType = this.channelMessage.attachment[0].includes('.jpg?');              
+            }
+            
+
             this.channelMessage.threads = data['threads'];          
             this.adjustTextareaHeight(this.messageToEdit.nativeElement);
             this.fillEmojiReactions();

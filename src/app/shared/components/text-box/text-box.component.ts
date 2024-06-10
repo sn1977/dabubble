@@ -33,6 +33,7 @@ export class TextBoxComponent implements AfterViewInit {
   filedate: number | undefined;
   errorMessage: string | null = null;
   openEmojiPicker: boolean = false;
+  fileType: string = '';
   maxSizeReached: boolean = false;
 
   @Input() textBoxData: any;
@@ -110,6 +111,7 @@ export class TextBoxComponent implements AfterViewInit {
       if (file?.size && file?.size <= 500000) {
         this.maxSizeReached = false;        
         this.filedate = new Date().getTime();
+        this.fileType = file.type;
         this.uploadService
           .uploadFile(file, this.filedate, 'attachments')
           .then((url: string) => {
