@@ -3,7 +3,6 @@ import {
   Component,
   ElementRef,
   inject,
-  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -46,9 +45,7 @@ import { ChannelMessage } from '../../../models/channel-message.class';
     TimeSeperatorComponent,
   ],
 })
-export class ChannelComponent
-  implements OnInit, AfterViewChecked, OnDestroy
-{
+export class ChannelComponent implements OnInit, AfterViewChecked {
   firestore = inject(FirestoreService);
   router = inject(Router);
   itemID: any = '';
@@ -101,6 +98,8 @@ export class ChannelComponent
 
     this.route.paramMap.subscribe((paramMap) => {
       this.itemID = paramMap.get('id');
+      this.textBoxData.messageText = '';
+
       this.firestore.getSingleItemData('channels', this.itemID, () => {
         this.channel = new Channel(this.firestore.channel);
         this.textBoxData.channelName = this.channel.name;
@@ -120,10 +119,6 @@ export class ChannelComponent
         }, 1000);
       });
     });
-  }
-
-  ngOnDestroy() {
-    this.textBoxData.placeholder = 'HALLO';
   }
 
   async getItemValues(collection: string, itemID: string) {
