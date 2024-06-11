@@ -49,7 +49,7 @@ export class ThreadComponent implements OnInit, OnDestroy {
   channelList: any = [];
   newMessage: boolean = false;
   firebaseAuth = inject(Auth);
-  authService = inject(AuthService);
+  authService = inject(AuthService);  
   textBoxData: any = {
     placeholder: 'Antworten...',
     channelName: '',
@@ -83,7 +83,7 @@ export class ThreadComponent implements OnInit, OnDestroy {
 
   async ngOnInit(): Promise<void> {
     await this.waitForUserData();
-    this.test();
+    this.test();    
     this.newMessage = false;    
     this.headerStateService.setAlternativeHeader(true);
     this.scrollToBottom();
@@ -135,10 +135,13 @@ export class ThreadComponent implements OnInit, OnDestroy {
 
   closeThread() {
     this.isDesktop = this.matchMedia.checkIsDesktop();
+    this.matchMedia.scrollToBottom = true;
+    
     if (this.isDesktop === true) {
       this.matchMedia.showThread = false;
     } else {
       history.back();
     }
   }
+  
 }

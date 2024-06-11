@@ -244,14 +244,11 @@ export class FirestoreService {
       })
       .then(async (docRef) => {
         console.log('Document written with ID: ', docRef?.id);
-
-        if (!this.matchMedia.showThread) {
-          this.matchMedia.scrollToBottom = true;
-        } else {
+ 
+        this.matchMedia.scrollToBottom = true;
+        if(type === 'thread'){
           this.matchMedia.scrollToBottomThread = true;          
-          if(type === 'thread'){
-            await this.updateThreadCounter();
-          }
+          await this.updateThreadCounter();
         }
       });
   }

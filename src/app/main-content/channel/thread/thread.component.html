@@ -22,7 +22,7 @@
         [channelMessage]="this.firestore.channelMessage"
         [isChannel]="false"
         [isThread]="false"
-        [hideCompleteReactionBar]="true"
+        [hideCompleteReactionBar]="this.matchMedia.checkIsDesktop()"
         [hideThreadInfos]="true"
       ></app-conversation>
     <div class="timeSeperator">
