@@ -99,6 +99,7 @@ export class ChannelComponent implements OnInit, AfterViewChecked {
     this.route.paramMap.subscribe((paramMap) => {
       this.itemID = paramMap.get('id');
       this.textBoxData.messageText = '';
+      this.textBoxData.inputField = '';      
 
       this.firestore.getSingleItemData('channels', this.itemID, () => {
         this.channel = new Channel(this.firestore.channel);

@@ -43,9 +43,9 @@
 
           @if (this.selectedFiles && !this.maxSizeReached) {
             @if(this.fileType !== 'application/pdf'){
-              <img class="preview" src="{{ this.textBoxData.inputField }}"/>
+              <a target="_blank" href="{{ this.textBoxData.inputField }}"><img class="preview" src="{{ this.textBoxData.inputField }}"/></a>
             } @else{              
-              <img class="preview" src="./assets/img/icon/pdf.png" alt="">
+              <a target="_blank" href="{{ this.textBoxData.inputField }}"><img class="preview" src="./assets/img/icon/pdf.png" alt=""></a>
             }
           }
 

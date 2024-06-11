@@ -30,6 +30,7 @@ export class TextBoxComponent implements AfterViewInit {
   firestore = inject(FirestoreService);
   reactions = [];
   selectedFiles: FileList | undefined;
+  file: any = undefined;
   filedate: number | undefined;
   errorMessage: string | null = null;
   openEmojiPicker: boolean = false;
@@ -88,6 +89,7 @@ export class TextBoxComponent implements AfterViewInit {
 
       this.textBoxData.inputField = '';
       this.selectedFiles = undefined;
+      this.file = undefined;
       this.textBoxData.messageText = '';
       this.resetTextareaHeight();
     }
@@ -107,13 +109,13 @@ export class TextBoxComponent implements AfterViewInit {
 
   uploadSingleFile() {
     if (this.selectedFiles) {
-      let file = this.selectedFiles.item(0);
-      if (file?.size && file?.size <= 500000) {
+      this.file = this.selectedFiles.item(0);
+      if (this.file?.size && this.file?.size <= 500000) {
         this.maxSizeReached = false;        
         this.filedate = new Date().getTime();
-        this.fileType = file.type;
+        this.fileType = this.file.type;
         this.uploadService
-          .uploadFile(file, this.filedate, 'attachments')
+          .uploadFile(this.file, this.filedate, 'attachments')
           .then((url: string) => {
             this.textBoxData.inputField = url;
           })
