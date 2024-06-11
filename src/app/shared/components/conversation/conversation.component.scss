@@ -123,7 +123,7 @@
         font-weight: 400;
         font-size: 0.944rem;
         line-height: 23.19px;
-        color: #000000;        
+        color: #000000;
       }
 
       .edit-message {
@@ -144,11 +144,29 @@
       .attachment-list {
         @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 8px);
         flex-wrap: wrap;
+        padding: 8px;
+
+        a {
+          @include dFlex($jc: flex-start, $ai: flex-start, $fd: column, $g: 0);
+          font-family: "Nunito", sans-serif;
+          font-weight: 400;
+          font-size: 0.7rem;
+          line-height: 24.55px;
+          color: #444df2;
+          text-decoration: none;
+
+          &:hover {
+            font-weight: 600;
+          }
+        }
+        &:hover {
+          box-shadow: 0px 6px 14px 0px #00000033;
+        }
       }
 
       .attachment {
-        height: 75px;
-        width: 75px;
+        height: 60px;
+        width: 60px;
         object-fit: contain;
       }
 
