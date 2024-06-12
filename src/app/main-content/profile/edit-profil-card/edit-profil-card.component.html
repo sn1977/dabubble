@@ -50,8 +50,7 @@
                 <input
                     type="email"
                     name="email"
-                    [(ngModel)]="emailData.email"
-                    pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                    [formControl]="emailControl"
                     (ngModelChange)="checkInput($event)"
                     (focus)="onFocus()"
                     [class.input-has-value]="inputHasValue"

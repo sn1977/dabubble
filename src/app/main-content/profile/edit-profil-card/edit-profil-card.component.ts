@@ -1,92 +1,108 @@
-import {Component, inject, Inject, OnDestroy, OnInit} from '@angular/core';
-import {MatCard, MatCardActions, MatCardContent, MatCardImage} from '@angular/material/card';
-import {NgOptimizedImage} from '@angular/common';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog'; // Import MatDialog
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MatButton} from '@angular/material/button';
-import {User} from '../../../../models/user.class';
-import {FirestoreService} from '../../../shared/services/firestore.service';
-import {AuthService} from '../../../shared/services/auth.service';
-import { ChooseAvatarComponent } from '../../auth/register/choose-avatar/choose-avatar.component';
-
-@Component({
-  selector: 'app-edit-profil-card',
-  standalone: true,
-  imports: [
+import { Component, inject, Inject, OnDestroy, OnInit } from "@angular/core";
+import {
     MatCard,
+    MatCardActions,
     MatCardContent,
     MatCardImage,
-    NgOptimizedImage,
-    ReactiveFormsModule,
-    FormsModule,
-    MatCardActions,
-    MatButton
-  ],
-  templateUrl: './edit-profil-card.component.html',
-  styleUrl: './edit-profil-card.component.scss'
+} from "@angular/material/card";
+import { NgOptimizedImage } from "@angular/common";
+import {
+    MAT_DIALOG_DATA,
+    MatDialog,
+    MatDialogRef,
+} from "@angular/material/dialog"; // Import MatDialog
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { MatButton } from "@angular/material/button";
+import { User } from "../../../../models/user.class";
+import { FirestoreService } from "../../../shared/services/firestore.service";
+import { AuthService } from "../../../shared/services/auth.service";
+import { ChooseAvatarComponent } from "../../auth/register/choose-avatar/choose-avatar.component";
+import { Validators, FormControl } from '@angular/forms';
+
+@Component({
+    selector: "app-edit-profil-card",
+    standalone: true,
+    imports: [
+        MatCard,
+        MatCardContent,
+        MatCardImage,
+        NgOptimizedImage,
+        ReactiveFormsModule,
+        FormsModule,
+        MatCardActions,
+        MatButton,
+    ],
+    templateUrl: "./edit-profil-card.component.html",
+    styleUrl: "./edit-profil-card.component.scss",
 })
-
 export class EditProfilCardComponent implements OnInit, OnDestroy {
-  authService = inject(AuthService);
-  user: User = new User();
+    authService = inject(AuthService);
+    user: User = new User();
 
-  nameData = { name: '' };
-  emailData = { email: '' };
-  namePlaceholder?: string;
-  emailPlaceholder?: string;
+    nameData = { name: "" };
+    emailData = { email: "" };
+    namePlaceholder?: string;
+    emailPlaceholder?: string;
+    inputHasValue = false;
+    emailControl = new FormControl('', [
+      Validators.required,
+      Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}')
+    ]);
 
-  inputHasValue = false;
+    constructor(
+        private firestore: FirestoreService,
+        public dialogRef: MatDialogRef<EditProfilCardComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: { user: User },
+        public dialog: MatDialog // Add MatDialog as a property
+    ) {
+        console.log("Übergebene Benutzerdaten:", this.data.user);
+    }
 
-  constructor(
-    private firestore: FirestoreService,
-    public dialogRef: MatDialogRef<EditProfilCardComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { user: User },
-    public dialog: MatDialog // Add MatDialog as a property
-  ) {
-    console.log('Übergebene Benutzerdaten:', this.data.user);
-  }
+    onNoClick(): void {
+        this.dialogRef.close();
+    }
 
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
+    checkInput(value: string): void {
+        this.inputHasValue = !!value.trim();
+    }
 
-  checkInput(value: string): void {
-    this.inputHasValue = !!value.trim();
-  }
+    closeEditProfilCard() {
+        this.dialogRef.close();
+    }
 
-  closeEditProfilCard() {
-    this.dialogRef.close()
-  }
+    onFocus() {
+        this.namePlaceholder = "";
+        this.emailPlaceholder = "";
+    }
 
-  onFocus() {
-    this.namePlaceholder = '';
-    this.emailPlaceholder = '';
-  }
+    ngOnInit() {
+        this.firestore.subUserList(); // Abonniere die Benutzerliste
 
-  ngOnInit() {
-    this.firestore.subUserList();  // Abonniere die Benutzerliste
+        this.nameData.name = this.data.user.displayName || "";
+        this.emailData.email = this.data.user.email || "";
+    }
 
-    this.nameData.name = this.data.user.displayName || '';
-    this.emailData.email = this.data.user.email || '';
-  }
+    ngOnDestroy() {
+        this.firestore.unsubUsers(); // Beende das Abonnement
+    }
 
-  ngOnDestroy() {
-    this.firestore.unsubUsers();  // Beende das Abonnement
-  }
+    saveProfile(): void {
+        // Aktualisiere das User-Objekt mit neuen Daten aus den Formularfeldern
+        this.data.user.displayName =
+            this.nameData.name || this.data.user.displayName;
+        this.data.user.email = this.emailData.email || this.data.user.email;
 
-  saveProfile(): void {
-    // Aktualisiere das User-Objekt mit neuen Daten aus den Formularfeldern
-    this.data.user.displayName = this.nameData.name || this.data.user.displayName;
-    this.data.user.email = this.emailData.email || this.data.user.email;
+        this.firestore
+            .updateUser(this.data.user, this.authService.activeUserAccount.uid)
+            .then(() => {
+                this.dialogRef.close();
+            })
+            .catch((error) => {
+                console.error("Fehler beim Aktualisieren des Profils:", error);
+            });
+    }
 
-    this.firestore.updateUser(this.data.user, this.authService.activeUserAccount.uid).then(() => {
-      this.dialogRef.close();
-    }).catch(error => {
-      console.error('Fehler beim Aktualisieren des Profils:', error);
-    });
-  }
-
-  openRegisterDialog(): void {
-  this.dialog.open(ChooseAvatarComponent);
-}
+    openRegisterDialog(): void {
+        this.dialog.open(ChooseAvatarComponent);
+    }
 }
