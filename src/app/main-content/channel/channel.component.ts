@@ -45,7 +45,7 @@ import { ChannelMessage } from '../../../models/channel-message.class';
     TimeSeperatorComponent,
   ],
 })
-export class ChannelComponent implements OnInit, AfterViewChecked {
+export class ChannelComponent implements OnInit {
   firestore = inject(FirestoreService);
   router = inject(Router);
   itemID: any = '';
@@ -68,8 +68,7 @@ export class ChannelComponent implements OnInit, AfterViewChecked {
     subcollection: 'channelmessages',
   };
 
-  @ViewChild('messageContent') messageContent!: ElementRef;
-  previousMessageCount: number = 0;
+  @ViewChild('messageContent') messageContent!: ElementRef;  
 
   constructor(
     private _bottomSheet: MatBottomSheet,
@@ -129,21 +128,6 @@ export class ChannelComponent implements OnInit, AfterViewChecked {
       this.textBoxData.channelName = this.channel.name;
       this.textBoxData.channelId = itemID;
     });
-  }
-
-  ngAfterViewInit() {
-    this.previousMessageCount = this.getCurrentMessageCount();
-  }
-
-  ngAfterViewChecked() {
-    const currentMessageCount = this.getCurrentMessageCount();
-    if (currentMessageCount > this.previousMessageCount) {
-      this.previousMessageCount = currentMessageCount;
-    }
-  }
-
-  getCurrentMessageCount(): number {
-    return this.messageContent.nativeElement.children.length;
   }
 
   async scrollToBottom() {
