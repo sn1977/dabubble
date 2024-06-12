@@ -1,12 +1,13 @@
 import {Component, inject, Inject, OnDestroy, OnInit} from '@angular/core';
 import {MatCard, MatCardActions, MatCardContent, MatCardImage} from '@angular/material/card';
 import {NgOptimizedImage} from '@angular/common';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog'; // Import MatDialog
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatButton} from '@angular/material/button';
 import {User} from '../../../../models/user.class';
 import {FirestoreService} from '../../../shared/services/firestore.service';
 import {AuthService} from '../../../shared/services/auth.service';
+import { ChooseAvatarComponent } from '../../auth/register/choose-avatar/choose-avatar.component';
 
 @Component({
   selector: 'app-edit-profil-card',
@@ -39,7 +40,9 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
   constructor(
     private firestore: FirestoreService,
     public dialogRef: MatDialogRef<EditProfilCardComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { user: User }) {
+    @Inject(MAT_DIALOG_DATA) public data: { user: User },
+    public dialog: MatDialog // Add MatDialog as a property
+  ) {
     console.log('Übergebene Benutzerdaten:', this.data.user);
   }
 
@@ -82,4 +85,8 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
       console.error('Fehler beim Aktualisieren des Profils:', error);
     });
   }
+
+  openRegisterDialog(): void {
+  this.dialog.open(ChooseAvatarComponent);
+}
 }
