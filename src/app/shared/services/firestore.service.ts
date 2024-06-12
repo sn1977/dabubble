@@ -233,7 +233,7 @@ export class FirestoreService {
       })
       .then((docRef) => {
         console.log('Document written with ID: ', docRef?.id);
-        this.router.navigate(['/new-channel/' + docRef?.id]);
+        this.router.navigate(['/channel/' + docRef?.id]);
       });
   }
 
