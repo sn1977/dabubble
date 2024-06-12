@@ -37,7 +37,7 @@
         <textarea
           class="message text-white"
           [ngStyle]="{
-            'background-color': hovered ? '#797EF3' : '#797EF3',            
+            'background-color': hovered ? '#797EF3' : '#797EF3',
             'border-radius': isMessageFromYou
               ? '0 30px 30px 30px'
               : '30px 0 30px 30px'
@@ -49,11 +49,15 @@
           required
           (input)="adjustTextareaHeight(messageToEdit)"
           (change)="changeMessage(); adjustTextareaHeight(messageToEdit)"
-          >{{ channelMessage.text }}</textarea>
+          >{{ channelMessage.text }}</textarea
+        >
         @if(!isMessageDisabled){
         <div class="edit-bar">
-          <div class="buttons"
-          [ngStyle]="{ 'justify-content': isMessageFromYou ? 'flex-start' : 'flex-end' }"
+          <div
+            class="buttons"
+            [ngStyle]="{
+              'justify-content': isMessageFromYou ? 'flex-start' : 'flex-end'
+            }"
           >
             <button
               class="btn-secondary pointer"
@@ -71,7 +75,7 @@
       <textarea
         class="message"
         [ngStyle]="{
-          'background-color': hovered ? '#FFFFFF' : '#ECEEFE',          
+          'background-color': hovered ? '#FFFFFF' : '#ECEEFE',
           'border-radius': isMessageFromYou
             ? '0 30px 30px 30px'
             : '30px 0 30px 30px'
@@ -85,33 +89,29 @@
       } @if (channelMessage.attachment) {
       <div class="attachment-list">
         @for (item of channelMessage.attachment; track $index) { @if(item !==
-        'undefined' && item !== ''){
-
-          @if(this.fileType){
-            <a href="{{ item }}" target="_blank" title="{{ item | filename }}"><img class="attachment" src="{{ item }}" alt="Foto"/></a>
-          }@else {
-            <a href="{{ item }}" target="_blank" title="{{ item | filename }}"><img class="attachment" src="./assets/img/icon/pdf.png" alt="">{{ item | filename }}</a>
-          }
-        } }
+        'undefined' && item !== ''){ @if(this.fileType){
+        <a href="{{ item }}" target="_blank" title="{{ item | filename }}"
+          ><img class="attachment" src="./assets/img/icon/pdf.png" alt="" />{{
+            item | filename
+          }}</a
+        >
+        }@else {
+        <a href="{{ item }}" target="_blank" title="{{ item | filename }}"
+          ><img class="attachment" src="{{ item }}" alt="Foto"
+        /></a>
+        } } }
       </div>
-      } 
-      @if(channelMessage.threads !== 0 && hideThreadInfos === false){
+      } @if(channelMessage.threads !== 0 && hideThreadInfos === false){
       <div
         class="thread-infos"
         [ngStyle]="{
           'flex-direction': isMessageFromYou ? 'row' : 'row-reverse'
         }"
       >
-        <span class="answer" (click)="doNotClose($event); openThread()"
-          >
-          {{ channelMessage.threads }} 
-          @if(channelMessage.threads == 1){
-            Antwort
-          }@else {
-            Antworten
-          }
-          </span
-        >
+        <span class="answer" (click)="doNotClose($event); openThread()">
+          {{ channelMessage.threads }}
+          @if(channelMessage.threads == 1){ Antwort }@else { Antworten }
+        </span>
         <span
           class="last-thread"
           [ngStyle]="{ color: hovered ? '#000000' : '#686868' }"
@@ -124,17 +124,15 @@
     @if(channelMessage.reactions.length > 0 && !hideCompleteReactionBar){
     <div class="reaction-infos" (click)="doNotClose($event)">
       <div class="reactions">
-        <ng-container *ngFor="let reaction of channelMessage.reactions">          
-            <div
+        <ng-container *ngFor="let reaction of channelMessage.reactions">
+          <div
             *ngIf="reaction.emoji"
             class="reaction-group pointer"
             (mouseenter)="showEmojiSnackbarTile = true"
             (mouseleave)="showEmojiSnackbarTile = false"
             (click)="toggleReaction(reaction)"
-            >
-            <span class="reaction-icon">{{
-              reaction.emoji
-            }}</span>
+          >
+            <span class="reaction-icon">{{ reaction.emoji }}</span>
             <div class="reaction-count">
               {{ getUserReactionCount(reaction.emoji) }}
             </div>

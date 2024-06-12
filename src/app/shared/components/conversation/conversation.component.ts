@@ -93,7 +93,7 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
             this.channelMessage.attachment = data['attachment'];
 
             if(this.channelMessage.attachment){
-              this.fileType = this.channelMessage.attachment[0].includes('.jpg?');              
+              this.fileType = this.channelMessage.attachment[0].includes('.pdf?');              
             }
             
 
