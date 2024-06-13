@@ -183,3 +183,11 @@
     font-size: 0.8rem;
     margin-top: 5px;
 }
+
+label {
+    @include dFlex($jc: center, $ai: center, $fd: row, $g: 0);
+  }
+
+  input[type="file"] {
+    display: none;
+  }

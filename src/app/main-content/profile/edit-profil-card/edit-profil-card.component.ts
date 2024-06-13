@@ -18,6 +18,7 @@ import { FirestoreService } from "../../../shared/services/firestore.service";
 import { AuthService } from "../../../shared/services/auth.service";
 import { ChooseAvatarComponent } from "../../auth/register/choose-avatar/choose-avatar.component";
 import { Validators, FormControl } from "@angular/forms";
+import { UploadService } from "../../../shared/services/upload.service";
 
 @Component({
     selector: "app-edit-profil-card",
@@ -56,10 +57,25 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
         Validators.pattern("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"),
     ]);
 
+    contactData = {
+        name: "Sascha",
+        email: "",
+        password: "",
+        photoURL: "",
+    };
+
+    selectedAvatar: FileList | undefined;
+    file: any = undefined;
+    filedate: number | undefined;
+    errorMessage: string | null = null;
+    fileType: string = "";
+    maxSizeReached: boolean = false;
+
     constructor(
         private firestore: FirestoreService,
         public dialogRef: MatDialogRef<EditProfilCardComponent>,
         @Inject(MAT_DIALOG_DATA) public data: { user: User },
+        private uploadService: UploadService,
         public dialog: MatDialog // Add MatDialog as a property
     ) {
         console.log("Übergebene Benutzerdaten:", this.data.user);
@@ -119,6 +135,41 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
     }
 
     openRegisterDialog(): void {
-        this.dialog.open(ChooseAvatarComponent);
+        console.log(this.contactData);
+
+        this.dialog.open(ChooseAvatarComponent, {
+            width: "80%",
+            data: { user: this.contactData },
+        });
+    }
+
+    uploadSingleFile2() {
+        if (this.selectedAvatar) {
+            this.file = this.selectedAvatar.item(0);
+            console.log(this.file);
+
+            if (this.file?.size && this.file?.size <= 500000) {
+                this.maxSizeReached = false;
+                this.filedate = new Date().getTime();
+                this.fileType = this.file.type;
+                this.uploadService
+                    .uploadFile(this.file, this.filedate, "character")
+                    .then((url: string) => {
+                        console.log(url);
+                        
+                        // this.textBoxData.inputField = url;
+                    })
+                    .catch((error) => {
+                        this.errorMessage = error.code;
+                    });
+            } else {
+                this.maxSizeReached = true;
+            }
+        }
+    }
+
+    detectAvatar(event: any) {
+        this.selectedAvatar = event.target.files;
+        this.uploadSingleFile2();
     }
 }
