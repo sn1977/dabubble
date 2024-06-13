@@ -5,7 +5,7 @@ import {
     MatCardContent,
     MatCardImage,
 } from "@angular/material/card";
-import { NgOptimizedImage } from "@angular/common";
+import { CommonModule, NgOptimizedImage } from "@angular/common";
 import {
     MAT_DIALOG_DATA,
     MatDialog,
@@ -17,7 +17,7 @@ import { User } from "../../../../models/user.class";
 import { FirestoreService } from "../../../shared/services/firestore.service";
 import { AuthService } from "../../../shared/services/auth.service";
 import { ChooseAvatarComponent } from "../../auth/register/choose-avatar/choose-avatar.component";
-import { Validators, FormControl } from '@angular/forms';
+import { Validators, FormControl } from "@angular/forms";
 
 @Component({
     selector: "app-edit-profil-card",
@@ -31,6 +31,7 @@ import { Validators, FormControl } from '@angular/forms';
         FormsModule,
         MatCardActions,
         MatButton,
+        CommonModule,
     ],
     templateUrl: "./edit-profil-card.component.html",
     styleUrl: "./edit-profil-card.component.scss",
@@ -44,9 +45,15 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
     namePlaceholder?: string;
     emailPlaceholder?: string;
     inputHasValue = false;
-    emailControl = new FormControl('', [
-      Validators.required,
-      Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}')
+
+    nameControl = new FormControl("", [
+        Validators.required,
+        Validators.minLength(5),
+    ]);
+
+    emailControl = new FormControl("", [
+        Validators.required,
+        Validators.pattern("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"),
     ]);
 
     constructor(
@@ -87,19 +94,28 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
     }
 
     saveProfile(): void {
-        // Aktualisiere das User-Objekt mit neuen Daten aus den Formularfeldern
-        this.data.user.displayName =
-            this.nameData.name || this.data.user.displayName;
-        this.data.user.email = this.emailData.email || this.data.user.email;
+        // Überprüfen Sie, ob nameControl und emailControl gültig sind
+        if (this.nameControl.valid && this.emailControl.valid) {
+            // Aktualisiere das User-Objekt mit neuen Daten aus den Formularfeldern
+            this.data.user.displayName =
+                this.nameData.name || this.data.user.displayName;
+            this.data.user.email = this.emailData.email || this.data.user.email;
 
-        this.firestore
-            .updateUser(this.data.user, this.authService.activeUserAccount.uid)
-            .then(() => {
-                this.dialogRef.close();
-            })
-            .catch((error) => {
-                console.error("Fehler beim Aktualisieren des Profils:", error);
-            });
+            this.firestore
+                .updateUser(
+                    this.data.user,
+                    this.authService.activeUserAccount.uid
+                )
+                .then(() => {
+                    this.dialogRef.close();
+                })
+                .catch((error) => {
+                    console.error(
+                        "Fehler beim Aktualisieren des Profils:",
+                        error
+                    );
+                });
+        }
     }
 
     openRegisterDialog(): void {

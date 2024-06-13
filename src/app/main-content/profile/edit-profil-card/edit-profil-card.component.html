@@ -31,13 +31,21 @@
                 type="text"
                 name="name"
                 [(ngModel)]="nameData.name"
-                [minLength]="5"
+                [formControl]="nameControl"
                 (ngModelChange)="checkInput($event)"
                 (focus)="onFocus()"
                 [class.input-has-value]="inputHasValue"
                 placeholder="{{ data.user.displayName }}"
                 required
                 class="full-width input-field-design" />
+            <div
+                *ngIf="
+                    nameControl.invalid &&
+                    (nameControl.dirty || nameControl.touched)
+                "
+                class="error">
+                Bitte mindestens 5 Buchstaben eingeben.
+            </div>
         </div>
     </mat-card-content>
     <mat-card-content>
@@ -50,6 +58,7 @@
                 <input
                     type="email"
                     name="email"
+                    [(ngModel)]="emailData.email"
                     [formControl]="emailControl"
                     (ngModelChange)="checkInput($event)"
                     (focus)="onFocus()"
@@ -57,6 +66,14 @@
                     placeholder="{{ data.user.email }}"
                     required
                     class="full-width input-field-design" />
+                <div
+                    *ngIf="
+                        emailControl.invalid &&
+                        (emailControl.dirty || emailControl.touched)
+                    "
+                    class="error">
+                    Bitte eine gültige E-Mail-Adresse eingeben.
+                </div>
             </div>
         </div>
     </mat-card-content>
