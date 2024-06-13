@@ -156,7 +156,8 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
                     .uploadFile(this.file, this.filedate, "character")
                     .then((url: string) => {
                         console.log(url);
-                        
+                        //NOTE - direkt live anzeigen lassen & in authentififizierung (UID) speichern / ändern & user.objekt speichern
+                        // this.contactData.photoURL = url;
                         // this.textBoxData.inputField = url;
                     })
                     .catch((error) => {

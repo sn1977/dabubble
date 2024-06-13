@@ -227,20 +227,21 @@ export class AuthService {
     return this.activeUserAccount ? this.activeUserAccount.uid : null;
   }
 
-  updateEmail(newEmail: string): Promise<void> {
-    const currentUser = this.firebaseAuth.currentUser;
-    if (currentUser) {
-      return currentUser.updateEmail(newEmail)
-        .then(() => {
-          console.log('Email updated successfully');
-          // Hier können Sie zusätzliche Aktionen durchführen, z. B. das Aktualisieren des Benutzerprofils in Ihrer Datenbank
-        })
-        .catch((error) => {
-          console.error('Error updating email:', error);
-          throw error;
-        });
-    } else {
-      throw new Error('No user is currently signed in');
-    }
-  }
+  //NOTE - updateEmail Try
+  // updateEmail(newEmail: string): Promise<void> {
+  //   const currentUser = this.firebaseAuth.currentUser;
+  //   if (currentUser) {
+  //     return currentUser.updateEmail(newEmail)
+  //       .then(() => {
+  //         console.log('Email updated successfully');
+  //         // Hier können Sie zusätzliche Aktionen durchführen, z. B. das Aktualisieren des Benutzerprofils in Ihrer Datenbank
+  //       })
+  //       .catch((error) => {
+  //         console.error('Error updating email:', error);
+  //         throw error;
+  //       });
+  //   } else {
+  //     throw new Error('No user is currently signed in');
+  //   }
+  // }
 }
