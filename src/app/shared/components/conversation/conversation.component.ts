@@ -93,9 +93,8 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
             this.channelMessage.attachment = data['attachment'];
 
             if(this.channelMessage.attachment){
-              this.fileType = this.channelMessage.attachment[0].includes('.pdf?');              
-            }
-            
+              this.fileType = this.channelMessage.attachment![0].includes('.pdf?');
+            }            
 
             this.channelMessage.threads = data['threads'];          
             this.adjustTextareaHeight(this.messageToEdit.nativeElement);

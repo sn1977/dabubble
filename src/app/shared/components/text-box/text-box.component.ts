@@ -114,6 +114,10 @@ export class TextBoxComponent implements AfterViewInit {
         this.maxSizeReached = false;        
         this.filedate = new Date().getTime();
         this.fileType = this.file.type;
+
+        // console.log(this.file);
+        
+
         this.uploadService
           .uploadFile(this.file, this.filedate, 'attachments')
           .then((url: string) => {

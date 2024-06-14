@@ -89,7 +89,8 @@
       } @if (channelMessage.attachment) {
       <div class="attachment-list">
         @for (item of channelMessage.attachment; track $index) { @if(item !==
-        'undefined' && item !== ''){ @if(this.fileType){
+        'undefined' && item !== '')
+        { @if(channelMessage.attachment[0].includes('.pdf?')){          
         <a href="{{ item }}" target="_blank" title="{{ item | filename }}"
           ><img class="attachment" src="./assets/img/icon/pdf.png" alt="" />{{
             item | filename
@@ -98,7 +99,7 @@
         }@else {
         <a href="{{ item }}" target="_blank" title="{{ item | filename }}"
           ><img class="attachment" src="{{ item }}" alt="Foto"
-        /></a>
+        /></a>        
         } } }
       </div>
       } @if(channelMessage.threads !== 0 && hideThreadInfos === false){

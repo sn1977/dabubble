@@ -65,9 +65,13 @@ textarea {
     @include dFlex($jc: center, $ai: center, $fd: row, $g: 0);
   }
 
-  input[type="file"] {
-    display: none;
-  }
+  // input[type="file"] {
+  //   // display: none; // scheinbar fehlerhaft
+  //   // opacity: 0; // verschwendet Platz
+  //   //
+  //   // visibility: hidden;
+  //   transform: translateX(300%);
+  // }
 
   a {
     @include dFlex($jc: center, $ai: center, $fd: row, $g: 0);
