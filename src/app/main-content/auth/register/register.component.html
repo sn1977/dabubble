@@ -58,8 +58,8 @@
               type="email"
               name="email"
               #email="ngModel"
-              [(ngModel)]="contactData.email"
-              pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+              [(ngModel)]="contactData.email"              
+              pattern="[a-zA-ZO0-9.%+\-]+@[a-zA-Z0-9.\-]+.[a-zA-Z]{2,}"
               placeholder="beispielname@email.com"
               required
             />

@@ -17,13 +17,13 @@
     </div>
 
     <div class="profile-img-container">
-        <label for="inputField" class="pointer">
+        <label for="editAvatar" class="pointer">
             <input
                 type="file"
                 (change)="detectAvatar($event)"
                 accept="image/*"
-                name="inputField"
-                id="inputField" />
+                name="editAvatar"
+                id="editAvatar" />
             <img class="profile-img" mat-card-image [src]="data.user.avatar" />
         </label>
     </div>

@@ -20,18 +20,18 @@
       <div class="actions">
         <div class="other-content">
           <label
-            for="inputField"
+            for="inputAttachment"
             class="pointer"
             (mouseenter)="add_hovered = true"
             (mouseleave)="deleteHovered()"
           >
 
             <input
-              type="file"
+              type="file"              
               (change)="detectFile($event)"
               accept="image/*,application/pdf"              
-              name="inputField"
-              id="inputField"
+              name="inputAttachment"
+              id="inputAttachment"
             >
             @if (add_hovered) {
               <img src="./assets/img/icon/add_hover.svg"/>
