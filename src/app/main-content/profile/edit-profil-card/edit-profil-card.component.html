@@ -16,25 +16,18 @@
         </div>
     </div>
 
-    
-
     <div class="profile-img-container">
-        <label
-            for="inputField"
-            class="pointer"
-          >
-
+        <label for="inputField" class="pointer">
             <input
-              type="file"
-              (change)="detectAvatar($event)"
-              accept="image/*"
-              name="inputField"
-              id="inputField"
-            >
-        <img class="profile-img" mat-card-image [src]="data.user.avatar" />
+                type="file"
+                (change)="detectAvatar($event)"
+                accept="image/*"
+                name="inputField"
+                id="inputField" />
+            <img class="profile-img" mat-card-image [src]="data.user.avatar" />
         </label>
     </div>
-    
+
     <mat-card-content>
         <div class="email-field">
             <img
@@ -43,7 +36,6 @@
                 width="26" />
             <span>Vollständiger Name</span>
         </div>
-        <!-- [class.input-has-value]="inputHasValue" -->
         <div class="input-field">
             <input
                 type="text"
@@ -52,7 +44,6 @@
                 [formControl]="nameControl"
                 (ngModelChange)="checkInput($event)"
                 (focus)="onFocus()"
-                
                 placeholder="{{ data.user.displayName }}"
                 required
                 class="full-width input-field-design" />

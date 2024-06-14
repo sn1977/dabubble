@@ -19,6 +19,9 @@ import { AuthService } from "../../../shared/services/auth.service";
 import { ChooseAvatarComponent } from "../../auth/register/choose-avatar/choose-avatar.component";
 import { Validators, FormControl } from "@angular/forms";
 import { UploadService } from "../../../shared/services/upload.service";
+import firebase from 'firebase/app';
+
+import 'firebase/auth';
 
 @Component({
     selector: "app-edit-profil-card",
@@ -32,7 +35,7 @@ import { UploadService } from "../../../shared/services/upload.service";
         FormsModule,
         MatCardActions,
         MatButton,
-        CommonModule,
+        CommonModule
     ],
     templateUrl: "./edit-profil-card.component.html",
     styleUrl: "./edit-profil-card.component.scss",
@@ -134,7 +137,7 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
         }
     }
 
-    openRegisterDialog(): void {
+    openAvatarDialog(): void {
         console.log(this.contactData);
 
         this.dialog.open(ChooseAvatarComponent, {
@@ -159,6 +162,10 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
                         //NOTE - direkt live anzeigen lassen & in authentififizierung (UID) speichern / ändern & user.objekt speichern
                         // this.contactData.photoURL = url;
                         // this.textBoxData.inputField = url;
+                        this.data.user.avatar = url;
+                        this.authService.activeUserAccount.photoURL = url
+                        console.log(this.authService.activeUserAccount.photoURL);
+                        
                     })
                     .catch((error) => {
                         this.errorMessage = error.code;
