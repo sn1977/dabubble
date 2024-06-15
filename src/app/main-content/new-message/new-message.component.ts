@@ -15,6 +15,7 @@ import { TextBoxComponent } from '../../shared/components/text-box/text-box.comp
 import { ConversationComponent } from '../../shared/components/conversation/conversation.component';
 import { Channel } from '../../../models/channel.class';
 import { NgIf } from '@angular/common';
+import { MemberService } from '../../shared/services/member-service.service';
 
 @Component({
   selector: 'app-new-message',
@@ -86,7 +87,8 @@ export class NewMessageComponent implements OnInit{
     private navigationService: NavigationService,
     private _bottomSheet: MatBottomSheet,
     private route: ActivatedRoute,
-    private headerStateService: HeaderStateService
+    private headerStateService: HeaderStateService,
+    private memberService: MemberService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -201,6 +203,15 @@ export class NewMessageComponent implements OnInit{
     }
   }
 
- 
+
+  changeAvatar(newAvatar: string) {
+    if (this.user && this.user.id && newAvatar) {
+      this.memberService.updateMemberAvatar(this.user.id, newAvatar);
+      this.user.avatar = newAvatar;
+      this.userData.avatar = newAvatar;
+    } else {
+      console.error('User ID or new avatar is undefined');
+    }
+  }
 
 }

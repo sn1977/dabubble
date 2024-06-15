@@ -19,9 +19,11 @@ import { AuthService } from "../../../shared/services/auth.service";
 import { ChooseAvatarComponent } from "../../auth/register/choose-avatar/choose-avatar.component";
 import { Validators, FormControl } from "@angular/forms";
 import { UploadService } from "../../../shared/services/upload.service";
-import firebase from 'firebase/app';
+import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/firestore";
 
-import 'firebase/auth';
+import { MemberService } from "../../../shared/services/member-service.service";
 
 @Component({
     selector: "app-edit-profil-card",
@@ -35,11 +37,12 @@ import 'firebase/auth';
         FormsModule,
         MatCardActions,
         MatButton,
-        CommonModule
+        CommonModule,
     ],
     templateUrl: "./edit-profil-card.component.html",
     styleUrl: "./edit-profil-card.component.scss",
 })
+
 export class EditProfilCardComponent implements OnInit, OnDestroy {
     authService = inject(AuthService);
     user: User = new User();
@@ -79,10 +82,15 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
         public dialogRef: MatDialogRef<EditProfilCardComponent>,
         @Inject(MAT_DIALOG_DATA) public data: { user: User },
         private uploadService: UploadService,
-        public dialog: MatDialog // Add MatDialog as a property
+        public dialog: MatDialog, // Add MatDialog as a property
+        private memberService: MemberService
     ) {
         console.log("Übergebene Benutzerdaten:", this.data.user);
     }
+
+    updateMemberAvatar(newAvatarUrl: string) {
+        this.memberService.updateMemberAvatar(this.authService.activeUserAccount.uid, newAvatarUrl);
+      }
 
     onNoClick(): void {
         this.dialogRef.close();
@@ -150,6 +158,7 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
         if (this.selectedAvatar) {
             this.file = this.selectedAvatar.item(0);
             console.log(this.file);
+            console.log(this.authService.activeUserAccount.photoURL);
 
             if (this.file?.size && this.file?.size <= 500000) {
                 this.maxSizeReached = false;
@@ -163,9 +172,11 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
                         // this.contactData.photoURL = url;
                         // this.textBoxData.inputField = url;
                         this.data.user.avatar = url;
-                        this.authService.activeUserAccount.photoURL = url
-                        console.log(this.authService.activeUserAccount.photoURL);
-                        
+                        this.authService.activeUserAccount.photoURL = url;
+                        console.log(
+                            this.authService.activeUserAccount.photoURL
+                        );
+                        this.updateMemberAvatar(url);
                     })
                     .catch((error) => {
                         this.errorMessage = error.code;
@@ -175,9 +186,18 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
             }
         }
     }
-
     detectAvatar(event: any) {
         this.selectedAvatar = event.target.files;
         this.uploadSingleFile2();
     }
+
+    // updateMemberAvatar(newAvatarUrl: string) {
+    //     // Durchlaufen Sie jedes Mitglied in channel.member
+    //     this.channel.member.forEach(member => {
+    //       // Wenn die uid des Mitglieds mit der uid des aktiven Benutzers übereinstimmt, aktualisieren Sie das avatar-Feld
+    //       if (member.uid === this.authService.activeUserAccount.uid) {
+    //         member.avatar = newAvatarUrl;
+    //       }
+    //     });
+    //   }
 }

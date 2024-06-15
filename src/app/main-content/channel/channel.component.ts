@@ -28,6 +28,7 @@ import { TimeSeperatorComponent } from '../../shared/components/time-seperator/t
 import { MatchMediaService } from '../../shared/services/match-media.service';
 import { DataService } from '../../shared/services/data.service';
 import { ChannelMessage } from '../../../models/channel-message.class';
+import { MemberService } from '../../shared/services/member-service.service';
 
 @Component({
   selector: 'app-channel',
@@ -76,7 +77,8 @@ export class ChannelComponent implements OnInit {
     public navigationService: NavigationService,
     private headerStateService: HeaderStateService,
     private dialogService: DialogServiceService,
-    public dateFormatService: DateFormatService
+    public dateFormatService: DateFormatService,
+    private memberService: MemberService
   ) {}
 
   channelData = {
@@ -88,9 +90,16 @@ export class ChannelComponent implements OnInit {
     newMessage: this.channel.newMessage,
   };
 
+  updateMemberAvatar() {
+    this.memberService.getMembers().subscribe(members => {
+      this.channel.member = members;
+    });
+  }
+
   async ngOnInit(): Promise<void> {
     this.dataService.searchWorkspace('');
     this.isDesktop = this.matchMedia.checkIsDesktop();
+    this.updateMemberAvatar();
     await this.waitForUserData();
     this.test();
     this.newMessage = false;
