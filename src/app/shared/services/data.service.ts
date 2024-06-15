@@ -50,7 +50,7 @@ export class DataService {
     this.userMatches = this.allUsers
       .filter(
         (user) =>
-          user.displayName.toLowerCase().includes(query) ||
+          user.displayName!.toLowerCase().includes(query) ||
           user.email.toLowerCase().includes(query)
       )
       .map((user) => ({ ...user, type: 'user' }));

@@ -24,6 +24,7 @@ import "firebase/auth";
 import "firebase/firestore";
 
 import { MemberService } from "../../../shared/services/member-service.service";
+import { Auth } from "@angular/fire/auth";
 
 @Component({
     selector: "app-edit-profil-card",
@@ -44,9 +45,10 @@ import { MemberService } from "../../../shared/services/member-service.service";
 })
 
 export class EditProfilCardComponent implements OnInit, OnDestroy {
+    firebaseAuth = inject(Auth);
     authService = inject(AuthService);
     user: User = new User();
-
+    templateIndex: number = 0;
     nameData = { name: "" };
     emailData = { email: "" };
     namePlaceholder?: string;
@@ -142,6 +144,10 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
                         error
                     );
                 });
+
+                if(this.firebaseAuth.currentUser?.photoURL){
+                    this.authService.updateUserData(this.nameData.name, this.firebaseAuth.currentUser.photoURL);
+                }
         }
     }
 
@@ -156,9 +162,7 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
 
     uploadSingleFile2() {
         if (this.selectedAvatar) {
-            this.file = this.selectedAvatar.item(0);
-            console.log(this.file);
-            console.log(this.authService.activeUserAccount.photoURL);
+            this.file = this.selectedAvatar.item(0);            
 
             if (this.file?.size && this.file?.size <= 500000) {
                 this.maxSizeReached = false;
@@ -167,15 +171,12 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
                 this.uploadService
                     .uploadFile(this.file, this.filedate, "character")
                     .then((url: string) => {
-                        console.log(url);
+                        this.authService.updateUserData(this.user.displayName!, url);
                         //NOTE - direkt live anzeigen lassen & in authentififizierung (UID) speichern / ändern & user.objekt speichern
                         // this.contactData.photoURL = url;
                         // this.textBoxData.inputField = url;
                         this.data.user.avatar = url;
-                        this.authService.activeUserAccount.photoURL = url;
-                        console.log(
-                            this.authService.activeUserAccount.photoURL
-                        );
+                        this.authService.activeUserAccount.photoURL = url;                        
                         this.updateMemberAvatar(url);
                     })
                     .catch((error) => {

@@ -57,7 +57,6 @@ export class AuthService {
     );
 
     this.isDesktop = this.matchMedia.checkIsDesktop();
-
   }
 
   googleAuth() {
@@ -124,10 +123,12 @@ export class AuthService {
     ).then(() => {
       const currentUser = this.firebaseAuth.currentUser;
       if (currentUser) {
-        this.user.id = currentUser.uid ?? this.user.id;
+        this.user.id = currentUser.uid ?? this.user.id;        
+
         if (currentUser.photoURL) {
           this.user.avatar = currentUser.photoURL;
         }
+
         this.user.email = currentUser.email ?? this.user.email;
         this.user.displayName =
           currentUser.displayName ?? this.user.displayName;
@@ -141,9 +142,12 @@ export class AuthService {
 
   logout(): Promise<void> {
     const currentUser = this.firebaseAuth.currentUser;
+
     if (currentUser) {
       this.user.id = currentUser.uid ?? this.user.id;
+      this.user.displayName = currentUser.displayName;
       this.user.isOnline = false;
+      this.user.avatar = currentUser.photoURL;
       this.matchMedia.channelName = '';
       this.matchMedia.showThread = false;
       this.firestore.updateUser(this.user, this.user.id);
@@ -197,7 +201,7 @@ export class AuthService {
     const auth = getAuth();
     signInAnonymously(auth)
       .then(async (response) => {
-        await updateProfile(response.user, {          
+        await updateProfile(response.user, {
           displayName: `Gast #${randomUserNumber}`,
           photoURL:
             'http://localhost:4200/assets/img/characters/template' +
@@ -244,4 +248,18 @@ export class AuthService {
   //     throw new Error('No user is currently signed in');
   //   }
   // }
+
+  updateUserData(displayName: string, url: string) {
+    const auth = getAuth();
+    if (auth.currentUser) {
+      updateProfile(auth.currentUser, {
+        displayName: displayName,
+        photoURL: url,
+      })
+        .then(() => {})
+        .catch((error) => {
+          console.error('An error occurred!', error);
+        });
+    }
+  }
 }

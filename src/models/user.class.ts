@@ -1,8 +1,8 @@
 export class User {
   id?: string;
-  avatar?: string;
+  avatar?: string | null;
   email: string;
-  displayName: string;
+  displayName: string | null;
   isOnline: boolean;
   newMessage: boolean | undefined;
   provider: string;
