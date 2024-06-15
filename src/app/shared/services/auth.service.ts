@@ -18,6 +18,7 @@ import {
   authState,
   getRedirectResult,
   signInAnonymously,
+  sendEmailVerification,
 } from '@angular/fire/auth';
 import { Observable, from, BehaviorSubject } from 'rxjs';
 import { UserInterface } from '../interfaces/user.interface';
@@ -112,6 +113,7 @@ export class AuthService {
         this.firestore.updateUser(this.user, this.user.id);
       }
     });
+    this.sendMailVerification();
     return from(promise);
   }
 
@@ -175,6 +177,18 @@ export class AuthService {
     );
     return from(promise);
   }
+
+  sendMailVerification(): Observable<void> {
+    const auth = getAuth();    
+    const promise = sendEmailVerification(auth.currentUser!)
+    .then(() => {
+      console.log('Email verification sent!');      
+      // Email verification sent!
+      // ...
+    });
+    return from(promise);
+  }
+
 
   resetPassword(actionCode: string, newPassword: string) {
     const auth = getAuth();
@@ -260,6 +274,7 @@ export class AuthService {
         .catch((error) => {
           console.error('An error occurred!', error);
         });
-    }
+    }    
   }
+
 }
