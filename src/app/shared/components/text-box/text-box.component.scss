@@ -62,12 +62,12 @@ textarea {
   }
 
   label {
-    @include dFlex($jc: center, $ai: center, $fd: row, $g: 0);
+    @include dFlex($jc: center, $ai: center, $fd: row, $g: 0);    
   }
 
-  // input[type="file"] {
-  //   display: hidden;
-  // }
+  input[type="file"] {    
+    display: none;
+  }
 
   a {
     @include dFlex($jc: center, $ai: center, $fd: row, $g: 0);

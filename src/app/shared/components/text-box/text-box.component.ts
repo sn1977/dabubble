@@ -29,13 +29,14 @@ export class TextBoxComponent implements AfterViewInit {
   authService = inject(AuthService);
   firestore = inject(FirestoreService);
   reactions = [];
-  selectedFiles: FileList | undefined;
+  selectedFiles: FileList | undefined | null;
   file: any = undefined;
   filedate: number | undefined;
   errorMessage: string | null = null;
   openEmojiPicker: boolean = false;
   fileType: string = '';
   maxSizeReached: boolean = false;
+  @Input() isThread!: boolean;
 
   @Input() textBoxData: any;
   @ViewChild('messageText') messageText!: ElementRef<HTMLTextAreaElement>;
@@ -88,7 +89,7 @@ export class TextBoxComponent implements AfterViewInit {
       );
 
       this.textBoxData.inputField = '';
-      this.selectedFiles = undefined;
+      this.selectedFiles = null;
       this.file = undefined;
       this.textBoxData.messageText = '';
       this.resetTextareaHeight();
@@ -103,7 +104,7 @@ export class TextBoxComponent implements AfterViewInit {
   }
 
   detectFile(event: any) {
-    this.selectedFiles = event.target.files;
+    this.selectedFiles = event.target.files;    
     this.uploadSingleFile();
   }
 
@@ -114,9 +115,6 @@ export class TextBoxComponent implements AfterViewInit {
         this.maxSizeReached = false;        
         this.filedate = new Date().getTime();
         this.fileType = this.file.type;
-
-        // console.log(this.file);
-        
 
         this.uploadService
           .uploadFile(this.file, this.filedate, 'attachments')
