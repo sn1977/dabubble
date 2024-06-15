@@ -45,7 +45,7 @@
             @for (channel of this.firestore.channelList; track $index) {
             @if(this.dataService.containsPartialChannelValue(channel.name)){
             <div
-                class="channel-name"
+                class="channel-name pointer"
                 [ngClass]="
                     this.matchMedia.channelName == channel.name
                         ? 'selected-menu-item'
@@ -98,7 +98,7 @@
 
             <div class="scrollable-panel-content">
                 <div
-                    class="user-name"
+                    class="user-name pointer"
                     [ngClass]="
                         this.matchMedia.channelName ==
                         authService.activeUserAccount
