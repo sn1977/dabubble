@@ -111,9 +111,9 @@ export class AuthService {
         this.user.isOnline = true;
         this.user.provider = 'email';
         this.firestore.updateUser(this.user, this.user.id);
+        this.sendMailVerification(currentUser);
       }
     });
-    this.sendMailVerification();
     return from(promise);
   }
 
@@ -178,9 +178,9 @@ export class AuthService {
     return from(promise);
   }
 
-  sendMailVerification(): Observable<void> {
-    const auth = getAuth();    
-    const promise = sendEmailVerification(auth.currentUser!)
+  sendMailVerification(currentUser: any): Observable<void> {
+    // const auth = getAuth();    
+    const promise = sendEmailVerification(currentUser!)
     .then(() => {
       console.log('Email verification sent!');      
       // Email verification sent!
