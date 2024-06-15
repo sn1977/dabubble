@@ -16,6 +16,7 @@ import {
   DocumentData,
   increment,
   serverTimestamp,  
+  collectionData
 } from '@angular/fire/firestore';
 import { User } from '../../../models/user.class';
 import { Channel } from '../../../models/channel.class';
@@ -24,6 +25,7 @@ import { Router } from '@angular/router';
 import { ChannelMessage } from '../../../models/channel-message.class';
 import { DirectMessage } from '../../../models/direct-message.class';
 import { MatchMediaService } from './match-media.service';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -455,5 +457,11 @@ export class FirestoreService {
     );
   }
 
+  getAllChannelNames() {
+    const ref = this.getChannelsRef();
+    return collectionData(query(ref), {idField: 'id'}).pipe(
+      map(channels => channels.map(channel => channel['name']))
+    );
+  }
 
 }

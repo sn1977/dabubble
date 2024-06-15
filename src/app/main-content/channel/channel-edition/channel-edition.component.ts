@@ -7,6 +7,7 @@ import { User } from '../../../../models/user.class';
 import { AuthService } from '../../../shared/services/auth.service';
 import { CommonModule } from '@angular/common';
 import { SearchUserComponent } from '../../../shared/components/search-user/search-user.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-channel-edition',
@@ -15,6 +16,8 @@ import { SearchUserComponent } from '../../../shared/components/search-user/sear
   templateUrl: './channel-edition.component.html',
   styleUrl: './channel-edition.component.scss',
 })
+
+
 export class ChannelEditionComponent implements OnInit {
   selectedUser: any = [];
   router = inject(Router);
@@ -26,6 +29,8 @@ export class ChannelEditionComponent implements OnInit {
   isEditingChannelName: boolean = false;
   isEditingDescription: boolean = false;
 
+  channelNames: string[] = [];
+  private subscription?: Subscription;
 
   channelData = {
     creator: this.channel.creator,
@@ -37,10 +42,8 @@ export class ChannelEditionComponent implements OnInit {
     // allMembers: this.channel.allMembers
   };
 
-  constructor( private route: ActivatedRoute, ) {
+  constructor( private route: ActivatedRoute, private firestoreService: FirestoreService) {
   }
-
- 
 
   onSubmit(toggle: string) {
    
@@ -55,6 +58,7 @@ export class ChannelEditionComponent implements OnInit {
     if (this.channelData.member.length === 0 && Array.isArray(this.channel.member)) {
       this.channelData.member = this.channel.member;
     }
+    
 
     const channel = new Channel({
       creator: this.channel.creator,
@@ -108,6 +112,16 @@ export class ChannelEditionComponent implements OnInit {
       this.getItemValues('channels', this.itemID);
       await this.waitForUserData();      
     });
+
+    this.subscription = this.firestoreService.getAllChannelNames().subscribe(names => {
+      this.channelNames = names;
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   async waitForUserData(): Promise<void> {
