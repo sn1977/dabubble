@@ -7,20 +7,20 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { BottomSheetComponent } from '../../../shared/components/bottom-sheet/bottom-sheet.component';
+import { BottomSheetComponent } from '../bottom-sheet/bottom-sheet.component';
 import { Channel } from '../../../../models/channel.class';
-import { FirestoreService } from '../../../shared/services/firestore.service';
+import { FirestoreService } from '../../services/firestore.service';
 import { User } from '../../../../models/user.class';
-import { NavigationService } from '../../../shared/services/navigation.service';
-import { AuthService } from '../../../shared/services/auth.service';
+import { NavigationService } from '../../services/navigation.service';
+import { AuthService } from '../../services/auth.service';
 import { Auth } from '@angular/fire/auth';
-import { ConversationComponent } from '../../../shared/components/conversation/conversation.component';
-import { HeaderMobileComponent } from '../../../shared/components/header-mobile/header-mobile.component';
-import { HeaderStateService } from '../../../shared/services/header-state.service';
-import { TextBoxComponent } from '../../../shared/components/text-box/text-box.component';
-import { SearchUserComponent } from '../../../shared/components/search-user/search-user.component';
+import { ConversationComponent } from '../conversation/conversation.component';
+import { HeaderMobileComponent } from '../header-mobile/header-mobile.component';
+import { HeaderStateService } from '../../services/header-state.service';
+import { TextBoxComponent } from '../text-box/text-box.component';
+import { SearchUserComponent } from '../search-user/search-user.component';
 import { CommonModule } from '@angular/common';
-import { MatchMediaService } from '../../../shared/services/match-media.service';
+import { MatchMediaService } from '../../services/match-media.service';
 import { ChannelMessage } from '../../../../models/channel-message.class';
 
 @Component({

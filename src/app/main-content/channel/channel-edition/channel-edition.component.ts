@@ -44,51 +44,42 @@ export class ChannelEditionComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private firestoreService: FirestoreService // private memberService: MemberService,
-  ) // private avatarService: AvatarService
-  {}
+    private firestoreService: FirestoreService // private memberService: MemberService, // private avatarService: AvatarService
+  ) {}
 
   onSubmit(toggle: string) {
     if (
       this.channel.name.toLowerCase() !== this.channelData.name.toLowerCase()
     ) {
-      // ja, der name wurde überhaupt geändert
-        this.channelNameExists = this.checkChannelName(this.channelData.name);
-        
-        console.log(this.channelNameExists);
-        // true = name schon vorhanden        
+      this.channelNameExists = this.checkChannelName(this.channelData.name);
 
-        if (this.channelNameExists == false) {
-        if (this.channelData.name === "") {
-            this.channelData.name = this.channel.name;
+      if (this.channelNameExists == false) {
+        if (this.channelData.name === '') {
+          this.channelData.name = this.channel.name;
         }
-        if (this.channelData.description === "") {
-            this.channelData.description = this.channel.description;
+        if (this.channelData.description === '') {
+          this.channelData.description = this.channel.description;
         }
         if (
-            this.channelData.member.length === 0 &&
-            Array.isArray(this.channel.member)
+          this.channelData.member.length === 0 &&
+          Array.isArray(this.channel.member)
         ) {
-            this.channelData.member = this.channel.member;
+          this.channelData.member = this.channel.member;
         }
         const channel = new Channel({
-            creator: this.channel.creator,
-            description: this.channelData.description,
-            member: this.channel.member,
-            name: this.channelData.name,
-            count: this.channel.count,
-            newMessage: this.channel.newMessage,
-            // allMembers: this.channel.allMembers
-        });    
+          creator: this.channel.creator,
+          description: this.channelData.description,
+          member: this.channel.member,
+          name: this.channelData.name,
+          count: this.channel.count,
+          newMessage: this.channel.newMessage,
+        });
         this.firestore.updateChannel(this.itemID, channel);
         this.toggleEdit(toggle);
-        }
       }
-      else{
-          this.toggleEdit(toggle);
-      }
-    
-    
+    } else {
+      this.toggleEdit(toggle);
+    }
   }
 
   checkChannelName(name: string) {
@@ -97,7 +88,7 @@ export class ChannelEditionComponent implements OnInit {
     );
     if (nameNotExists) {
       return true;
-    } else {      
+    } else {
       return false;
     }
   }

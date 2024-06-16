@@ -70,6 +70,24 @@
       >
         <div class="channel-name">
           <h1>Beschreibung</h1>
+          <div class="edit-icon">
+            <span class="menu-icon-hover pointer">
+              @if(!isEditingDescription){
+              <img
+                id="edit-icon-description"
+                src="./assets/img/icon/edit.svg"
+                (click)="toggleEdit('channelDescription')"
+              />
+              }@else {
+              <img
+                id="check-icon-description"
+                src="./assets/img/icon/check_circle.svg"
+                (click)="onSubmit('channelDescription')"
+              />
+              }
+            </span>
+          </div>
+        </div>
           @if(!isEditingDescription){
           <p id="description">{{ channel.description }}</p>
           }@else {
@@ -87,24 +105,8 @@
             <p>Erstellt von</p>
             <p class="color">{{ user.displayName }}</p>
           </div>
-        </div>
-        <div class="edit-icon">
-          <span class="menu-icon-hover pointer">
-            @if(!isEditingDescription){
-            <img
-              id="edit-icon-description"
-              src="./assets/img/icon/edit.svg"
-              (click)="toggleEdit('channelDescription')"
-            />
-            }@else {
-            <img
-              id="check-icon-description"
-              src="./assets/img/icon/check_circle.svg"
-              (click)="onSubmit('channelDescription')"
-            />
-            }
-          </span>
-        </div>
+        
+        
       </div>
       <!-- Mitglieder von Firebase -->
       <div class="container">

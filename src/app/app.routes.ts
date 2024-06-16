@@ -12,7 +12,7 @@ import { ResetPasswordComponent } from './main-content/auth/reset-password/reset
 import { NewMessageComponent } from './main-content/new-message/new-message.component';
 import { ChannelEditionComponent } from './main-content/channel/channel-edition/channel-edition.component';
 import { ChooseAvatarComponent } from './main-content/auth/register/choose-avatar/choose-avatar.component';
-import { ThreadComponent } from './main-content/channel/thread/thread.component';
+import { ThreadComponent } from './shared/components/thread/thread.component';
 import { DirectMessageComponent } from './main-content/direct-message/direct-message.component';
 
 export const routes: Routes = [

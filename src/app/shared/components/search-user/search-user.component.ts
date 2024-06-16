@@ -36,8 +36,6 @@ export class SearchUserComponent {
   itemID: any = '';
 
   activeUser: any ='';
-
-
   channel: Channel = new Channel();
 
   channelData = {
