@@ -17,26 +17,26 @@ import { MatchMediaService } from '../../../shared/services/match-media.service'
 })
 export class AddChannelComponent implements OnInit {
   allMembers: any[] = [
-    {
-      avatar: 'http://localhost:4200/assets/img/characters/template2.svg',
-      count: 0,
-      displayName: 'Boss',
-      email: 'boss@d.ch',
-      isOnline: true,
-      newMessage: false,
-      provider: 'email',
-      selected: false,
-    },
-    {
-      avatar: 'http://localhost:4200/assets/img/characters/template1.svg',
-      count: 0,
-      displayName: 'Sekretärin',
-      email: 'secretary@d.ch',
-      isOnline: false,
-      newMessage: false,
-      provider: 'email',
-      selected: false,
-    },
+    // {
+    //   avatar: 'http://localhost:4200/assets/img/characters/template2.svg',
+    //   count: 0,
+    //   displayName: 'Boss',
+    //   email: 'boss@d.ch',
+    //   isOnline: true,
+    //   newMessage: false,
+    //   provider: 'email',
+    //   selected: false,
+    // },
+    // {
+    //   avatar: 'http://localhost:4200/assets/img/characters/template1.svg',
+    //   count: 0,
+    //   displayName: 'Sekretärin',
+    //   email: 'secretary@d.ch',
+    //   isOnline: false,
+    //   newMessage: false,
+    //   provider: 'email',
+    //   selected: false,
+    // },
   ];
 
   selectedUsers: User[] = [];
