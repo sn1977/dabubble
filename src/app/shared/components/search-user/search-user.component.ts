@@ -43,9 +43,7 @@ export class SearchUserComponent {
     description: this.channel.description,
     member: this.channel.member,
     name: this.channel.name,
-    count: this.channel.count,
     newMessage: this.channel.newMessage,
-    // allMembers: this.channel.allMembers
   };
 
 
@@ -70,9 +68,7 @@ export class SearchUserComponent {
       description: this.channelData.description,
       member: this.selectedUsers,
       name: this.channelData.name,
-      count: this.channel.count,
       newMessage: this.channel.newMessage,
-      // allMembers: this.channel.allMembers
     });
     this.firestore.updateChannel(this.itemID, channel);
 
@@ -106,9 +102,7 @@ export class SearchUserComponent {
       description: this.channel.description,
       member: this.channel.member,
       name: this.channel.name,
-      count: this.channel.count,
       newMessage: this.channel.newMessage,
-      // allMembers: this.channel.allMembers
     };
     
   }

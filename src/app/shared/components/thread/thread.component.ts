@@ -77,7 +77,6 @@ export class ThreadComponent implements OnInit, OnDestroy {
     description: this.channel.description,
     member: this.channel.member,
     name: this.channel.name,
-    count: this.channel.count,
     newMessage: this.channel.newMessage,
   };
 

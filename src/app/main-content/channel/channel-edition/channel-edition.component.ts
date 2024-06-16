@@ -37,9 +37,7 @@ export class ChannelEditionComponent implements OnInit {
     description: this.channel.description,
     member: this.channel.member,
     name: this.channel.name,
-    count: this.channel.count,
     newMessage: this.channel.newMessage,
-    // allMembers: this.channel.allMembers
   };
 
   constructor(
@@ -70,8 +68,7 @@ export class ChannelEditionComponent implements OnInit {
           creator: this.channel.creator,
           description: this.channelData.description,
           member: this.channel.member,
-          name: this.channelData.name,
-          count: this.channel.count,
+          name: this.channelData.name,          
           newMessage: this.channel.newMessage,
         });
         this.firestore.updateChannel(this.itemID, channel);
@@ -182,10 +179,8 @@ export class ChannelEditionComponent implements OnInit {
       creator: this.channel.creator,
       description: this.channel.description,
       member: this.channel.member,
-      name: this.channel.name,
-      count: this.channel.count,
+      name: this.channel.name,      
       newMessage: this.channel.newMessage,
-      // allMembers: this.channel.allMembers
     };
   }
   openChannel(event: MouseEvent, path: string) {

@@ -70,7 +70,7 @@ export class ChannelComponent implements OnInit {
     subcollection: 'channelmessages',
   };
 
-  @ViewChild('messageContent') messageContent!: ElementRef;  
+  @ViewChild('messageContent') messageContent!: ElementRef;
 
   constructor(
     private _bottomSheet: MatBottomSheet,
@@ -78,17 +78,16 @@ export class ChannelComponent implements OnInit {
     public navigationService: NavigationService,
     private headerStateService: HeaderStateService,
     private dialogService: DialogServiceService,
-    public dateFormatService: DateFormatService,
-    // private memberService: MemberService,
-    // private avatarService: AvatarService
-  ) {}
+    public dateFormatService: DateFormatService
+  ) // private memberService: MemberService,
+  // private avatarService: AvatarService
+  {}
 
   channelData = {
     creator: this.channel.creator,
     description: this.channel.description,
     member: this.channel.member,
-    name: this.channel.name,
-    count: this.channel.count,
+    name: this.channel.name,    
     newMessage: this.channel.newMessage,
   };
 
@@ -118,7 +117,7 @@ export class ChannelComponent implements OnInit {
     this.route.paramMap.subscribe((paramMap) => {
       this.itemID = paramMap.get('id');
       this.textBoxData.messageText = '';
-      this.textBoxData.inputField = '';      
+      this.textBoxData.inputField = '';
 
       this.firestore.getSingleItemData('channels', this.itemID, () => {
         this.channel = new Channel(this.firestore.channel);
@@ -132,6 +131,7 @@ export class ChannelComponent implements OnInit {
         );
         this.textBoxData.channelName = this.channel.name;
         this.textBoxData.channelId = this.itemID;
+
         this.headerStateService.setAlternativeHeader(true);
         this.matchMedia.scrollToBottom = true;
         setInterval(() => {
@@ -139,6 +139,14 @@ export class ChannelComponent implements OnInit {
         }, 1000);
       });
     });
+  }
+
+  filterUsers() {
+    return this.filterUsersById(this.firestore.getUsers(), this.channel.member);
+  }
+  
+  filterUsersById(usersArray: any[], idsArray: string | any[]) {
+    return usersArray.filter((user) => idsArray.includes(user.id));
   }
 
   async getItemValues(collection: string, itemID: string) {

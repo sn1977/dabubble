@@ -72,17 +72,24 @@ export class AddChannelComponent implements OnInit {
   };
 
   onSubmit() {
+    const userIds = this.getUserIds(this.selectedUsers);
     const channel = new Channel({
       creator: this.authService.activeUserId,
       description: this.channelData.description,
-      member: this.selectedUsers,
-      allMembers: this.allMembers,
+      member: userIds,
+      // allMembers: this.allMembers,
       name: this.channelData.name,
       count: this.channelData.count,
       newMessage: this.channelData.newMessage,
     });
     this.firestore.addChannel(channel);
     this.matchMedia.channelName = channel.name;
+
+    console.log(this.selectedUsers);
+  }
+
+  getUserIds(usersArray: any[]) {
+    return usersArray.map((user) => user.id);
   }
 
   constructor() {}

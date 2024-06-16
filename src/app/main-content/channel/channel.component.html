@@ -19,7 +19,8 @@
       (click)="toggleOverlay('overlay1')"
       >
         @if(isDesktop){
-       <div *ngFor="let member of channel.member" style="margin-left: -12px;">
+       <!-- <div *ngFor="let member of channel.member" style="margin-left: -12px;"> -->
+       <div *ngFor="let member of filterUsers()" style="margin-left: -12px;">
           <div class="profil-img">
             <img class="img-profil" src="{{ member.avatar }}" alt="" />
           </div>
@@ -76,7 +77,7 @@
       />
     </div>
     <div class="members">
-      <div *ngFor="let member of channel.member">
+      <div *ngFor="let member of filterUsers()">
         <div class="profil">
           <img class="img-profil" src="{{ member.avatar }}" alt="" />
 

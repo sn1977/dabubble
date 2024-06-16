@@ -121,9 +121,7 @@ export class FirestoreService {
       member: obj.member,
       id: id,
       name: obj.name,
-      count: obj.count,
       newMessage: obj.newMessage,
-      allMembers: obj.allMembers,
     };
   }
 
