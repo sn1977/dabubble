@@ -43,7 +43,6 @@ import { Auth } from "@angular/fire/auth";
     templateUrl: "./edit-profil-card.component.html",
     styleUrl: "./edit-profil-card.component.scss",
 })
-
 export class EditProfilCardComponent implements OnInit, OnDestroy {
     firebaseAuth = inject(Auth);
     authService = inject(AuthService);
@@ -91,8 +90,11 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
     }
 
     updateMemberAvatar(newAvatarUrl: string) {
-        this.memberService.updateMemberAvatar(this.authService.activeUserAccount.uid, newAvatarUrl);
-      }
+        this.memberService.updateMemberAvatar(
+            this.authService.activeUserAccount.uid,
+            newAvatarUrl
+        );
+    }
 
     onNoClick(): void {
         this.dialogRef.close();
@@ -145,9 +147,12 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
                     );
                 });
 
-                if(this.firebaseAuth.currentUser?.photoURL){
-                    this.authService.updateUserData(this.nameData.name, this.firebaseAuth.currentUser.photoURL);
-                }
+            if (this.firebaseAuth.currentUser?.photoURL) {
+                this.authService.updateUserData(
+                    this.nameData.name,
+                    this.firebaseAuth.currentUser.photoURL
+                );
+            }
         }
     }
 
@@ -162,7 +167,7 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
 
     uploadSingleFile2() {
         if (this.selectedAvatar) {
-            this.file = this.selectedAvatar.item(0);            
+            this.file = this.selectedAvatar.item(0);
 
             if (this.file?.size && this.file?.size <= 500000) {
                 this.maxSizeReached = false;
@@ -171,12 +176,15 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
                 this.uploadService
                     .uploadFile(this.file, this.filedate, "character")
                     .then((url: string) => {
-                        this.authService.updateUserData(this.user.displayName!, url);
+                        this.authService.updateUserData(
+                            this.user.displayName!,
+                            url
+                        );
                         //NOTE - direkt live anzeigen lassen & in authentififizierung (UID) speichern / ändern & user.objekt speichern
                         // this.contactData.photoURL = url;
                         // this.textBoxData.inputField = url;
                         this.data.user.avatar = url;
-                        this.authService.activeUserAccount.photoURL = url;                        
+                        this.authService.activeUserAccount.photoURL = url;
                         this.updateMemberAvatar(url);
                     })
                     .catch((error) => {
@@ -187,9 +195,14 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
             }
         }
     }
+
     detectAvatar(event: any) {
         this.selectedAvatar = event.target.files;
         this.uploadSingleFile2();
+    }
+
+    setAvatar(event: any) {
+        this.data.user.avatar = event.target.src;
     }
 
     // updateMemberAvatar(newAvatarUrl: string) {
