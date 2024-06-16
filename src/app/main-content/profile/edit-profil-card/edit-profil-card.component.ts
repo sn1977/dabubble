@@ -26,6 +26,7 @@ import "firebase/firestore";
 import { MemberService } from "../../../shared/services/member-service.service";
 import { Auth } from "@angular/fire/auth";
 // import { AvatarService } from "../../../shared/services/avatar-service.service";
+import { getAuth, updateEmail, sendEmailVerification } from "firebase/auth";
 
 @Component({
     selector: "app-edit-profil-card",
@@ -79,6 +80,7 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
     fileType: string = "";
     maxSizeReached: boolean = false;
     currentUser: string = "";
+    auth = getAuth();
 
     constructor(
         private firestore: FirestoreService,
@@ -86,9 +88,9 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
         @Inject(MAT_DIALOG_DATA) public data: { user: User },
         private uploadService: UploadService,
         public dialog: MatDialog, // Add MatDialog as a property
-        private memberService: MemberService,
-        // private avatarService: AvatarService
-    ) {
+        private memberService: MemberService
+    ) // private avatarService: AvatarService
+    {
         console.log("Übergebene Benutzerdaten:", this.data.user);
     }
 
@@ -97,6 +99,26 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
             this.authService.activeUserAccount.uid,
             newAvatarUrl
         );
+    }
+
+    updateEmailForUser() {
+        const auth = getAuth();
+        const user = auth.currentUser;
+        if (user && this.emailControl.valid) {
+            const newEmail = this.emailControl.value;
+            if (newEmail) {
+                updateEmail(user, newEmail).then(() => {
+                    console.log("Email successfully updated to:", newEmail);
+                    return sendEmailVerification(user);
+                }).then(() => {
+                    console.log("Verification email sent.");
+                }).catch((error) => {
+                    console.error("Error in email update or verification process:", error);
+                });
+            }
+        } else {
+            console.error("No user is logged in or email input is invalid.");
+        }
     }
 
     onNoClick(): void {
@@ -156,6 +178,8 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
                     this.firebaseAuth.currentUser.photoURL
                 );
             }
+
+            this.updateEmailForUser();
         }
     }
 
