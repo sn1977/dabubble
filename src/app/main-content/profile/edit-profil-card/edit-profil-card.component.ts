@@ -25,6 +25,7 @@ import "firebase/firestore";
 
 import { MemberService } from "../../../shared/services/member-service.service";
 import { Auth } from "@angular/fire/auth";
+// import { AvatarService } from "../../../shared/services/avatar-service.service";
 
 @Component({
     selector: "app-edit-profil-card",
@@ -77,6 +78,7 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
     errorMessage: string | null = null;
     fileType: string = "";
     maxSizeReached: boolean = false;
+    currentUser: string = "";
 
     constructor(
         private firestore: FirestoreService,
@@ -84,7 +86,8 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
         @Inject(MAT_DIALOG_DATA) public data: { user: User },
         private uploadService: UploadService,
         public dialog: MatDialog, // Add MatDialog as a property
-        private memberService: MemberService
+        private memberService: MemberService,
+        // private avatarService: AvatarService
     ) {
         console.log("Übergebene Benutzerdaten:", this.data.user);
     }
@@ -213,5 +216,10 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
     //         member.avatar = newAvatarUrl;
     //       }
     //     });
+    //   }
+
+    // onAvatarChange(newAvatarUrl: string) {
+    //      // Lösen Sie ein Ereignis aus, wenn das Profilbild geändert wird
+    // this.avatarService.avatarChanged(newAvatarUrl);
     //   }
 }
