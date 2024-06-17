@@ -100,64 +100,64 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
         );
     }
 
-    updateEmailForUser() {
-        const auth = getAuth();
-        const user = auth.currentUser;
-        if (user && this.emailControl.valid) {
-            const newEmail = this.emailControl.value;
-            if (newEmail) {
-                updateEmail(user, newEmail)
-                    .then(() => {
-                        console.log("Email successfully updated to:", newEmail);
-                        return sendEmailVerification(user);
-                    })
-                    .then(() => {
-                        console.log("Verification email sent.");
-                    })
-                    .catch((error) => {
-                        console.error(
-                            "Error in email update or verification process:",
-                            error
-                        );
-                    });
-            }
-        } else {
-            console.error("No user is logged in or email input is invalid.");
-        }
-    }
-
     // updateEmailForUser() {
     //     const auth = getAuth();
     //     const user = auth.currentUser;
     //     if (user && this.emailControl.valid) {
     //         const newEmail = this.emailControl.value;
     //         if (newEmail) {
-    //             // Zuerst die Verifizierungs-E-Mail senden
-    //             sendEmailVerification(user).then(() => {
-    //                 console.log("Verification email sent to the new email address.");
-    //             }).catch((error) => {
-    //                 console.error("Error sending verification email:", error);
-    //             });
-
-    //             // Update-E-Mail-Prozess
-    //             user.reload().then(() => {
-    //                 if (user.emailVerified) {
-    //                     updateEmail(user, newEmail).then(() => {
-    //                         console.log("Email successfully updated to:", newEmail);
-    //                     }).catch((error) => {
-    //                         console.error("Error updating email:", error);
-    //                     });
-    //                 } else {
-    //                     console.error("Please verify the new email before changing email.");
-    //                 }
-    //             }).catch((error) => {
-    //                 console.error("Error reloading user:", error);
-    //             });
+    //             updateEmail(user, newEmail)
+    //                 .then(() => {
+    //                     console.log("Email successfully updated to:", newEmail);
+    //                     return sendEmailVerification(user);
+    //                 })
+    //                 .then(() => {
+    //                     console.log("Verification email sent.");
+    //                 })
+    //                 .catch((error) => {
+    //                     console.error(
+    //                         "Error in email update or verification process:",
+    //                         error
+    //                     );
+    //                 });
     //         }
     //     } else {
     //         console.error("No user is logged in or email input is invalid.");
     //     }
     // }
+
+    updateEmailForUser() {
+        const auth = getAuth();
+        const user = auth.currentUser;
+        if (user && this.emailControl.valid) {
+            const newEmail = this.emailControl.value;
+            if (newEmail) {
+                // Zuerst die Verifizierungs-E-Mail senden
+                sendEmailVerification(user).then(() => {
+                    console.log("Verification email sent to the new email address.");
+                }).catch((error) => {
+                    console.error("Error sending verification email:", error);
+                });
+
+                // Update-E-Mail-Prozess
+                user.reload().then(() => {
+                    if (user.emailVerified) {
+                        updateEmail(user, newEmail).then(() => {
+                            console.log("Email successfully updated to:", newEmail);
+                        }).catch((error) => {
+                            console.error("Error updating email:", error);
+                        });
+                    } else {
+                        console.error("Please verify the new email before changing email.");
+                    }
+                }).catch((error) => {
+                    console.error("Error reloading user:", error);
+                });
+            }
+        } else {
+            console.error("No user is logged in or email input is invalid.");
+        }
+    }
 
     onNoClick(): void {
         this.dialogRef.close();
