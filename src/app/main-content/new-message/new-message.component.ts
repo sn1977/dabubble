@@ -40,6 +40,9 @@ export class NewMessageComponent implements OnInit{
   newMessage: boolean = false;
   showInputField: boolean = false;
   showAddMember: boolean = false;
+  showChannels = false;
+  showUsers = false;
+
 
   textBoxData: any = {
     placeholder: 'Starte eine neue Nachricht ',
@@ -192,17 +195,28 @@ export class NewMessageComponent implements OnInit{
     this._bottomSheet.open(BottomSheetComponent);
   }
 
-  toggleInputField(inputId: string) {
- if (inputId === 'searchPeople') {
-      if (this.showInputField) {
-        this.showAddMember = !this.showAddMember;
-      } else {
-        this.showInputField = true;
-        this.showAddMember = true;
-      }
+  onInputChange(event: any) {
+    const inputValue = event.target.value;
+    if (inputValue.startsWith('#')) {
+      this.showAddMember = true;
+      this.showChannels = true;
+      this.showUsers = false;
+    } else if (inputValue.startsWith('@')) {
+      this.showAddMember = true;
+      this.showChannels = false;
+      this.showUsers = true;
+    } else {
+      this.showAddMember = false;
+      this.showChannels = false;
+      this.showUsers = false;
     }
   }
 
+  trackByIndex(index: number, item: any): any {
+    return index;
+  }
+
+  
 
   changeAvatar(newAvatar: string) {
     if (this.user && this.user.id && newAvatar) {
