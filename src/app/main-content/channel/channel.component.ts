@@ -1,5 +1,4 @@
 import {
-  AfterViewChecked,
   Component,
   ElementRef,
   inject,
@@ -28,8 +27,6 @@ import { TimeSeperatorComponent } from '../../shared/components/time-seperator/t
 import { MatchMediaService } from '../../shared/services/match-media.service';
 import { DataService } from '../../shared/services/data.service';
 import { ChannelMessage } from '../../../models/channel-message.class';
-// import { MemberService } from '../../shared/services/member-service.service';
-// import { AvatarService } from '../../shared/services/avatar-service.service';
 
 @Component({
   selector: 'app-channel',
@@ -80,8 +77,7 @@ export class ChannelComponent implements OnInit {
     private headerStateService: HeaderStateService,
     private dialogService: DialogServiceService,
     public dateFormatService: DateFormatService
-  ) // private memberService: MemberService,
-  // private avatarService: AvatarService
+  )
   {}
 
   channelData = {
@@ -92,28 +88,12 @@ export class ChannelComponent implements OnInit {
     newMessage: this.channel.newMessage,
   };
 
-  // updateMemberAvatar() {
-  //   this.memberService.getMembers().subscribe(members => {
-  //     this.channel.member = members;
-  //   });
-  // }
-
   async ngOnInit(): Promise<void> {
     this.dataService.searchWorkspace('');
     this.isDesktop = this.matchMedia.checkIsDesktop();
-    // this.updateMemberAvatar();
     await this.waitForUserData();
     this.test();
     this.newMessage = false;
-
-    // this.memberService.getMembers().subscribe(members => {
-    //   this.channel.member = members;
-    // });
-
-    // this.avatarService.avatarChange$.subscribe(newAvatarUrl => {
-    //   // Aktualisieren Sie das Avatar-Bild
-    //   this.channel.member.forEach(member => member.avatar = newAvatarUrl);
-    // });
 
     this.route.paramMap.subscribe((paramMap) => {
       this.itemID = paramMap.get('id');

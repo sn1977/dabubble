@@ -8,8 +8,6 @@ import { AuthService } from '../../../shared/services/auth.service';
 import { CommonModule } from '@angular/common';
 import { SearchUserComponent } from '../../../shared/components/search-user/search-user.component';
 import { Subscription } from 'rxjs';
-// import { MemberService } from "../../../shared/services/member-service.service";
-// import { AvatarService } from "../../../shared/services/avatar-service.service";
 
 @Component({
   selector: 'app-channel-edition',
@@ -42,7 +40,7 @@ export class ChannelEditionComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private firestoreService: FirestoreService // private memberService: MemberService, // private avatarService: AvatarService
+    private firestoreService: FirestoreService
   ) {}
 
   onSubmit(toggle: string) {
@@ -68,7 +66,7 @@ export class ChannelEditionComponent implements OnInit {
           creator: this.channel.creator,
           description: this.channelData.description,
           member: this.channel.member,
-          name: this.channelData.name,          
+          name: this.channelData.name,
           newMessage: this.channel.newMessage,
         });
         this.firestore.updateChannel(this.itemID, channel);
@@ -179,34 +177,40 @@ export class ChannelEditionComponent implements OnInit {
       creator: this.channel.creator,
       description: this.channel.description,
       member: this.channel.member,
-      name: this.channel.name,      
+      name: this.channel.name,
       newMessage: this.channel.newMessage,
     };
   }
   openChannel(event: MouseEvent, path: string) {
-    const docRefId = (event.currentTarget as HTMLElement).id;
-    //console.log('Öffne Collection ' + path + ' mit ID: ' + docRefId);
-    this.router.navigate(['/' + path + '/' + docRefId]);
-    //this.getActivUserId();
+    const docRefId = (event.currentTarget as HTMLElement).id;    
+    this.router.navigate(['/' + path + '/' + docRefId]);    
   }
 
-  getActivUserId() {
-    let id = this.authService.activeUserAccount.uid;
-    console.log(id); // Stelle sicher, dass id definiert ist, bevor du darauf zugreifst
-
-    this.removeMemberById(id);
-  }
-
-  removeMemberById(id: string) {
-    const memberArray = this.channel.member || [];
-    const index = memberArray.findIndex((member) => member.id === id);
-
+  removeMember() {
+    const index = this.channel.member.indexOf(this.authService.activeUserId);
     if (index !== -1) {
-      memberArray.splice(index, 1);
-      console.log('Mitglied mit ID', id, 'wurde aus dem Array entfernt.');
-      this.onSubmit('update');
-    } else {
-      //console.log('Mitglied mit ID', id, 'nicht im Array gefunden.');
+      this.channel.member.splice(index, 1);
     }
+
+    console.log(this.channel.member);
+    // this.firestore.updateChannel(this.itemID, channel);
+    this.saveChannel();
   }
+  
+  saveChannel() {
+    console.log('hallo');    
+    // if (this.channelMessage.messageId !== undefined) {
+    //   if(this.isThread){
+    //     this.channelMessage.messageId = this.matchMedia.subID + '/threads/' + this.channelMessage.messageId;
+    //   }
+
+    //   this.firestore.saveMessageData(
+    //     'channels',
+    //     this.channelMessage.channelId,
+    //     this.channelMessage.messageId,
+    //     this.channelMessage
+    //   );
+    // }
+  }
+
 }
