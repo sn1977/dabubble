@@ -73,17 +73,12 @@ export class AddChannelComponent implements OnInit {
 
   onSubmit() {
     const userIds = this.getUserIds(this.selectedUsers);
-    console.log(userIds);
-    if(userIds){
-      const idExists = userIds.some(element => element.id === this.authService.activeUserId);
-      if(!idExists){
-        // prüfen, ob this.authService.activeUserId noch nicht in this.selectedUsers ist
-          // wenn nicht enthalten muss er gepusht werden
-          // userIds.push(this.authService.activeUserId);
-          userIds.push(this.authService.activeUserId);
-      }
-    }
+    const activeUserId = this.authService.activeUserId;
+    const idExists = userIds.includes(activeUserId);
 
+    if (!idExists) {
+      userIds.push(activeUserId);
+    }
 
     const channel = new Channel({
       creator: this.authService.activeUserId,
@@ -93,16 +88,14 @@ export class AddChannelComponent implements OnInit {
       count: this.channelData.count,
       newMessage: this.channelData.newMessage,
     });
+
     this.firestore.addChannel(channel);
     this.matchMedia.channelName = channel.name;
-
   }
 
   getUserIds(usersArray: any[]) {
     return usersArray.map((user) => user.id);
   }
-
-
 
   ngOnInit(): void {
     this.isDesktop = this.matchMedia.checkIsDesktop();
