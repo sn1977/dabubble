@@ -207,6 +207,7 @@ h1 {
 .profil-img{
   @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 10px);
   img {
+    background-color: #FFFFFF;
     border: 2px solid #FFFFFF;
     width: 35px;
     height: 35px;
