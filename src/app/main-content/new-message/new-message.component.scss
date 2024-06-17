@@ -11,6 +11,7 @@
 @import "../../../styles/mixins.scss";
 
 .h1{
+  width: 100%;
   font-size: 1.111rem;
   margin-bottom: 0;
 }
@@ -35,6 +36,7 @@
   align-items: center;
   flex-direction: column !important;
   gap: 10px;
+  width: 100%;
 }
 
 .input-div{
@@ -220,6 +222,7 @@
 }
 
 .selected-users-container {
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
