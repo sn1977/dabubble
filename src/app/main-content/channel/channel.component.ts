@@ -69,6 +69,7 @@ export class ChannelComponent implements OnInit {
     collection: 'channels',
     subcollection: 'channelmessages',
   };
+  hovering = false;
 
   @ViewChild('messageContent') messageContent!: ElementRef;
 

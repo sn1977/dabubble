@@ -39,6 +39,10 @@
   overflow: hidden;
 }
 
+.test {
+  height: calc(100vh - 200px);
+}
+
 .workspace,
 .thread {
   height: calc(100vh - 150px);
