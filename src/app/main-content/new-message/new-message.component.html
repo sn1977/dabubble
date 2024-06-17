@@ -14,14 +14,14 @@
       <div class="scroll">
         <div *ngIf="showChannels">
           @for (channel of this.firestore.channelList; track $index) {
-            <div class="pf">
+            <div class="hover">
               <span>{{ channel.name }}</span>
             </div>
            }
         </div>
         <div *ngIf="showUsers">
           @for (user of this.firestore.getUsers(); track $index) {
-            <div>
+            <div class="hover">
                 <span>{{ user.displayName }}
                   <span *ngIf="user.id === this.authService.activeUserId">(Du)</span>
                 </span>

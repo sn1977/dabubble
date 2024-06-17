@@ -240,7 +240,6 @@
 
 .add-member {
   position: relative;
-  height: 100px;
   width: 90%;
   margin-left: 20px;
 
@@ -254,10 +253,13 @@
 }
 
 .scroll {
-  overflow: scroll;
-  height: 100px;
   font-size: 0.833rem;
   width: 100%;
+}
+
+.hover:hover {
+  background-color: #e3e3e3;
+  cursor: pointer;
 }
 
 .channel-name {
