@@ -16,6 +16,7 @@ import { ConversationComponent } from '../../shared/components/conversation/conv
 import { Channel } from '../../../models/channel.class';
 import { NgIf } from '@angular/common';
 import { MemberService } from '../../shared/services/member-service.service';
+import { FormsModule } from '@angular/forms'; 
 
 @Component({
   selector: 'app-new-message',
@@ -24,7 +25,8 @@ import { MemberService } from '../../shared/services/member-service.service';
     HeaderMobileComponent, 
     TextBoxComponent, 
     ConversationComponent,
-    NgIf
+    NgIf,
+    FormsModule
   ],
   templateUrl: './new-message.component.html',
   styleUrl: './new-message.component.scss'
@@ -42,6 +44,7 @@ export class NewMessageComponent implements OnInit{
   showAddMember: boolean = false;
   showChannels = false;
   showUsers = false;
+  selectedUserOrChannel: string = '';
 
 
   textBoxData: any = {
@@ -67,7 +70,6 @@ export class NewMessageComponent implements OnInit{
   };
 
   
-
   addCountToChannelDocument(toggle: string) {
 
     const user = new User({
@@ -210,6 +212,16 @@ export class NewMessageComponent implements OnInit{
       this.showChannels = false;
       this.showUsers = false;
     }
+  }
+
+  onUserClick(user: User) {
+    this.selectedUserOrChannel = `@${user.displayName}`;
+    this.showAddMember = false;
+  }
+
+  onChannelClick(channel: Channel) {
+    this.selectedUserOrChannel = `#${channel.name}`;
+    this.showAddMember = false;
   }
 
   trackByIndex(index: number, item: any): any {
