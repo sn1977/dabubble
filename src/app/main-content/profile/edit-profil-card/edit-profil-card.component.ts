@@ -88,9 +88,8 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
         @Inject(MAT_DIALOG_DATA) public data: { user: User },
         private uploadService: UploadService,
         public dialog: MatDialog, // Add MatDialog as a property
-        private memberService: MemberService
-    ) // private avatarService: AvatarService
-    {
+        private memberService: MemberService // private avatarService: AvatarService
+    ) {
         console.log("Übergebene Benutzerdaten:", this.data.user);
     }
 
@@ -107,15 +106,20 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
         if (user && this.emailControl.valid) {
             const newEmail = this.emailControl.value;
             if (newEmail) {
-
-                updateEmail(user, newEmail).then(() => {
-                    console.log("Email successfully updated to:", newEmail);
-                    return sendEmailVerification(user);
-                }).then(() => {
-                    console.log("Verification email sent.");
-                }).catch((error) => {
-                    console.error("Error in email update or verification process:", error);
-                });
+                updateEmail(user, newEmail)
+                    .then(() => {
+                        console.log("Email successfully updated to:", newEmail);
+                        return sendEmailVerification(user);
+                    })
+                    .then(() => {
+                        console.log("Verification email sent.");
+                    })
+                    .catch((error) => {
+                        console.error(
+                            "Error in email update or verification process:",
+                            error
+                        );
+                    });
             }
         } else {
             console.error("No user is logged in or email input is invalid.");
@@ -134,7 +138,7 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
     //             }).catch((error) => {
     //                 console.error("Error sending verification email:", error);
     //             });
-    
+
     //             // Update-E-Mail-Prozess
     //             user.reload().then(() => {
     //                 if (user.emailVerified) {
@@ -237,13 +241,7 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
                 this.uploadService
                     .uploadFile(this.file, this.filedate, "character")
                     .then((url: string) => {
-                        this.authService.updateUserData(
-                            this.user.displayName!,
-                            url
-                        );
-                        //NOTE - direkt live anzeigen lassen & in authentififizierung (UID) speichern / ändern & user.objekt speichern
-                        // this.contactData.photoURL = url;
-                        // this.textBoxData.inputField = url;
+                        this.updateAuthService(url);
                         this.data.user.avatar = url;
                         this.authService.activeUserAccount.photoURL = url;
                         this.updateMemberAvatar(url);
@@ -257,6 +255,10 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
         }
     }
 
+    updateAuthService(url: string) {
+        this.authService.updateUserData(this.user.displayName!, url);
+    }
+
     detectAvatar(event: any) {
         this.selectedAvatar = event.target.files;
         this.uploadSingleFile2();
@@ -264,20 +266,6 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
 
     setAvatar(event: any) {
         this.data.user.avatar = event.target.src;
+        this.updateAuthService(event.target.src);
     }
-
-    // updateMemberAvatar(newAvatarUrl: string) {
-    //     // Durchlaufen Sie jedes Mitglied in channel.member
-    //     this.channel.member.forEach(member => {
-    //       // Wenn die uid des Mitglieds mit der uid des aktiven Benutzers übereinstimmt, aktualisieren Sie das avatar-Feld
-    //       if (member.uid === this.authService.activeUserAccount.uid) {
-    //         member.avatar = newAvatarUrl;
-    //       }
-    //     });
-    //   }
-
-    // onAvatarChange(newAvatarUrl: string) {
-    //      // Lösen Sie ein Ereignis aus, wenn das Profilbild geändert wird
-    // this.avatarService.avatarChanged(newAvatarUrl);
-    //   }
 }
