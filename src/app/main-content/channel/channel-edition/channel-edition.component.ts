@@ -125,16 +125,7 @@ export class ChannelEditionComponent implements OnInit {
       this.itemID = paramMap.get('id');
       this.getItemValues('channels', this.itemID);
       await this.waitForUserData();
-      // console.log(this.firestore.channelList);
     });
-
-    // this.subscription = this.firestoreService
-    //     .getAllChannelNames()
-    //     .subscribe((names) => {
-    //         this.channelNames = names;
-    //     });
-
-    //     console.log(this.channelNames);   
   }
 
   ngOnDestroy() {
@@ -145,7 +136,7 @@ export class ChannelEditionComponent implements OnInit {
 
   async waitForUserData(): Promise<void> {
     while (!this.authService.activeUserAccount) {
-      await this.delay(100); // Wartezeit in Millisekunden, bevor erneut überprüft wird
+      await this.delay(100);
     }
   }
 
@@ -172,6 +163,7 @@ export class ChannelEditionComponent implements OnInit {
       newMessage: this.channel.newMessage,
     };
   }
+
   openChannel(event: MouseEvent, path: string) {
     const docRefId = (event.currentTarget as HTMLElement).id;    
     this.router.navigate(['/' + path + '/' + docRefId]);
@@ -193,4 +185,13 @@ export class ChannelEditionComponent implements OnInit {
     this.firestore.updateChannel(this.itemID, channel);
     this.router.navigate(['/main']);
   }
+
+  filterUsers() {
+    return this.filterUsersById(this.firestore.getUsers(), this.channel.member);
+  }
+  
+  filterUsersById(usersArray: any[], idsArray: string | any[]) {
+    return usersArray.filter((user) => idsArray.includes(user.id));
+  }
+
 }

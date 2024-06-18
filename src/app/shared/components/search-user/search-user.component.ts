@@ -34,6 +34,7 @@ export class SearchUserComponent {
   router = inject(Router);
   authService = inject(AuthService);
   itemID: any = '';
+  searchQuery: string = '';
 
   activeUser: any ='';
   channel: Channel = new Channel();
@@ -62,7 +63,6 @@ export class SearchUserComponent {
       this.channelData.member = this.channel.member;
     }
 
-
     const channel = new Channel({
       creator: this.authService.activeUserId,
       description: this.channelData.description,
@@ -71,13 +71,9 @@ export class SearchUserComponent {
       newMessage: this.channel.newMessage,
     });
     this.firestore.updateChannel(this.itemID, channel);
-
-
   }
 
-  constructor (private route: ActivatedRoute,) {
-    
-  }
+  constructor (private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.route.paramMap.subscribe((paramMap) => {
@@ -86,10 +82,10 @@ export class SearchUserComponent {
     });
   }
 
-
   getItemValues(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {
       this.channel = new Channel(this.firestore.channel);
+      this.selectedUsers = this.channel.member;
     });
     setTimeout(() => {
       this.setOldChannelValues();
@@ -103,24 +99,27 @@ export class SearchUserComponent {
       member: this.channel.member,
       name: this.channel.name,
       newMessage: this.channel.newMessage,
-    };
-    
+    };    
   }
 
   addmember(event: MouseEvent, user: User) {
-    const index = this.selectedUsers.findIndex((selectedUser) => selectedUser.id === user.id);
 
+    const index = this.selectedUsers.findIndex((selectedUser) => selectedUser.id === user.id);
+    debugger
+    
     if (index === -1) {
-      this.selectedUsers.push(user);
+      this.selectedUsers.push(user.id);
 
     } else {
       this.selectedUsers.splice(index, 1);
     }
     this.updateFormattedUserNames();
   }
+
   updateFormattedUserNames() {
     this.userNames = this.selectedUsers.map(user => user.displayName).join(', ');
   }
+
   removeUser(user: User) {
     const index = this.selectedUsers.findIndex(selectedUser => selectedUser.id === user.id);
     if (index !== -1) {
@@ -128,10 +127,11 @@ export class SearchUserComponent {
       this.updateFormattedUserNames();
     }
   }
-  searchQuery: string = '';
+
   onSearchInputChange(value: string) {
     this.searchQuery = value;
   }
+
   matchesSearch(user: any): boolean {
     if (!this.searchQuery || this.searchQuery.trim() === '') {
       return true;
@@ -140,9 +140,11 @@ export class SearchUserComponent {
       .toLowerCase()
       .includes(this.searchQuery.toLowerCase());
   }
+
   toggleOverlay() {
     this.overlayVisible = !this.overlayVisible;
   }
+
   toggleInputField(inputId: string) {
     if (inputId === 'addSpecificMembers') {
       this.showInputField = !this.showInputField;
@@ -172,28 +174,28 @@ export class SearchUserComponent {
         this.showInputField = false; // Verstecke das spezifische Eingabefeld
         this.showGeneralInputField = true; // Öffne das allgemeine Eingabefeld
 
-        this.selectedUsers = [
-          {
-            avatar: 'http://localhost:4200/assets/img/characters/template2.svg',
-            count: 0,            
-            displayName: 'Boss',
-            email: 'boss@d.ch',
-            isOnline: true,
-            newMessage: false,
-            provider: 'email',
-            selected: false
-          },
-          {
-            avatar: 'http://localhost:4200/assets/img/characters/template1.svg',
-            count: 0,            
-            displayName: 'Sekretärin',
-            email: 'secretary@d.ch',
-            isOnline: false,
-            newMessage: false,
-            provider: 'email',
-            selected: false
-          }
-        ];
+        // this.selectedUsers = [
+        //   {
+        //     avatar: 'http://localhost:4200/assets/img/characters/template2.svg',
+        //     count: 0,            
+        //     displayName: 'Boss',
+        //     email: 'boss@d.ch',
+        //     isOnline: true,
+        //     newMessage: false,
+        //     provider: 'email',
+        //     selected: false
+        //   },
+        //   {
+        //     avatar: 'http://localhost:4200/assets/img/characters/template1.svg',
+        //     count: 0,            
+        //     displayName: 'Sekretärin',
+        //     email: 'secretary@d.ch',
+        //     isOnline: false,
+        //     newMessage: false,
+        //     provider: 'email',
+        //     selected: false
+        //   }
+        // ];
         
         // Aktualisiere die angezeigten Benutzernamen
         this.updateFormattedUserNames();
@@ -206,6 +208,13 @@ export class SearchUserComponent {
     }
   }
   
+  filterUsers() {
+    return this.filterUsersById(this.firestore.getUsers(), this.channel.member);
+  }
+  
+  filterUsersById(usersArray: any[], idsArray: string | any[]) {
+    return usersArray.filter((user) => idsArray.includes(user.id));
+  }
   
   getInputValue(event: any): string {
     return event && event.target && event.target.value;

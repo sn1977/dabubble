@@ -1,10 +1,8 @@
 @import "../../../../styles/mixins.scss";
 
-.selected-users-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    align-items: center;
+.selected-users-container {    
+    @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 8px);
+    flex-wrap: wrap;    
     padding: 8px;
   }
 
@@ -31,10 +29,8 @@
     cursor: pointer;
   }
   
-  .selected-user button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  .selected-user button {    
+    @include dFlex($jc: center, $ai: center, $fd: row, $g: 0);
     width: 20px;
     height: 20px;
     border: none;
@@ -60,8 +56,7 @@
   }
 
   .selected-user {
-    display: flex;
-    align-items: center;
+    @include dFlex($jc: center, $ai: flex-start, $fd: row, $g: 0);
     background-color: #f0f0f0;
     padding: 4px 8px;
     border-radius: 16px;
@@ -102,11 +97,18 @@
 
   .channel-name {
     padding: 10px;
+    
     gap: 16px;
     display: flex;
     align-items: center;
+
+
     position: relative;
-  
+    &:hover{
+      background-color: green;
+
+    }
+
     span {
       @include fontBold(
         $fw: 400,

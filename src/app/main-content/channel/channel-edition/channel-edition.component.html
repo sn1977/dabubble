@@ -113,7 +113,7 @@
         <div class="channel-name">
           <h1>Mitglieder</h1>
 
-          <div *ngFor="let member of channel.member">
+          <div *ngFor="let member of filterUsers()">
             <div class="profil">
               <img class="img-profil" src="{{ member.avatar }}" alt="" />
 
