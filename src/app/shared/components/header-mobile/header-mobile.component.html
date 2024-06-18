@@ -11,7 +11,7 @@
     @if (!alternativeHeader) {
 
       <div class="logo-header">
-        <img src="assets/img/mobile-logo.svg"/>
+        <img src="./assets/img/mobile-logo.svg"/>
         <span class="logo-name">DABubble</span>
       </div>
 
@@ -20,14 +20,14 @@
         <img
           [src]="
         hoverBack
-          ? 'assets/img/icon/arrow_back_color.svg'
-          : 'assets/img/icon/arrow_back.svg'
+          ? './assets/img/icon/arrow_back_color.svg'
+          : './assets/img/icon/arrow_back.svg'
       "
           (click)="onBack()"
           (mouseenter)="hoverBack = true"
           (mouseleave)="hoverBack = false"
         />
-        <img src="assets/img/icon/Property 1=Default (1).svg"/>
+        <img src="./assets/img/icon/Property 1=Default (1).svg"/>
       </div>
     }
   }
