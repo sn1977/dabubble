@@ -87,6 +87,7 @@
               [(ngModel)]="contactData.password"
               minlength="6"
               placeholder="Passwort"
+              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
               required
             />
             <img
@@ -100,7 +101,7 @@
           </div>
           <span class="required">
             @if (!password.valid && password.touched && !password.disabled){
-            Bitte geben Sie ein Passwort ein. }
+              Das Passwort muss mindestens 6 Zeichen lang sein und eine Zahl, einen Groß- und einen Kleinbuchstaben enthalten. }
           </span>
         </div>
         <div class="buttons">
