@@ -123,6 +123,10 @@ export class MainContentComponent implements OnInit {
     });
   }
 
+  isChannelMember(members: string[]): boolean {
+    return members.includes(this.authService.activeUserId);
+  }
+
  /*  onPanelOpened(index: number) {
     this.panels[index].expanded = true;
     this.panels[index].arrowImagePath = 'assets/img/icon/arrow_drop_down.png';

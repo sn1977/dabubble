@@ -174,7 +174,7 @@ export class ChannelEditionComponent implements OnInit {
   }
   openChannel(event: MouseEvent, path: string) {
     const docRefId = (event.currentTarget as HTMLElement).id;    
-    this.router.navigate(['/' + path + '/' + docRefId]);    
+    this.router.navigate(['/' + path + '/' + docRefId]);
   }
 
   removeMember() {
@@ -191,5 +191,6 @@ export class ChannelEditionComponent implements OnInit {
       newMessage: this.channel.newMessage,
     });   
     this.firestore.updateChannel(this.itemID, channel);
+    this.router.navigate(['/main']);
   }
 }
