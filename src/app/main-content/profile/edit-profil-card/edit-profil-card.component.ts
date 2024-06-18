@@ -126,36 +126,129 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
     //     }
     // }
 
+    // updateEmailForUser() {
+    //     const auth = getAuth();
+    //     const user = auth.currentUser;
+    //     if (user && this.emailControl.valid) {
+    //         const newEmail = this.emailControl.value;
+    //         if (newEmail) {
+    //             // Zuerst die Verifizierungs-E-Mail senden
+    //             sendEmailVerification(user).then(() => {
+    //                 console.log("Verification email sent to the new email address.");
+    //             }).catch((error) => {
+    //                 console.error("Error sending verification email:", error);
+    //             });
+
+    //             // Update-E-Mail-Prozess
+    //             user.reload().then(() => {
+    //                 if (user.emailVerified) {
+    //                     updateEmail(user, newEmail).then(() => {
+    //                         console.log("Email successfully updated to:", newEmail);
+    //                     }).catch((error) => {
+    //                         console.error("Error updating email:", error);
+    //                     });
+    //                 } else {
+    //                     console.error("Please verify the new email before changing email.");
+    //                 }
+    //             }).catch((error) => {
+    //                 console.error("Error reloading user:", error);
+    //             });
+    //         }
+    //     } else {
+    //         console.error("No user is logged in or email input is invalid.");
+    //     }
+    // }
+
+    // updateEmailForUser() {
+    //     const auth = getAuth();
+    //     const user = auth.currentUser;
+
+    //     if (user && this.emailControl.valid) {
+    //         const newEmail = this.emailControl.value;
+
+    //         if (newEmail) {
+    //             // Update the email address
+    //             updateEmail(user, newEmail).then(() => {
+    //                 console.log("Email successfully updated to:", newEmail);
+
+    //                 // Send verification email to the new email address
+    //                 sendEmailVerification(user).then(() => {
+    //                     console.log("Verification email sent to the new email address.");
+    //                 }).catch((error) => {
+    //                     console.error("Error sending verification email:", error);
+    //                 });
+
+    //             }).catch((error) => {
+    //                 console.error("Error updating email:", error);
+    //             });
+
+    //         } else {
+    //             console.error("New email is invalid or empty.");
+    //         }
+    //     } else {
+    //         console.error("No user is logged in or email input is invalid.");
+    //     }
+    // }
+
     updateEmailForUser() {
         const auth = getAuth();
         const user = auth.currentUser;
+
         if (user && this.emailControl.valid) {
             const newEmail = this.emailControl.value;
-            if (newEmail) {
-                // Zuerst die Verifizierungs-E-Mail senden
-                sendEmailVerification(user).then(() => {
-                    console.log("Verification email sent to the new email address.");
-                }).catch((error) => {
-                    console.error("Error sending verification email:", error);
-                });
 
-                // Update-E-Mail-Prozess
-                user.reload().then(() => {
-                    if (user.emailVerified) {
-                        updateEmail(user, newEmail).then(() => {
-                            console.log("Email successfully updated to:", newEmail);
-                        }).catch((error) => {
-                            console.error("Error updating email:", error);
-                        });
-                    } else {
-                        console.error("Please verify the new email before changing email.");
-                    }
-                }).catch((error) => {
-                    console.error("Error reloading user:", error);
-                });
+            if (newEmail) {
+                // Speichere die neue E-Mail-Adresse im Local Storage oder Session Storage
+                localStorage.setItem("newEmail", newEmail);
+
+                // Zuerst die Verifizierungs-E-Mail an die neue E-Mail-Adresse senden
+                sendEmailVerification(user)
+                    .then(() => {
+                        console.log(
+                            "Verification email sent to the new email address."
+                        );
+
+                        // Benachrichtige den Nutzer, die neue E-Mail-Adresse zu verifizieren
+                        alert(
+                            "Please verify your new email address by clicking the link sent to your new email."
+                        );
+                    })
+                    .catch((error) => {
+                        console.error(
+                            "Error sending verification email:",
+                            error
+                        );
+                    });
+            } else {
+                console.error("New email is invalid or empty.");
             }
         } else {
             console.error("No user is logged in or email input is invalid.");
+        }
+    }
+
+    updateEmailAfterVerification(newEmail: string) {
+        const auth = getAuth();
+        const user = auth.currentUser;
+
+        if (user) {
+            updateEmail(user, newEmail)
+                .then(() => {
+                    console.log("Email successfully updated to:", newEmail);
+                })
+                .catch((error) => {
+                    console.error("Error updating email:", error);
+                });
+        } else {
+            console.error("No user is logged in.");
+        }
+    }
+
+    confirmEmailUpdate() {
+        const newEmail = this.emailControl.value;
+        if (newEmail) {
+            // Stelle sicher, dass die E-Mail-Adresse nach Verifizierung aktualisiert wird
+            this.updateEmailAfterVerification(newEmail);
         }
     }
 
