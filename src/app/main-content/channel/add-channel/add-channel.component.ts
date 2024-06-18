@@ -57,8 +57,9 @@ export class AddChannelComponent implements OnInit {
   authService = inject(AuthService);
   isDesktop: boolean = false;
   activeUser: any = '';
-
+  channelNameExists: boolean = false;
   channel: Channel = new Channel();
+  searchQuery: string = '';
 
   channelData = {
     creator: '',
@@ -72,25 +73,41 @@ export class AddChannelComponent implements OnInit {
   };
 
   onSubmit() {
-    const userIds = this.getUserIds(this.selectedUsers);
-    const activeUserId = this.authService.activeUserId;
-    const idExists = userIds.includes(activeUserId);
-
-    if (!idExists) {
-      userIds.push(activeUserId);
+    this.channelNameExists = this.checkChannelName(this.channelData.name);
+    if (this.channelNameExists == false) {
+      const userIds = this.getUserIds(this.selectedUsers);
+      const activeUserId = this.authService.activeUserId;
+      const idExists = userIds.includes(activeUserId);
+      
+      if (!idExists) {
+        userIds.push(activeUserId);
+      }
+      
+      const channel = new Channel({
+        creator: this.authService.activeUserId,
+        description: this.channelData.description,
+        member: userIds,
+        name: this.channelData.name,
+        count: this.channelData.count,
+        newMessage: this.channelData.newMessage,
+      });
+      
+      this.firestore.addChannel(channel);
+      this.matchMedia.channelName = channel.name;
+    } else {
+      this.toggleOverlay();
     }
+  }
 
-    const channel = new Channel({
-      creator: this.authService.activeUserId,
-      description: this.channelData.description,
-      member: userIds,
-      name: this.channelData.name,
-      count: this.channelData.count,
-      newMessage: this.channelData.newMessage,
-    });
-
-    this.firestore.addChannel(channel);
-    this.matchMedia.channelName = channel.name;
+  checkChannelName(name: string) {
+    const nameNotExists = this.firestore.channelList.some(
+      (channel: { name: string }) => channel.name === name
+    );
+    if (nameNotExists) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   getUserIds(usersArray: any[]) {
@@ -130,8 +147,7 @@ export class AddChannelComponent implements OnInit {
       this.updateFormattedUserNames();
     }
   }
-
-  searchQuery: string = '';
+  
   onSearchInputChange(value: string) {
     this.searchQuery = value;
   }

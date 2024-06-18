@@ -26,6 +26,11 @@
       placeholder="z.B. Kooperationsprojekte"
       required
     />
+    <span class="required">
+      @if(channelNameExists){ Fehler: Der Kanalname "{{
+        channelData.name
+      }}"" ist bereits vorhanden und kann nicht genutzt werden. }
+    </span>
 
     <div class="input-headline">
       <div>Beschreibung</div>
