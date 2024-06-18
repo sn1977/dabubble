@@ -134,16 +134,7 @@ export class ChannelEditionComponent implements OnInit {
     //         this.channelNames = names;
     //     });
 
-    //     console.log(this.channelNames);
-
-    // this.memberService.getMembers().subscribe(members => {
-    //   this.channel.member = members;
-    // });
-
-    // this.avatarService.avatarChange$.subscribe(newAvatarUrl => {
-    //   // Aktualisieren Sie das Avatar-Bild
-    //   this.channel.member.forEach(member => member.avatar = newAvatarUrl);
-    // });
+    //     console.log(this.channelNames);   
   }
 
   ngOnDestroy() {
@@ -191,26 +182,14 @@ export class ChannelEditionComponent implements OnInit {
     if (index !== -1) {
       this.channel.member.splice(index, 1);
     }
-
-    console.log(this.channel.member);
-    // this.firestore.updateChannel(this.itemID, channel);
-    this.saveChannel();
+    
+    const channel = new Channel({
+      creator: this.channel.creator,
+      description: this.channelData.description,
+      member: this.channel.member,
+      name: this.channelData.name,
+      newMessage: this.channel.newMessage,
+    });   
+    this.firestore.updateChannel(this.itemID, channel);
   }
-  
-  saveChannel() {
-    console.log('hallo');    
-    // if (this.channelMessage.messageId !== undefined) {
-    //   if(this.isThread){
-    //     this.channelMessage.messageId = this.matchMedia.subID + '/threads/' + this.channelMessage.messageId;
-    //   }
-
-    //   this.firestore.saveMessageData(
-    //     'channels',
-    //     this.channelMessage.channelId,
-    //     this.channelMessage.messageId,
-    //     this.channelMessage
-    //   );
-    // }
-  }
-
 }
