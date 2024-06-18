@@ -89,7 +89,8 @@ handleVerifyEmail(auth: any, actionCode: string) {
       const newEmail = localStorage.getItem('newEmail');
       if (newEmail) {
           this.emailUpdateService.updateEmailAfterVerification(newEmail);
-          localStorage.removeItem('newEmail'); // Bereinige den Local Storage
+          localStorage.removeItem('newEmail'); // clean Local Storage
+          alert('Email successfully updated to: ' + newEmail);
       }
       this.router.navigate(['/action']);
   }).catch(error => {
