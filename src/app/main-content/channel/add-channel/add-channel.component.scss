@@ -110,6 +110,13 @@ form {
   margin-top: unset;
 }
 
+.pos-overlay{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
 .dropdown-list li {
   padding: 10px;
   cursor: pointer;
@@ -276,3 +283,13 @@ form {
   justify-content: flex-end;
   width: 100%;
 }
+
+//DESKTOP/////
+
+@media (min-width: 400px) {
+
+  .overlay-content{
+    position:unset;
+  }
+}
+
