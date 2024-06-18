@@ -48,10 +48,8 @@ main {
   padding: 20px;
 }
 
-.channel-name {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.channel-name {  
+  @include dFlex($jc: space-between, $ai: center, $fd: row, $g: 0);
   width: 100%;
 
   .text-channel-name{
@@ -61,8 +59,8 @@ main {
     line-height: 24.55px;
     text-align: left;
   }
-
 }
+
 .description {
   position: absolute;
   top: 240px;
@@ -260,7 +258,7 @@ main {
 .btn-pos {
   display: flex;
   justify-content: flex-end;
-  width: 100%;
+  width: 100%;  
 }
 
 .menu-icon-hover {

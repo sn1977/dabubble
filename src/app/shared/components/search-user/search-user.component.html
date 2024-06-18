@@ -5,12 +5,14 @@
       <div class="overlay-content">
         <div class="channel-header">
           <h1 style="margin: 0;">Leute hinzufügen</h1>
-          <img src="./assets/img/icon/close.svg" alt="" (click)="closeOverlay('overlay')">
+          <span>
+            <img src="./assets/img/icon/close.svg" alt="" (click)="closeOverlay('overlay')">
+          </span>
         </div>
         <div class="checkbox-container">
           <input
             type="radio"
-            id="addAllMembers"
+            id="addAllMembers"            
             [checked]="isAddAllMembersChecked"
             (change)="toggleCheckbox('addAllMembers')"
           />
@@ -26,7 +28,6 @@
           <label for="addSpecificMembers">Bestimmte Leute hinzufügen</label>
 
           <div *ngIf="showInputField" class="selected-users-container">
-            <!-- <div *ngFor="let user of selectedUsers" class="selected-user"> -->
             <div *ngFor="let user of filterUsers()" class="selected-user">
               <img src="{{ user.avatar }}" />
               <span>{{ user.displayName }}</span>
@@ -64,7 +65,7 @@
           </div>
         </div>
         <div class="btn-pos">
-          <button type="submit" class="add-button" (click)="closeOverlay('overlay')">Erstellen </button>
+          <button type="submit" class="add-button" (click)="closeOverlay('overlay')">Hinzufügen</button>
         </div>
       </div>
     </div>

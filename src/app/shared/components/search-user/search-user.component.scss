@@ -56,10 +56,16 @@
   }
 
   .selected-user {
-    @include dFlex($jc: center, $ai: flex-start, $fd: row, $g: 0);
+    @include dFlex($jc: center, $ai: center, $fd: row, $g: 4px);
     background-color: #f0f0f0;
     padding: 4px 8px;
     border-radius: 16px;
+
+    &:hover{
+      background-color: #eceefe;
+      color: #535af1;
+      font-weight: 700;
+    }
   
     img {
       width: 35px;
@@ -81,7 +87,7 @@
     margin-left: 20px;
   
     // looks
-    background-color: #fff;
+    background-color: #ffffff;
     padding: 10px;
     font-size: 1.25em;
     border-radius: 1rem;
@@ -89,24 +95,33 @@
       0 0.0625rem 0.125rem rgba(0, 0, 0, 0.2);
   }
 
-  .channel-header{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  .channel-header{    
+    @include dFlex($jc: space-between, $ai: center, $fd: row, $g: 0);
+    span{
+      @include dFlex($jc: center, $ai: center, $fd: row, $g: 0);
+      height: 40px;      
+      width: 40px;
+      cursor: pointer;
+      &:hover{
+        background-color: #eceefe;
+        border-radius: 50%;
+      }
+    }
+  }
+
+  input[type="radio"] {    
+    cursor: pointer;    
   }
 
   .channel-name {
-    padding: 10px;
-    
+    padding: 10px;    
     gap: 16px;
     display: flex;
     align-items: center;
-
-
     position: relative;
     &:hover{
-      background-color: green;
-
+      background-color: #eceefe;
+      border-radius: 16px;
     }
 
     span {
@@ -130,7 +145,7 @@
     .offline-avatar {
       position: absolute;
       bottom: 8px;
-      left: 35px;
+      left: 48px;
       width: 14px;
       height: 14px;
     }
@@ -141,14 +156,16 @@
   }
 
   .space-between {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    @include dFlex($jc: space-between, $ai: center, $fd: row, $g: 0);
     width: 100%;
   
     img {
       width: 20px !important;
       height: 20px !important;
     }
+  }
+
+  .btn-pos{
+    @include dFlex($jc: flex-end, $ai: center, $fd: row, $g: 0);
   }
 

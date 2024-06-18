@@ -103,10 +103,7 @@ export class SearchUserComponent {
   }
 
   addmember(event: MouseEvent, user: User) {
-
     const index = this.selectedUsers.findIndex((selectedUser) => selectedUser.id === user.id);
-    debugger
-    
     if (index === -1) {
       this.selectedUsers.push(user.id);
 
@@ -121,7 +118,7 @@ export class SearchUserComponent {
   }
 
   removeUser(user: User) {
-    const index = this.selectedUsers.findIndex(selectedUser => selectedUser.id === user.id);
+    const index = this.selectedUsers.findIndex(selectedUser => selectedUser === user.id);
     if (index !== -1) {
       this.selectedUsers.splice(index, 1);
       this.updateFormattedUserNames();
