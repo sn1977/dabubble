@@ -82,10 +82,12 @@
     <div class="overlay-content">
         <div class="display-flex">
             <h1 class="no-margin">Mitglieder</h1>
-            <img
+            <span>
+                <img
                 src="./assets/img/icon/close.svg"
                 alt=""
                 (click)="closeOverlay('overlay1')" />
+            </span>
         </div>
         <div class="members">
             <div *ngFor="let member of filterUsers()">

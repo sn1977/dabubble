@@ -81,6 +81,17 @@ h1 {
 
 .display-flex {
   @include dFlex($jc: space-between, $ai: center, $fd: row, $g: 0);
+
+  span{
+    @include dFlex($jc: center, $ai: center, $fd: row, $g: 0);
+    cursor: pointer;
+    height: 40px;
+    width: 40px;
+    &:hover{
+      background-color: #eceefe;
+      border-radius: 50%;
+    }
+  }
 }
 
 .overlay {
@@ -153,6 +164,7 @@ h1 {
   font-weight: 400;
   font-size: 1rem;
   line-height: 24.55px;
+  cursor: pointer;
 
   img {
     width: 50px;
