@@ -89,8 +89,8 @@
       } @if (channelMessage.attachment) {
       <div class="attachment-list">
         @for (item of channelMessage.attachment; track $index) { @if(item !==
-        'undefined' && item !== '')
-        { @if(channelMessage.attachment[0].includes('.pdf?')){          
+        'undefined' && item !== '') {
+        @if(channelMessage.attachment[0].includes('.pdf?')){
         <a href="{{ item }}" target="_blank" title="{{ item | filename }}"
           ><img class="attachment" src="./assets/img/icon/pdf.png" alt="" />{{
             item | filename
@@ -99,7 +99,7 @@
         }@else {
         <a href="{{ item }}" target="_blank" title="{{ item | filename }}"
           ><img class="attachment" src="{{ item }}" alt="Foto"
-        /></a>        
+        /></a>
         } } }
       </div>
       } @if(channelMessage.threads !== 0 && hideThreadInfos === false){
@@ -160,14 +160,14 @@
     }"
   >
     @if(this.matchMedia.hideReactionIcons == false){
-    <div class="reaction-icon-small">
+    <div class="reaction-icon-small pointer">
       <img
         src="./assets/img/emojis/check_mark2.svg"
         alt=""
         (click)="addEmojiReaction('✅')"
       />
     </div>
-    <div class="reaction-icon-small">
+    <div class="reaction-icon-small pointer">
       <img
         src="./assets/img/emojis/raised_hands.svg"
         alt=""
@@ -177,15 +177,22 @@
     }
     <img
       src="./assets/img/emojis/add_reaction.svg"
+      class="pointer"
       alt=""
       (click)="openEmojiPicker()"
     />
 
     @if(isChannel == true && !isMessageFromYou){
-    <img src="./assets/img/emojis/answer.svg" alt="" (click)="openThread()" />
+    <img
+      src="./assets/img/emojis/answer.svg"
+      class="pointer"
+      alt=""
+      (click)="openThread()"
+    />
     } @if(isMessageFromYou){
     <img
       src="./assets/img/emojis/answer2.svg"
+      class="pointer"
       alt=""
       (click)="toggleEditMessage($event); doNotClose($event)"
     />
@@ -199,7 +206,7 @@
       left: isMessageFromYou ? 'unset' : '5%'
     }"
   >
-    <span (click)="editMessage(channelMessage.messageId)">
+    <span class="pointer" (click)="editMessage(channelMessage.messageId)">
       Nachricht bearbeiten
     </span>
   </div>
