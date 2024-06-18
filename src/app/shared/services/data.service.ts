@@ -3,6 +3,7 @@ import { Channel } from '../../../models/channel.class';
 import { User } from '../../../models/user.class';
 import { MatchMediaService } from './match-media.service';
 import { FirestoreService } from './firestore.service';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,26 +17,15 @@ export class DataService {
   noChannelFound: boolean = false;
   matchMedia = inject(MatchMediaService);
   firestore = inject(FirestoreService);
+  authService = inject(AuthService);
 
   constructor() {}
 
   async searchWorkspace(query: string) {
     if (query == '') {
-      this.channelMatches = this.firestore.channelList;
-
-      // console.log(this.authService.activeUserAccount.displayName;);
-      
-      
-      const myName = 'Donal Duck';  // Dein eigener Name
-      // Finde den Index des Eintrags mit deinem Namen
-      const myIndex = this.firestore.userList.findIndex((user: { displayName: string | string[]; }) => user.displayName.includes(myName));
-      if (myIndex > -1) {
-        // Entferne den Eintrag mit deinem Namen aus der aktuellen Position
-        const myUser = this.firestore.userList.splice(myIndex, 1)[0];
-        // Füge den Eintrag mit deinem Namen an den Anfang der Liste
-        this.firestore.userList.unshift(myUser);
-      }
-      
+            
+      const filteredData = this.firestore.channelList.filter((item: { member: string | string[]; }) => item.member.includes(this.authService.activeUserId));
+      this.channelMatches = filteredData;
       this.userMatches = this.firestore.userList;
       return;
     }
@@ -54,6 +44,10 @@ export class DataService {
           user.email.toLowerCase().includes(query)
       )
       .map((user) => ({ ...user, type: 'user' }));
+  }
+
+  isChannelMember(members: string[]): boolean {
+    return members.includes(this.authService.activeUserAccount);
   }
 
   containsPartialChannelValue(searchValue: string) {

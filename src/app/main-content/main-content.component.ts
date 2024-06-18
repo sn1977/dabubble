@@ -18,7 +18,7 @@ import { NavigationService } from '../shared/services/navigation.service';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../shared/services/auth.service';
 import { ItemStateService } from '../shared/services/item-state.service';
-import { firstValueFrom, lastValueFrom, Observable } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { Channel } from '../../models/channel.class';
 import { User } from '../../models/user.class';
 import { CommonModule, NgForOf, NgIf } from '@angular/common';
