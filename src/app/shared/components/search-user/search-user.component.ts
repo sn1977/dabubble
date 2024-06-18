@@ -169,31 +169,7 @@ export class SearchUserComponent {
         this.isAddAllMembersChecked = true;
         this.isAddSpecificMembersChecked = false; // Setze andere Checkbox zurück
         this.showInputField = false; // Verstecke das spezifische Eingabefeld
-        this.showGeneralInputField = true; // Öffne das allgemeine Eingabefeld
-
-        // this.selectedUsers = [
-        //   {
-        //     avatar: 'http://localhost:4200/assets/img/characters/template2.svg',
-        //     count: 0,            
-        //     displayName: 'Boss',
-        //     email: 'boss@d.ch',
-        //     isOnline: true,
-        //     newMessage: false,
-        //     provider: 'email',
-        //     selected: false
-        //   },
-        //   {
-        //     avatar: 'http://localhost:4200/assets/img/characters/template1.svg',
-        //     count: 0,            
-        //     displayName: 'Sekretärin',
-        //     email: 'secretary@d.ch',
-        //     isOnline: false,
-        //     newMessage: false,
-        //     provider: 'email',
-        //     selected: false
-        //   }
-        // ];
-        
+        this.showGeneralInputField = true; // Öffne das allgemeine Eingabefeld        
         // Aktualisiere die angezeigten Benutzernamen
         this.updateFormattedUserNames();
       }
@@ -218,6 +194,9 @@ export class SearchUserComponent {
   }
 
   closeOverlay(overlayId: string): void {
+    // console.log('hi');
+    // Todo Hinzufügen der Member (alle oder ausgewählte)
+    
     const overlay = document.getElementById(overlayId) as HTMLElement;
     if (overlay) {
       overlay.style.display = 'none';

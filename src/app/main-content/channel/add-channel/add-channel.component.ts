@@ -16,29 +16,6 @@ import { MatchMediaService } from '../../../shared/services/match-media.service'
   styleUrl: './add-channel.component.scss',
 })
 export class AddChannelComponent implements OnInit {
-  allMembers: any[] = [
-    // {
-    //   avatar: 'http://localhost:4200/assets/img/characters/template2.svg',
-    //   count: 0,
-    //   displayName: 'Boss',
-    //   email: 'boss@d.ch',
-    //   isOnline: true,
-    //   newMessage: false,
-    //   provider: 'email',
-    //   selected: false,
-    // },
-    // {
-    //   avatar: 'http://localhost:4200/assets/img/characters/template1.svg',
-    //   count: 0,
-    //   displayName: 'Sekretärin',
-    //   email: 'secretary@d.ch',
-    //   isOnline: false,
-    //   newMessage: false,
-    //   provider: 'email',
-    //   selected: false,
-    // },
-  ];
-
   selectedUsers: User[] = [];
   userNames: string = '';
   selectedUser: any = [];
@@ -65,7 +42,6 @@ export class AddChannelComponent implements OnInit {
     creator: '',
     description: '',
     member: [],
-    allMembers: [],
     name: '',
     user: '',
     count: '',
@@ -73,14 +49,22 @@ export class AddChannelComponent implements OnInit {
   };
 
   onSubmit() {
+
     this.channelNameExists = this.checkChannelName(this.channelData.name);
     if (this.channelNameExists == false) {
-      const userIds = this.getUserIds(this.selectedUsers);
-      const activeUserId = this.authService.activeUserId;
-      const idExists = userIds.includes(activeUserId);
-      
-      if (!idExists) {
-        userIds.push(activeUserId);
+      let userIds;
+
+      if(this.isAddAllMembersChecked){
+        userIds = this.getUserIds(this.firestore.getUsers());
+      }
+      else{
+        userIds = this.getUserIds(this.selectedUsers);
+        const activeUserId = this.authService.activeUserId;
+        const idExists = userIds.includes(activeUserId);
+        
+        if (!idExists) {
+          userIds.push(activeUserId);
+        }
       }
       
       const channel = new Channel({
@@ -184,10 +168,8 @@ export class AddChannelComponent implements OnInit {
       this.isAddSpecificMembersChecked = false;
       this.showInputField = false;
 
-      this.selectedUsers = this.selectedUsers.concat(this.allMembers);
     } else if (checkboxId === 'addSpecificMembers') {
       this.selectedUsers = [];
-
       this.isAddAllMembersChecked = false;
       this.isAddSpecificMembersChecked = true;
     }
