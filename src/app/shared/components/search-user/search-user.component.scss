@@ -29,7 +29,7 @@
     cursor: pointer;
   }
   
-  .selected-user button {    
+  .selected-user button,input[type="button"] {    
     @include dFlex($jc: center, $ai: center, $fd: row, $g: 0);
     width: 20px;
     height: 20px;

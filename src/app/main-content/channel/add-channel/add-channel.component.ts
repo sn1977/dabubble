@@ -17,7 +17,6 @@ import { MatchMediaService } from '../../../shared/services/match-media.service'
 })
 export class AddChannelComponent implements OnInit {
   selectedUsers: User[] = [];
-  userNames: string = '';
   selectedUser: any = [];
   users: User[] = [];
   selected: boolean = false;

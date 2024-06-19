@@ -16,11 +16,10 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './search-user.component.scss',
 })
 export class SearchUserComponent implements OnInit {
-  selectedUsers: User[] = [];
-  userNames: string = '';
-  selectedUser: any = [];
+  // selectedUsers: User[] = [];  
+  // selectedUser: any = [];
   users: User[] = [];
-  selected: boolean = false;
+  // selected: boolean = false;
   showDropdown: boolean = false;
   overlayVisible: boolean = false;
   showInputField: boolean = false;
@@ -32,10 +31,9 @@ export class SearchUserComponent implements OnInit {
   router = inject(Router);
   authService = inject(AuthService);
   itemID: any = '';
-  searchQuery: string = '';
-
   activeUser: any = '';
   channel: Channel = new Channel();
+  searchQuery: string = '';
 
   channelData = {
     creator: this.channel.creator,
@@ -48,7 +46,7 @@ export class SearchUserComponent implements OnInit {
 
   onSubmit() {
 
-    if (!this.isAddAllMembersChecked && !this.isAddSpecificMembersChecked) {      
+    if (!this.isAddAllMembersChecked && !this.isAddSpecificMembersChecked) {
       this.closeOverlay('overlay');
     } else {
 
@@ -57,7 +55,7 @@ export class SearchUserComponent implements OnInit {
       if (this.isAddAllMembersChecked) {
         userIds = this.getUserIds(this.firestore.getUsers());
       } else {
-        userIds = this.getUserIds(this.selectedUsers);        
+        userIds = this.channel.member;
       }
       const channel = new Channel({
         creator: this.authService.activeUserId,
@@ -66,7 +64,10 @@ export class SearchUserComponent implements OnInit {
         name: this.channelData.name,
         newMessage: this.channel.newMessage,
       });
+
       this.firestore.updateChannel(this.itemID, channel);
+      this.isAddAllMembersChecked = false;
+      this.isAddSpecificMembersChecked = false;
       this.closeOverlay('overlay');
     }   
   }
@@ -105,24 +106,12 @@ export class SearchUserComponent implements OnInit {
     };
   }
 
-  addmember(event: MouseEvent, user: User) {
-    const index = this.selectedUsers.findIndex(
-      (selectedUser) => selectedUser.id === user.id
-    );
-
-    if (index === -1) {
-      this.selectedUsers.push(user);
-    } else {
-      this.selectedUsers.splice(index, 1);
-    }
-  }
-
-  removeUser(user: User) {
-    const index = this.selectedUsers.findIndex(
-      (selectedUser) => selectedUser.id === user.id
-    );
+  toggleMember(user: User) {    
+    const index = this.channel.member.indexOf(user.id);
     if (index !== -1) {
-      this.selectedUsers.splice(index, 1);
+      this.channel.member.splice(index, 1);
+    } else {
+      this.channel.member.push(user.id);
     }
   }
 
@@ -163,7 +152,6 @@ export class SearchUserComponent implements OnInit {
       this.isAddSpecificMembersChecked = false;
       this.showInputField = false;
     } else if (checkboxId === 'addSpecificMembers') {
-      this.selectedUsers = [];
       this.isAddAllMembersChecked = false;
       this.isAddSpecificMembersChecked = true;
     }
@@ -178,5 +166,19 @@ export class SearchUserComponent implements OnInit {
     if (overlay) {
       overlay.style.display = 'none';
     }
+
+    this.showAddMember = false;
+    this.showInputField = false;
+    this.isAddAllMembersChecked = false;
+    this.isAddSpecificMembersChecked = false;
   }
+
+  filterUsers() {    
+    return this.filterUsersById(this.firestore.getUsers(), this.channel.member);    
+  }
+  
+  filterUsersById(usersArray: any[], idsArray: string | any[]) {
+    return usersArray.filter((user) => idsArray.includes(user.id));
+  }
+
 }
