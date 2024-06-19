@@ -26,7 +26,10 @@
       border-radius: 20px;
     }
   }
+}
 
+input[type="radio"] {
+  cursor: pointer;    
 }
 
 h1,
@@ -189,19 +192,22 @@ form {
 }
 
 .selected-users-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  align-items: center;
+  @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 8px);
+  flex-wrap: wrap;    
   padding: 8px;
 }
 
 .selected-user {
-  display: flex;
-  align-items: center;
+  @include dFlex($jc: center, $ai: center, $fd: row, $g: 4px);
   background-color: #f0f0f0;
   padding: 4px 8px;
   border-radius: 16px;
+
+  &:hover{
+    background-color: #eceefe;
+    color: #535af1;
+    font-weight: 700;
+  }
 
   img {
     width: 35px;
@@ -215,10 +221,8 @@ form {
   margin-right: 8px;
 }
 
-.selected-user button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.selected-user button {    
+  @include dFlex($jc: center, $ai: center, $fd: row, $g: 0);
   width: 20px;
   height: 20px;
   border: none;

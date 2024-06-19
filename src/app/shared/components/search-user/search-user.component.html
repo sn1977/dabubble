@@ -28,12 +28,12 @@
           <label for="addSpecificMembers">Bestimmte Leute hinzufügen</label>
 
           <div *ngIf="showInputField" class="selected-users-container">
-            <div *ngFor="let user of filterUsers()" class="selected-user">
+            <div *ngFor="let user of selectedUsers" class="selected-user">
               <img src="{{ user.avatar }}" />
               <span>{{ user.displayName }}</span>
               <button (click)="removeUser(user)">X</button>
             </div>
-            <input type="text" id="input" class="input-field" name="selectedUser" placeholder="Leute suchen" (click)="toggleInputField('searchPeople')" (input)="onSearchInputChange($any($event.target).value)" autocomplete="off"
+            <input type="text" id="input" class="input-field" name="selectedUser" placeholder="Leute suchen" (click)="toggleInputField('searchPeople')" (input)="onSearchInputChange($any($event.target).value)"
             />
           </div>
           <div id="add-member" class="add-member" *ngIf="showAddMember">

@@ -20,7 +20,6 @@ export class AddChannelComponent implements OnInit {
   userNames: string = '';
   selectedUser: any = [];
   users: User[] = [];
-  filteredUsers: User[] = [];
   selected: boolean = false;
   showDropdown: boolean = false;
   overlayVisible: boolean = false;
@@ -56,8 +55,7 @@ export class AddChannelComponent implements OnInit {
 
       if(this.isAddAllMembersChecked){
         userIds = this.getUserIds(this.firestore.getUsers());
-      }
-      else{
+      }else{
         userIds = this.getUserIds(this.selectedUsers);
         const activeUserId = this.authService.activeUserId;
         const idExists = userIds.includes(activeUserId);
@@ -111,14 +109,7 @@ export class AddChannelComponent implements OnInit {
       this.selectedUsers.push(user);
     } else {
       this.selectedUsers.splice(index, 1);
-    }
-    this.updateFormattedUserNames();
-  }
-
-  updateFormattedUserNames() {
-    this.userNames = this.selectedUsers
-      .map((user) => user.displayName)
-      .join(', ');
+    }    
   }
 
   removeUser(user: User) {
@@ -126,8 +117,7 @@ export class AddChannelComponent implements OnInit {
       (selectedUser) => selectedUser.id === user.id
     );
     if (index !== -1) {
-      this.selectedUsers.splice(index, 1);
-      this.updateFormattedUserNames();
+      this.selectedUsers.splice(index, 1);      
     }
   }
   
@@ -167,7 +157,6 @@ export class AddChannelComponent implements OnInit {
       this.isAddAllMembersChecked = true;
       this.isAddSpecificMembersChecked = false;
       this.showInputField = false;
-
     } else if (checkboxId === 'addSpecificMembers') {
       this.selectedUsers = [];
       this.isAddAllMembersChecked = false;
