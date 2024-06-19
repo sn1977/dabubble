@@ -17,7 +17,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class SearchUserComponent {
 
-  selectedUsers: any[] = [];
+  selectedUsers: User[] = [];
   userNames: string = '';
   selectedUser: any = [];
   users: User[] = [];
@@ -44,52 +44,116 @@ export class SearchUserComponent {
     description: this.channel.description,
     member: this.channel.member,
     name: this.channel.name,
+    count: '',
     newMessage: this.channel.newMessage,
   };
 
 
   onSubmit() {
-    const memberNames = this.selectedUsers.map(user => user.displayName);
-
-    if(this.channelData.name === ''){
-      this.channelData.name = this.channel.name;
-    }
     
-    if(this.channelData.description === ''){
-      this.channelData.description = this.channel.description;
-    }
+    this.selectedUsers = this.filterUsers();
+    
+    //const memberNames = this.selectedUsers.map(user => user.displayName);
 
-    if (this.channelData.member.length === 0 && Array.isArray(this.channel.member)) {
-      this.channelData.member = this.channel.member;
-    }
+    // if(this.channelData.name === ''){
+    //   this.channelData.name = this.channel.name;
+    // }
+    
+    // if(this.channelData.description === ''){
+    //   this.channelData.description = this.channel.description;
+    // }
 
-    const channel = new Channel({
-      creator: this.authService.activeUserId,
-      description: this.channelData.description,
-      member: this.selectedUsers,
-      name: this.channelData.name,
-      newMessage: this.channel.newMessage,
-    });
-    this.firestore.updateChannel(this.itemID, channel);
+    // if (this.channelData.member.length === 0 && Array.isArray(this.channel.member)) {
+    //   this.channelData.member = this.channel.member;
+    // }
+
+    // if(this.isAddAllMembersChecked){
+    //   this.channelData.member = this.getUserIds(this.firestore.getUsers());
+    // }
+
+    // console.log(this.channelData.member);
+    // console.log(this.selectedUsers);
+    
+
+    // const channel = new Channel({
+    //   creator: this.authService.activeUserId,
+    //   description: this.channelData.description,
+    //   member: this.selectedUsers,
+    //   name: this.channelData.name,
+    //   newMessage: this.channel.newMessage,
+    // });
+    // this.firestore.updateChannel(this.itemID, channel);
   }
 
+// onSubmit(){
+
+//   console.log(this.selectedUsers);
+//   console.log(this.channel.member);
+
+//   let userIds;
+
+//       if(this.isAddAllMembersChecked){
+//         userIds = this.getUserIds(this.firestore.getUsers());
+//       }
+//       else{
+        
+//         //   if (this.channelData.member.length === 0 && Array.isArray(this.channel.member)) {
+//   //     this.channelData.member = this.channel.member;
+//   //   }
+
+//   //   const channel = new Channel({
+//   //     creator: this.authService.activeUserId,
+//   //     description: this.channelData.description,
+//   //     member: this.selectedUsers,
+//   //     name: this.channelData.name,
+//   //     newMessage: this.channel.newMessage,
+//   //   });
+//   //   this.firestore.updateChannel(this.itemID, channel);
+
+//       }
+
+//       const channel = new Channel({
+//         creator: this.authService.activeUserId,
+//         description: this.channelData.description,
+//         member: userIds,
+//         name: this.channelData.name,
+//         count: this.channelData.count,
+//         newMessage: this.channelData.newMessage,
+//       });
+      
+//       //this.firestore.addChannel(channel);
+//       this.firestore.updateChannel(this.itemID, channel);
+
+//       console.log(userIds);
+//       console.log(this.isAddAllMembersChecked);
+//       console.log(this.isAddSpecificMembersChecked);
+      
+//       this.closeOverlay('overlay');
+// }
+
+
   constructor (private route: ActivatedRoute) {}
+  
+  getUserIds(usersArray: any[]) {
+    return usersArray.map((user) => user.id);
+  }
 
   ngOnInit() {
     this.route.paramMap.subscribe((paramMap) => {
       this.itemID = paramMap.get('id');
-      this.getItemValues('channels', this.itemID);
+      this.getItemValues('channels', this.itemID);      
     });
   }
 
   getItemValues(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {
       this.channel = new Channel(this.firestore.channel);
-      this.selectedUsers = this.channel.member;
+      this.selectedUsers = this.filterUsers();
     });
+    
     setTimeout(() => {
       this.setOldChannelValues();
-    }, 1000)
+    }, 1000)    
   }
 
   setOldChannelValues(){
@@ -98,30 +162,39 @@ export class SearchUserComponent {
       description: this.channel.description,
       member: this.channel.member,
       name: this.channel.name,
+      count: '',
       newMessage: this.channel.newMessage,
     };    
   }
 
   addmember(event: MouseEvent, user: User) {
-    const index = this.selectedUsers.findIndex((selectedUser) => selectedUser.id === user.id);
-    if (index === -1) {
-      this.selectedUsers.push(user.id);
+    const index = this.selectedUsers.findIndex(
+      (selectedUser) => selectedUser.id === user.id
+    );
 
+    if (index === -1) {
+      this.selectedUsers.push(user);
     } else {
       this.selectedUsers.splice(index, 1);
     }
-    this.updateFormattedUserNames();
+    // this.updateFormattedUserNames();
+    console.log(this.selectedUsers);    
   }
 
-  updateFormattedUserNames() {
-    this.userNames = this.selectedUsers.map(user => user.displayName).join(', ');
-  }
+  // updateFormattedUserNames() {
+  //   this.userNames = this.selectedUsers
+  //     .map(user => user.displayName)
+  //     .join(', ');
+  // }
 
   removeUser(user: User) {
-    const index = this.selectedUsers.findIndex(selectedUser => selectedUser === user.id);
+    // this.selectedUsers = this.filterUsers();
+    const index = this.selectedUsers.findIndex(
+      (selectedUser) => selectedUser.id === user.id
+    );
     if (index !== -1) {
       this.selectedUsers.splice(index, 1);
-      this.updateFormattedUserNames();
+      //this.updateFormattedUserNames();
     }
   }
 
@@ -156,12 +229,9 @@ export class SearchUserComponent {
     }
   }
   
-  toggleCheckbox(checkboxId: string): void {
-
-    if (checkboxId === 'addAllMembers') {
-      // Checkbox 'Alle Mitglieder hinzufügen' wurde ausgewählt
-      if (this.isAddAllMembersChecked) {
-        // Checkbox ist jetzt ausgewählt
+  xtoggleCheckbox(checkboxId: string): void {
+    if (checkboxId === 'addAllMembers') {      
+      if (this.isAddAllMembersChecked) {        
         this.isAddAllMembersChecked = false;
         this.showGeneralInputField = false; // Verstecke das allgemeine Eingabefeld
       } else {
@@ -171,13 +241,26 @@ export class SearchUserComponent {
         this.showInputField = false; // Verstecke das spezifische Eingabefeld
         this.showGeneralInputField = true; // Öffne das allgemeine Eingabefeld        
         // Aktualisiere die angezeigten Benutzernamen
-        this.updateFormattedUserNames();
+        //this.updateFormattedUserNames();
       }
     } else if (checkboxId === 'addSpecificMembers') {
       // Checkbox 'Bestimmte Leute hinzufügen' wurde ausgewählt
       this.isAddAllMembersChecked = false; // Setze andere Checkbox zurück
       this.isAddSpecificMembersChecked = true;
       this.showGeneralInputField = false; // Verstecke das allgemeine Eingabefeld
+    }
+  }
+
+  toggleCheckbox(checkboxId: string): void {
+    if (checkboxId === 'addAllMembers') {
+      this.isAddAllMembersChecked = true;
+      this.isAddSpecificMembersChecked = false;
+      this.showInputField = false;
+
+    } else if (checkboxId === 'addSpecificMembers') {
+      this.selectedUsers = [];
+      this.isAddAllMembersChecked = false;
+      this.isAddSpecificMembersChecked = true;
     }
   }
   
@@ -194,9 +277,6 @@ export class SearchUserComponent {
   }
 
   closeOverlay(overlayId: string): void {
-    // console.log('hi');
-    // Todo Hinzufügen der Member (alle oder ausgewählte)
-    
     const overlay = document.getElementById(overlayId) as HTMLElement;
     if (overlay) {
       overlay.style.display = 'none';

@@ -109,7 +109,6 @@ export class AddChannelComponent implements OnInit {
 
     if (index === -1) {
       this.selectedUsers.push(user);
-      console.log(this.selectedUsers);
     } else {
       this.selectedUsers.splice(index, 1);
     }
@@ -162,6 +161,7 @@ export class AddChannelComponent implements OnInit {
       }
     }
   }
+  
   toggleCheckbox(checkboxId: string): void {
     if (checkboxId === 'addAllMembers') {
       this.isAddAllMembersChecked = true;
