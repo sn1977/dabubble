@@ -152,18 +152,13 @@ mat-expansion-panel:last-child {
 .selected-menu-item {
   background-color: #eceefe;
   border-radius: 20px;
-
-  .pf{
-    .span{
-      font-weight: 700;
-      color: red;
-    }
-  }
-
 }
 
 .pf {
   @include dFlex($jc: center, $ai: center, $fd: row, $g: 6px);
+  img:first-child{
+    border: 2px solid #eceefe;
+  }
 }
 
 .flex {

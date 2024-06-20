@@ -86,11 +86,11 @@
         (change)="adjustTextareaHeight(messageToEdit)"
         >{{ channelMessage.text }} </textarea
       >
-      } @if (channelMessage.attachment) {
+      } @if (channelMessage.attachment!.length > 0 && channelMessage.attachment![0] !== '') {
       <div class="attachment-list">
         @for (item of channelMessage.attachment; track $index) { @if(item !==
         'undefined' && item !== '') {
-        @if(channelMessage.attachment[0].includes('.pdf?')){
+        @if(channelMessage.attachment![0].includes('.pdf?')){
         <a href="{{ item }}" target="_blank" title="{{ item | filename }}"
           ><img class="attachment" src="./assets/img/icon/pdf.png" alt="" />{{
             item | filename
@@ -125,19 +125,31 @@
     @if(channelMessage.reactions.length > 0 && !hideCompleteReactionBar){
     <div class="reaction-infos" (click)="doNotClose($event)">
       <div class="reactions">
-        <ng-container *ngFor="let reaction of channelMessage.reactions">
+        <ng-container
+          *ngFor="let reaction of channelMessage.reactions; let i = index"
+        >
           <div
-              *ngIf="reaction.emoji"
-              class="reaction-group pointer"
-              (mouseenter)="this.showEmojiSnackbar(reaction.emoji,this.authService.activeUserAccount.displayName, true)"
-              (mouseleave)="this.showEmojiSnackbar(reaction.emoji,this.authService.activeUserAccount.displayName, false)"
-              (click)="toggleReaction(reaction)"
-            >
+            *ngIf="reaction.emoji"
+            class="reaction-group pointer"
+            (click)="toggleReaction(reaction)"
+            (mouseenter)="setShowBubble(i, true)"
+            (mouseleave)="setShowBubble(i, false)"
+          >
             <span class="reaction-icon">{{ reaction.emoji }}</span>
             <div class="reaction-count">
               {{ getUserReactionCount(reaction.emoji) }}
             </div>
           </div>
+
+          @if(showBubble[i]){            
+            <div class="bubble" [ngStyle]="{ 'left.px': getLeftPosition(i) }">
+            <span class="bubble-icon">{{ reaction.emoji }}</span>
+            @for (user of reaction.users; track $index) {
+            <span class="bubble-user">{{ user }}</span>
+            }
+            <span class="bubble-text">hat reagiert</span>
+          </div>
+          }
         </ng-container>
       </div>
       <img

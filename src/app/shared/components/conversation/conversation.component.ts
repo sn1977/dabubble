@@ -16,9 +16,9 @@ import { EmojiPickerComponent } from '../emoji-picker/emoji-picker.component';
 import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { DateFormatService } from '../../services/date-format.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+// import { MatSnackBar } from '@angular/material/snack-bar';
 import { PositionService } from '../../services/position.service';
-import { SnackbarOverlayService } from '../../services/snackbar-overlay.service';
+// import { SnackbarOverlayService } from '../../services/snackbar-overlay.service';
 import { Router } from '@angular/router';
 import { MatchMediaService } from '../../services/match-media.service';
 import { Subscription } from 'rxjs';
@@ -30,15 +30,21 @@ import { FilenamePipe } from '../../pipes/filename.pipe';
   standalone: true,
   templateUrl: './conversation.component.html',
   styleUrl: './conversation.component.scss',
-  imports: [CommonModule, MatDialogModule, EmojiPickerComponent, FormsModule, FilenamePipe],
+  imports: [
+    CommonModule,
+    MatDialogModule,
+    EmojiPickerComponent,
+    FormsModule,
+    FilenamePipe,
+  ],
 })
 export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private dialog: MatDialog,
     public dateFormatService: DateFormatService,
-    private snackBar: MatSnackBar,
+    // private snackBar: MatSnackBar,
     private positionService: PositionService,
-    private snackbarOverlayService: SnackbarOverlayService
+    // private snackbarOverlayService: SnackbarOverlayService
   ) {
     this.previousMessageDate = '';
   }
@@ -61,7 +67,7 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
   showReactionBar: boolean = false;
   showEditMessage: boolean = false;
   isMessageDisabled: boolean = true;
-  // showEmojiSnackbarTile: boolean = false;
+  showBubble: boolean[] = [];
   savedMessage: string = '';
   isDesktop: boolean = false;
   @ViewChild('messageToEdit') messageToEdit!: ElementRef<HTMLTextAreaElement>;
@@ -85,23 +91,24 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
         .getChannelData(docRef)
         .subscribe((data) => {
           // console.log('MainCollection Data in Component:', data);
-          if(data !== undefined){
+          if (data !== undefined) {
             this.channelMessage.creator = data['creator'];
             this.channelMessage.createdAt = data['createdAt'];
             this.channelMessage.text = data['text'];
             this.channelMessage.reactions = data['reactions'];
             this.channelMessage.attachment = data['attachment'];
 
-            if(this.channelMessage.attachment){
-              this.fileType = this.channelMessage.attachment![0].includes('.pdf?');
-            }            
+            if (this.channelMessage.attachment) {
+              this.fileType =
+                this.channelMessage.attachment![0].includes('.pdf?');
+            }
 
-            this.channelMessage.threads = data['threads'];          
+            this.channelMessage.threads = data['threads'];
             this.adjustTextareaHeight(this.messageToEdit.nativeElement);
             this.fillEmojiReactions();
             this.timestampLastThread = data['timestampLastThread'];
             this.matchMedia.scrollToBottom = true;
-            this.matchMedia.scrollToBottomThread = true;          
+            this.matchMedia.scrollToBottomThread = true;
           }
         });
     }
@@ -110,6 +117,20 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
   async ngAfterViewInit() {
     await this.delay(200);
     this.adjustTextareaHeight(this.messageToEdit.nativeElement);
+  }
+
+  setShowBubble(index: number, value: boolean) {
+    this.showBubble[index] = value;
+  }
+
+  getLeftPosition(index: number): number {
+    if (index === 0) {
+      return 30;
+    } else if (index === 1) {
+      return 94;
+    } else {
+      return 94 + (index - 1) * 64;
+    }
   }
 
   ngOnDestroy() {
@@ -127,27 +148,6 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.channelMessage.reactions = filteredData;
     this.saveMessage();
-  }
-
-  showEmojiSnackbar(emoji: string, user: string, show: boolean) {
-    if(show){      
-      const reactionGroupDiv = document.querySelector('.reaction-group');
-      if (reactionGroupDiv) {
-        const rect = reactionGroupDiv.getBoundingClientRect();
-        const snackbarHeight = 100; // Ersetzen Sie dies durch die tatsächliche Höhe Ihrer Snackbar
-        const snackbarWidth = 200; // Ersetzen Sie dies durch die tatsächliche Breite Ihrer Snackbar
-        this.snackbarOverlayService.open({
-          top: rect.top - snackbarHeight,
-          left: rect.left,
-          emoji,
-          user,
-        });
-      } else {
-        console.error(
-          'Element mit der Klasse "reaction-group pointer" wurde nicht gefunden'
-        );
-      }
-    }
   }
 
   async getItemValuesProfile(collection: string, itemID: string) {
@@ -192,12 +192,7 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
       });
     }
 
-    this.saveMessage();
-
-    // this.showEmojiSnackbar(
-    //   selectedEmoji,
-    //   this.authService.activeUserAccount.displayName
-    // );
+    this.saveMessage();    
   }
 
   getUserReactionCount(selectedEmoji: string): number {
@@ -221,12 +216,8 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
     } else {
       reaction.users.splice(userIndex, 1);
     }
-    this.saveMessage();
 
-    // this.showEmojiSnackbar(
-    //   reaction.emoji,
-    //   this.authService.activeUserAccount.displayName
-    // );
+    this.saveMessage();
   }
 
   toggleReactionBar(event: any): void {
@@ -296,8 +287,9 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
 
   saveMessage() {
     if (this.channelMessage.messageId !== undefined) {
-      if(this.isThread){
-        this.channelMessage.messageId = this.matchMedia.subID + '/threads/' + this.channelMessage.messageId;
+      if (this.isThread) {
+        this.channelMessage.messageId =
+          this.matchMedia.subID + '/threads/' + this.channelMessage.messageId;
       }
 
       this.firestore.saveMessageData(
