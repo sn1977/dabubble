@@ -10,23 +10,27 @@
           </span>
         </div>
         <div class="checkbox-container">
-          <input
+          <div class="radio-options">
+            <input
             type="radio"
             id="addAllMembers"            
             [checked]="isAddAllMembersChecked"
             (change)="toggleCheckbox('addAllMembers')"
-          />
-          <label for="addAllMembers">Alle Mitglieder hinzufügen</label>          
-          <br />
-          <input
+            />
+            <label for="addAllMembers">Alle Mitglieder hinzufügen</label>          
+          </div>
+          
+          <div class="radio-options">
+            <input
             type="radio"
             id="addSpecificMembers"
             [checked]="isAddSpecificMembersChecked"
             (change)="toggleCheckbox('addSpecificMembers')"
             (change)="toggleInputField('addSpecificMembers')"
-          />
-          <label for="addSpecificMembers">Bestimmte Leute hinzufügen</label>
-
+            />
+            <label for="addSpecificMembers">Bestimmte Leute hinzufügen</label>
+          </div>
+            
           <div *ngIf="showInputField" class="selected-users-container">
             <div *ngFor="let user of filterUsers()" class="selected-user">
               <img src="{{ user.avatar }}" />

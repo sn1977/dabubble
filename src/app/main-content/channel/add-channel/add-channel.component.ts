@@ -33,6 +33,7 @@ export class AddChannelComponent implements OnInit {
   isDesktop: boolean = false;
   activeUser: any = '';
   channelNameExists: boolean = false;
+  channelNameEmpty: boolean = false;
   channel: Channel = new Channel();
   searchQuery: string = '';
 
@@ -47,42 +48,36 @@ export class AddChannelComponent implements OnInit {
   };
 
   onSubmit() {
+    let userIds;
 
-    this.channelNameExists = this.checkChannelName(this.channelData.name);
-    if (this.channelNameExists == false) {
-      let userIds;
-
-      if(this.isAddAllMembersChecked){
-        userIds = this.getUserIds(this.firestore.getUsers());
-      }else{
-        userIds = this.getUserIds(this.selectedUsers);
-        const activeUserId = this.authService.activeUserId;
-        const idExists = userIds.includes(activeUserId);
-        
-        if (!idExists) {
-          userIds.push(activeUserId);
-        }
-      }
-      
-      const channel = new Channel({
-        creator: this.authService.activeUserId,
-        description: this.channelData.description,
-        member: userIds,
-        name: this.channelData.name,
-        count: this.channelData.count,
-        newMessage: this.channelData.newMessage,
-      });
-      
-      this.firestore.addChannel(channel);
-      this.matchMedia.channelName = channel.name;
+    if (this.isAddAllMembersChecked) {
+      userIds = this.getUserIds(this.firestore.getUsers());
     } else {
-      this.toggleOverlay();
+      userIds = this.getUserIds(this.selectedUsers);
+      const activeUserId = this.authService.activeUserId;
+      const idExists = userIds.includes(activeUserId);
+
+      if (!idExists) {
+        userIds.push(activeUserId);
+      }
     }
+
+    const channel = new Channel({
+      creator: this.authService.activeUserId,
+      description: this.channelData.description,
+      member: userIds,
+      name: this.channelData.name,
+      count: this.channelData.count,
+      newMessage: this.channelData.newMessage,
+    });
+
+    this.firestore.addChannel(channel);
+    this.matchMedia.channelName = channel.name;
   }
 
   checkChannelName(name: string) {
     const nameNotExists = this.firestore.channelList.some(
-      (channel: { name: string }) => channel.name === name
+      (channel: { name: string }) => channel.name.toLowerCase() === name.toLowerCase()
     );
     if (nameNotExists) {
       return true;
@@ -108,7 +103,7 @@ export class AddChannelComponent implements OnInit {
       this.selectedUsers.push(user);
     } else {
       this.selectedUsers.splice(index, 1);
-    }    
+    }
   }
 
   removeUser(user: User) {
@@ -116,10 +111,10 @@ export class AddChannelComponent implements OnInit {
       (selectedUser) => selectedUser.id === user.id
     );
     if (index !== -1) {
-      this.selectedUsers.splice(index, 1);      
+      this.selectedUsers.splice(index, 1);
     }
   }
-  
+
   onSearchInputChange(value: string) {
     this.searchQuery = value;
   }
@@ -134,7 +129,16 @@ export class AddChannelComponent implements OnInit {
   }
 
   toggleOverlay() {
-    this.overlayVisible = !this.overlayVisible;
+    if (this.channelData.name !== '') {
+      this.channelNameEmpty = false;
+      this.channelNameExists = this.checkChannelName(this.channelData.name);
+      if (this.channelNameExists == false) {
+        this.overlayVisible = !this.overlayVisible;
+      }
+    }
+    else {
+      this.channelNameEmpty = true;
+    }
   }
 
   toggleInputField(inputId: string) {
@@ -150,7 +154,7 @@ export class AddChannelComponent implements OnInit {
       }
     }
   }
-  
+
   toggleCheckbox(checkboxId: string): void {
     if (checkboxId === 'addAllMembers') {
       this.isAddAllMembersChecked = true;

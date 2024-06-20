@@ -78,8 +78,8 @@ export class ChannelEditionComponent implements OnInit {
   }
 
   checkChannelName(name: string) {
-    const nameNotExists = this.firestore.channelList.some(
-      (channel: { name: string }) => channel.name === name
+    const nameNotExists = this.firestore.channelList.some(      
+      (channel: { name: string }) => channel.name.toLowerCase() === name.toLowerCase()
     );
     if (nameNotExists) {
       return true;

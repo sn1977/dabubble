@@ -29,7 +29,8 @@
     <span class="required">
       @if(channelNameExists){ Fehler: Der Kanalname "{{
         channelData.name
-      }}"" ist bereits vorhanden und kann nicht genutzt werden. }
+      }}" ist bereits vorhanden und kann nicht genutzt werden. }
+      @if(channelNameEmpty){ Fehler: Bitte Channel-Name eingeben. }
     </span>
 
     <div class="input-headline">

@@ -16,10 +16,7 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './search-user.component.scss',
 })
 export class SearchUserComponent implements OnInit {
-  // selectedUsers: User[] = [];  
-  // selectedUser: any = [];
   users: User[] = [];
-  // selected: boolean = false;
   showDropdown: boolean = false;
   overlayVisible: boolean = false;
   showInputField: boolean = false;
