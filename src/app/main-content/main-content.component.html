@@ -109,10 +109,10 @@
         <div
           class="user-name pointer"
           [ngClass]="
-            this.matchMedia.channelName == authService.activeUserAccount
+            this.matchMedia.channelName == authService.activeUserAccount.displayName
               ? 'selected-menu-item'
               : ''
-          "
+          "          
           [id]="authService.activeUserId"
           (click)="
             openChannel(
