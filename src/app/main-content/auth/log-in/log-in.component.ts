@@ -15,27 +15,27 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../../shared/services/auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { MatchMediaService } from '../../../shared/services/match-media.service';
-import { DesktopFooterComponent } from "../../../shared/components/desktop-footer/desktop-footer.component";
+import { DesktopFooterComponent } from '../../../shared/components/desktop-footer/desktop-footer.component';
 
 @Component({
-    selector: 'app-log-in',
-    standalone: true,
-    templateUrl: './log-in.component.html',
-    styleUrl: './log-in.component.scss',
-    imports: [
-        MatCardModule,
-        MatDialogModule,
-        MatDialogContent,
-        MatDialogActions,
-        MatButtonModule,
-        MatInputModule,
-        MatFormFieldModule,
-        FormsModule,
-        MatIconModule,
-        RouterLink,
-        CommonModule,
-        DesktopFooterComponent
-    ]
+  selector: 'app-log-in',
+  standalone: true,
+  templateUrl: './log-in.component.html',
+  styleUrl: './log-in.component.scss',
+  imports: [
+    MatCardModule,
+    MatDialogModule,
+    MatDialogContent,
+    MatDialogActions,
+    MatButtonModule,
+    MatInputModule,
+    MatFormFieldModule,
+    FormsModule,
+    MatIconModule,
+    RouterLink,
+    CommonModule,
+    DesktopFooterComponent,
+  ],
 })
 export class LogInComponent implements OnInit {
   contactData = {
@@ -51,6 +51,14 @@ export class LogInComponent implements OnInit {
   playIntroAnimation: boolean = true;
   isDesktop: boolean = false;
 
+  constructor() {
+    setTimeout(() => {
+      if (this.authService.activeUserId) {
+        this.redirectToMain();
+      }
+    }, 500);
+  }
+
   ngOnInit(): void {
     this.isDesktop = this.matchMedia.checkIsDesktop();
   }
@@ -60,7 +68,7 @@ export class LogInComponent implements OnInit {
       .login(this.contactData.email, this.contactData.password)
       .subscribe({
         next: () => {
-            this.router.navigateByUrl('/main');
+          this.router.navigateByUrl('/main');
         },
         error: (err) => {
           this.errorMessage = err.code;
@@ -79,5 +87,9 @@ export class LogInComponent implements OnInit {
 
   anonymousLogin() {
     this.authService.signInAnonymous();
+  }
+
+  redirectToMain() {
+    this.router.navigateByUrl('/main');
   }
 }

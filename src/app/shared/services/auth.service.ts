@@ -13,8 +13,6 @@ import {
   GoogleAuthProvider,
   signInWithRedirect,
   getAuth,
-  setPersistence,
-  browserSessionPersistence,
   authState,
   getRedirectResult,
   signInAnonymously,
