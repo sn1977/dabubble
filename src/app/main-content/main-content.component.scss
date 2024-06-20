@@ -155,7 +155,7 @@ mat-expansion-panel:last-child {
 }
 
 .pf {
-  @include dFlex($jc: center, $ai: center, $fd: row, $g: 10px);  
+  @include dFlex($jc: center, $ai: center, $fd: row, $g: 6px);
 }
 
 .flex {
