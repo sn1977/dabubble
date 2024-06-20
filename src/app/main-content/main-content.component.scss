@@ -26,7 +26,7 @@
 .channel-menu {
   @include dFlex($ai: center, $fd: row);
   width: 100%;
-  padding-left: 16px;
+  //padding-left: 16px;
 
   .plus-icon:hover {
     background-color: #eceefe;
@@ -64,7 +64,11 @@
 }
 
 mat-expansion-panel {
-  overflow: auto;
+  overflow: hidden;
+}
+
+.mat-content.mat-content-hide-toggle{
+  margin: 0 !important;
 }
 
 .hide-overflow {
@@ -97,6 +101,9 @@ mat-expansion-panel {
   }
 } */
 
+.mat-expansion-panel-body{
+  padding: 0;
+}
 
 mat-expansion-panel:last-child {
   margin-bottom: 110px !important;
@@ -104,8 +111,9 @@ mat-expansion-panel:last-child {
 
 .user-name,
 .channel-name {
-  padding: 10px 0;
+  padding: 5px;
   position: relative;
+  cursor: pointer;
 
   @include dFlex($jc: space-between, $ai: center, $fd: row, $g: 16px);
 
@@ -134,8 +142,8 @@ mat-expansion-panel:last-child {
   .online-avatar,
   .offline-avatar {
     position: absolute;
-    bottom: 10px;
-    left: 38px;
+    bottom: 4px;
+    left: 42px;
     width: 14px;
     height: 14px;
   }
@@ -239,6 +247,7 @@ mat-expansion-panel:last-child {
 @media (min-width: 993px) {
   .content-main {
     padding: unset;
+    margin-top: 16px;
   }
 
   .btn-edit-message {

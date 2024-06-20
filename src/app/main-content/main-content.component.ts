@@ -161,7 +161,7 @@ export class MainContentComponent implements OnInit {
     // panel._body.nativeElement.classList.add('no-overflow');
     // panel._body.nativeElement.classList.add('hide-scrollbar');
     // panel._body.nativeElement.classList.add('hide-overflow');
-  }
+  }  
 
   onAddClick(event: MouseEvent): void {
     event.stopPropagation(); // Verhindert, dass das Click-Event weiter zum mat-expansion-panel propagiert wird.

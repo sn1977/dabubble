@@ -48,10 +48,8 @@
 
       @for (channel of this.firestore.channelList; track $index) {
       @if(this.dataService.containsPartialChannelValue(channel.name)){
+      @if(isChannelMember(channel.member)){ @if(panels[0].expanded){
 
-        @if(isChannelMember(channel.member)){
-            
-        
       <div
         class="channel-name pointer"
         [ngClass]="
@@ -66,19 +64,19 @@
           <span class="channel-tag">#</span>
           <span>{{ channel.name }} </span>
         </div>
-      </div> }
-      } } @if(this.dataService.channelMatches == 0){
+      </div>
+      } } }} @if(this.dataService.channelMatches == 0){
       <div class="nothingFound">
         <span class="channel-tag"></span>
         <span>Kein Channel gefunden</span>
       </div>
       }
-
-      <div class="add-channel" (click)="navigateToAddChannel()">
-        <img src="./assets/img/icon/add_circle.png" />
-        <span>Channel hinzufügen</span>
-      </div>
     </mat-expansion-panel>
+
+    <div class="add-channel" (click)="navigateToAddChannel()">
+      <img src="./assets/img/icon/add_circle.png" />
+      <span>Channel hinzufügen</span>
+    </div>
 
     <mat-expansion-panel
       #panel
@@ -106,6 +104,7 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
 
+      @if(panels[1].expanded){
       <div class="scrollable-panel-content">
         <div
           class="user-name pointer"
@@ -178,10 +177,10 @@
             <span>{{ user.displayName }} </span>
           </div>
           <!-- <div class="flex">
-            <div class="pop-up">
-              <p class="pop-up-color">Neue Nachricht</p>
-            </div>
-          </div> -->
+              <div class="pop-up">
+                <p class="pop-up-color">Neue Nachricht</p>
+              </div>
+            </div> -->
         </div>
         } } } @if(this.dataService.userMatches == 0){
         <div class="nothingFound">
@@ -190,6 +189,7 @@
         </div>
         }
       </div>
+      }
     </mat-expansion-panel>
   </mat-accordion>
   @if(!isDesktop){
