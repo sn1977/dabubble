@@ -61,7 +61,7 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
   showReactionBar: boolean = false;
   showEditMessage: boolean = false;
   isMessageDisabled: boolean = true;
-  showEmojiSnackbarTile: boolean = false;
+  // showEmojiSnackbarTile: boolean = false;
   savedMessage: string = '';
   isDesktop: boolean = false;
   @ViewChild('messageToEdit') messageToEdit!: ElementRef<HTMLTextAreaElement>;
@@ -129,22 +129,24 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
     this.saveMessage();
   }
 
-  showEmojiSnackbar(emoji: string, user: string) {
-    const reactionGroupDiv = document.querySelector('.reaction-group');
-    if (reactionGroupDiv) {
-      const rect = reactionGroupDiv.getBoundingClientRect();
-      const snackbarHeight = 100; // Ersetzen Sie dies durch die tatsächliche Höhe Ihrer Snackbar
-      const snackbarWidth = 200; // Ersetzen Sie dies durch die tatsächliche Breite Ihrer Snackbar
-      this.snackbarOverlayService.open({
-        top: rect.top - snackbarHeight,
-        left: rect.left,
-        emoji,
-        user,
-      });
-    } else {
-      console.error(
-        'Element mit der Klasse "reaction-group pointer" wurde nicht gefunden'
-      );
+  showEmojiSnackbar(emoji: string, user: string, show: boolean) {
+    if(show){      
+      const reactionGroupDiv = document.querySelector('.reaction-group');
+      if (reactionGroupDiv) {
+        const rect = reactionGroupDiv.getBoundingClientRect();
+        const snackbarHeight = 100; // Ersetzen Sie dies durch die tatsächliche Höhe Ihrer Snackbar
+        const snackbarWidth = 200; // Ersetzen Sie dies durch die tatsächliche Breite Ihrer Snackbar
+        this.snackbarOverlayService.open({
+          top: rect.top - snackbarHeight,
+          left: rect.left,
+          emoji,
+          user,
+        });
+      } else {
+        console.error(
+          'Element mit der Klasse "reaction-group pointer" wurde nicht gefunden'
+        );
+      }
     }
   }
 
@@ -192,10 +194,10 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.saveMessage();
 
-    this.showEmojiSnackbar(
-      selectedEmoji,
-      this.authService.activeUserAccount.displayName
-    );
+    // this.showEmojiSnackbar(
+    //   selectedEmoji,
+    //   this.authService.activeUserAccount.displayName
+    // );
   }
 
   getUserReactionCount(selectedEmoji: string): number {
@@ -221,10 +223,10 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     this.saveMessage();
 
-    this.showEmojiSnackbar(
-      reaction.emoji,
-      this.authService.activeUserAccount.displayName
-    );
+    // this.showEmojiSnackbar(
+    //   reaction.emoji,
+    //   this.authService.activeUserAccount.displayName
+    // );
   }
 
   toggleReactionBar(event: any): void {

@@ -127,12 +127,12 @@
       <div class="reactions">
         <ng-container *ngFor="let reaction of channelMessage.reactions">
           <div
-            *ngIf="reaction.emoji"
-            class="reaction-group pointer"
-            (mouseenter)="showEmojiSnackbarTile = true"
-            (mouseleave)="showEmojiSnackbarTile = false"
-            (click)="toggleReaction(reaction)"
-          >
+              *ngIf="reaction.emoji"
+              class="reaction-group pointer"
+              (mouseenter)="this.showEmojiSnackbar(reaction.emoji,this.authService.activeUserAccount.displayName, true)"
+              (mouseleave)="this.showEmojiSnackbar(reaction.emoji,this.authService.activeUserAccount.displayName, false)"
+              (click)="toggleReaction(reaction)"
+            >
             <span class="reaction-icon">{{ reaction.emoji }}</span>
             <div class="reaction-count">
               {{ getUserReactionCount(reaction.emoji) }}

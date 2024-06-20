@@ -38,6 +38,6 @@ export class SnackbarOverlayService {
 
     setTimeout(() => {
       overlayRef.detach();
-    }, 2000);
+    }, 1000);
   }
 }
