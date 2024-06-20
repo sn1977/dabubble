@@ -35,7 +35,12 @@
 .profile-img {
   display: flex;
   justify-content: center;
-  border-radius: 100%;
+  
+  img{
+    border-radius: 50%;
+    border: 2px solid #eceefe;
+  }
+
 }
 
 
