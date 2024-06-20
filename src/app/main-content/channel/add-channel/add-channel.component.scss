@@ -231,7 +231,7 @@ form {
   background-color: #ccc;
   color: #666;
   font-size: 0.667rem;
-  cursor: pointer;
+  cursor: pointer;  
 }
 
 .channel-name {
@@ -240,6 +240,11 @@ form {
   display: flex;
   align-items: center;
   position: relative;
+  cursor: pointer;
+  &:hover {
+    background-color: #eceefe;
+    border-radius: 16px;
+  }
 
   span {
     @include fontBold(
@@ -266,11 +271,6 @@ form {
     width: 14px;
     height: 14px;
   }
-}
-
-.channel-name:hover {
-  background-color: lightgrey;
-  cursor: pointer;
 }
 
 .add-button {
