@@ -152,6 +152,14 @@ mat-expansion-panel:last-child {
 .selected-menu-item {
   background-color: #eceefe;
   border-radius: 20px;
+
+  .pf{
+    .span{
+      font-weight: 700;
+      color: red;
+    }
+  }
+
 }
 
 .pf {

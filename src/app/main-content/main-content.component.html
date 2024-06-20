@@ -61,8 +61,18 @@
         (click)="openChannel($event, 'channel', channel.name)"
       >
         <div class="pf">
-          <span class="channel-tag">#</span>
-          <span>{{ channel.name }} </span>
+          <span class="channel-tag"
+          [ngStyle]="{
+            'font-weight': this.matchMedia.channelName != channel.name ? '400' : '700',
+            'color': this.matchMedia.channelName != channel.name ? '#000000' : '#535af1'
+          }"
+          >#</span>
+          <span
+          [ngStyle]="{
+            'font-weight': this.matchMedia.channelName != channel.name ? '400' : '700',
+            'color': this.matchMedia.channelName != channel.name ? '#000000' : '#535af1'
+          }"
+          >{{ channel.name }} </span>
         </div>
       </div>
       } } }} @if(this.dataService.channelMatches == 0){
@@ -138,9 +148,18 @@
               class="offline-avatar"
             />
             }
-            <span
-              >{{ user.displayName }}
-              <span> (Du)</span>
+            <span 
+            [ngStyle]="{
+              'font-weight': this.matchMedia.channelName != authService.activeUserAccount.displayName ? '400' : '700',
+              'color': this.matchMedia.channelName != authService.activeUserAccount.displayName ? '#000000' : '#535af1'
+            }"
+            >{{ user.displayName }}
+              <span
+              [ngStyle]="{
+                'font-weight': this.matchMedia.channelName != authService.activeUserAccount.displayName ? '400' : '700',
+                'color': this.matchMedia.channelName != authService.activeUserAccount.displayName ? '#000000' : '#535af1'
+              }"
+              > (Du)</span>
             </span>
           </div>
         </div>
@@ -174,13 +193,13 @@
               class="offline-avatar"
             />
             }
-            <span>{{ user.displayName }} </span>
-          </div>
-          <!-- <div class="flex">
-              <div class="pop-up">
-                <p class="pop-up-color">Neue Nachricht</p>
-              </div>
-            </div> -->
+            <span
+            [ngStyle]="{
+              'font-weight': this.matchMedia.channelName != user.displayName ? '400' : '700',
+              'color': this.matchMedia.channelName != user.displayName ? '#000000' : '#535af1'
+            }"
+            >{{ user.displayName }} </span>
+          </div>          
         </div>
         } } } @if(this.dataService.userMatches == 0){
         <div class="nothingFound">
