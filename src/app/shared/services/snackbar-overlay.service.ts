@@ -13,9 +13,7 @@ export class SnackbarOverlayService {
   open({ emoji, user, top, left }: { emoji: string, user: string, top: number, left: number }) {
     const positionStrategy = this.overlay
       .position()
-      .global()
-      // .centerHorizontally()
-      // .centerVertically();
+      .global()      
       .top(`${top}px`)
       .left(`${left}px`);
 
