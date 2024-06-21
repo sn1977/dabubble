@@ -118,9 +118,45 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
     await this.delay(200);
     this.adjustTextareaHeight(this.messageToEdit.nativeElement);
   }
+  
+  setShowBubble(index: number, show: boolean): void {
+    this.showBubble[index] = show;
+  }
 
-  setShowBubble(index: number, value: boolean) {
-    this.showBubble[index] = value;
+  handleTouchStart(event: TouchEvent, index: number): void {    
+    if (!event.defaultPrevented) {
+      this.setShowBubble(index, true);
+    }
+  }
+
+  handleTouchEnd(event: TouchEvent, index: number): void {    
+    if (!event.defaultPrevented) {
+      this.setShowBubble(index, false);
+    }
+  }
+
+  getDisplayNameById(id: string): string | undefined {
+    const user = this.firestore.userList.find((user: { id: string; }) => user.id === id);
+    return user ? user.displayName : undefined;
+  }
+
+  getDisplayNamesWithCurrentUser(reactionUsers: string[]): string[] {
+    const currentUserDisplayName = this.authService.activeUserAccount.displayName;
+    const displayNames = reactionUsers
+      .map(userId => this.getDisplayNameById(userId))
+      .filter((name): name is string => name !== undefined);
+
+    const isCurrentUserIncluded = displayNames.includes(currentUserDisplayName);
+
+    if (isCurrentUserIncluded) {
+      if (displayNames.length === 1) {
+        return ['Du hast'];
+      } else {
+        return [...displayNames.filter(name => name !== currentUserDisplayName), 'und Du habt'];
+      }
+    }
+
+    return displayNames;
   }
 
   getLeftPosition(index: number): number {

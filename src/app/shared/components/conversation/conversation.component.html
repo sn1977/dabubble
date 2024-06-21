@@ -134,6 +134,8 @@
             (click)="toggleReaction(reaction)"
             (mouseenter)="setShowBubble(i, true)"
             (mouseleave)="setShowBubble(i, false)"
+            (touchstart)="handleTouchStart($event, i)"
+            (touchend)="handleTouchEnd($event, i)"
           >
             <span class="reaction-icon">{{ reaction.emoji }}</span>
             <div class="reaction-count">
@@ -144,10 +146,14 @@
           @if(showBubble[i]){            
             <div class="bubble" [ngStyle]="{ 'left.px': getLeftPosition(i) }">
             <span class="bubble-icon">{{ reaction.emoji }}</span>
-            @for (user of reaction.users; track $index) {
-            <span class="bubble-user">{{ user }}</span>
-            }
-            <span class="bubble-text">hat reagiert</span>
+            <span class="bubble-userlist">
+              @for (user of getDisplayNamesWithCurrentUser(reaction.users); track $index) {
+                <span class="bubble-user">                
+                  {{user}}
+                </span>
+              }
+            </span>
+            <span class="bubble-text">reagiert</span>
           </div>
           }
         </ng-container>

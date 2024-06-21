@@ -241,31 +241,38 @@
 
         .bubble {
           position: absolute;
+          touch-action: manipulation;
           @include dFlex($jc: center, $ai: center, $fd: column, $g: 5px);
           color: #ffffff;
-          top: -115px;          
-          width: 158px;
+          bottom: 36px;
+          max-width: 158px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          box-sizing: border-box;
           border-radius: 30px 30px 30px 0px;
           padding: 15px 10px;
           background-color: #444df2;
           font-family: Nunito;
+          z-index: 9;
 
-          .bubble-icon {            
+          .bubble-icon {
             height: 30px;
             width: 30px;
-            align-items: center;
-            display: flex;
+            @include dFlex($jc: center, $ai: center, $fd: row, $g: 0);
             font-size: 1rem;
           }
 
-          .bubble-user {
-            font-size: 18px;
-            font-weight: 700;
-            line-height: 24.55px;            
+          .bubble-userlist{
+            @include dFlex($jc: center, $ai: center, $fd: column, $g: 0);
+            .bubble-user {
+              @include dFlex($jc: center, $ai: center, $fd: row, $g: 0);
+              font-weight: 700;
+            }
           }
 
-          .bubble-text {            
-            font-size: 16px;
+          .bubble-text {
+            font-size: 14px;
             font-weight: 400;
             line-height: 21.82px;
           }
