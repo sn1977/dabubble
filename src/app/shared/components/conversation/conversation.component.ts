@@ -16,9 +16,7 @@ import { EmojiPickerComponent } from '../emoji-picker/emoji-picker.component';
 import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { DateFormatService } from '../../services/date-format.service';
-// import { MatSnackBar } from '@angular/material/snack-bar';
 import { PositionService } from '../../services/position.service';
-// import { SnackbarOverlayService } from '../../services/snackbar-overlay.service';
 import { Router } from '@angular/router';
 import { MatchMediaService } from '../../services/match-media.service';
 import { Subscription } from 'rxjs';
@@ -42,9 +40,7 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private dialog: MatDialog,
     public dateFormatService: DateFormatService,
-    // private snackBar: MatSnackBar,
     private positionService: PositionService,
-    // private snackbarOverlayService: SnackbarOverlayService
   ) {
     this.previousMessageDate = '';
   }
@@ -120,7 +116,12 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   
   setShowBubble(index: number, show: boolean): void {
-    this.showBubble[index] = show;
+    this.showBubble[index] = show;    
+    if(show){
+      setTimeout(() => {
+        this.showBubble[index] = false;
+      }, 2000);
+    }
   }
 
   handleTouchStart(event: TouchEvent, index: number): void {    
@@ -181,9 +182,7 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
     };
 
     const filteredData = filterEmojisWithUsers(this.channelMessage.reactions);
-
     this.channelMessage.reactions = filteredData;
-    this.saveMessage();
   }
 
   async getItemValuesProfile(collection: string, itemID: string) {
@@ -226,8 +225,7 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
         emoji: selectedEmoji,
         users: [userId],
       });
-    }
-
+    }    
     this.saveMessage();    
   }
 
@@ -251,8 +249,7 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
       reaction.users.push(this.authService.activeUserAccount.uid);
     } else {
       reaction.users.splice(userIndex, 1);
-    }
-
+    }    
     this.saveMessage();
   }
 
@@ -310,7 +307,7 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
 
     if (messageId) {
       const setFocusMessage = this.messageToEdit.nativeElement;
-      this.channelMessage.text = setFocusMessage.value;
+      this.channelMessage.text = setFocusMessage.value;      
       this.saveMessage();
 
       setTimeout(() => {
@@ -323,13 +320,20 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
 
   saveMessage() {
     if (this.channelMessage.messageId !== undefined) {
+      let colId = 'channels';
+
       if (this.isThread) {
         this.channelMessage.messageId =
           this.matchMedia.subID + '/threads/' + this.channelMessage.messageId;
       }
 
+      if(!this.isChannel){        
+        colId = 'messages';
+      }
+
       this.firestore.saveMessageData(
-        'channels',
+        // 'channels',
+        colId,
         this.channelMessage.channelId,
         this.channelMessage.messageId,
         this.channelMessage

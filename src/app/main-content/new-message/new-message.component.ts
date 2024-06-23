@@ -8,7 +8,6 @@ import { FirestoreService } from '../../shared/services/firestore.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../../../models/user.class';
 import { AuthService } from '../../shared/services/auth.service';
-// import { Channel } from '../../../models/channel.class';
 import { HeaderMobileComponent } from '../../shared/components/header-mobile/header-mobile.component';
 import { HeaderStateService } from '../../shared/services/header-state.service';
 import { TextBoxComponent } from '../../shared/components/text-box/text-box.component';
@@ -46,7 +45,6 @@ export class NewMessageComponent implements OnInit{
   showUsers = false;
   selectedUserOrChannel: string = '';
 
-
   textBoxData: any = {
     placeholder: 'Starte eine neue Nachricht ',
     channelName: '',
@@ -62,30 +60,28 @@ export class NewMessageComponent implements OnInit{
     displayName: this.user.displayName,
     isOnline: this.user.isOnline,
     provider: this.user.provider,
-    selected: this.user.selected,
-    count: this.user.count,
-    newMessage: this.user.newMessage
-
-    
+    // selected: this.user.selected,
+    // count: this.user.count,
+    // newMessage: this.user.newMessage    
   };
 
   
-  addCountToChannelDocument(toggle: string) {
+  // addCountToChannelDocument(toggle: string) {
 
-    const user = new User({
-      avatar: this.user.avatar,
-      email: this.user.email,
-      displayName: this.user.displayName,
-      isOnline: this.user.isOnline,
-      provider: this.user.provider,
-      selected: this.user.selected,
-      count: this.user.count,
-      newMessage: this.newMessage
-    });
+  //   const user = new User({
+  //     avatar: this.user.avatar,
+  //     email: this.user.email,
+  //     displayName: this.user.displayName,
+  //     isOnline: this.user.isOnline,
+  //     provider: this.user.provider,
+  //     // selected: this.user.selected,
+  //     // count: this.user.count,
+  //     // newMessage: this.newMessage
+  //   });
 
     
-    this.firestore.updateUser(user, this.itemID, );
-  }
+  //   this.firestore.updateUser(user, this.itemID, );
+  // }
 
   constructor(
     public dialog: MatDialog,
@@ -107,9 +103,9 @@ export class NewMessageComponent implements OnInit{
   
     });
 
-    setTimeout(() => {
-      this.addCountToChannelDocument(this.itemID);
-   }, 1000)
+  //   setTimeout(() => {
+  //     this.addCountToChannelDocument(this.itemID);
+  //  }, 1000)
 
     await this.firestore.getDirectMessages(
       this.authService.activeUserAccount.uid,
@@ -135,10 +131,9 @@ export class NewMessageComponent implements OnInit{
       displayName: this.user.displayName,
       isOnline: this.user.isOnline,
       provider: this.user.provider,
-      selected: this.user.selected,
-      count: this.user.count,
-      newMessage: this.user.newMessage
-
+      // selected: this.user.selected,
+      // count: this.user.count,
+      // newMessage: this.user.newMessage
     };
   }
 

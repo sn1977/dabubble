@@ -108,9 +108,9 @@ export class FirestoreService {
       displayName: obj.displayName,
       isOnline: obj.isOnline,
       provider: obj.provider,
-      selected: obj.selected,
-      count: obj.count,
-      newMessage: obj.newMessage,
+      // selected: obj.selected,
+      // count: obj.count,
+      // newMessage: obj.newMessage,
     };
   }
 
@@ -121,7 +121,7 @@ export class FirestoreService {
       member: obj.member,
       id: id,
       name: obj.name,
-      newMessage: obj.newMessage,
+      // newMessage: obj.newMessage,
     };
   }
 
@@ -414,6 +414,7 @@ export class FirestoreService {
     messageId: string,
     item: object
   ) {
+
     const messageDoc = docId + '/channelmessages/' + messageId;
     const docRef = this.getSingleDocRef(colId, messageDoc);
     await updateDoc(docRef, item).catch((err) => {

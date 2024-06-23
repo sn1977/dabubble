@@ -77,7 +77,7 @@ export class ThreadComponent implements OnInit, OnDestroy {
     description: this.channel.description,
     member: this.channel.member,
     name: this.channel.name,
-    newMessage: this.channel.newMessage,
+    // newMessage: this.channel.newMessage,
   };
 
   async ngOnInit(): Promise<void> {

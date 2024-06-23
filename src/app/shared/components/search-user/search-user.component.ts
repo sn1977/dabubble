@@ -37,8 +37,8 @@ export class SearchUserComponent implements OnInit {
     description: this.channel.description,
     member: this.channel.member,
     name: this.channel.name,
-    count: '',
-    newMessage: this.channel.newMessage,
+    // count: '',
+    // newMessage: this.channel.newMessage,
   };
 
   onSubmit() {
@@ -59,7 +59,7 @@ export class SearchUserComponent implements OnInit {
         description: this.channelData.description,
         member: userIds,
         name: this.channelData.name,
-        newMessage: this.channel.newMessage,
+        // newMessage: this.channel.newMessage,
       });
 
       this.firestore.updateChannel(this.itemID, channel);
@@ -98,8 +98,8 @@ export class SearchUserComponent implements OnInit {
       description: this.channel.description,
       member: this.channel.member,
       name: this.channel.name,
-      count: '',
-      newMessage: this.channel.newMessage,
+      // count: '',
+      // newMessage: this.channel.newMessage,
     };
   }
 

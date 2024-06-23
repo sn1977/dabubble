@@ -35,7 +35,7 @@ export class ChannelEditionComponent implements OnInit {
     description: this.channel.description,
     member: this.channel.member,
     name: this.channel.name,
-    newMessage: this.channel.newMessage,
+    // newMessage: this.channel.newMessage,
   };
 
   constructor(
@@ -67,7 +67,7 @@ export class ChannelEditionComponent implements OnInit {
           description: this.channelData.description,
           member: this.channel.member,
           name: this.channelData.name,
-          newMessage: this.channel.newMessage,
+          // newMessage: this.channel.newMessage,
         });
         this.firestore.updateChannel(this.itemID, channel);
         this.toggleEdit(toggle);
@@ -160,7 +160,7 @@ export class ChannelEditionComponent implements OnInit {
       description: this.channel.description,
       member: this.channel.member,
       name: this.channel.name,
-      newMessage: this.channel.newMessage,
+      // newMessage: this.channel.newMessage,
     };
   }
 
@@ -180,7 +180,7 @@ export class ChannelEditionComponent implements OnInit {
       description: this.channelData.description,
       member: this.channel.member,
       name: this.channelData.name,
-      newMessage: this.channel.newMessage,
+      // newMessage: this.channel.newMessage,
     });   
     this.firestore.updateChannel(this.itemID, channel);
     this.router.navigate(['/main']);

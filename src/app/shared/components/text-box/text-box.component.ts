@@ -78,7 +78,7 @@ export class TextBoxComponent implements AfterViewInit {
         threads: 0,
       });
 
-      if (this.textBoxData.subcollection != 'channelmessages' && this.textBoxData.subcollection != 'chat') {
+      if (this.textBoxData.subcollection != 'channelmessages') {
         type = 'thread';
       }
 

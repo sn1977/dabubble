@@ -61,21 +61,33 @@
         (click)="openChannel($event, 'channel', channel.name)"
       >
         <div class="pf">
-          <span class="channel-tag"
-          [ngStyle]="{
-            'font-weight': this.matchMedia.channelName != channel.name ? '400' : '700',
-            'color': this.matchMedia.channelName != channel.name ? '#000000' : '#535af1'
-          }"
-          >#</span>
           <span
-          [ngStyle]="{
-            'font-weight': this.matchMedia.channelName != channel.name ? '400' : '700',
-            'color': this.matchMedia.channelName != channel.name ? '#000000' : '#535af1'
-          }"
-          >{{ channel.name }} </span>
+            class="channel-tag"
+            [ngStyle]="{
+              'font-weight':
+                this.matchMedia.channelName != channel.name ? '400' : '700',
+              color:
+                this.matchMedia.channelName != channel.name
+                  ? '#000000'
+                  : '#535af1'
+            }"
+            >#</span
+          >
+          <span
+            [ngStyle]="{
+              'font-weight':
+                this.matchMedia.channelName != channel.name ? '400' : '700',
+              color:
+                this.matchMedia.channelName != channel.name
+                  ? '#000000'
+                  : '#535af1'
+            }"
+            >{{ channel.name }}
+          </span>
         </div>
       </div>
-      } } }} @if(this.dataService.channelMatches == 0 || this.firestore.channelList.length == 0){
+      } } }} @if(this.dataService.channelMatches == 0 ||
+      this.firestore.channelList.length == 0){
       <div class="nothingFound">
         <span class="channel-tag"></span>
         <span>Kein Channel gefunden</span>
@@ -114,15 +126,16 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
 
-      @if(panels[1].expanded){
+      @if(this.authService.activeUserId){ @if(panels[1].expanded){
       <div class="scrollable-panel-content">
         <div
           class="user-name pointer"
           [ngClass]="
-            this.matchMedia.channelName == authService.activeUserAccount.displayName
+            this.matchMedia.channelName ==
+            authService.activeUserAccount.displayName
               ? 'selected-menu-item'
               : ''
-          "          
+          "
           [id]="authService.activeUserId"
           (click)="
             openChannel(
@@ -148,18 +161,36 @@
               class="offline-avatar"
             />
             }
-            <span 
-            [ngStyle]="{
-              'font-weight': this.matchMedia.channelName != authService.activeUserAccount.displayName ? '400' : '700',
-              'color': this.matchMedia.channelName != authService.activeUserAccount.displayName ? '#000000' : '#535af1'
-            }"
-            >{{ user.displayName }}
-              <span
+            <span
               [ngStyle]="{
-                'font-weight': this.matchMedia.channelName != authService.activeUserAccount.displayName ? '400' : '700',
-                'color': this.matchMedia.channelName != authService.activeUserAccount.displayName ? '#000000' : '#535af1'
+                'font-weight':
+                  this.matchMedia.channelName !=
+                  authService.activeUserAccount.displayName
+                    ? '400'
+                    : '700',
+                color:
+                  this.matchMedia.channelName !=
+                  authService.activeUserAccount.displayName
+                    ? '#000000'
+                    : '#535af1'
               }"
-              > (Du)</span>
+              >{{ user.displayName }}
+              <span
+                [ngStyle]="{
+                  'font-weight':
+                    this.matchMedia.channelName !=
+                    authService.activeUserAccount.displayName
+                      ? '400'
+                      : '700',
+                  color:
+                    this.matchMedia.channelName !=
+                    authService.activeUserAccount.displayName
+                      ? '#000000'
+                      : '#535af1'
+                }"
+              >
+                (Du)</span
+              >
             </span>
           </div>
         </div>
@@ -194,12 +225,19 @@
             />
             }
             <span
-            [ngStyle]="{
-              'font-weight': this.matchMedia.channelName != user.displayName ? '400' : '700',
-              'color': this.matchMedia.channelName != user.displayName ? '#000000' : '#535af1'
-            }"
-            >{{ user.displayName }} </span>
-          </div>          
+              [ngStyle]="{
+                'font-weight':
+                  this.matchMedia.channelName != user.displayName
+                    ? '400'
+                    : '700',
+                color:
+                  this.matchMedia.channelName != user.displayName
+                    ? '#000000'
+                    : '#535af1'
+              }"
+              >{{ user.displayName }}
+            </span>
+          </div>
         </div>
         } } } @if(this.dataService.userMatches == 0){
         <div class="nothingFound">
@@ -208,7 +246,7 @@
         </div>
         }
       </div>
-      }
+      } }
     </mat-expansion-panel>
   </mat-accordion>
   @if(!isDesktop){
