@@ -34,7 +34,7 @@
           @if(i === 0 || (this.dateFormatService.formatDateYYYYMMDD(chat.createdAt) !== this.dateFormatService.formatDateYYYYMMDD(firestore.channelMessages[i - 1].createdAt))){
             <app-time-seperator [seperatorDate]="chat.createdAt"></app-time-seperator>
           }
-          <app-conversation [channelMessage]="chat" [isChannel]="false" [isThread]="false"></app-conversation>
+          <app-conversation [channelMessage]="chat" [isChannel]="true" [isThread]="false" [isDirectMessage]="true"></app-conversation>
         }
     </div>
   </div>

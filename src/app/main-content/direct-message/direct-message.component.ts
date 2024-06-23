@@ -110,10 +110,11 @@ export class DirectMessageComponent implements OnInit {
       }
 
       await this.delay(700);
+      // hier die loading-animation rein beim warten
 
       if (this.firestore.conversation) {
         this.textBoxData.channelId = this.firestore.conversation;
-        this.firestore.getAllChannelMessages(
+        await this.firestore.getAllChannelMessages(
           this.firestore.conversation,
           this.textBoxData.collection,
           this.textBoxData.subcollection

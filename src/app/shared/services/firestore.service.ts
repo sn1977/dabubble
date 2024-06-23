@@ -291,11 +291,11 @@ export class FirestoreService {
     );
   }
 
-  getAllChannelMessages(
+  async getAllChannelMessages(
     channelId: string,
     colID: string,
     subcollection: string
-  ): Unsubscribe {
+  ): Promise<Unsubscribe> {
     const ref = collection(
       this.firestore,
       `${colID}/${channelId}/${subcollection}`

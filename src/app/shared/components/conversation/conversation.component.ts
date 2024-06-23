@@ -52,6 +52,7 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() channelMessage!: ChannelMessage;
   @Input() isChannel!: boolean;
   @Input() isThread!: boolean;
+  @Input() isDirectMessage!: boolean;
   @Input() hideCompleteReactionBar: boolean = false;
   @Input() hideThreadInfos: boolean = false;
   @Input() index!: number;
@@ -327,12 +328,11 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
           this.matchMedia.subID + '/threads/' + this.channelMessage.messageId;
       }
 
-      if(!this.isChannel){        
+      if(this.isDirectMessage){
         colId = 'messages';
       }
 
-      this.firestore.saveMessageData(
-        // 'channels',
+      this.firestore.saveMessageData(        
         colId,
         this.channelMessage.channelId,
         this.channelMessage.messageId,

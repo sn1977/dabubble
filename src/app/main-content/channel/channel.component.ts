@@ -52,7 +52,6 @@ export class ChannelComponent implements OnInit {
   channel: Channel = new Channel();
   channelMessages: ChannelMessage = new ChannelMessage();
   channelList: any[] = [];
-  // newMessage: boolean = false;
   firebaseAuth = inject(Auth);
   authService = inject(AuthService);
   isDesktop: boolean = false;
@@ -85,7 +84,6 @@ export class ChannelComponent implements OnInit {
     description: this.channel.description,
     member: this.channel.member,
     name: this.channel.name,
-    // newMessage: this.channel.newMessage,
   };
 
   async ngOnInit(): Promise<void> {
@@ -93,7 +91,6 @@ export class ChannelComponent implements OnInit {
     this.isDesktop = this.matchMedia.checkIsDesktop();
     await this.waitForUserData();
     this.test();
-    // this.newMessage = false;
 
     this.route.paramMap.subscribe((paramMap) => {
       this.itemID = paramMap.get('id');
