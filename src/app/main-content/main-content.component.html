@@ -75,7 +75,7 @@
           >{{ channel.name }} </span>
         </div>
       </div>
-      } } }} @if(this.dataService.channelMatches == 0){
+      } } }} @if(this.dataService.channelMatches == 0 || this.firestore.channelList.length == 0){
       <div class="nothingFound">
         <span class="channel-tag"></span>
         <span>Kein Channel gefunden</span>

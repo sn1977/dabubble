@@ -2,7 +2,7 @@ import {
   Component,
   ElementRef,
   inject,
-  OnDestroy,
+  // OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -15,7 +15,6 @@ import { FirestoreService } from '../../shared/services/firestore.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../../../models/user.class';
 import { AuthService } from '../../shared/services/auth.service';
-// import { Channel } from '../../../models/channel.class';
 import { HeaderMobileComponent } from '../../shared/components/header-mobile/header-mobile.component';
 import { HeaderStateService } from '../../shared/services/header-state.service';
 import { TextBoxComponent } from '../../shared/components/text-box/text-box.component';
@@ -38,7 +37,7 @@ import { Subscription } from 'rxjs';
     TimeSeperatorComponent  
   ],
 })
-export class DirectMessageComponent implements OnInit, OnDestroy {
+export class DirectMessageComponent implements OnInit {
   @ViewChild('messageContent') messageContent!: ElementRef;
   firestore = inject(FirestoreService);
   router = inject(Router);
@@ -161,15 +160,15 @@ export class DirectMessageComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
-    // Aufräumen, wenn die Komponente zerstört wird
-    if (this.routeSubscription) {
-      this.routeSubscription.unsubscribe();
-    }
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
-    }
-  }
+  // ngOnDestroy(): void {
+  //   // Aufräumen, wenn die Komponente zerstört wird
+  //   if (this.routeSubscription) {
+  //     this.routeSubscription.unsubscribe();
+  //   }
+  //   if (this.intervalId) {
+  //     clearInterval(this.intervalId);
+  //   }
+  // }
 
   private setupScrollToBottom(): void {
     this.intervalId = setInterval(() => {

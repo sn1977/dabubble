@@ -15,8 +15,8 @@ import {
   DocumentReference,
   DocumentData,
   increment,
-  serverTimestamp,  
-  collectionData
+  serverTimestamp,
+  collectionData,
 } from '@angular/fire/firestore';
 import { User } from '../../../models/user.class';
 import { Channel } from '../../../models/channel.class';
@@ -30,7 +30,7 @@ import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root',
 })
-export class FirestoreService {  
+export class FirestoreService {
   firestore: Firestore = inject(Firestore);
   router = inject(Router);
   activeUser: any = [];
@@ -134,7 +134,7 @@ export class FirestoreService {
       text: obj.text,
       reactions: obj.reactions,
       attachment: obj.attachment,
-      threads: obj.threads
+      threads: obj.threads,
     };
   }
 
@@ -237,24 +237,27 @@ export class FirestoreService {
       });
   }
 
-  async addChannelMessage(message: ChannelMessage, docRef: string, type?: string) {
+  async addChannelMessage(
+    message: ChannelMessage,
+    docRef: string,
+    type?: string
+  ) {
     await addDoc(collection(this.firestore, docRef), message.toJSON())
       .catch((err) => {
         console.error(err);
       })
       .then(async (docRef) => {
         console.log('Document written with ID: ', docRef?.id);
- 
         this.matchMedia.scrollToBottom = true;
-        if(type === 'thread'){
-          this.matchMedia.scrollToBottomThread = true;          
+        if (type && type === 'thread') {
+          this.matchMedia.scrollToBottomThread = true;
           await this.updateThreadCounter();
         }
       });
   }
 
   private singleItemUnsubscribe: Unsubscribe | undefined;
-  private singleMessageUnsubscribe: Unsubscribe | undefined;  
+  private singleMessageUnsubscribe: Unsubscribe | undefined;
 
   unsubscribeSingleUserData() {
     if (this.singleItemUnsubscribe) {
@@ -411,19 +414,22 @@ export class FirestoreService {
     messageId: string,
     item: object
   ) {
-      const messageDoc = docId + '/channelmessages/' + messageId;
-      const docRef = this.getSingleDocRef(colId, messageDoc);
-      await updateDoc(docRef, item).catch((err) => {
-        console.log(err);
+    const messageDoc = docId + '/channelmessages/' + messageId;
+    const docRef = this.getSingleDocRef(colId, messageDoc);
+    await updateDoc(docRef, item).catch((err) => {
+      console.log(err);
     });
   }
 
-  async updateThreadCounter(){    
-    const threadsRef = doc(this.getChannelsRef(), this.matchMedia.channelId + '/channelmessages/' + this.matchMedia.subID);
-    
+  async updateThreadCounter() {
+    const threadsRef = doc(
+      this.getChannelsRef(),
+      this.matchMedia.channelId + '/channelmessages/' + this.matchMedia.subID
+    );
+
     await updateDoc(threadsRef, {
-       threads: increment(1),
-       timestampLastThread: serverTimestamp()
+      threads: increment(1),
+      timestampLastThread: serverTimestamp(),
     });
   }
 
@@ -457,9 +463,8 @@ export class FirestoreService {
 
   getAllChannelNames() {
     const ref = this.getChannelsRef();
-    return collectionData(query(ref), {idField: 'id'}).pipe(
-      map(channels => channels.map(channel => channel['name']))
+    return collectionData(query(ref), { idField: 'id' }).pipe(
+      map((channels) => channels.map((channel) => channel['name']))
     );
   }
-
 }
