@@ -12,6 +12,7 @@ export class MatchMediaService {
   hideReactionIcons: boolean = false;
   scrollToBottom: boolean = true;
   scrollToBottomThread: boolean = true;
+  collectionType: string = '';
   
   constructor() { }
 

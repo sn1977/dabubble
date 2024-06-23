@@ -70,13 +70,6 @@ export class FirestoreService {
     return doc(collection(this.firestore, colId), docId);
   }
 
-  getChannelThreadsRef(channelId: string, messageId: string) {
-    return collection(
-      this.firestore,
-      `channels/${channelId}/channelmessages/${messageId}/threads`
-    );
-  }
-
   subUserList() {
     return onSnapshot(
       query(this.getUsersRef(), orderBy('displayName')),
@@ -159,22 +152,6 @@ export class FirestoreService {
     }
   }
 
-  // async updateChannelMessage(
-  //   docId: string,
-  //   messageId: string,
-  //   channelData: ChannelMessage
-  // ) {
-  //   if (docId) {
-  //     let docRef = doc(
-  //       this.getChannelsRef(),
-  //       `${docId}/channelmessages/${messageId}`
-  //     );
-  //     await updateDoc(docRef, channelData.toJSON()).catch((err) => {
-  //       console.log(err);
-  //     });
-  //   }
-  // }
-
   getChannels(): Observable<Channel[]> {
     return new Observable((observer) => {
       const unsubscribe = onSnapshot(
@@ -242,6 +219,9 @@ export class FirestoreService {
     docRef: string,
     type?: string
   ) {
+    console.log(message);
+    console.log(docRef);
+
     await addDoc(collection(this.firestore, docRef), message.toJSON())
       .catch((err) => {
         console.error(err);
@@ -414,7 +394,6 @@ export class FirestoreService {
     messageId: string,
     item: object
   ) {
-
     const messageDoc = docId + '/channelmessages/' + messageId;
     const docRef = this.getSingleDocRef(colId, messageDoc);
     await updateDoc(docRef, item).catch((err) => {
@@ -423,8 +402,14 @@ export class FirestoreService {
   }
 
   async updateThreadCounter() {
+    let colID;
+    if ((this.matchMedia.collectionType = 'messages')) {
+      colID = this.getDirectMessageRef();
+    } else {
+      colID = this.getChannelsRef();
+    }
     const threadsRef = doc(
-      this.getChannelsRef(),
+      colID,
       this.matchMedia.channelId + '/channelmessages/' + this.matchMedia.subID
     );
 

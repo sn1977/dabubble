@@ -348,6 +348,7 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   async openThread() {
+
     this.matchMedia.showThread = false;
     this.matchMedia.hideReactionIcons = false;
     await this.delay(200);
@@ -359,6 +360,14 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
     if (messageId) {
       this.matchMedia.channelId = docId;
       this.matchMedia.subID = messageId;
+
+      if(this.isDirectMessage){
+        this.matchMedia.collectionType = 'messages';
+        // console.log(this.matchMedia.collectionType);     
+      }else{
+        this.matchMedia.collectionType = 'channels';
+        // console.log(this.matchMedia.collectionType);
+      }
 
       if (this.isDesktop === true) {
         this.matchMedia.showThread = true;

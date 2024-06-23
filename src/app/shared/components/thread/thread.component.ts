@@ -60,7 +60,6 @@ export class ThreadComponent implements OnInit, OnDestroy {
   };
 
   @ViewChild('threadContent') threadContent!: ElementRef;
-  previousMessageCount: number = 0;
   isDesktop: boolean = false;
 
   constructor(
@@ -86,8 +85,10 @@ export class ThreadComponent implements OnInit, OnDestroy {
     this.newMessage = false;    
     this.headerStateService.setAlternativeHeader(true);
     this.scrollToBottom();
-    await this.firestore.getSingleMessageData('channels', this.matchMedia.channelId + '/channelmessages/' + this.matchMedia.subID, () => {});
-    await this.firestore.getAllChannelThreads(this.matchMedia.channelId, 'channels', 'channelmessages/' + this.matchMedia.subID + '/threads');
+
+    await this.firestore.getSingleMessageData(this.matchMedia.collectionType, this.matchMedia.channelId + '/channelmessages/' + this.matchMedia.subID, () => {});
+    await this.firestore.getAllChannelThreads(this.matchMedia.channelId, this.matchMedia.collectionType, 'channelmessages/' + this.matchMedia.subID + '/threads');
+    
     this.textBoxData.channelId = this.matchMedia.channelId;
     this.textBoxData.subcollection = 'channelmessages/' + this.matchMedia.subID + '/threads';
     
