@@ -114,9 +114,9 @@ export class ChannelComponent implements OnInit {
 
         this.headerStateService.setAlternativeHeader(true);
         this.matchMedia.scrollToBottom = true;
-        this.matchMedia.loading = false;
         setInterval(() => {
           this.scrollToBottom();
+          this.matchMedia.loading = false;
         }, 1000);
       });
     });

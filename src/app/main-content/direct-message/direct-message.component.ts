@@ -23,20 +23,20 @@ import { DateFormatService } from '../../shared/services/date-format.service';
 import { TimeSeperatorComponent } from '../../shared/components/time-seperator/time-seperator.component';
 import { MatchMediaService } from '../../shared/services/match-media.service';
 import { Subscription } from 'rxjs';
-import { ProgressSpinnerComponent } from "../../shared/components/progress-spinner/progress-spinner.component";
+import { ProgressSpinnerComponent } from '../../shared/components/progress-spinner/progress-spinner.component';
 
 @Component({
-    selector: 'app-direct-message',
-    standalone: true,
-    templateUrl: './direct-message.component.html',
-    styleUrl: './direct-message.component.scss',
-    imports: [
-        HeaderMobileComponent,
-        TextBoxComponent,
-        ConversationComponent,
-        TimeSeperatorComponent,
-        ProgressSpinnerComponent
-    ]
+  selector: 'app-direct-message',
+  standalone: true,
+  templateUrl: './direct-message.component.html',
+  styleUrl: './direct-message.component.scss',
+  imports: [
+    HeaderMobileComponent,
+    TextBoxComponent,
+    ConversationComponent,
+    TimeSeperatorComponent,
+    ProgressSpinnerComponent,
+  ],
 })
 export class DirectMessageComponent implements OnInit {
   @ViewChild('messageContent') messageContent!: ElementRef;
@@ -45,9 +45,9 @@ export class DirectMessageComponent implements OnInit {
   itemID: any = '';
   user: User = new User();
   channel: Channel = new Channel();
-  authService = inject(AuthService);  
+  authService = inject(AuthService);
   matchMedia = inject(MatchMediaService);
-  routeSubscription: Subscription | undefined;  
+  routeSubscription: Subscription | undefined;
 
   textBoxData: any = {
     placeholder: 'Nachricht an ',
@@ -75,14 +75,14 @@ export class DirectMessageComponent implements OnInit {
     public dateFormatService: DateFormatService
   ) {}
 
-  async ngOnInit(): Promise<void> {    
+  async ngOnInit(): Promise<void> {
     this.waitForUserData();
 
     this.routeSubscription = this.route.paramMap.subscribe(async (paramMap) => {
-      this.test();      
+      this.test();
       this.itemID = paramMap.get('id');
       this.getItemValues('users', this.itemID);
-      
+
       if (this.authService.activeUserAccount) {
         await this.firestore.getDirectMessages(
           this.authService.activeUserAccount.uid,
@@ -91,7 +91,8 @@ export class DirectMessageComponent implements OnInit {
       }
 
       this.headerStateService.setAlternativeHeader(true);
-      this.textBoxData.placeholder = 'Nachricht an ' + this.matchMedia.channelName;
+      this.textBoxData.placeholder =
+        'Nachricht an ' + this.matchMedia.channelName;
 
       await this.delay(700);
       if (this.firestore.conversation) {
@@ -104,8 +105,8 @@ export class DirectMessageComponent implements OnInit {
       }
       this.matchMedia.loading = false;
       setInterval(() => {
-          this.scrollToBottom();
-        }, 1000);
+        this.scrollToBottom();
+      }, 1000);
     });
   }
 
@@ -120,7 +121,7 @@ export class DirectMessageComponent implements OnInit {
 
   async waitForUserData(): Promise<void> {
     while (!this.authService.activeUserAccount) {
-      await this.delay(100);      
+      await this.delay(100);
     }
   }
 
@@ -129,7 +130,7 @@ export class DirectMessageComponent implements OnInit {
   }
 
   test() {
-    if(this.authService.activeUserAccount){
+    if (this.authService.activeUserAccount) {
       let id = this.authService.activeUserAccount.uid;
       this.getItemValues('users', id);
     }
