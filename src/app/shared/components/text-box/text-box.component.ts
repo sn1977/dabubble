@@ -82,7 +82,7 @@ export class TextBoxComponent implements AfterViewInit {
         type = 'thread';
       }
 
-      console.log(this.textBoxData.collection + message.channelId + this.textBoxData.subcollection);
+      //console.log(this.textBoxData.collection + message.channelId + this.textBoxData.subcollection);
 
       this.firestore.addChannelMessage(
         message,

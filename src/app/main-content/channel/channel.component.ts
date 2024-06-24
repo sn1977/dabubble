@@ -27,22 +27,24 @@ import { TimeSeperatorComponent } from '../../shared/components/time-seperator/t
 import { MatchMediaService } from '../../shared/services/match-media.service';
 import { DataService } from '../../shared/services/data.service';
 import { ChannelMessage } from '../../../models/channel-message.class';
+import { ProgressSpinnerComponent } from "../../shared/components/progress-spinner/progress-spinner.component";
 
 @Component({
-  selector: 'app-channel',
-  standalone: true,
-  templateUrl: './channel.component.html',
-  styleUrl: './channel.component.scss',
-  imports: [
-    RouterLink,
-    BottomSheetComponent,
-    ConversationComponent,
-    HeaderMobileComponent,
-    TextBoxComponent,
-    CommonModule,
-    SearchUserComponent,
-    TimeSeperatorComponent,
-  ],
+    selector: 'app-channel',
+    standalone: true,
+    templateUrl: './channel.component.html',
+    styleUrl: './channel.component.scss',
+    imports: [
+        RouterLink,
+        BottomSheetComponent,
+        ConversationComponent,
+        HeaderMobileComponent,
+        TextBoxComponent,
+        CommonModule,
+        SearchUserComponent,
+        TimeSeperatorComponent,
+        ProgressSpinnerComponent
+    ]
 })
 export class ChannelComponent implements OnInit {
   firestore = inject(FirestoreService);
@@ -112,6 +114,7 @@ export class ChannelComponent implements OnInit {
 
         this.headerStateService.setAlternativeHeader(true);
         this.matchMedia.scrollToBottom = true;
+        this.matchMedia.loading = false;
         setInterval(() => {
           this.scrollToBottom();
         }, 1000);

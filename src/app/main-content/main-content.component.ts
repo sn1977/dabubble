@@ -175,6 +175,7 @@ export class MainContentComponent implements OnInit {
   }
 
   openChannel(event: MouseEvent, path: string, name: string) {
+    this.matchMedia.loading = true;
     this.matchMedia.channelName = name;
     this.matchMedia.showThread = false;
     this.firestore.conversation = '';

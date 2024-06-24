@@ -24,21 +24,37 @@
     </div>
   </div>
 
+  @if(this.matchMedia.loading){
+    <div class="loading-animation">
+      <app-progress-spinner></app-progress-spinner>
+    </div>
+    }@else{
   <div class="content">
     <div
       class="message-content"
       #messageContent
-      style="overflow-y: scroll; height: 100%"
-    >      
-        @for (chat of this.firestore.channelMessages; let i = $index; track chat.id) {
-          @if(i === 0 || (this.dateFormatService.formatDateYYYYMMDD(chat.createdAt) !== this.dateFormatService.formatDateYYYYMMDD(firestore.channelMessages[i - 1].createdAt))){
-            <app-time-seperator [seperatorDate]="chat.createdAt"></app-time-seperator>
-          }
-          <app-conversation [channelMessage]="chat" [isChannel]="true" [isThread]="false" [isDirectMessage]="true"></app-conversation>
-        }
+      style="overflow-y: scroll; height: 100%">
+      @if (this.firestore.channelMessages.length !== 0) {
+        @for 
+      (channelMessage of this.firestore.channelMessages; let i = $index; 
+      track channelMessage.id) { @if(i === 0 ||
+      (this.dateFormatService.formatDateYYYYMMDD(channelMessage.createdAt) 
+      !==
+      this.dateFormatService.formatDateYYYYMMDD(firestore.channelMessages[i 
+      - 1].createdAt))){
+      <app-time-seperator
+        [seperatorDate]="channelMessage.createdAt"></app-time-seperator>
+      }
+      <app-conversation
+        [channelMessage]="channelMessage"
+        [isChannel]="true"
+        [isThread]="false"
+        [isDirectMessage]="true"
+      ></app-conversation>
+      }}
     </div>
   </div>
-
+}
   @if (this.firestore.channelMessages.length === 0) {
   <div class="channel-info">
     <div class="profile-box" (click)="openDirectMessageOverlay()">
@@ -53,7 +69,10 @@
     <div class="profile-box-info">
       @if(itemID === this.authService.activeUserId){
       <span class="text-sender">Dieser Raum ist nur für dich da. </span>
-      <span class="text-default">Mache dir Notizen, liste deine To-dos auf oder bewahre Links und Dateien griffbereit auf. Du kannst hier auch gerne Dinge mit dir selbst besprechen.</span
+      <span class="text-default"
+        >Mache dir Notizen, liste deine To-dos auf oder bewahre Links und
+        Dateien griffbereit auf. Du kannst hier auch gerne Dinge mit dir selbst
+        besprechen.</span
       >
       }@else {
       <span class="text-default">Diese Unterhaltung findet nur zwischen </span>
@@ -63,6 +82,7 @@
     </div>
   </div>
   }
+
   <app-text-box [textBoxData]="textBoxData" [isThread]="false"></app-text-box>
 
   <div id="overlay3" class="overlay" (click)="closeOverlay('overlay3')">

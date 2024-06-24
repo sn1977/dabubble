@@ -13,6 +13,7 @@ export class MatchMediaService {
   scrollToBottom: boolean = true;
   scrollToBottomThread: boolean = true;
   collectionType: string = '';
+  loading: boolean = true;
   
   constructor() { }
 

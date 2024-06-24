@@ -20,7 +20,7 @@ import {
 } from '@angular/fire/firestore';
 import { User } from '../../../models/user.class';
 import { Channel } from '../../../models/channel.class';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { ChannelMessage } from '../../../models/channel-message.class';
 import { DirectMessage } from '../../../models/direct-message.class';
@@ -101,9 +101,6 @@ export class FirestoreService {
       displayName: obj.displayName,
       isOnline: obj.isOnline,
       provider: obj.provider,
-      // selected: obj.selected,
-      // count: obj.count,
-      // newMessage: obj.newMessage,
     };
   }
 
@@ -114,7 +111,6 @@ export class FirestoreService {
       member: obj.member,
       id: id,
       name: obj.name,
-      // newMessage: obj.newMessage,
     };
   }
 
@@ -219,8 +215,8 @@ export class FirestoreService {
     docRef: string,
     type?: string
   ) {
-    console.log(message);
-    console.log(docRef);
+    // console.log(message);
+    // console.log(docRef);
 
     await addDoc(collection(this.firestore, docRef), message.toJSON())
       .catch((err) => {
@@ -403,11 +399,12 @@ export class FirestoreService {
 
   async updateThreadCounter() {
     let colID;
-    if ((this.matchMedia.collectionType = 'messages')) {
+    if (this.matchMedia.collectionType === 'messages') {      
       colID = this.getDirectMessageRef();
     } else {
       colID = this.getChannelsRef();
     }
+
     const threadsRef = doc(
       colID,
       this.matchMedia.channelId + '/channelmessages/' + this.matchMedia.subID
