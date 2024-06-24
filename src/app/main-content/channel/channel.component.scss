@@ -34,13 +34,12 @@
     @include dFlex($jc: flex-start, $ai: normal, $fd: row, $g: 15px);
     padding: 8px 16px;
 
-    &:hover{
+    &:hover {
       background-color: #eceefe;
       border-radius: 30px;
       font-weight: 700;
       color: #535af1;
     }
-
   }
 }
 
@@ -82,12 +81,12 @@ h1 {
 .display-flex {
   @include dFlex($jc: space-between, $ai: center, $fd: row, $g: 0);
 
-  span{
+  span {
     @include dFlex($jc: center, $ai: center, $fd: row, $g: 0);
     cursor: pointer;
     height: 40px;
     width: 40px;
-    &:hover{
+    &:hover {
       background-color: #eceefe;
       border-radius: 50%;
     }
@@ -173,7 +172,6 @@ h1 {
     object-fit: cover;
   }
 
-
   .online-avatar,
   .offline-avatar {
     position: absolute;
@@ -192,15 +190,16 @@ h1 {
   }
 }
 
-.img-box{
-  @include dFlex($jc: center, $ai: center, $fd: row, $g: 0);  
-  &:hover{
+.img-box {
+  @include dFlex($jc: center, $ai: center, $fd: row, $g: 0);
+  padding: 6px 6px 4px 20px;
+  &:hover {
     background: #eceefe;
     border-radius: 50px;
   }
 }
 
-.memberCount{
+.memberCount {
   margin-bottom: 0;
   margin-left: 10px;
   font-family: Nunito;
@@ -210,23 +209,22 @@ h1 {
   text-align: left;
 }
 
-.add-img{
+.add-img {
   height: 39px;
   width: 40px;
   margin-left: 10px;
 }
 
-.profil-img{
+.profil-img {
   @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 10px);
   img {
-    background-color: #FFFFFF;
-    border: 2px solid #FFFFFF;
+    background-color: #ffffff;
+    border: 2px solid #ffffff;
     width: 35px;
     height: 35px;
     border-radius: 100%;
     object-fit: cover;
   }
-
 }
 
 .height {
@@ -239,13 +237,7 @@ h1 {
   }
 }
 
-//DESKTOP/////
-
 @media (min-width: 400px) {
-  // .container app-header-mobile {
-  //   display: none;
-  // }
-
   .mdc-card {
     box-shadow: 0px 10px 10px -5px rgba(0, 0, 0, 0.08);
   }

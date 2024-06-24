@@ -74,7 +74,7 @@ form {
 
 .overlay {
   position: fixed;
-  bottom: -100%; /* Startposition unten außerhalb des Bildschirms */
+  bottom: -100%;
   left: 0;
   width: 100%;
   height: 100%;
@@ -91,7 +91,7 @@ form {
   padding: 20px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  transition: opacity 0.5s ease-in-out; /* Animation für die Sichtbarkeit */
+  transition: opacity 0.5s ease-in-out;
 }
 
 .dropdown-list {
@@ -103,8 +103,8 @@ form {
   list-style-type: none;
   margin: 0;
   padding: 0;
-  max-height: 50px; /* Maximale Höhe der Dropdown-Liste */
-  overflow-y: auto; /* Scrollleiste anzeigen, wenn Inhalt überläuft */
+  max-height: 50px;
+  overflow-y: auto;
 }
 
 .dropdown {
@@ -135,9 +135,9 @@ form {
 }
 
 .show-overlay {
-  bottom: 0; /* Endposition oben auf dem Bildschirm */
+  bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  transition: opacity 0.5s ease-in-out; /* Animation für die Sichtbarkeit */
+  transition: opacity 0.5s ease-in-out;
 }
 
 .space-between {
@@ -177,17 +177,14 @@ form {
 }
 
 .add-member:before {
-  // layout
   content: "";
   position: absolute;
   width: 0;
   height: 0;
   bottom: 100%;
-  left: 1.5em; // offset should move with padding of parent
+  left: 1.5em;
   border: 0.75rem solid transparent;
   border-top: none;
-
-  // looks
   border-bottom-color: #fff;
   filter: drop-shadow(0 -0.0625rem 0.0625rem rgba(0, 0, 0, 0.1));
 }
@@ -289,10 +286,7 @@ form {
   width: 100%;
 }
 
-//DESKTOP/////
-
 @media (min-width: 400px) {
-
   .overlay-content{
     position:unset;
     border-bottom-left-radius: 10px;

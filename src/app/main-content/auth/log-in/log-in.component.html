@@ -2,18 +2,7 @@
 [ngClass]="{'intro-start': playIntroAnimation}"
 ></div>
 
-<div class="content">
-  
-  
-
-  <!-- @if(isDesktop){
-    <div class="logo-animated-desktop"
-    [ngClass]="{'logo-animated-desktop-start': playIntroAnimation}"
-    >
-    <img src="./assets/img/auth/logo.svg" />
-    <span>DABubble</span>
-  </div>
-  }@else { -->
+<div class="content">  
     <div class="logo-animated"
   [ngClass]="{'logo-animated-start': playIntroAnimation}"
   >
@@ -23,8 +12,6 @@
     [ngStyle]="{ 'right': isDesktop ? 'unset' : '40%' }"
     >DABubble</span>
   </div>
-  <!-- } -->
-
 
   <mat-card>
         <mat-card-header>

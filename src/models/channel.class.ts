@@ -3,15 +3,13 @@ export class Channel {
   creator: string;
   description: string;
   member: any[];
-  name: string;  
-  // newMessage: boolean | undefined;
+  name: string;
 
   constructor(obj?: any) {
     this.creator = obj ? obj.creator : '';
     this.description = obj ? obj.description : '';
     this.member = obj && obj.member ? obj.member : [];
     this.name = obj ? obj.name : '';
-    // this.newMessage= obj ? obj.newMessage : false;
   }
 
   public toJSON() {
@@ -20,7 +18,6 @@ export class Channel {
       description: this.description,
       member: this.member,
       name: this.name,
-      // newMessage: this.newMessage,
     };
   }
 }
