@@ -17,8 +17,7 @@
       <div
         class="container"
         [style.border]="
-          !isEditingChannelName ? '1px solid #ADB0D9' : '1px solid #ADB0D9'
-        "
+          !isEditingChannelName ? '1px solid #ADB0D9' : 'none'"
       >
       <div class="edit-channel-name">
         <div class="channel-name">          
@@ -110,7 +109,7 @@
       </div>
       <!-- Mitglieder von Firebase -->
       <div class="container">
-        <div class="channel-name-two">
+        <div class="channel-name">
           <h1>Mitglieder</h1>
 
           <div *ngFor="let member of filterUsers()">
