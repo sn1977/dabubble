@@ -12,7 +12,7 @@
 
 main {  
   background-color: white;
-  margin: 20px 0;
+  margin: 20px;
   @include dFlex($jc: flex-start, $ai: flex-start, $fd: column, $g: 20px);
 }
 
@@ -35,7 +35,9 @@ main {
 
 .background {
   background-color: white;
+  height: 100%;
   overflow: scroll;  
+  overflow-x: hidden;
 }
 
 .no-margin {
@@ -43,14 +45,18 @@ main {
 }
 
 .edit-channel-name {
-  @include dFlex($jc: flex-start, $ai: flex-start, $fd: column, $g: 0);
-  width: 100%;
-  padding: 20px;
+  display: flex !important;
+    flex-direction: column;
+    width: 100%;
 }
 
-.channel-name {  
+.channel-name { 
   @include dFlex($jc: space-between, $ai: center, $fd: row, $g: 0);
   width: 100%;
+
+  h1{
+    margin: unset;
+  }
 
   .text-channel-name{
     font-family: Nunito;
@@ -107,11 +113,11 @@ main {
 }
 
 .container {
-  @include dFlex($jc: space-between, $ai: center, $fd: column, $g: 20px);
-  width: 99%;
+  width: 89%;
   border-radius: 20px;
   border: 1px solid #ADB0D9;
   background-color: white;
+  padding: 20px;
   
 }
 
