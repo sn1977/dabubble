@@ -35,7 +35,7 @@ main {
 
 .background {
   background-color: white;
-  height: 100%;
+  height: calc(90vh - 150px);
   overflow: scroll;  
   overflow-x: hidden;
 }
@@ -89,6 +89,7 @@ main {
 .mdc-card {
   padding: 10px;
   position: sticky;
+  z-index: 99;
   top: 0;
   @include shadow-bottom();
 }
@@ -274,5 +275,14 @@ main {
   &:hover {
     background-color: #eceefe;
     border-radius: 20px;
+  }
+}
+
+@media (max-width: 500px) {
+  .background {
+    background-color: white;
+    height: 100%;
+    overflow: scroll;  
+    overflow-x: hidden;
   }
 }
