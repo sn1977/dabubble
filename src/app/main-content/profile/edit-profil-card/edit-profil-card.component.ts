@@ -26,7 +26,8 @@ import "firebase/firestore";
 import { MemberService } from "../../../shared/services/member-service.service";
 import { Auth } from "@angular/fire/auth";
 // import { AvatarService } from "../../../shared/services/avatar-service.service";
-import { getAuth, updateEmail, sendEmailVerification } from "firebase/auth";
+import { getAuth, updateEmail, EmailAuthProvider, reauthenticateWithCredential, verifyBeforeUpdateEmail } from "firebase/auth";
+import { doc, updateDoc } from "firebase/firestore";
 
 @Component({
     selector: "app-edit-profil-card",
@@ -67,7 +68,7 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
     ]);
 
     contactData = {
-        name: "Sascha",
+        name: "",
         email: "",
         password: "",
         photoURL: "",
@@ -100,192 +101,72 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
         );
     }
 
-    // updateEmailForUser() {
-    //     const auth = getAuth();
-    //     const user = auth.currentUser;
-    //     if (user && this.emailControl.valid) {
-    //         const newEmail = this.emailControl.value;
-    //         if (newEmail) {
-    //             updateEmail(user, newEmail)
-    //                 .then(() => {
-    //                     console.log("Email successfully updated to:", newEmail);
-    //                     return sendEmailVerification(user);
-    //                 })
-    //                 .then(() => {
-    //                     console.log("Verification email sent.");
-    //                 })
-    //                 .catch((error) => {
-    //                     console.error(
-    //                         "Error in email update or verification process:",
-    //                         error
-    //                     );
-    //                 });
-    //         }
-    //     } else {
-    //         console.error("No user is logged in or email input is invalid.");
-    //     }
-    // }
-
-    // updateEmailForUser() {
-    //     const auth = getAuth();
-    //     const user = auth.currentUser;
-    //     if (user && this.emailControl.valid) {
-    //         const newEmail = this.emailControl.value;
-    //         if (newEmail) {
-    //             // Zuerst die Verifizierungs-E-Mail senden
-    //             sendEmailVerification(user).then(() => {
-    //                 console.log("Verification email sent to the new email address.");
-    //             }).catch((error) => {
-    //                 console.error("Error sending verification email:", error);
-    //             });
-
-    //             // Update-E-Mail-Prozess
-    //             user.reload().then(() => {
-    //                 if (user.emailVerified) {
-    //                     updateEmail(user, newEmail).then(() => {
-    //                         console.log("Email successfully updated to:", newEmail);
-    //                     }).catch((error) => {
-    //                         console.error("Error updating email:", error);
-    //                     });
-    //                 } else {
-    //                     console.error("Please verify the new email before changing email.");
-    //                 }
-    //             }).catch((error) => {
-    //                 console.error("Error reloading user:", error);
-    //             });
-    //         }
-    //     } else {
-    //         console.error("No user is logged in or email input is invalid.");
-    //     }
-    // }
-
-    // updateEmailForUser() {
-    //     const auth = getAuth();
-    //     const user = auth.currentUser;
-
-    //     if (user && this.emailControl.valid) {
-    //         const newEmail = this.emailControl.value;
-
-    //         if (newEmail) {
-    //             // Update the email address
-    //             updateEmail(user, newEmail).then(() => {
-    //                 console.log("Email successfully updated to:", newEmail);
-
-    //                 // Send verification email to the new email address
-    //                 sendEmailVerification(user).then(() => {
-    //                     console.log("Verification email sent to the new email address.");
-    //                 }).catch((error) => {
-    //                     console.error("Error sending verification email:", error);
-    //                 });
-
-    //             }).catch((error) => {
-    //                 console.error("Error updating email:", error);
-    //             });
-
-    //         } else {
-    //             console.error("New email is invalid or empty.");
-    //         }
-    //     } else {
-    //         console.error("No user is logged in or email input is invalid.");
-    //     }
-    // }
-
     async updateEmailForUser() {
-        const auth = getAuth();
-        const user = auth.currentUser;
-
-        if (user !== null) {
-            // The user object has basic properties such as display name, email, etc.
-            const displayName = user.displayName;
-            const email = user.email;
-            const photoURL = user.photoURL;
-            const emailVerified = user.emailVerified;
-          
-            // The user's ID, unique to the Firebase project. Do NOT use
-            // this value to authenticate with your backend server, if
-            // you have one. Use User.getToken() instead.
-            const uid = user.uid;
-            console.log("User is signed in:", displayName, "<br>", email, "<br>", photoURL, "<br>", emailVerified, "<br>", uid);
-
-            if (this.emailControl.valid) {
-                    const newEmail = this.emailControl.value;
-        
-                    if (newEmail) {
-                        // Speichere die neue E-Mail-Adresse im Local Storage oder Session Storage
-                        localStorage.setItem("newEmail", newEmail);
-
-                        try {
-                            await user.getIdToken(true); // Holen Sie sich ein aktuelles ID-Token
-                            await sendEmailVerification(user); // Verifizierung an alte Email senden
-                            alert("Verification email sent. Please verify your new email address.");
-                        } catch (error) {
-                            console.log("Error sending verification email:", error);
-                        }
-                    }
-                }
-            } else {
-                console.log("No user is signed in.");
-            }
-        
-                
-
-        // if (user && this.emailControl.valid) {
-        //     const newEmail = this.emailControl.value;
-
-        //     if (newEmail) {
-        //         // Speichere die neue E-Mail-Adresse im Local Storage oder Session Storage
-        //         localStorage.setItem("newEmail", newEmail);
-
-        //         // Zuerst die Verifizierungs-E-Mail an die neue E-Mail-Adresse senden
-        //         sendEmailVerification(user)
-        //             .then(() => {
-        //                 console.log(
-        //                     "Verification email sent to the new email address."
-        //                 );
-
-        //                 // Benachrichtige den Nutzer, die neue E-Mail-Adresse zu verifizieren
-        //                 alert(
-        //                     "Please verify your new email address by clicking the link sent to your new email."
-        //                 );
-        //             })
-        //             .catch((error) => {
-        //                 console.error(
-        //                     "Error sending verification email:",
-        //                     error
-        //                 );
-        //             });
-        //     } else {
-        //         console.error("New email is invalid or empty.");
-        //     }
-        // } else {
-        //     console.error("No user is logged in or email input is invalid.");
-        // }
-    }
-
-    updateEmailAfterVerification(newEmail: string) {
-        const auth = getAuth();
-        const user = auth.currentUser;
-
-        if (user) {
-            updateEmail(user, newEmail)
-                .then(() => {
-                    console.log("Email successfully updated to:", newEmail);
-                })
-                .catch((error) => {
-                    console.error("Error updating email:", error);
-                });
-        } else {
-            console.error("No user is logged in.");
-        }
-    }
-
-    confirmEmailUpdate() {
-        const newEmail = this.emailControl.value;
-        if (newEmail) {
-            // Stelle sicher, dass die E-Mail-Adresse nach Verifizierung aktualisiert wird
-            this.updateEmailAfterVerification(newEmail);
-        }
-    }
+      const auth = getAuth();
+      const user = auth.currentUser;
+  
+      if (user !== null) {
+          const displayName = user.displayName;
+          const email = user.email;
+          const photoURL = user.photoURL;
+          const emailVerified = user.emailVerified;
+          const uid = user.uid;
+  
+          console.log("User is signed in:", displayName, "<br>", email, "<br>", photoURL, "<br>", emailVerified, "<br>", uid);
+  
+          if (this.emailControl.valid) {
+              const newEmail = this.emailControl.value;
+              console.log("New email:", newEmail);
+              
+              if (newEmail) {
+                  localStorage.setItem("newEmail", newEmail);
+  
+                  try {
+                      // Prompt user to enter current password
+                      const currentPassword = prompt("Please enter your current password:");
+  
+                      if (currentPassword) {
+                          const credentials = EmailAuthProvider.credential(email!, currentPassword);
+                          await reauthenticateWithCredential(user, credentials);
+  
+                          // Send verification email to the new email address
+                          await verifyBeforeUpdateEmail(user, newEmail, {
+                              url: window.location.href, // Redirect URL after email verification
+                          });
+                          alert("Verification email sent to your new email address. Please verify it before continuing.");
+                      } else {
+                          alert("Password is required to update email.");
+                      }
+                  } catch (error: any) {
+                      console.error("Error updating email:", error.code, error.message);
+                      alert(`Error: ${error.message}`);
+                  }
+              }
+          }
+      } else {
+          console.log("No user is signed in.");
+      }
+  }
+  
+  // Function to finalize email update after verification
+  async finalizeEmailUpdate() {
+      const auth = getAuth();
+      const user = auth.currentUser;
+      const newEmail = localStorage.getItem("newEmail");
+  
+      if (user !== null && newEmail) {
+          try {
+              // In this step, Firebase automatically updates the email after verification
+              alert("Your email address has been updated successfully.");
+              localStorage.removeItem("newEmail");
+          } catch (error: any) {
+              console.error("Error finalizing email update:", error.code, error.message);
+              alert(`Error: ${error.message}`);
+          }
+      } else {
+          console.log("No user is signed in or new email is missing.");
+      }
+  }
 
     onNoClick(): void {
         this.dialogRef.close();

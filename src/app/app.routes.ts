@@ -14,7 +14,6 @@ import { ChannelEditionComponent } from './main-content/channel/channel-edition/
 import { ChooseAvatarComponent } from './main-content/auth/register/choose-avatar/choose-avatar.component';
 import { ThreadComponent } from './shared/components/thread/thread.component';
 import { DirectMessageComponent } from './main-content/direct-message/direct-message.component';
-import { ActionComponent } from './shared/components/action/action.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -32,7 +31,6 @@ export const routes: Routes = [
   { path: 'new-message', component: NewMessageComponent, canActivate:[IsAdminGuard]},
   { path: 'channel-edition/:id', component: ChannelEditionComponent, canActivate:[IsAdminGuard]},  
   { path: 'thread', component: ThreadComponent, canActivate:[IsAdminGuard]},
-  { path: 'action', component: ActionComponent },
   { path: '**', redirectTo: '/login', pathMatch: 'full' },
 
   // { path: 'newchannel', component: NewChannelComponent, canActivate:[IsAdminGuard]},  
