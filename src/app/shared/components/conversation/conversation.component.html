@@ -11,7 +11,7 @@
     class="main"
     [ngStyle]="{ 'align-items': isMessageFromYou ? 'flex-start' : 'flex-end' }"
   >
-  <div
+    <div
       class="message-content pointer"
       [ngStyle]="{
         'align-items': isMessageFromYou ? 'flex-start' : 'flex-end'
@@ -86,7 +86,8 @@
         (change)="adjustTextareaHeight(messageToEdit)"
         >{{ channelMessage.text }} </textarea
       >
-      } @if (channelMessage.attachment!.length > 0 && channelMessage.attachment![0] !== '') {
+      } @if (channelMessage.attachment!.length > 0 &&
+      channelMessage.attachment![0] !== '') {
       <div class="attachment-list">
         @for (item of channelMessage.attachment; track $index) { @if(item !==
         'undefined' && item !== '') {
@@ -128,6 +129,8 @@
         <ng-container
           *ngFor="let reaction of channelMessage.reactions; let i = index"
         >
+          @if(getUserReactionCount(reaction.emoji) > 0) {
+
           <div
             *ngIf="reaction.emoji"
             class="reaction-group pointer"
@@ -143,28 +146,31 @@
             </div>
           </div>
 
-          @if(showBubble[i]){            
-            <div class="bubble" [ngStyle]="{ 'left.px': getLeftPosition(i) }">
+          @if(showBubble[i]){
+          <div class="bubble" [ngStyle]="{ 'left.px': getLeftPosition(i) }">
             <span class="bubble-icon">{{ reaction.emoji }}</span>
             <span class="bubble-userlist">
-              @for (user of getDisplayNamesWithCurrentUser(reaction.users); track $index) {
-                <span class="bubble-user">                
-                  {{user}}
-                </span>
+              @for (user of getDisplayNamesWithCurrentUser(reaction.users);
+              track $index) {
+              <span class="bubble-user">
+                {{ user }}
+              </span>
               }
             </span>
             <span class="bubble-text">reagiert</span>
           </div>
-          }
+          } }
         </ng-container>
       </div>
+
+      @if(hasReactionsWithUsers()) {
       <img
-        *ngIf="channelMessage.reactions.length > 0"
         class="new-reaction pointer"
         src="./assets/img/emojis/add_reaction.svg"
         alt=""
         (click)="openEmojiPicker()"
       />
+      }
     </div>
     }
   </div>

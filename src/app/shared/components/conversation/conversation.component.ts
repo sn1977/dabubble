@@ -382,4 +382,10 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
   delay(ms: number) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
+
+  hasReactionsWithUsers(): boolean {
+    return this.channelMessage.reactions.some(reaction => reaction.users.length > 0) && 
+           !this.hideCompleteReactionBar;
+  }
+
 }

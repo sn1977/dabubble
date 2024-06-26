@@ -1,15 +1,5 @@
 <div class="footer">
   <form (ngSubmit)="onSubmit()" #messageForm="ngForm" ngNativeValidate>
-    
-    <!-- <input
-              type="file"              
-              (change)="detectFile($event)"
-              accept="image/*,application/pdf"              
-              name="inputAttachment"
-              id="inputAttachment"
-    > -->
-        
-    
     <div class="message-box">
       <div class="text-content">
         <textarea
@@ -91,8 +81,7 @@
               (click)="openEmojiPickerDialog()"
               src="./assets/img/icon/smile_hover.svg"
               alt=""
-            />
-            <!-- Rest of your code -->
+            />            
           } @else {
             <img
               class="pointer"
@@ -102,7 +91,7 @@
               alt=""
             />
           }
-          @if (email_hovered) {
+          <!-- @if (email_hovered) {
             <img
               class="pointer"
               (mouseenter)="email_hovered = true"
@@ -118,7 +107,7 @@
               src="./assets/img/icon/email.svg"
               alt=""
             />
-          }
+          } -->
         </div>
 
         @if (send_hovered) {
