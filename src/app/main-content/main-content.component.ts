@@ -183,4 +183,9 @@ export class MainContentComponent implements OnInit {
     this.itemStateService.setItemId(docRefId);
     this.router.navigate([path, docRefId]);
   }
+
+  openNewMessage() {
+    this.matchMedia.loading = true;
+    this.router.navigateByUrl('/new-message');
+  }
 }

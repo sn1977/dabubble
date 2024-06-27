@@ -31,7 +31,7 @@
           <img class="workspace-logo" src="./assets/img/icon/workspace_logo.svg" alt="" >
           <span>Devspace</span>
         </div>
-        <img class="workspace-action-button" src="./assets/img/icon/edit_square.svg" alt="" routerLink="/new-message">
+        <img class="workspace-action-button" src="./assets/img/icon/edit_square.svg" alt="" (click)="openNewMessage()">
       </div>      
       <app-main-content [isDesktop]="true"></app-main-content>
     </mat-card-content>

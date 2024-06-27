@@ -1,5 +1,4 @@
 import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
-import { DirectMessageOverlayComponent } from '../direct-message/direct-message-overlay/direct-message-overlay.component';
 import { MatDialog } from '@angular/material/dialog';
 import { NavigationService } from '../../shared/services/navigation.service';
 import { BottomSheetComponent } from '../../shared/components/bottom-sheet/bottom-sheet.component';
@@ -14,8 +13,9 @@ import { TextBoxComponent } from '../../shared/components/text-box/text-box.comp
 import { ConversationComponent } from '../../shared/components/conversation/conversation.component';
 import { Channel } from '../../../models/channel.class';
 import { NgIf } from '@angular/common';
-import { MemberService } from '../../shared/services/member-service.service';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule } from '@angular/forms';
+import { ProgressSpinnerComponent } from '../../shared/components/progress-spinner/progress-spinner.component';
+import { MatchMediaService } from '../../shared/services/match-media.service';
 
 @Component({
   selector: 'app-new-message',
@@ -25,7 +25,8 @@ import { FormsModule } from '@angular/forms';
     TextBoxComponent, 
     ConversationComponent,
     NgIf,
-    FormsModule
+    FormsModule,
+    ProgressSpinnerComponent
   ],
   templateUrl: './new-message.component.html',
   styleUrl: './new-message.component.scss'
@@ -44,6 +45,8 @@ export class NewMessageComponent implements OnInit{
   showChannels = false;
   showUsers = false;
   selectedUserOrChannel: string = '';
+  isDesktop: boolean = false;
+  matchMedia = inject(MatchMediaService);
 
   textBoxData: any = {
     placeholder: 'Starte eine neue Nachricht ',
@@ -54,34 +57,13 @@ export class NewMessageComponent implements OnInit{
     subcollection: 'chat',
   };  
 
-  userData = {
-    avatar: this.user.avatar,
-    email: this.user.email,
-    displayName: this.user.displayName,
-    isOnline: this.user.isOnline,
-    provider: this.user.provider,
-    // selected: this.user.selected,
-    // count: this.user.count,
-    // newMessage: this.user.newMessage    
-  };
-
-  
-  // addCountToChannelDocument(toggle: string) {
-
-  //   const user = new User({
-  //     avatar: this.user.avatar,
-  //     email: this.user.email,
-  //     displayName: this.user.displayName,
-  //     isOnline: this.user.isOnline,
-  //     provider: this.user.provider,
-  //     // selected: this.user.selected,
-  //     // count: this.user.count,
-  //     // newMessage: this.newMessage
-  //   });
-
-    
-  //   this.firestore.updateUser(user, this.itemID, );
-  // }
+  // userData = {
+  //   avatar: this.user.avatar,
+  //   email: this.user.email,
+  //   displayName: this.user.displayName,
+  //   isOnline: this.user.isOnline,
+  //   provider: this.user.provider,
+  // };
 
   constructor(
     public dialog: MatDialog,
@@ -89,52 +71,24 @@ export class NewMessageComponent implements OnInit{
     private _bottomSheet: MatBottomSheet,
     private route: ActivatedRoute,
     private headerStateService: HeaderStateService,
-    private memberService: MemberService
   ) {}
 
   async ngOnInit(): Promise<void> {
+    this.isDesktop = this.matchMedia.checkIsDesktop();
     await this.waitForUserData();
     this.test();
-    this.newMessage = false;    
-
-    this.route.paramMap.subscribe((paramMap) => {
-      this.itemID = paramMap.get('id');
-      this.getItemValues('users', this.itemID);
-  
-    });
-
-  //   setTimeout(() => {
-  //     this.addCountToChannelDocument(this.itemID);
-  //  }, 1000)
-
-    await this.firestore.getDirectMessages(
-      this.authService.activeUserAccount.uid,
-      this.itemID      
-    );
-        
-    this.textBoxData.channelId = this.firestore.conversation;    
+    this.textBoxData.channelId = this.firestore.conversation;
     this.headerStateService.setAlternativeHeader(true);
-    this.firestore.getAllChannelMessages(this.textBoxData.channelId, this.textBoxData.collection, this.textBoxData.subcollection);    
+
+    setInterval(() => {      
+      this.matchMedia.loading = false;
+    }, 1000);
   }
 
   getItemValues(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {
       this.user = new User(this.firestore.user);
-      this.setOldUserlValues();
     });
-  }
-
-  setOldUserlValues(){
-    this.userData = {
-      avatar: this.user.avatar,
-      email: this.user.email,
-      displayName: this.user.displayName,
-      isOnline: this.user.isOnline,
-      provider: this.user.provider,
-      // selected: this.user.selected,
-      // count: this.user.count,
-      // newMessage: this.user.newMessage
-    };
   }
 
   async waitForUserData(): Promise<void> {
@@ -150,38 +104,6 @@ export class NewMessageComponent implements OnInit{
   test() {
     let id = this.authService.activeUserAccount.uid;
     this.getItemValues('users', id);
-  }
-
-  toggleOverlay(overlayId: string): void {
-    const currentOverlay = document.querySelector(
-      '.overlay[style="display: block;"]'
-    ) as HTMLElement;
-    const newOverlay = document.getElementById(overlayId);
-
-    if (currentOverlay && currentOverlay.id !== overlayId) {
-      currentOverlay.style.display = 'none';
-    }
-
-    if (newOverlay) {
-      newOverlay.style.display =
-        newOverlay.style.display === 'none' ? 'block' : 'none';
-    }
-  }
-
-  closeOverlay(overlayId: string): void {
-    const overlay = document.getElementById(overlayId) as HTMLElement;
-    if (overlay) {
-      overlay.style.display = 'none';
-    }
-  }
-
-  openDirectMessageOverlay(): void {
-    const dialogRef = this.dialog.open(DirectMessageOverlayComponent, {
-      minWidth: '398px',
-      minHeight: '600px',
-      panelClass: 'custom-dialog-container',
-      data: { user: this.user, itemId: this.itemID },
-    });
   }
 
   goBack(): void {
@@ -222,17 +144,4 @@ export class NewMessageComponent implements OnInit{
   trackByIndex(index: number, item: any): any {
     return index;
   }
-
-  
-
-  changeAvatar(newAvatar: string) {
-    if (this.user && this.user.id && newAvatar) {
-      this.memberService.updateMemberAvatar(this.user.id, newAvatar);
-      this.user.avatar = newAvatar;
-      this.userData.avatar = newAvatar;
-    } else {
-      console.error('User ID or new avatar is undefined');
-    }
-  }
-
 }

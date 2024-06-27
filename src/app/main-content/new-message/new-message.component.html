@@ -1,64 +1,56 @@
 <div class="container">
-    <app-header-mobile></app-header-mobile>
-
-    <div class="mdc-card">
-      <h1 class="h1">Neue Nachricht: </h1>
-      <div class="channel-box">
-        <div class="selected-users-container">
-          <input type="text" id="input" class="input-field" [(ngModel)]="selectedUserOrChannel" name="selectedUser" placeholder="An: #channel, oder @jemand oder E-Mail Adresse" (input)="onInputChange($event)" autocomplete="off"
-          />
-        </div>
-      </div>
-    </div>
-    <div id="add-member" class="add-member" *ngIf="showAddMember">
-      <div class="scroll">
-        <div *ngIf="showChannels">
-          @for (channel of this.firestore.channelList; track $index) {
-            <div class="hover" (click)="onChannelClick(channel)">
+  @if(!isDesktop){
+  <app-header-mobile></app-header-mobile>
+  }
+  <div class="mdc-card">
+    <div class="channel-box">
+      <h1 class="no-margin">
+        <span></span>
+        <span>Neue Nachricht</span>
+      </h1>
+      <input
+        type="text"
+        id="input"
+        class="input-field"
+        [(ngModel)]="selectedUserOrChannel"
+        name="selectedUser"
+        placeholder="An: #channel, oder @jemand oder E-Mail Adresse"
+        (input)="onInputChange($event)"
+        autocomplete="off"
+      />
+      <div id="add-member" class="add-member" *ngIf="showAddMember">
+        <div class="scroll">
+          <div *ngIf="showChannels">
+            @for (channel of this.firestore.channelList; track $index) {
+            <div class="selection" (click)="onChannelClick(channel)">
               <span>{{ channel.name }}</span>
             </div>
-           }
-        </div>
-        <div *ngIf="showUsers">
-          @for (user of this.firestore.getUsers(); track $index) {
-            <div class="hover" (click)="onUserClick(user)">
-                <span>{{ user.displayName }}
-                  <span *ngIf="user.id === this.authService.activeUserId">(Du)</span>
-                </span>
+            }
+          </div>
+          <div *ngIf="showUsers">
+            @for (user of this.firestore.getUsers(); track $index) {
+            <div class="selection" (click)="onUserClick(user)">
+              <span
+                >{{ user.displayName }}
+                <span *ngIf="user.id === this.authService.activeUserId"
+                  >(Du)</span
+                >
+              </span>
             </div>
-          }
-        </div>
-      </div>
-    </div>
-
-    <div class="content">
-      <div
-        class="message-content"
-        #messageContent
-        style="overflow-y: scroll; height: 100%"
-      >
-        @for (chat of this.firestore.channelMessages; track
-        chat.id) {
-          <app-conversation
-            [channelMessage]="chat" [isChannel]="false" [isThread]="false"
-          ></app-conversation>
-        }
-      </div>
-    </div>
-
-
-    <app-text-box [textBoxData]="textBoxData"></app-text-box>
-
-    <div id="overlay3" class="overlay" (click)="closeOverlay('overlay3')">
-      <div class="overlay-profil">
-        <div class="profile-icon">
-          <img src="./assets/img/icon/account_circle.svg" alt="" />
-          <p class="no-margin">Profil</p>
-        </div>
-        <div class="profile-icon">
-          <img src="./assets/img/icon/logout.svg" alt="" />
-          <p class="no-margin">Log out</p>
+            }
+          </div>
         </div>
       </div>
     </div>
   </div>
+  @if(this.matchMedia.loading){
+  <div class="loading-animation">
+    <app-progress-spinner></app-progress-spinner>
+  </div>
+  }@else{
+  <div class="content">
+    <div class="message-content" style="overflow-y: scroll; height: 100%"></div>
+  </div>
+  }
+  <app-text-box [textBoxData]="textBoxData" [isThread]="false"></app-text-box>
+</div>

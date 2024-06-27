@@ -251,7 +251,7 @@
   </mat-accordion>
   @if(!isDesktop){
   <div class="btn-position">
-    <button mat-fab class="btn-edit-message" routerLink="/new-message">
+    <button mat-fab class="btn-edit-message" (click)="openNewMessage()">
       <mat-icon class="white-icon"> edit_square </mat-icon>
     </button>
   </div>

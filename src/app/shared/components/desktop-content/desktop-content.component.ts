@@ -39,4 +39,8 @@ export class DesktopContentComponent implements OnInit {
     this.hovered = false;
   }
 
+  openNewMessage() {
+    this.matchMedia.loading = true;
+    this.router.navigateByUrl('/new-message');
+  }
 }
