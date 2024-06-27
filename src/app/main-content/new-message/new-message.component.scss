@@ -167,12 +167,15 @@ app-progress-spinner{
   width: 100%;
 }
 
-.selection:hover {
-  cursor: pointer;
-  background-color: #eceefe;
-  border-radius: 30px;
-  font-weight: 700;
-  color: #535af1;
+.selection{
+  padding: 8px;
+  &:hover {
+    cursor: pointer;
+    background-color: #eceefe;
+    border-radius: 30px;
+    font-weight: 700;
+    color: #535af1;
+  }
 }
 
 .channel-name {

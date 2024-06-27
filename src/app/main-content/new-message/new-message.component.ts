@@ -53,17 +53,9 @@ export class NewMessageComponent implements OnInit{
     channelName: '',
     messageText: '',
     channelId: '',
-    collection: 'messages',
-    subcollection: 'chat',
+    collection: '',
+    subcollection: 'channelmessages',
   };  
-
-  // userData = {
-  //   avatar: this.user.avatar,
-  //   email: this.user.email,
-  //   displayName: this.user.displayName,
-  //   isOnline: this.user.isOnline,
-  //   provider: this.user.provider,
-  // };
 
   constructor(
     public dialog: MatDialog,
@@ -132,16 +124,46 @@ export class NewMessageComponent implements OnInit{
   }
 
   onUserClick(user: User) {
-    this.selectedUserOrChannel = `@${user.displayName}`;
-    this.showAddMember = false;
+    this.selectedUserOrChannel = `@${user.displayName}`;    
+    const selectedId = user.id;
+    if(selectedId){      
+      this.selectedRecipient('messages', selectedId, 'direct-message/');
+    }
   }
 
   onChannelClick(channel: Channel) {
     this.selectedUserOrChannel = `#${channel.name}`;
+    const selectedId = channel.id;    
+    if(selectedId){
+      this.selectedRecipient('channels', selectedId, 'channel/');
+    }
+  }
+
+  selectedRecipient(collection: string, selection: string, target: string){
     this.showAddMember = false;
+    const nextUrl = target + selection;
+    
+    this.textBoxData.collection = collection;
+    this.textBoxData.channelId = selection;
+    
+    // Check for submit on text-box    
+    
+    // this.redirectToNextUrl(nextUrl);
+  }
+
+  redirectToNextUrl(url: string){
+     this.matchMedia.loading = true;
+     setTimeout(() => {
+       this.router.navigateByUrl(url);
+     }, 1000);
   }
 
   trackByIndex(index: number, item: any): any {
     return index;
   }
+
+  onSubmit(){
+    console.log('klappt');
+  }
+
 }

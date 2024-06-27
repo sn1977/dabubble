@@ -37,7 +37,7 @@ export class TextBoxComponent implements AfterViewInit {
   fileType: string = '';
   maxSizeReached: boolean = false;
   @Input() isThread!: boolean;
-
+  @Input() isNewMessage!: boolean;
   @Input() textBoxData: any;
   @ViewChild('messageText') messageText!: ElementRef<HTMLTextAreaElement>;
   private initialHeight: string = '';
