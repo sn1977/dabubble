@@ -53,6 +53,7 @@ export class NewMessageComponent implements OnInit, OnDestroy {
   showUsers = false;
   selectedUserOrChannel: string = '';
   isDesktop: boolean = false;
+  selectedId: string | undefined = '';
   matchMedia = inject(MatchMediaService);
   private intervalId: any;
 
@@ -75,7 +76,7 @@ export class NewMessageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.matchMedia.newMessage = false;
-    this.matchMedia.scrollToBottom = true;    
+    this.matchMedia.scrollToBottom = true;
     this.clearInterval();
   }
 
@@ -140,25 +141,40 @@ export class NewMessageComponent implements OnInit, OnDestroy {
 
   onUserClick(user: User) {
     this.selectedUserOrChannel = `@${user.displayName}`;
-    const selectedId = user.id;
-    if (selectedId) {
-      this.selectedRecipient('messages', selectedId, 'direct-message/');
+    this.selectedId = user.id;
+    if (this.selectedId) {
+      this.selectedRecipient('messages', this.selectedId, 'direct-message/');
     }
   }
 
   onChannelClick(channel: Channel) {
     this.selectedUserOrChannel = `#${channel.name}`;
-    const selectedId = channel.id;
-    if (selectedId) {
-      this.selectedRecipient('channels', selectedId, 'channel/');
+    this.selectedId = channel.id;
+    if (this.selectedId) {
+      this.selectedRecipient('channels', this.selectedId, 'channel/');
     }
   }
 
-  selectedRecipient(collection: string, selection: string, target: string) {
+  async selectedRecipient(
+    collection: string,
+    selection: string,
+    target: string
+  ) {
+    this.clearInterval();
     this.showAddMember = false;
-    const nextUrl = target + selection;
+    let nextUrl = target + selection;
     this.textBoxData.collection = collection;
     this.textBoxData.channelId = selection;
+
+    if (collection === 'messages') {
+      await this.firestore.getDirectMessages(
+        this.authService.activeUserAccount.uid,
+        selection
+      );
+
+      this.textBoxData.channelId = this.firestore.conversation;
+    }
+
     this.waitForNewMessageInterval(nextUrl);
   }
 
@@ -173,7 +189,7 @@ export class NewMessageComponent implements OnInit, OnDestroy {
     this.intervalId = setInterval(() => {
       if (this.matchMedia.newMessage) {
         this.clearInterval();
-        this.matchMedia.scrollToBottom = true;        
+        this.matchMedia.scrollToBottom = true;
         this.redirectToNextUrl(nextUrl);
       }
     }, 500);
@@ -188,9 +204,5 @@ export class NewMessageComponent implements OnInit, OnDestroy {
 
   trackByIndex(index: number, item: any): any {
     return index;
-  }
-
-  onSubmit() {
-    console.log('klappt');
   }
 }
