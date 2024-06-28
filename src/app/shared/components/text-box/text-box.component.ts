@@ -6,6 +6,7 @@ import {
   Input,
   ViewChild,
   inject,
+  Renderer2
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ChannelMessage } from '../../../../models/channel-message.class';
@@ -51,7 +52,8 @@ export class TextBoxComponent implements AfterViewInit {
 
   constructor(
     private uploadService: UploadService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private renderer: Renderer2
   ) {}
 
   addEmoji(event: EmojiEvent) {
@@ -99,7 +101,6 @@ export class TextBoxComponent implements AfterViewInit {
       if(this.isNewMessage === false){
         this.matchMedia.newMessage = true;
       }
-
     }
   }
 
@@ -153,12 +154,17 @@ export class TextBoxComponent implements AfterViewInit {
     const textarea = this.messageText.nativeElement;
     this.initialHeight = textarea.style.height || 'auto';
     this.adjustTextareaHeight(textarea);
+    this.setFocus();
   }
 
   adjustTextareaHeight(textarea: HTMLTextAreaElement) {
     textarea.style.height = 'auto';
     textarea.style.height = textarea.scrollHeight + 'px';
     textarea.focus();
+  }
+
+  setFocus() {
+    this.renderer.selectRootElement(this.messageText.nativeElement).focus();
   }
 
   resetTextareaHeight() {
