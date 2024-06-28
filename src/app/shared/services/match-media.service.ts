@@ -14,6 +14,7 @@ export class MatchMediaService {
   scrollToBottomThread: boolean = true;
   collectionType: string = '';
   loading: boolean = true;
+  newMessage: boolean = false;
   
   constructor() { }
 

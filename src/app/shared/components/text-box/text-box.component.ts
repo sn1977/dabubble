@@ -17,6 +17,7 @@ import { EmojiEvent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { MatDialog } from '@angular/material/dialog';
 import { EmojiPickerComponent } from '../emoji-picker/emoji-picker.component';
+import { MatchMediaService } from '../../services/match-media.service';
 
 @Component({
   selector: 'app-text-box',
@@ -41,6 +42,7 @@ export class TextBoxComponent implements AfterViewInit {
   @Input() textBoxData: any;
   @ViewChild('messageText') messageText!: ElementRef<HTMLTextAreaElement>;
   private initialHeight: string = '';
+  matchMedia = inject(MatchMediaService);
 
   add_hovered: boolean = false;
   smile_hovered: boolean = false;
@@ -95,6 +97,11 @@ export class TextBoxComponent implements AfterViewInit {
       this.file = undefined;
       this.textBoxData.messageText = '';
       this.resetTextareaHeight();
+
+      if(this.isNewMessage === false){
+        this.matchMedia.newMessage = true;
+      }
+
     }
   }
 

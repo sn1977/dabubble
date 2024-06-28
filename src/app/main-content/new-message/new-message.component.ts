@@ -1,4 +1,11 @@
-import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  inject,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NavigationService } from '../../shared/services/navigation.service';
 import { BottomSheetComponent } from '../../shared/components/bottom-sheet/bottom-sheet.component';
@@ -21,17 +28,17 @@ import { MatchMediaService } from '../../shared/services/match-media.service';
   selector: 'app-new-message',
   standalone: true,
   imports: [
-    HeaderMobileComponent, 
-    TextBoxComponent, 
+    HeaderMobileComponent,
+    TextBoxComponent,
     ConversationComponent,
     NgIf,
     FormsModule,
-    ProgressSpinnerComponent
+    ProgressSpinnerComponent,
   ],
   templateUrl: './new-message.component.html',
-  styleUrl: './new-message.component.scss'
+  styleUrl: './new-message.component.scss',
 })
-export class NewMessageComponent implements OnInit{
+export class NewMessageComponent implements OnInit, OnDestroy {
   @ViewChild('messageContent') messageContent!: ElementRef;
   firestore = inject(FirestoreService);
   router = inject(Router);
@@ -47,6 +54,7 @@ export class NewMessageComponent implements OnInit{
   selectedUserOrChannel: string = '';
   isDesktop: boolean = false;
   matchMedia = inject(MatchMediaService);
+  private intervalId: any;
 
   textBoxData: any = {
     placeholder: 'Starte eine neue Nachricht ',
@@ -55,24 +63,31 @@ export class NewMessageComponent implements OnInit{
     channelId: '',
     collection: '',
     subcollection: 'channelmessages',
-  };  
+  };
 
   constructor(
     public dialog: MatDialog,
     private navigationService: NavigationService,
     private _bottomSheet: MatBottomSheet,
     private route: ActivatedRoute,
-    private headerStateService: HeaderStateService,
+    private headerStateService: HeaderStateService
   ) {}
+
+  ngOnDestroy(): void {
+    this.matchMedia.newMessage = false;
+    this.matchMedia.scrollToBottom = true;    
+    this.clearInterval();
+  }
 
   async ngOnInit(): Promise<void> {
     this.isDesktop = this.matchMedia.checkIsDesktop();
+    this.matchMedia.newMessage = false;
     await this.waitForUserData();
     this.test();
     this.textBoxData.channelId = this.firestore.conversation;
     this.headerStateService.setAlternativeHeader(true);
 
-    setInterval(() => {      
+    setInterval(() => {
       this.matchMedia.loading = false;
     }, 1000);
   }
@@ -124,46 +139,58 @@ export class NewMessageComponent implements OnInit{
   }
 
   onUserClick(user: User) {
-    this.selectedUserOrChannel = `@${user.displayName}`;    
+    this.selectedUserOrChannel = `@${user.displayName}`;
     const selectedId = user.id;
-    if(selectedId){      
+    if (selectedId) {
       this.selectedRecipient('messages', selectedId, 'direct-message/');
     }
   }
 
   onChannelClick(channel: Channel) {
     this.selectedUserOrChannel = `#${channel.name}`;
-    const selectedId = channel.id;    
-    if(selectedId){
+    const selectedId = channel.id;
+    if (selectedId) {
       this.selectedRecipient('channels', selectedId, 'channel/');
     }
   }
 
-  selectedRecipient(collection: string, selection: string, target: string){
+  selectedRecipient(collection: string, selection: string, target: string) {
     this.showAddMember = false;
     const nextUrl = target + selection;
-    
     this.textBoxData.collection = collection;
     this.textBoxData.channelId = selection;
-    
-    // Check for submit on text-box    
-    
-    // this.redirectToNextUrl(nextUrl);
+    this.waitForNewMessageInterval(nextUrl);
   }
 
-  redirectToNextUrl(url: string){
-     this.matchMedia.loading = true;
-     setTimeout(() => {
-       this.router.navigateByUrl(url);
-     }, 1000);
+  redirectToNextUrl(url: string) {
+    this.matchMedia.loading = true;
+    setTimeout(() => {
+      this.router.navigateByUrl(url);
+    }, 1000);
+  }
+
+  waitForNewMessageInterval(nextUrl: string) {
+    this.intervalId = setInterval(() => {
+      if (this.matchMedia.newMessage) {
+        this.clearInterval();
+        this.matchMedia.scrollToBottom = true;        
+        this.redirectToNextUrl(nextUrl);
+      }
+    }, 500);
+  }
+
+  clearInterval() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+      this.intervalId = null;
+    }
   }
 
   trackByIndex(index: number, item: any): any {
     return index;
   }
 
-  onSubmit(){
+  onSubmit() {
     console.log('klappt');
   }
-
 }
