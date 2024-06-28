@@ -145,7 +145,7 @@ export class TextBoxComponent implements AfterViewInit {
     });
 
     dialogRef.componentInstance.emojiSelect.subscribe((event: string) => {
-      this.addEmoji({ emoji: { native: event } } as EmojiEvent); // Konvertieren Sie den empfangenen String in ein EmojiEvent Objekt
+      this.addEmoji({ emoji: { native: event } } as EmojiEvent);
       dialogRef.close();
     });
   }

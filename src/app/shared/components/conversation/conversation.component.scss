@@ -112,11 +112,12 @@
         overflow: hidden;
         resize: none;
         width: 100%;
-        box-sizing: border-box; /* Einschließlich Padding und Border in der Breite */
+        box-sizing: border-box;
       }
 
       .message {
         background-color: #eceefe;
+        border-color: transparent;
         width: 100%;
         box-sizing: border-box;
         padding: 15px;
