@@ -66,6 +66,21 @@ export class FirestoreService {
     return collection(this.firestore, 'messages');
   }
 
+  async getAllUsers(): Promise<User[]> {
+    const usersSnapshot = await getDocs(query(this.getUsersRef(), orderBy('displayName')));
+    return usersSnapshot.docs.map(doc => this.setUserObject(doc.data(), doc.id));
+  }
+
+  async getAllChannels(): Promise<Channel[]> {
+    const channelsSnapshot = await getDocs(query(this.getChannelsRef(), orderBy('name')));
+    return channelsSnapshot.docs.map(doc => this.setChannelObject(doc.data(), doc.id));
+  }
+
+  async getAllMessages(): Promise<ChannelMessage[]> {
+    const messagesSnapshot = await getDocs(query(this.getDirectMessageRef(), orderBy('createdAt')));
+    return messagesSnapshot.docs.map(doc => this.setChannelMessageObject(doc.data(), doc.id));
+  }
+
   getSingleDocRef(colId: string, docId: string) {
     return doc(collection(this.firestore, colId), docId);
   }
