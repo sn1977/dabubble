@@ -165,6 +165,8 @@ app-progress-spinner{
 .scroll {
   font-size: 0.833rem;
   width: 100%;
+  max-height: 200px;
+  overflow: scroll;
 }
 
 .selection{
