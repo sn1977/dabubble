@@ -81,6 +81,8 @@ export class DirectMessageComponent implements OnInit {
     this.routeSubscription = this.route.paramMap.subscribe(async (paramMap) => {
       this.test();
       this.itemID = paramMap.get('id');
+      this.textBoxData.messageText = '';
+      this.textBoxData.inputField = '';
       this.getItemValues('users', this.itemID);
 
       if (this.authService.activeUserAccount) {
