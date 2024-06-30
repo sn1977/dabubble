@@ -81,6 +81,8 @@ export class FirestoreService {
     return messagesSnapshot.docs.map(doc => this.setChannelMessageObject(doc.data(), doc.id));
   }
 
+  
+
   getSingleDocRef(colId: string, docId: string) {
     return doc(collection(this.firestore, colId), docId);
   }
