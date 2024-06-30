@@ -26,7 +26,13 @@ import "firebase/firestore";
 import { MemberService } from "../../../shared/services/member-service.service";
 import { Auth } from "@angular/fire/auth";
 // import { AvatarService } from "../../../shared/services/avatar-service.service";
-import { getAuth, updateEmail, EmailAuthProvider, reauthenticateWithCredential, verifyBeforeUpdateEmail } from "firebase/auth";
+import {
+    getAuth,
+    updateEmail,
+    EmailAuthProvider,
+    reauthenticateWithCredential,
+    verifyBeforeUpdateEmail,
+} from "firebase/auth";
 import { doc, updateDoc } from "firebase/firestore";
 
 @Component({
@@ -44,7 +50,7 @@ import { doc, updateDoc } from "firebase/firestore";
         CommonModule,
     ],
     templateUrl: "./edit-profil-card.component.html",
-    styleUrl: "./edit-profil-card.component.scss",
+    styleUrls: ["./edit-profil-card.component.scss"],
 })
 export class EditProfilCardComponent implements OnInit, OnDestroy {
     firebaseAuth = inject(Auth);
@@ -53,9 +59,11 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
     templateIndex: number = 0;
     nameData = { name: "" };
     emailData = { email: "" };
+    passwordData = { password: "" };
     namePlaceholder?: string;
     emailPlaceholder?: string;
     inputHasValue = false;
+    showPasswordField = false;
 
     nameControl = new FormControl("", [
         Validators.required,
@@ -65,6 +73,11 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
     emailControl = new FormControl("", [
         Validators.required,
         Validators.pattern("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"),
+    ]);
+
+    passwordControl = new FormControl("", [
+        Validators.required,
+        Validators.minLength(6),
     ]);
 
     contactData = {
@@ -90,8 +103,10 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
         private uploadService: UploadService,
         public dialog: MatDialog, // Add MatDialog as a property
         private memberService: MemberService // private avatarService: AvatarService
-    ) {
-        console.log("Übergebene Benutzerdaten:", this.data.user);
+    ) {}
+
+    trackByFn(index: number, item: any) {
+        return index; // or item.id
     }
 
     updateMemberAvatar(newAvatarUrl: string) {
@@ -101,70 +116,46 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
         );
     }
 
+    onEmailChange(value: string): void {
+        this.showPasswordField = value !== this.data.user.email;
+    }
+
     async updateEmailForUser() {
-      const auth = getAuth();
-      const user = auth.currentUser;
+      const user = this.getCurrentUser();
+      if (!user) return;
   
-      if (user !== null) {
-          const displayName = user.displayName;
-          const email = user.email;
-          const photoURL = user.photoURL;
-          const emailVerified = user.emailVerified;
-          const uid = user.uid;
-  
-          console.log("User is signed in:", displayName, "<br>", email, "<br>", photoURL, "<br>", emailVerified, "<br>", uid);
-  
-          if (this.emailControl.valid) {
-              const newEmail = this.emailControl.value;
-              console.log("New email:", newEmail);
-              
-              if (newEmail) {
-                  localStorage.setItem("newEmail", newEmail);
-  
-                  try {
-                      // Prompt user to enter current password
-                      const currentPassword = prompt("Please enter your current password:");
-  
-                      if (currentPassword) {
-                          const credentials = EmailAuthProvider.credential(email!, currentPassword);
-                          await reauthenticateWithCredential(user, credentials);
-  
-                          // Send verification email to the new email address
-                          await verifyBeforeUpdateEmail(user, newEmail, {
-                              url: window.location.href, // Redirect URL after email verification
-                          });
-                          alert("Verification email sent to your new email address. Please verify it before continuing.");
-                      } else {
-                          alert("Password is required to update email.");
-                      }
-                  } catch (error: any) {
-                      console.error("Error updating email:", error.code, error.message);
-                      alert(`Error: ${error.message}`);
-                  }
-              }
+      if (this.emailControl.valid && this.passwordControl.valid) {
+          const newEmail = this.emailControl.value;
+          const currentPassword = this.passwordData.password;
+          if (newEmail && currentPassword) {
+              await this.handleEmailUpdate(user, newEmail, currentPassword);
           }
-      } else {
-          console.log("No user is signed in.");
       }
   }
   
-  // Function to finalize email update after verification
-  async finalizeEmailUpdate() {
+  getCurrentUser() {
       const auth = getAuth();
       const user = auth.currentUser;
-      const newEmail = localStorage.getItem("newEmail");
+      if (!user) {
+          console.log("No user is signed in.");
+          return null;
+      }
+      return user;
+  }
   
-      if (user !== null && newEmail) {
-          try {
-              // In this step, Firebase automatically updates the email after verification
-              alert("Your email address has been updated successfully.");
-              localStorage.removeItem("newEmail");
-          } catch (error: any) {
-              console.error("Error finalizing email update:", error.code, error.message);
-              alert(`Error: ${error.message}`);
-          }
-      } else {
-          console.log("No user is signed in or new email is missing.");
+  async handleEmailUpdate(user: any, newEmail: string, currentPassword: string) {
+      const email = user.email;
+      localStorage.setItem("newEmail", newEmail);
+      try {
+          const credentials = EmailAuthProvider.credential(email!, currentPassword);
+          await reauthenticateWithCredential(user, credentials);
+          await verifyBeforeUpdateEmail(user, newEmail, { url: window.location.href });
+          alert("Verification email sent to your new email address. Please verify it before continuing.");
+      } catch (error: any) {
+          console.error("Error updating email:", error.code, error.message);
+          alert(`Error: ${error.message}`);
+      } finally {
+          localStorage.removeItem("newEmail");
       }
   }
 
@@ -197,9 +188,7 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
     }
 
     saveProfile(): void {
-        // Überprüfen Sie, ob nameControl und emailControl gültig sind
         if (this.nameControl.valid && this.emailControl.valid) {
-            // Aktualisiere das User-Objekt mit neuen Daten aus den Formularfeldern
             this.data.user.displayName =
                 this.nameData.name || this.data.user.displayName;
             this.data.user.email = this.emailData.email || this.data.user.email;
@@ -231,8 +220,6 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
     }
 
     openAvatarDialog(): void {
-        console.log(this.contactData);
-
         this.dialog.open(ChooseAvatarComponent, {
             width: "80%",
             data: { user: this.contactData },
