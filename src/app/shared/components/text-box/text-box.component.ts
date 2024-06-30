@@ -6,7 +6,7 @@ import {
   Input,
   ViewChild,
   inject,
-  Renderer2
+  Renderer2,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ChannelMessage } from '../../../../models/channel-message.class';
@@ -85,12 +85,19 @@ export class TextBoxComponent implements AfterViewInit {
       if (this.textBoxData.subcollection != 'channelmessages') {
         type = 'thread';
       }
-      
-      this.firestore.addChannelMessage(
-        message,
-        `${this.textBoxData.collection}/${message.channelId}/${this.textBoxData.subcollection}`,
-        type
-      );
+
+      if (
+        !this.isNewMessage &&
+        this.isNewMessage != undefined &&
+        !this.matchMedia.inputValid
+      ) {
+      } else {
+        this.firestore.addChannelMessage(
+          message,
+          `${this.textBoxData.collection}/${message.channelId}/${this.textBoxData.subcollection}`,
+          type
+        );
+      }
 
       this.textBoxData.inputField = '';
       this.selectedFiles = null;
@@ -98,7 +105,7 @@ export class TextBoxComponent implements AfterViewInit {
       this.textBoxData.messageText = '';
       this.resetTextareaHeight();
 
-      if(this.isNewMessage === false){
+      if (this.isNewMessage === false && this.matchMedia.inputValid === true) {
         this.matchMedia.newMessage = true;
       }
     }
@@ -112,7 +119,7 @@ export class TextBoxComponent implements AfterViewInit {
   }
 
   detectFile(event: any) {
-    this.selectedFiles = event.target.files;    
+    this.selectedFiles = event.target.files;
     this.uploadSingleFile();
   }
 
@@ -120,7 +127,7 @@ export class TextBoxComponent implements AfterViewInit {
     if (this.selectedFiles) {
       this.file = this.selectedFiles.item(0);
       if (this.file?.size && this.file?.size <= 500000) {
-        this.maxSizeReached = false;        
+        this.maxSizeReached = false;
         this.filedate = new Date().getTime();
         this.fileType = this.file.type;
 

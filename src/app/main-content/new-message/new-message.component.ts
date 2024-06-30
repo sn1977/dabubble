@@ -77,12 +77,14 @@ export class NewMessageComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.matchMedia.newMessage = false;
     this.matchMedia.scrollToBottom = true;
+    this.matchMedia.inputValid = false;
     this.clearInterval();
   }
 
   async ngOnInit(): Promise<void> {
     this.isDesktop = this.matchMedia.checkIsDesktop();
     this.matchMedia.newMessage = false;
+    this.matchMedia.inputValid = false;
     await this.waitForUserData();
     this.test();
     this.textBoxData.channelId = this.firestore.conversation;
@@ -123,7 +125,9 @@ export class NewMessageComponent implements OnInit, OnDestroy {
   }
 
   onInputChange(event: any) {
-    const inputValue = event.target.value;
+    const inputValue = event.target.value;    
+    this.matchMedia.inputValid = false;    
+    
     if (inputValue.startsWith('#')) {
       this.showAddMember = true;
       this.showChannels = true;
@@ -136,12 +140,12 @@ export class NewMessageComponent implements OnInit, OnDestroy {
       this.showAddMember = false;
       this.showChannels = false;
       this.showUsers = false;
-    }
+    }    
   }
 
   onUserClick(user: User) {
     this.selectedUserOrChannel = `@${user.displayName}`;
-    this.selectedId = user.id;
+    this.selectedId = user.id;    
     if (this.selectedId) {
       this.selectedRecipient('messages', this.selectedId, 'direct-message/');
     }
@@ -161,7 +165,8 @@ export class NewMessageComponent implements OnInit, OnDestroy {
     target: string
   ) {
     this.clearInterval();
-    this.showAddMember = false;
+    this.showAddMember = false;   
+    this.matchMedia.inputValid = true; 
     let nextUrl = target + selection;
     this.textBoxData.collection = collection;
     this.textBoxData.channelId = selection;

@@ -15,6 +15,7 @@ export class MatchMediaService {
   collectionType: string = '';
   loading: boolean = true;
   newMessage: boolean = false;
+  inputValid: boolean = false;
   
   constructor() { }
 
