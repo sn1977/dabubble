@@ -141,7 +141,7 @@
                 (click)="closeEditProfilCard()">
                 Abbrechen
             </button>
-            <button mat-flat-button class="btn-flat" (click)="saveProfile()">
+            <button mat-flat-button class="btn-flat" (click)="saveProfile()" [disabled]="showPasswordField && passwordControl.invalid">
                 Speichern
             </button>
         </div>
