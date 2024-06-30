@@ -19,7 +19,6 @@ import { HeaderStateService } from '../../shared/services/header-state.service';
 import { TextBoxComponent } from '../../shared/components/text-box/text-box.component';
 import { ConversationComponent } from '../../shared/components/conversation/conversation.component';
 import { Channel } from '../../../models/channel.class';
-import { NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProgressSpinnerComponent } from '../../shared/components/progress-spinner/progress-spinner.component';
 import { MatchMediaService } from '../../shared/services/match-media.service';
@@ -31,7 +30,6 @@ import { MatchMediaService } from '../../shared/services/match-media.service';
     HeaderMobileComponent,
     TextBoxComponent,
     ConversationComponent,
-    NgIf,
     FormsModule,
     ProgressSpinnerComponent,
   ],
@@ -148,10 +146,22 @@ export class NewMessageComponent implements OnInit, OnDestroy {
 
   filterInput(inputValue: string){
     if(inputValue.length > 1){
-      this.inputResult = inputValue.toLocaleLowerCase().slice(1);      
+      this.inputResult = inputValue.toLocaleLowerCase().slice(1);
     }else{
       this.inputResult = '';
     }
+  }
+
+  filteredChannelList() {
+    return this.firestore.channelList.filter((channel: { name: string; }) => 
+      !this.inputResult || channel.name.toLocaleLowerCase().startsWith(this.inputResult)
+    );
+  }
+
+  filteredUserList() {
+    return this.firestore.userList.filter((user: { displayName: string; }) => 
+      !this.inputResult || user.displayName.toLocaleLowerCase().startsWith(this.inputResult)
+    );
   }
 
   onUserClick(user: User) {    

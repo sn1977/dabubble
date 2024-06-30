@@ -18,31 +18,36 @@
         (input)="onInputChange($event)"
         autocomplete="off"
       />
-      <div id="add-member" class="add-member" *ngIf="showAddMember">
-        <div class="scroll">
-          <div *ngIf="showChannels">
-            @for (channel of this.firestore.channelList; track $index) {
-            @if(!inputResult ||
-            channel.name.toLocaleLowerCase().startsWith(inputResult)){
-            <div class="selection" (click)="onChannelClick(channel)">
-              <span>{{ channel.name }}</span>
-            </div>
-            } }
-          </div>
-          <div *ngIf="showUsers">
-            @for (user of this.firestore.getUsers(); track $index) {
-            @if(!inputResult ||
-            user.displayName!.toLocaleLowerCase().startsWith(inputResult)){
-            <div class="selection" (click)="onUserClick(user)">
-              <span>{{ user.displayName }}</span>
-              <span *ngIf="user.id === this.authService.activeUserId"
-                >(Du)</span
-              >
-            </div>
-            } }
-          </div>
+
+      @if(showAddMember){
+        <div class="add-member">
+
+        
+      <div class="scroll">
+        @if(showChannels){ @if(filteredChannelList().length > 0;) { @for(channel
+        of filteredChannelList(); track $index){
+        <div class="selection" (click)="onChannelClick(channel)">
+          <span>{{ channel.name }}</span>
         </div>
+        } } @else {
+        <div class="error">
+          Keine Kanäle gefunden, die mit "{{ inputResult }}" beginnen.
+        </div>
+        } } 
+        
+        @if(showUsers){ @if(filteredUserList().length > 0;) { @for(user
+          of filteredUserList(); track $index){
+          <div class="selection" (click)="onUserClick(user)">
+            <span>{{ user.displayName }}</span>
+          </div>
+          } } @else {
+          <div class="error">
+            Keine User gefunden, die mit "{{ inputResult }}" beginnen.
+          </div>
+          } }
       </div>
+    </div>  
+    }
     </div>
   </div>
   @if(this.matchMedia.loading){
