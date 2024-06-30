@@ -22,22 +22,24 @@
         <div class="scroll">
           <div *ngIf="showChannels">
             @for (channel of this.firestore.channelList; track $index) {
+            @if(!inputResult ||
+            channel.name.toLocaleLowerCase().startsWith(inputResult)){
             <div class="selection" (click)="onChannelClick(channel)">
               <span>{{ channel.name }}</span>
             </div>
-            }
+            } }
           </div>
           <div *ngIf="showUsers">
             @for (user of this.firestore.getUsers(); track $index) {
+            @if(!inputResult ||
+            user.displayName!.toLocaleLowerCase().startsWith(inputResult)){
             <div class="selection" (click)="onUserClick(user)">
-              <span
-                >{{ user.displayName }}
-                <span *ngIf="user.id === this.authService.activeUserId"
-                  >(Du)</span
-                >
-              </span>
+              <span>{{ user.displayName }}</span>
+              <span *ngIf="user.id === this.authService.activeUserId"
+                >(Du)</span
+              >
             </div>
-            }
+            } }
           </div>
         </div>
       </div>
@@ -52,5 +54,9 @@
     <div class="message-content" style="overflow-y: scroll; height: 100%"></div>
   </div>
   }
-  <app-text-box [textBoxData]="textBoxData" [isThread]="false" [isNewMessage]="false"></app-text-box>
+  <app-text-box
+    [textBoxData]="textBoxData"
+    [isThread]="false"
+    [isNewMessage]="false"
+  ></app-text-box>
 </div>

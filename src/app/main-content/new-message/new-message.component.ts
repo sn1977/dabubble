@@ -56,6 +56,7 @@ export class NewMessageComponent implements OnInit, OnDestroy {
   selectedId: string | undefined = '';
   matchMedia = inject(MatchMediaService);
   private intervalId: any;
+  inputResult: string = '';
 
   textBoxData: any = {
     placeholder: 'Starte eine neue Nachricht ',
@@ -126,16 +127,18 @@ export class NewMessageComponent implements OnInit, OnDestroy {
 
   onInputChange(event: any) {
     const inputValue = event.target.value;    
-    this.matchMedia.inputValid = false;    
+    this.matchMedia.inputValid = false;
     
     if (inputValue.startsWith('#')) {
       this.showAddMember = true;
       this.showChannels = true;
       this.showUsers = false;
+      this.filterInput(inputValue);
     } else if (inputValue.startsWith('@')) {
       this.showAddMember = true;
       this.showChannels = false;
       this.showUsers = true;
+      this.filterInput(inputValue);
     } else {
       this.showAddMember = false;
       this.showChannels = false;
@@ -143,7 +146,15 @@ export class NewMessageComponent implements OnInit, OnDestroy {
     }    
   }
 
-  onUserClick(user: User) {
+  filterInput(inputValue: string){
+    if(inputValue.length > 1){
+      this.inputResult = inputValue.toLocaleLowerCase().slice(1);      
+    }else{
+      this.inputResult = '';
+    }
+  }
+
+  onUserClick(user: User) {    
     this.selectedUserOrChannel = `@${user.displayName}`;
     this.selectedId = user.id;    
     if (this.selectedId) {
