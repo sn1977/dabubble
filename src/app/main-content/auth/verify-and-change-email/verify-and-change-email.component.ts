@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { AuthService } from '../../../shared/services/auth.service';
 
 @Component({
@@ -10,8 +10,9 @@ import { AuthService } from '../../../shared/services/auth.service';
 })
 export class VerifyAndChangeEmailComponent implements OnInit {
   authService = inject(AuthService);
+  @Input() oobCode!: string;
 
-  ngOnInit(): void {
-    this.authService.verifyAndUpdateEmail('test@hallo.de');    
+  ngOnInit(): void {    
+    this.authService.handleVerifyEmail(this.oobCode);
   }
 }

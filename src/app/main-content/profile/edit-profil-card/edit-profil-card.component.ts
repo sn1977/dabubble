@@ -157,7 +157,7 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
           console.error("Error updating email:", error.code, error.message);
           alert(`Error: ${error.message}`);
       } finally {
-          localStorage.removeItem("newEmail");
+          localStorage.removeItem("newEmail");          
       }
   }
 

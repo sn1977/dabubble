@@ -10,7 +10,7 @@ import {
   user,
   verifyPasswordResetCode,
   confirmPasswordReset,
-  GoogleAuthProvider,  
+  GoogleAuthProvider,
   signInWithPopup,
   getAuth,
   authState,
@@ -18,6 +18,7 @@ import {
   sendEmailVerification,
   UserCredential,
   updateEmail,
+  applyActionCode,
 } from '@angular/fire/auth';
 import { Observable, from, BehaviorSubject } from 'rxjs';
 import { UserInterface } from '../interfaces/user.interface';
@@ -68,14 +69,14 @@ export class AuthService {
         const user = result.user;
         this.resultGoogleAuth(user);
       })
-      .catch((error) => {      
+      .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         const credential = GoogleAuthProvider.credentialFromError(error);
       });
   }
 
-  resultGoogleAuth(user: any) {    
+  resultGoogleAuth(user: any) {
     this.user.id = user.uid;
     this.user.avatar = user.photoURL;
     this.user.email = user.email;
@@ -215,10 +216,7 @@ export class AuthService {
       .then(async (response) => {
         await updateProfile(response.user, {
           displayName: `Gast #${randomUserNumber}`,
-          photoURL:
-            './assets/img/characters/template' +
-            randomInt +
-            '.svg',
+          photoURL: './assets/img/characters/template' + randomInt + '.svg',
         });
         const currentUser = this.firebaseAuth.currentUser;
         if (currentUser) {
@@ -257,22 +255,14 @@ export class AuthService {
     }
   }
 
-  verifyAndUpdateEmail(newAdresse: string){
-    debugger
-    const auth = getAuth();
-    if (auth.currentUser) {
-    // updateEmail(auth.currentUser, "user@example.com").then(() => {
-    updateEmail(auth.currentUser, newAdresse).then(() => {
-      // Email updated!
-      console.log('Email updated!');
-      
-      // ...
+  handleVerifyEmail(actionCode: string) {
+    const auth = getAuth();  
+    applyActionCode(auth, actionCode).then((resp) => {
+      // Email address has been verified.
+      // noch ausloggen?
+      this.router.navigateByUrl('/login');
     }).catch((error) => {
-      // An error occurred
       console.log(error);      
-      // ...
     });
-  }
-
   }
 }
