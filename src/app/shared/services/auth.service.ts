@@ -17,6 +17,7 @@ import {
   signInAnonymously,
   sendEmailVerification,
   UserCredential,
+  updateEmail,
 } from '@angular/fire/auth';
 import { Observable, from, BehaviorSubject } from 'rxjs';
 import { UserInterface } from '../interfaces/user.interface';
@@ -254,5 +255,24 @@ export class AuthService {
           console.error('An error occurred!', error);
         });
     }
+  }
+
+  verifyAndUpdateEmail(newAdresse: string){
+    debugger
+    const auth = getAuth();
+    if (auth.currentUser) {
+    // updateEmail(auth.currentUser, "user@example.com").then(() => {
+    updateEmail(auth.currentUser, newAdresse).then(() => {
+      // Email updated!
+      console.log('Email updated!');
+      
+      // ...
+    }).catch((error) => {
+      // An error occurred
+      console.log(error);      
+      // ...
+    });
+  }
+
   }
 }
