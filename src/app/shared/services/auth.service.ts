@@ -216,7 +216,7 @@ export class AuthService {
         await updateProfile(response.user, {
           displayName: `Gast #${randomUserNumber}`,
           photoURL:
-            'http://localhost:4200/assets/img/characters/template' +
+            './assets/img/characters/template' +
             randomInt +
             '.svg',
         });
