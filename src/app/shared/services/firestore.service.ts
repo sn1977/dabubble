@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import {
   Firestore,
   collection,
+  collectionGroup,
   doc,
   onSnapshot,
   addDoc,
@@ -17,6 +18,7 @@ import {
   increment,
   serverTimestamp,
   collectionData,
+  or,
 } from '@angular/fire/firestore';
 import { User } from '../../../models/user.class';
 import { Channel } from '../../../models/channel.class';
@@ -67,21 +69,31 @@ export class FirestoreService {
   }
 
   async getAllUsers(): Promise<User[]> {
-    const usersSnapshot = await getDocs(query(this.getUsersRef(), orderBy('displayName')));
-    return usersSnapshot.docs.map(doc => this.setUserObject(doc.data(), doc.id));
+    const usersSnapshot = await getDocs(
+      query(this.getUsersRef(), orderBy('displayName'))
+    );
+    return usersSnapshot.docs.map((doc) =>
+      this.setUserObject(doc.data(), doc.id)
+    );
   }
 
   async getAllChannels(): Promise<Channel[]> {
-    const channelsSnapshot = await getDocs(query(this.getChannelsRef(), orderBy('name')));
-    return channelsSnapshot.docs.map(doc => this.setChannelObject(doc.data(), doc.id));
+    const channelsSnapshot = await getDocs(
+      query(this.getChannelsRef(), orderBy('name'))
+    );
+    return channelsSnapshot.docs.map((doc) =>
+      this.setChannelObject(doc.data(), doc.id)
+    );
   }
 
   async getAllMessages(): Promise<ChannelMessage[]> {
-    const messagesSnapshot = await getDocs(query(this.getDirectMessageRef(), orderBy('createdAt')));
-    return messagesSnapshot.docs.map(doc => this.setChannelMessageObject(doc.data(), doc.id));
+    const messagesSnapshot = await getDocs(
+      query(this.getDirectMessageRef(), orderBy('createdAt'))
+    );
+    return messagesSnapshot.docs.map((doc) =>
+      this.setChannelMessageObject(doc.data(), doc.id)
+    );
   }
-
-  
 
   getSingleDocRef(colId: string, docId: string) {
     return doc(collection(this.firestore, colId), docId);
@@ -232,9 +244,6 @@ export class FirestoreService {
     docRef: string,
     type?: string
   ) {
-    // console.log(message);
-    // console.log(docRef);
-
     await addDoc(collection(this.firestore, docRef), message.toJSON())
       .catch((err) => {
         console.error(err);
@@ -467,4 +476,20 @@ export class FirestoreService {
       map((channels) => channels.map((channel) => channel['name']))
     );
   }
+
+  async globalSearch() {
+    const results = query(
+      collectionGroup(this.firestore, 'channelmessages'),      
+      or( 
+        where('creator', '==', 'M7BioHSQtFZaPYj0xa7jpR3cR7u1')
+      ),
+      orderBy('createdAt')
+    );
+    const querySnapshot = await getDocs(results);
+    querySnapshot.forEach((doc) => {
+      console.log('Document path: ', doc.ref.path);
+      console.log(doc.id, ' => ', doc.data());
+    });
+  }
+  // 3:53
 }

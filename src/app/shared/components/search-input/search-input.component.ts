@@ -1,8 +1,9 @@
-import {Component, EventEmitter, Input, Output, inject} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, inject} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import { DataService } from '../../services/data.service';
 import { MatchMediaService } from '../../services/match-media.service';
 import { CommonModule } from '@angular/common';
+import { FirestoreService } from '../../services/firestore.service';
 
 @Component({
   selector: 'app-search-input',
@@ -14,19 +15,22 @@ import { CommonModule } from '@angular/common';
   templateUrl: './search-input.component.html',
   styleUrl: './search-input.component.scss'
 })
-export class SearchInputComponent {
+export class SearchInputComponent implements OnInit{
   textData = { text: '' };
   inputHasValue = false;
   matchMedia = inject(MatchMediaService);
   isDesktop: boolean = false;
   showDropdown = false;
   filteredResults: any[] = [];
-
+  firestore = inject(FirestoreService);
   dataService = inject(DataService);
   @Output() search = new EventEmitter<string>(); 
 
   constructor(){
     this.isDesktop = this.matchMedia.checkIsDesktop();
+  }
+  ngOnInit(): void {
+    this.firestore.globalSearch();
   }
 
   async onSearchChange(query: string) {
