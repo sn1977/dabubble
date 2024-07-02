@@ -2,8 +2,8 @@
 
 .content-header-mobile {
   height: 80px;
-  padding: 0 0 0 16px;
-  @include dFlex($jc: space-around, $ai: center, $fd: row, $g: 20px);
+  padding: 0 16px;
+  @include dFlex($jc: space-between, $ai: center, $fd: row, $g: 20px);
 
   &:hover {
     cursor: pointer;
@@ -45,7 +45,6 @@ app-desktop-overlay{
 
 @media (min-width: 431px) {
   .content-header-mobile {
-    // justify-content: space-between !important;
     text-align: right;
     padding-right: 8px;
   }

@@ -416,7 +416,7 @@ export class FirestoreService {
 
   async updateThreadCounter() {
     let colID;
-    if (this.matchMedia.collectionType === 'messages') {      
+    if (this.matchMedia.collectionType === 'messages') {
       colID = this.getDirectMessageRef();
     } else {
       colID = this.getChannelsRef();

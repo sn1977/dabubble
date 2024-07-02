@@ -16,15 +16,15 @@
       />
     </div>
   </div>
-  <div class="content">
-    <div class="message-content" #threadContent style="overflow-y: scroll; height: 100%;">
+  <div class="content">    
+    <div class="message-content" #threadContent>
       <app-conversation
         [channelMessage]="this.firestore.channelMessage"
         [isChannel]="false"
         [isThread]="false"
-        [hideCompleteReactionBar]="this.matchMedia.checkIsDesktop()"
+        [hideCompleteReactionBar]="true"
         [hideThreadInfos]="true"
-      ></app-conversation>
+        ></app-conversation>
     <div class="timeSeperator">
       <span>
         @if(this.firestore.channelMessage.threads == 0){

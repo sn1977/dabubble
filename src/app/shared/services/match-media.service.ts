@@ -43,7 +43,8 @@ export class MatchMediaService {
    */
   checkIsDesktop(){
     if (      
-      window.matchMedia('(min-width: 993px)').matches
+      // window.matchMedia('(min-width: 993px)').matches
+      window.matchMedia('(min-width: 1350px)').matches
     ) {      
       return true;
     } else {      

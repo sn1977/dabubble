@@ -92,13 +92,25 @@ export class TextBoxComponent implements AfterViewInit {
         !this.matchMedia.inputValid
       ) {
       } else {
-        //console.log(`${this.textBoxData.collection}/${message.channelId}/${this.textBoxData.subcollection}`);
+        console.log(`${this.textBoxData.collection}/${message.channelId}/${this.textBoxData.subcollection}`);
         
+        let colID = '';
+        if (this.matchMedia.collectionType === 'messages') {
+          colID = 'messages';
+        } else {
+          colID = 'channels';
+        }
+
         this.firestore.addChannelMessage(
           message,
-          `${this.textBoxData.collection}/${message.channelId}/${this.textBoxData.subcollection}`,
+          `${colID}/${message.channelId}/${this.textBoxData.subcollection}`,
           type
         );
+        // this.firestore.addChannelMessage(
+        //   message,
+        //   `${this.textBoxData.collection}/${message.channelId}/${this.textBoxData.subcollection}`,
+        //   type
+        // );
       }
 
       this.textBoxData.inputField = '';

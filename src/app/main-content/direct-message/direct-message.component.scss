@@ -201,12 +201,7 @@ app-progress-spinner{
   }
 }
 
-//DESKTOP/////
-
 @media (min-width: 450px) {
-  .container app-header-mobile {
-    display: none;
-  }
   .mdc-card{
     box-shadow: 0px 10px 10px -5px rgba(0, 0, 0, 0.08);
   }

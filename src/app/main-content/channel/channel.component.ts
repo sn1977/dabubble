@@ -91,6 +91,7 @@ export class ChannelComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.dataService.searchWorkspace('');
     this.isDesktop = this.matchMedia.checkIsDesktop();
+    this.matchMedia.collectionType = 'channels';
     await this.waitForUserData();
     this.test();
 

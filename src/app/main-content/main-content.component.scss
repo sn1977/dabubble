@@ -241,13 +241,7 @@ mat-expansion-panel:last-child {
   color: white;
 }
 
-// .scrollable-panel-content {
-//   padding-bottom: 64px
-// }
-
-//DESKTOP/////
-
-@media (min-width: 993px) {
+@media (min-width: 1350px) {
   .content-main {
     padding: unset;
     margin-top: 16px;

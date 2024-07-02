@@ -16,13 +16,18 @@
   width: 100%;
 }
 
-
 .loading-animation,
 .content {
   flex: 1;
   overflow-y: auto;
   background-color: #ffffff;
   padding: 24px 16px 12px 16px;
+
+  .message-content{
+    overflow-y: scroll; 
+    height: 100%;
+  }
+
 }
 
 app-progress-spinner{

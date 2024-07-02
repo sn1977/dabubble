@@ -2,6 +2,7 @@ import {
   Component,
   ElementRef,
   inject,
+  Input,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -48,6 +49,7 @@ export class DirectMessageComponent implements OnInit {
   authService = inject(AuthService);
   matchMedia = inject(MatchMediaService);
   routeSubscription: Subscription | undefined;
+  @Input() isDesktop: boolean = false;
 
   textBoxData: any = {
     placeholder: 'Nachricht an ',
@@ -77,6 +79,8 @@ export class DirectMessageComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.waitForUserData();
+    this.isDesktop = this.matchMedia.checkIsDesktop();
+    this.matchMedia.collectionType = 'messages';
 
     this.routeSubscription = this.route.paramMap.subscribe(async (paramMap) => {
       this.test();

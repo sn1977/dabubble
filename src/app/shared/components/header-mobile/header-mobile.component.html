@@ -2,7 +2,7 @@
   class="content-header-mobile bg-c"
   (mouseenter)="currentImage = hoverImage"
   (mouseleave)="currentImage = defaultImage"
-  [ngStyle]="{ 'justify-content': isDesktop ? 'flex-end' : 'space-around' }"
+  [ngStyle]="{ 'justify-content': isDesktop ? 'flex-end' : 'space-between' }"
   (click)="openOverlay()"
 >
   @if (isDesktop) {

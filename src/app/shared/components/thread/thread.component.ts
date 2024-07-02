@@ -76,7 +76,6 @@ export class ThreadComponent implements OnInit, OnDestroy {
     description: this.channel.description,
     member: this.channel.member,
     name: this.channel.name,
-    // newMessage: this.channel.newMessage,
   };
 
   async ngOnInit(): Promise<void> {
@@ -86,12 +85,10 @@ export class ThreadComponent implements OnInit, OnDestroy {
     this.headerStateService.setAlternativeHeader(true);
     this.scrollToBottom();
 
-    await this.firestore.getSingleMessageData(this.matchMedia.collectionType, this.matchMedia.channelId + '/channelmessages/' + this.matchMedia.subID, () => {});
-    // await this.firestore.getAllChannelThreads(this.matchMedia.channelId, this.matchMedia.collectionType, 'channelmessages/' + this.matchMedia.subID + '/threads');
+    await this.firestore.getSingleMessageData(this.matchMedia.collectionType, this.matchMedia.channelId + '/channelmessages/' + this.matchMedia.subID, () => {});    
     await this.firestore.getAllChannelThreads(this.matchMedia.channelId, this.matchMedia.collectionType, 'channelmessages/' + this.matchMedia.subID + '/channelmessages');
     
     this.textBoxData.channelId = this.matchMedia.channelId;
-    // this.textBoxData.subcollection = 'channelmessages/' + this.matchMedia.subID + '/threads';
     this.textBoxData.subcollection = 'channelmessages/' + this.matchMedia.subID + '/channelmessages';
     
     this.matchMedia.scrollToBottomThread = true;
