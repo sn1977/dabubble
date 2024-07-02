@@ -92,6 +92,8 @@ export class TextBoxComponent implements AfterViewInit {
         !this.matchMedia.inputValid
       ) {
       } else {
+        //console.log(`${this.textBoxData.collection}/${message.channelId}/${this.textBoxData.subcollection}`);
+        
         this.firestore.addChannelMessage(
           message,
           `${this.textBoxData.collection}/${message.channelId}/${this.textBoxData.subcollection}`,

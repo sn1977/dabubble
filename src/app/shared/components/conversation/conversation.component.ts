@@ -326,7 +326,8 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
 
       if (this.isThread) {
         this.channelMessage.messageId =
-          this.matchMedia.subID + '/threads/' + this.channelMessage.messageId;
+          // this.matchMedia.subID + '/threads/' + this.channelMessage.messageId;
+          this.matchMedia.subID + '/channelmessages/' + this.channelMessage.messageId;
       }
 
       if(this.isDirectMessage){
