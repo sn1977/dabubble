@@ -167,6 +167,7 @@ export class FirestoreService {
 
   async updateUser(item: User, id: string) {
     await setDoc(doc(this.getUsersRef(), id), item.toJSON());
+    this.globalSearch();
   }
 
   async updateChannel(docId: string, channelData: Channel) {
@@ -175,6 +176,7 @@ export class FirestoreService {
       await updateDoc(docRef, channelData.toJSON()).catch((err) => {
         console.log(err);
       });
+      this.globalSearch();
     }
   }
 
@@ -236,6 +238,7 @@ export class FirestoreService {
       })
       .then((docRef) => {
         console.log('Document written with ID: ', docRef?.id);
+        this.globalSearch();
         this.router.navigate(['/channel/' + docRef?.id]);
       });
   }
@@ -250,12 +253,13 @@ export class FirestoreService {
         console.error(err);
       })
       .then(async (docRef) => {
-        console.log('Document written with ID: ', docRef?.id);
+        console.log('Document written with ID: ', docRef?.id);        
         this.matchMedia.scrollToBottom = true;
         if (type && type === 'thread') {
           this.matchMedia.scrollToBottomThread = true;
           await this.updateThreadCounter();
         }
+        this.globalSearch();
       });
   }
 
@@ -422,6 +426,7 @@ export class FirestoreService {
     await updateDoc(docRef, item).catch((err) => {
       console.log(err);
     });
+    this.globalSearch();
   }
 
   async updateThreadCounter() {
@@ -479,7 +484,8 @@ export class FirestoreService {
   }
 
   async globalSearch() {
-
+    console.log('empty all');
+    
     this.globalValuesArray = [];
 
     const results = query(
