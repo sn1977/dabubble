@@ -9,9 +9,7 @@
   }"
 >
   @if(!isDesktop){
-  <app-search-input
-    (search)="this.dataService.searchWorkspace($event)"
-  ></app-search-input>
+  <app-search-input></app-search-input>
   }
 
   <mat-accordion [multi]="true">
@@ -46,8 +44,7 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
 
-      @for (channel of this.firestore.channelList; track $index) {
-      @if(this.dataService.containsPartialChannelValue(channel.name)){
+      @for (channel of this.firestore.channelList; track $index) {      
       @if(isChannelMember(channel.member)){ @if(panels[0].expanded){
 
       <div
@@ -86,13 +83,7 @@
           </span>
         </div>
       </div>
-      } } }} @if(this.dataService.channelMatches == 0 ||
-      this.firestore.channelList.length == 0){
-      <div class="nothingFound">
-        <span class="channel-tag"></span>
-        <span>Kein Channel gefunden</span>
-      </div>
-      }
+      } } }    
     </mat-expansion-panel>
 
     <div class="add-channel" (click)="navigateToAddChannel()">
@@ -196,8 +187,7 @@
         </div>
 
         @for (user of this.firestore.userList; track $index) { @if(user.id !==
-        authService.activeUserId){
-        @if(this.dataService.containsPartialUserValue(user.displayName)){
+        authService.activeUserId){        
         <div
           class="user-name"
           [ngClass]="
@@ -239,12 +229,8 @@
             </span>
           </div>
         </div>
-        } } } @if(this.dataService.userMatches == 0){
-        <div class="nothingFound">
-          <span class="user-tag"></span>
-          <span>Kein User gefunden</span>
-        </div>
-        }
+        } } 
+      
       </div>
       } }
     </mat-expansion-panel>

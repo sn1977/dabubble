@@ -22,16 +22,16 @@ export class DataService {
     firestore = inject(FirestoreService);
     authService = inject(AuthService);
 
-    constructor() {
-        this.loadInitialData();
-    }
+    // constructor() {
+    //     this.loadInitialData();
+    // }
 
-    // Method to load initial data
-    async loadInitialData() {
-        this.allChannels = await this.firestore.getAllChannels();
-        this.allUsers = await this.firestore.getAllUsers();
-        this.allMessages = await this.firestore.getAllMessages();
-    }
+    // // Method to load initial data
+    // async loadInitialData() {
+    //     this.allChannels = await this.firestore.getAllChannels();
+    //     this.allUsers = await this.firestore.getAllUsers();
+    //     this.allMessages = await this.firestore.getAllMessages();
+    // }
 
     async searchWorkspace(query: string) {
         if (query == "") {

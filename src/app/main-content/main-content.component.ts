@@ -18,15 +18,15 @@ import { NavigationService } from '../shared/services/navigation.service';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../shared/services/auth.service';
 import { ItemStateService } from '../shared/services/item-state.service';
-import { firstValueFrom } from 'rxjs';
-import { Channel } from '../../models/channel.class';
+// import { firstValueFrom } from 'rxjs';
+// import { Channel } from '../../models/channel.class';
 import { User } from '../../models/user.class';
 import { CommonModule, NgForOf, NgIf } from '@angular/common';
-import { MatDialog } from '@angular/material/dialog';
+// import { MatDialog } from '@angular/material/dialog';
 import { ChannelMessage } from '../../models/channel-message.class';
 import {SearchInputComponent} from '../shared/components/search-input/search-input.component';
 import { MatchMediaService } from '../shared/services/match-media.service';
-import { DataService } from '../shared/services/data.service';
+// import { DataService } from '../shared/services/data.service';
 
 @Component({
   selector: 'app-main-content',
@@ -58,7 +58,7 @@ export class MainContentComponent implements OnInit {
   router = inject(Router);
   authService = inject(AuthService);
   matchMedia = inject(MatchMediaService);
-  dataService = inject(DataService);
+  //dataService = inject(DataService);
   
   @Input() channelMessage!: ChannelMessage;
   @Input() isDesktop: boolean = false;
@@ -84,38 +84,35 @@ export class MainContentComponent implements OnInit {
     },
   ];
 
-  textData = { text: '' };
+  //textData = { text: '' };
   user: User = new User();
 
-  inputHasValue = false;
-  allChannels: Channel[] = [];
-  allUsers: User[] = [];
-  filteredResults: any[] = [];
-  noChannelFound: boolean = false;
-  noUserFound: boolean = false;
+  //inputHasValue = false;
+  // allChannels: Channel[] = [];
+  // allUsers: User[] = [];
+  //filteredResults: any[] = [];  
 
   constructor(
     public navigationService: NavigationService,
     private itemStateService: ItemStateService,
-    private dialog: MatDialog
   ) {}
   
   async ngOnInit() {
-    await this.listenForDataChanges();    
-    this.dataService.searchWorkspace('');
+    //await this.listenForDataChanges();    
+    //this.dataService.searchWorkspace('');
     this.getItemValues('users', this.authService.activeUserId);
   }
   
-  async listenForDataChanges(): Promise<void> {
-    const channelsPromise = firstValueFrom(this.firestore.getChannels());
-    const usersPromise = firstValueFrom(this.firestore.getUsers2());
+  // async listenForDataChanges(): Promise<void> {
+  //   const channelsPromise = firstValueFrom(this.firestore.getChannels());
+  //   const usersPromise = firstValueFrom(this.firestore.getUsers2());
 
-    const channels = await channelsPromise;
-    const users = await usersPromise;
+  //   // const channels = await channelsPromise;
+  //   // const users = await usersPromise;
 
-    this.dataService.allChannels = channels;    
-    this.dataService.allUsers = users;
-  }
+  //   // this.dataService.allChannels = channels;    
+  //   // this.dataService.allUsers = users;
+  // }
 
   getItemValues(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {

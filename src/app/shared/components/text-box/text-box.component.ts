@@ -80,6 +80,7 @@ export class TextBoxComponent implements AfterViewInit {
         reactions: (this.textBoxData.reactions = this.reactions),
         attachment: [`${this.textBoxData.inputField}`],
         threads: 0,
+        indexField: 'index',
       });
 
       if (this.textBoxData.subcollection != 'channelmessages') {
@@ -91,9 +92,7 @@ export class TextBoxComponent implements AfterViewInit {
         this.isNewMessage != undefined &&
         !this.matchMedia.inputValid
       ) {
-      } else {
-        console.log(`${this.textBoxData.collection}/${message.channelId}/${this.textBoxData.subcollection}`);
-        
+      } else {        
         let colID = '';
         if (this.matchMedia.collectionType === 'messages') {
           colID = 'messages';
@@ -106,11 +105,6 @@ export class TextBoxComponent implements AfterViewInit {
           `${colID}/${message.channelId}/${this.textBoxData.subcollection}`,
           type
         );
-        // this.firestore.addChannelMessage(
-        //   message,
-        //   `${this.textBoxData.collection}/${message.channelId}/${this.textBoxData.subcollection}`,
-        //   type
-        // );
       }
 
       this.textBoxData.inputField = '';

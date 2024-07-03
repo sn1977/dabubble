@@ -23,7 +23,8 @@ export class SearchInputComponent implements OnInit{
   showDropdown = false;
   filteredResults: any[] = [];
   firestore = inject(FirestoreService);
-  dataService = inject(DataService);
+  placeholder: string = '';
+  // dataService = inject(DataService);
   @Output() search = new EventEmitter<string>(); 
 
   constructor(){
@@ -31,33 +32,44 @@ export class SearchInputComponent implements OnInit{
   }
   ngOnInit(): void {
     this.firestore.globalSearch();
+    this.setPlaceholderText();
+  }
+
+  setPlaceholderText(){
+    if(this.isDesktop){
+      this.placeholder = 'Kanäle, Benutzer & Nachrichten durchsuchen';
+    }
+    else {
+      this.placeholder = 'Gehe zu...'
+    }
   }
 
   async onSearchChange(query: string) {
     if (query) {
-      await this.dataService.searchWorkspace(query);
-      this.filteredResults = [
-        ...this.dataService.channelMatches,
-        ...this.dataService.userMatches,
-        ...this.dataService.messageMatches
-      ];
-      this.showDropdown = this.filteredResults.length > 0;
-    } else {
-      this.filteredResults = [
-        ...this.dataService.allChannels,
-        ...this.dataService.allUsers,
-        ...this.dataService.allMessages
-      ];
+      // await this.dataService.searchWorkspace(query);
+      // this.filteredResults = [
+      //   ...this.dataService.channelMatches,
+      //   ...this.dataService.userMatches,
+      //   ...this.dataService.messageMatches
+      // ];
+      // this.showDropdown = this.filteredResults.length > 0;
       this.showDropdown = true;
+    } else {
+      // this.filteredResults = [
+      //   ...this.dataService.allChannels,
+      //   ...this.dataService.allUsers,
+      //   ...this.dataService.allMessages
+      // ];
+      //this.showDropdown = true;
       // this.filteredResults = [];
-      // this.showDropdown = false;
+      this.showDropdown = false;
       // this.search.emit('');  // Emit an empty string to indicate the input was cleared
     }
   }
 
-  onResultClick(result: any) {
-    this.textData.text = result.name || result.displayName || result.text;
-    this.showDropdown = false;
-    this.search.emit(this.textData.text);
-  }
+  // onResultClick(result: any) {
+  //   this.textData.text = result.name || result.displayName || result.text;
+  //   this.showDropdown = false;
+  //   this.search.emit(this.textData.text);
+  // }
 }

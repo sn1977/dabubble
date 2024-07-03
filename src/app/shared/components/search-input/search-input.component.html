@@ -52,17 +52,17 @@
     [(ngModel)]="textData.text"
     (ngModelChange)="onSearchChange($event)"
     [class.input-has-value]="inputHasValue"
-    placeholder="Gehe zu..."
+    placeholder="{{placeholder}}"
     required
     autocomplete="off"
     class="full-width input-field-design input-background-icon"
     [ngStyle]="{ 'border': isDesktop ? '1px solid #FFFFFF' : '1px solid #ADB0D9' }"
   />
-  <div *ngIf="showDropdown" class="dropdown-menu">
+  <!-- <div *ngIf="showDropdown" class="dropdown-menu">
     <ul>
       <li *ngFor="let result of filteredResults" (click)="onResultClick(result)">
         {{ result.name || result.displayName || result.text }}
       </li>
     </ul>
-  </div>
+  </div> -->
 </div>

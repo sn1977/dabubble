@@ -18,7 +18,6 @@ import {
   increment,
   serverTimestamp,
   collectionData,
-  or,
 } from '@angular/fire/firestore';
 import { User } from '../../../models/user.class';
 import { Channel } from '../../../models/channel.class';
@@ -47,6 +46,7 @@ export class FirestoreService {
   conversation: string | undefined;
   channelMessagesCount: number = 0;
   matchMedia = inject(MatchMediaService);
+  globalValuesArray: any = [];
 
   unsubUsers;
   unsubChannel;
@@ -153,6 +153,7 @@ export class FirestoreService {
       reactions: obj.reactions,
       attachment: obj.attachment,
       threads: obj.threads,
+      indexField: obj.indexField,
     };
   }
 
@@ -478,18 +479,42 @@ export class FirestoreService {
   }
 
   async globalSearch() {
+
+    this.globalValuesArray = [];
+
     const results = query(
-      collectionGroup(this.firestore, 'channelmessages'),      
-      or( 
-        where('creator', '==', 'M7BioHSQtFZaPYj0xa7jpR3cR7u1')
-      ),
+      collectionGroup(this.firestore, 'channelmessages'),
+      where('indexField', '==', 'index'),
       orderBy('createdAt')
     );
+
     const querySnapshot = await getDocs(results);
-    querySnapshot.forEach((doc) => {
-      console.log('Document path: ', doc.ref.path);
-      console.log(doc.id, ' => ', doc.data());
+    querySnapshot.forEach((doc) => {      
+      let collection = '';
+      let component = '';
+      let type = 'channelmessage';
+      if (doc.ref.path.startsWith('channels')) {
+        collection = 'channels';
+        component = 'channel';
+      } else if (doc.ref.path.startsWith('messages')) {
+        collection = 'messages';
+        component = 'direct-message';
+      }
+
+      const channelMessagesCount = doc.ref.path.split('channelmessages').length - 1;
+      const thread = channelMessagesCount > 1;
+
+      this.globalValuesArray.push({
+        ref: doc.ref.path,
+        type: type,
+        collection: collection,
+        component: component,
+        data: doc.data(),
+        thread: thread,
+      });
     });
+
+    console.log(this.globalValuesArray);
   }
   // 3:53
 }
