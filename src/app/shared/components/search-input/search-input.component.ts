@@ -37,7 +37,7 @@ export class SearchInputComponent implements OnInit{
 
   setPlaceholderText(){
     if(this.isDesktop){
-      this.placeholder = 'Kanäle, Benutzer & Nachrichten durchsuchen';
+      this.placeholder = 'Benutzer, Kanäle & Nachrichten durchsuchen';
     }
     else {
       this.placeholder = 'Gehe zu...'

@@ -253,7 +253,7 @@ export class FirestoreService {
         console.error(err);
       })
       .then(async (docRef) => {
-        console.log('Document written with ID: ', docRef?.id);        
+        console.log('Document written with ID: ', docRef?.id);
         this.matchMedia.scrollToBottom = true;
         if (type && type === 'thread') {
           this.matchMedia.scrollToBottomThread = true;
@@ -485,9 +485,14 @@ export class FirestoreService {
 
   async globalSearch() {
     console.log('empty all');
-    
     this.globalValuesArray = [];
+    await this.addChannelMessagesToGlobalSearch();
+    await this.addChannelsToGlobalSearch();
+    await this.addUsersToGlobalSearch();    
+  }
 
+  async addChannelMessagesToGlobalSearch()
+  {
     const results = query(
       collectionGroup(this.firestore, 'channelmessages'),
       where('indexField', '==', 'index'),
@@ -495,7 +500,7 @@ export class FirestoreService {
     );
 
     const querySnapshot = await getDocs(results);
-    querySnapshot.forEach((doc) => {      
+    querySnapshot.forEach((doc) => {
       let collection = '';
       let component = '';
       let type = 'channelmessage';
@@ -507,7 +512,8 @@ export class FirestoreService {
         component = 'direct-message';
       }
 
-      const channelMessagesCount = doc.ref.path.split('channelmessages').length - 1;
+      const channelMessagesCount =
+        doc.ref.path.split('channelmessages').length - 1;
       const thread = channelMessagesCount > 1;
 
       this.globalValuesArray.push({
@@ -522,5 +528,34 @@ export class FirestoreService {
 
     console.log(this.globalValuesArray);
   }
+
+  async addChannelsToGlobalSearch() {
+    for (let i = 0; i < this.channelList.length; i++) {
+      const element = this.channelList[i];
+      this.globalValuesArray.push({
+        ref: 'channels/' + element.id,
+        type: 'channel',
+        collection: 'channels',
+        component: 'channel',
+        thread: false,
+        data: element,
+      });
+    }   
+  }
+
+  async addUsersToGlobalSearch() {
+    for (let i = 0; i < this.userList.length; i++) {
+      const element = this.userList[i];
+      this.globalValuesArray.push({
+        ref: 'users/' + element.id,
+        type: 'user',
+        collection: 'users',
+        component: 'direct-message',
+        thread: false,
+        data: element,
+      });
+    }   
+  }
+
   // 3:53
 }
