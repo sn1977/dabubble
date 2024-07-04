@@ -4,6 +4,7 @@ import { DataService } from '../../services/data.service';
 import { MatchMediaService } from '../../services/match-media.service';
 import { CommonModule } from '@angular/common';
 import { FirestoreService } from '../../services/firestore.service';
+import { query } from 'firebase/firestore';
 
 @Component({
   selector: 'app-search-input',
@@ -24,7 +25,6 @@ export class SearchInputComponent implements OnInit{
   filteredResults: any[] = [];
   firestore = inject(FirestoreService);
   placeholder: string = '';
-  // dataService = inject(DataService);
   @Output() search = new EventEmitter<string>(); 
 
   constructor(){
@@ -43,33 +43,23 @@ export class SearchInputComponent implements OnInit{
       this.placeholder = 'Gehe zu...'
     }
   }
-
-  async onSearchChange(query: string) {
-    if (query) {
-      // await this.dataService.searchWorkspace(query);
-      // this.filteredResults = [
-      //   ...this.dataService.channelMatches,
-      //   ...this.dataService.userMatches,
-      //   ...this.dataService.messageMatches
-      // ];
-      // this.showDropdown = this.filteredResults.length > 0;
-      this.showDropdown = true;
-    } else {
-      // this.filteredResults = [
-      //   ...this.dataService.allChannels,
-      //   ...this.dataService.allUsers,
-      //   ...this.dataService.allMessages
-      // ];
-      //this.showDropdown = true;
-      // this.filteredResults = [];
-      this.showDropdown = false;
-      // this.search.emit('');  // Emit an empty string to indicate the input was cleared
-    }
+  
+  findeEintraegeMitWert(array: any, gesuchterText: any) {
+    const gesuchterTextKlein = gesuchterText.toLowerCase();
+  return array.filter((eintrag: { data: { text: any; displayName: any; email: any; description: any; name: any; }; }) => {
+    const text = (eintrag.data?.text || "").toLowerCase();
+    const displayName = (eintrag.data?.displayName || "").toLowerCase();
+    const email = (eintrag.data?.email || "").toLowerCase();
+    const description = (eintrag.data?.description || "").toLowerCase();
+    const name = (eintrag.data?.name || "").toLowerCase();
+    return text.includes(gesuchterTextKlein) || displayName.includes(gesuchterTextKlein) ||
+           description.includes(gesuchterTextKlein) || name.includes(gesuchterTextKlein);
+  });
   }
-
-  // onResultClick(result: any) {
-  //   this.textData.text = result.name || result.displayName || result.text;
-  //   this.showDropdown = false;
-  //   this.search.emit(this.textData.text);
-  // }
+  
+  startSearching(query: string){
+    const ergebnisse = this.findeEintraegeMitWert(this.firestore.globalValuesArray, query);      
+    console.log('Suchwert: ', query);    
+    console.log(ergebnisse);
+  }
 }
