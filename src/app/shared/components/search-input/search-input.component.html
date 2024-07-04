@@ -1,19 +1,30 @@
 <div class="input-field">
   <input
-  type="text"
-  name="text"
-  [(ngModel)]="textData.text"
-  (ngModelChange)="startSearching(textData.text)"
+    type="text"
+    name="text"
+    [(ngModel)]="textData.text"
+    (ngModelChange)="startSearching(textData.text)"
     [class.input-has-value]="inputHasValue"
-    placeholder="{{placeholder}}"
+    placeholder="{{ placeholder }}"
     required
     autocomplete="off"
     class="full-width input-field-design input-background-icon"
-    [ngStyle]="{ 'border': isDesktop ? '1px solid #FFFFFF' : '1px solid #ADB0D9' }"
+    [ngStyle]="{
+      border: isDesktop ? '1px solid #FFFFFF' : '1px solid #ADB0D9'
+    }"
   />
   @if(showDropdown){
-    <div class="dropdown-menu">
-      INHALT
+  <div class="dropdown-menu">
+    <div class="scroll">
+      @for (item of this.resultList; track $index) {
+      <div class="selection">
+        <span>{{ item.type }}</span>
+      </div>
+      }
+      @if(this.resultList.length == 0){
+        <div class="error">Kein Inhalt gefunden der "{{textData.text}}" enthält.</div>
+      }
     </div>
+  </div>  
   }
 </div>

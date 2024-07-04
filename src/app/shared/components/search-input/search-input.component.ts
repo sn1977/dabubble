@@ -21,10 +21,10 @@ export class SearchInputComponent implements OnInit{
   inputHasValue = false;
   matchMedia = inject(MatchMediaService);
   isDesktop: boolean = false;
-  showDropdown = false;
-  filteredResults: any[] = [];
+  showDropdown = false;  
   firestore = inject(FirestoreService);
   placeholder: string = '';
+  resultList: any [] = [];
   @Output() search = new EventEmitter<string>(); 
 
   constructor(){
@@ -52,14 +52,20 @@ export class SearchInputComponent implements OnInit{
     const email = (eintrag.data?.email || "").toLowerCase();
     const description = (eintrag.data?.description || "").toLowerCase();
     const name = (eintrag.data?.name || "").toLowerCase();
-    return text.includes(gesuchterTextKlein) || displayName.includes(gesuchterTextKlein) ||
+    return text.includes(gesuchterTextKlein) || displayName.includes(gesuchterTextKlein) ||email.includes(gesuchterTextKlein) ||
            description.includes(gesuchterTextKlein) || name.includes(gesuchterTextKlein);
   });
   }
   
   startSearching(query: string){
-    const ergebnisse = this.findeEintraegeMitWert(this.firestore.globalValuesArray, query);      
+    this.resultList = this.findeEintraegeMitWert(this.firestore.globalValuesArray, query);      
     console.log('Suchwert: ', query);    
-    console.log(ergebnisse);
+    console.log(this.resultList);
+    if(query){
+      this.showDropdown = true;
+    } else{
+      this.showDropdown = false;
+    }
+
   }
 }
