@@ -34,7 +34,7 @@ import {
     verifyBeforeUpdateEmail,
 } from "firebase/auth";
 import { doc, updateDoc } from "firebase/firestore";
-import { VerificationEmailDialogComponent } from "../../../verification-email-dialog/verification-email-dialog.component";
+import { VerificationEmailDialogComponent } from "../../auth/verification-email-dialog/verification-email-dialog.component";
 
 @Component({
     selector: "app-edit-profil-card",
@@ -153,6 +153,7 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
           await reauthenticateWithCredential(user, credentials);
           await verifyBeforeUpdateEmail(user, newEmail, { url: window.location.href });
           this.dialog.open(VerificationEmailDialogComponent);
+          
       } catch (error: any) {
           console.error("Error updating email:", error.code, error.message);
           alert(`Error: ${error.message}`);

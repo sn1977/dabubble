@@ -556,6 +556,4 @@ export class FirestoreService {
       });
     }   
   }
-
-  // 3:53
 }

@@ -19,6 +19,11 @@
       @for (item of this.resultList; track $index) {
       <div class="selection">
         <span>{{ item.type }}</span>
+        <span>{{ item.thread }}</span>
+        <span>{{ item.data.text }}</span>
+        <span>{{ item.data.name }}</span>
+        <span>{{ item.data.description }}</span>
+        <span>{{ item.data.displayName }}</span>
       </div>
       } @if(this.resultList.length == 0){
       <div class="error">

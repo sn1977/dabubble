@@ -1,9 +1,10 @@
 @if(mode === 'resetPassword'){
     <app-reset-password></app-reset-password>  
 }
-@if(mode === 'verifyAndChangeEmail'){  
+@if(mode === 'verifyAndChangeEmail' || mode === 'recoverEmail'){  
   <app-verify-and-change-email [oobCode]="oobCode!"></app-verify-and-change-email>
 }
-@if(!mode || (mode !== 'resetPassword' && mode !== 'verifyAndChangeEmail')){    
+
+@if(!mode || (mode !== 'resetPassword' && mode !== 'verifyAndChangeEmail' && mode !== 'recoverEmail')){    
   <h1>Invalid action</h1>
 }
