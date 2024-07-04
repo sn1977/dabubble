@@ -13,6 +13,7 @@
   max-height: calc(100vh - 80px);
   padding: 30px 16px;
   overflow-y: auto;
+  @include dFlex($jc: flex-start, $ai: flex-start, $fd: column, $g: 16px);
 }
 
 .p-0 {
@@ -26,7 +27,6 @@
 .channel-menu {
   @include dFlex($ai: center, $fd: row);
   width: 100%;
-  //padding-left: 16px;
 
   .plus-icon:hover {
     background-color: #eceefe;
@@ -53,21 +53,16 @@
   }
 }
 
-.nothingFound {
-  font-weight: 400;
-  font-size: 0.778rem;
-  line-height: 16.8px;
-  color: #ed1e79;
-  height: 17px;
-  font-family: "Nunito", serif;
-  margin-top: 4px;
+app-search-input,
+mat-accordion {
+  width: 100%;
 }
 
 mat-expansion-panel {
   overflow: hidden;
 }
 
-.mat-content.mat-content-hide-toggle{
+.mat-content.mat-content-hide-toggle {
   margin: 0 !important;
 }
 
@@ -75,33 +70,7 @@ mat-expansion-panel {
   overflow: hidden !important;
 }
 
-/* mat-expansion-panel {
-  &.no-overflow {
-    overflow: hidden;
-  }
-
-  &.hide-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-
-  &.hide-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-} */
-
-/* mat-expansion-panel {
-  &.hide-scrollbar {
-    scrollbar-width: 0;
-    -ms-overflow-style: none;
-
-    &::-webkit-scrollbar {
-      width: 0;
-    }
-  }
-} */
-
-.mat-expansion-panel-body{
+.mat-expansion-panel-body {
   padding: 0;
 }
 
@@ -156,7 +125,7 @@ mat-expansion-panel:last-child {
 
 .pf {
   @include dFlex($jc: center, $ai: center, $fd: row, $g: 6px);
-  img:first-child{
+  img:first-child {
     border: 2px solid #eceefe;
   }
 }
@@ -169,7 +138,7 @@ mat-expansion-panel:last-child {
 .pop-up {
   background-color: rgba(221, 1, 1, 0.7);
   height: 20px;
-  padding: 3px;  
+  padding: 3px;
   display: flex;
   justify-content: center;
   border-radius: 10px;
@@ -199,7 +168,7 @@ mat-expansion-panel:last-child {
   padding: 10px 5px;
   cursor: pointer;
 
-  &:hover{
+  &:hover {
     background-color: #eceefe;
     border-radius: 20px;
   }
@@ -217,6 +186,15 @@ mat-expansion-panel:last-child {
 
 .pl-7 {
   padding-left: 23px;
+}
+
+.mat-expansion-panel-header,
+.mat-expansion-panel-header.mat-expanded {
+  height: 48px;
+}
+
+.mat-expansion-panel-spacing {
+  margin: 0;
 }
 
 //.btn-position {
@@ -258,5 +236,4 @@ mat-expansion-panel:last-child {
   mat-expansion-panel:last-child {
     margin-bottom: 10px !important;
   }
-
 }
