@@ -20,11 +20,12 @@
       <div class="selection">
         <span>{{ item.type }}</span>
       </div>
-      }
-      @if(this.resultList.length == 0){
-        <div class="error">Kein Inhalt gefunden der "{{textData.text}}" enthält.</div>
+      } @if(this.resultList.length == 0){
+      <div class="error">
+        Kein Inhalt gefunden der "{{ textData.text }}" enthält.
+      </div>
       }
     </div>
-  </div>  
+  </div>
   }
 </div>

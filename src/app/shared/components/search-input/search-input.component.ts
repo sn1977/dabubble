@@ -24,7 +24,8 @@ export class SearchInputComponent implements OnInit{
   showDropdown = false;  
   firestore = inject(FirestoreService);
   placeholder: string = '';
-  resultList: any [] = [];
+  resultList: any [] = [];  
+  groupedItems: { [key: string]: any[] } = {};
   @Output() search = new EventEmitter<string>(); 
 
   constructor(){
@@ -65,7 +66,6 @@ export class SearchInputComponent implements OnInit{
       this.showDropdown = true;
     } else{
       this.showDropdown = false;
-    }
-
+    }    
   }
 }
