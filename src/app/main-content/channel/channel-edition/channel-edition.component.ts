@@ -48,14 +48,17 @@ export class ChannelEditionComponent implements OnInit {
       this.channel.name.toLowerCase() !== this.channelData.name.toLowerCase()
     ) {
       this.channelNameExists = this.checkChannelName(this.channelData.name);
+      //NOTE - für was ist dieser Abschnitt?
 
       if (this.channelNameExists == false) {
         if (this.channelData.name === '') {
-          this.channelData.name = this.channel.name;
+          this.channelData.name = this.channel.name;         
         }
-        if (this.channelData.description === '') {
-          this.channelData.description = this.channel.description;
-        }
+        // if (this.channelData.description === '') {
+          // this.channelData.description = this.channel.description;
+        // }
+        
+        this.channelData.description = this.channelData.description === '' ? this.channel.description : this.channelData.description;
         if (
           this.channelData.member.length === 0 &&
           Array.isArray(this.channel.member)
@@ -87,6 +90,8 @@ export class ChannelEditionComponent implements OnInit {
       return false;
     }
   }
+
+  
 
   toggleEdit(field: string) {
     if (field === 'channelName') {
