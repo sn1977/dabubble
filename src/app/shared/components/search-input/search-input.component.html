@@ -28,7 +28,9 @@
         }
           <li *ngFor="let item of type.value">
             @if(type.key === 'user' ){
-            <span>{{ item.data.displayName }} 
+            <span>
+              <img class="avatar" src="{{ item.data.avatar }}" alt="">              
+              {{ item.data.displayName }}
               @if(item.data.email !== ''){                
                 <span class="font-italic">(Email: {{ item.data.email }})</span>
               }

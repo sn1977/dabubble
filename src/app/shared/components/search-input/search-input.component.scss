@@ -87,6 +87,16 @@
     font-style:italic;
   }
 
+  .avatar{
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+  }
+
+  li>span{
+    @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 8px);
+  }
+
   >li:hover {
       cursor: pointer;
       background-color: #eceefe;
