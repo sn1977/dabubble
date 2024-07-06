@@ -19,16 +19,16 @@
       <div *ngFor="let type of groupedData | keyvalue">
         <div class="selection">
           @switch (type.key) { @case ("channelmessage") {
-          <div class="type">Nachricht</div>
+          <div class="type">Nachricht <span class="font-italic"> [{{this.groupedData['channelmessage'].length}} Ergebnisse]</span></div>
           } @case ("channel") {
-          <div class="type">Kanal</div>
+          <div class="type">Kanal <span class="font-italic"> [{{this.groupedData['channel'].length}} Ergebnisse]</span></div>
           } @case ("user") {
-          <div class="type">Benutzer</div>
+          <div class="type">Benutzer <span class="font-italic"> [{{this.groupedData['user'].length}} Ergebnisse]</span></div>
           } 
         }
           <li *ngFor="let item of type.value">
             @if(type.key === 'user' ){
-            <span>
+              <span (click)="openSelectedResult(item.component, item.data.id, item.data.displayName, item.thread)">
               <img class="avatar" src="{{ item.data.avatar }}" alt="">              
               {{ item.data.displayName }}
               @if(item.data.email !== ''){                
@@ -36,18 +36,19 @@
               }
             </span>
             } @if(type.key === 'channel' ){
-            <span>{{ item.data.name }} 
+            <span (click)="openSelectedResult(item.type, item.data.id, item.data.name, item.thread)">#{{ item.data.name }} 
               @if(item.data.description !== ''){                
-                <span class="font-italic">(Beschreibung: {{ item.data.description }})</span>
+                <span                 
+                class="font-italic">(Beschreibung: {{ item.data.description }})</span>
               }
-
             </span>
             }
             @if(type.key === 'channelmessage' ){
-              <span>{{ item.data.text }} </span>
-              @if(item.thread){                
-                <span class="font-italic">(Thread)</span>
-              }
+              <!-- <span (click)="openSelectedResult(item.component, item.data.creator, item.data.name, item.thread)">Nachricht -->
+              <span (click)="openSelectedResult(item.component, item.data.channelId, item.data.name, item.thread)">Nachricht
+                @if(item.thread){
+                  <span class="font-italic"> [Thread]</span>
+                }: "{{ item.data.text }}" von {{ item.data.creator }} {{ item.ref }} </span>
               }
           </li>
         </div>

@@ -483,8 +483,7 @@ export class FirestoreService {
     );
   }
 
-  async globalSearch() {
-    console.log('empty all');
+  async globalSearch() {    
     this.globalValuesArray = [];
     await this.addChannelMessagesToGlobalSearch();
     await this.addChannelsToGlobalSearch();
@@ -500,15 +499,12 @@ export class FirestoreService {
     );
 
     const querySnapshot = await getDocs(results);
-    querySnapshot.forEach((doc) => {
-      let collection = '';
+    querySnapshot.forEach((doc) => {      
       let component = '';
       let type = 'channelmessage';
-      if (doc.ref.path.startsWith('channels')) {
-        collection = 'channels';
+      if (doc.ref.path.startsWith('channels')) {        
         component = 'channel';
-      } else if (doc.ref.path.startsWith('messages')) {
-        collection = 'messages';
+      } else if (doc.ref.path.startsWith('messages')) {        
         component = 'direct-message';
       }
 
@@ -519,7 +515,6 @@ export class FirestoreService {
       this.globalValuesArray.push({
         ref: doc.ref.path,
         type: type,
-        collection: collection,
         component: component,
         data: doc.data(),
         thread: thread,
@@ -535,7 +530,6 @@ export class FirestoreService {
       this.globalValuesArray.push({
         ref: 'channels/' + element.id,
         type: 'channel',
-        collection: 'channels',
         component: 'channel',
         thread: false,
         data: element,
@@ -549,7 +543,6 @@ export class FirestoreService {
       this.globalValuesArray.push({
         ref: 'users/' + element.id,
         type: 'user',
-        collection: 'users',
         component: 'direct-message',
         thread: false,
         data: element,

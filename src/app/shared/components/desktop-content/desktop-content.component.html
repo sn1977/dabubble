@@ -27,7 +27,7 @@
   <mat-card class="menu" id="toggleDiv" [ngStyle]="{'display': isCollapsed ? 'none' : 'flex' }">
     <mat-card-content class="test">
       <div class="logo">
-        <div>
+        <div class="pointer" [routerLink]="[ '/' ]">
           <img class="workspace-logo" src="./assets/img/icon/workspace_logo.svg" alt="" >
           <span>Devspace</span>
         </div>

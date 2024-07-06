@@ -1,8 +1,8 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MainContentComponent } from '../../../main-content/main-content.component';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
-import { RouterOutlet } from '@angular/router';
+import { RouterModule, RouterOutlet } from '@angular/router';
 import { ThreadComponent } from "../thread/thread.component";
 import { MatchMediaService } from '../../services/match-media.service';
 import { Router, RouterLink } from '@angular/router';
@@ -16,7 +16,8 @@ import { Router, RouterLink } from '@angular/router';
       CommonModule, 
       MatCardModule, 
       RouterOutlet,
-      RouterLink, 
+      RouterLink,
+      RouterModule, 
       ThreadComponent
     ]
 })

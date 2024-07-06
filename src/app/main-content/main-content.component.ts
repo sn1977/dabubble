@@ -18,15 +18,11 @@ import { NavigationService } from '../shared/services/navigation.service';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../shared/services/auth.service';
 import { ItemStateService } from '../shared/services/item-state.service';
-// import { firstValueFrom } from 'rxjs';
-// import { Channel } from '../../models/channel.class';
 import { User } from '../../models/user.class';
 import { CommonModule, NgForOf, NgIf } from '@angular/common';
-// import { MatDialog } from '@angular/material/dialog';
 import { ChannelMessage } from '../../models/channel-message.class';
 import {SearchInputComponent} from '../shared/components/search-input/search-input.component';
 import { MatchMediaService } from '../shared/services/match-media.service';
-// import { DataService } from '../shared/services/data.service';
 
 @Component({
   selector: 'app-main-content',
@@ -58,7 +54,6 @@ export class MainContentComponent implements OnInit {
   router = inject(Router);
   authService = inject(AuthService);
   matchMedia = inject(MatchMediaService);
-  //dataService = inject(DataService);
   
   @Input() channelMessage!: ChannelMessage;
   @Input() isDesktop: boolean = false;
@@ -71,7 +66,7 @@ export class MainContentComponent implements OnInit {
       iconPathOpened: 'assets/img/icon/workspaces.png',
       iconPathClosed: 'assets/img/icon/workspaces_color.png',
       title: 'Channels',
-      titleColor: '#000000', // Startfarbe beim Öffnen
+      titleColor: '#000000',
     },
     {
       expanded: true,
@@ -80,40 +75,20 @@ export class MainContentComponent implements OnInit {
       iconPathOpened: 'assets/img/icon/account_circle_big.png',
       iconPathClosed: 'assets/img/icon/account_circle_color.png',
       title: 'Direktnachrichten',
-      titleColor: '#000000', // Startfarbe beim Öffnen
+      titleColor: '#000000',
     },
   ];
 
-  //textData = { text: '' };
   user: User = new User();
-
-  //inputHasValue = false;
-  // allChannels: Channel[] = [];
-  // allUsers: User[] = [];
-  //filteredResults: any[] = [];  
-
   constructor(
     public navigationService: NavigationService,
     private itemStateService: ItemStateService,
   ) {}
   
-  async ngOnInit() {
-    //await this.listenForDataChanges();    
-    //this.dataService.searchWorkspace('');
+  async ngOnInit() {    
     this.getItemValues('users', this.authService.activeUserId);
   }
   
-  // async listenForDataChanges(): Promise<void> {
-  //   const channelsPromise = firstValueFrom(this.firestore.getChannels());
-  //   const usersPromise = firstValueFrom(this.firestore.getUsers2());
-
-  //   // const channels = await channelsPromise;
-  //   // const users = await usersPromise;
-
-  //   // this.dataService.allChannels = channels;    
-  //   // this.dataService.allUsers = users;
-  // }
-
   getItemValues(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {
       this.user = new User(this.firestore.user);
@@ -124,29 +99,11 @@ export class MainContentComponent implements OnInit {
     return members.includes(this.authService.activeUserId);
   }
 
- /*  onPanelOpened(index: number) {
-    this.panels[index].expanded = true;
-    this.panels[index].arrowImagePath = 'assets/img/icon/arrow_drop_down.png';
-    this.panels[index].iconPath = this.panels[index].iconPathOpened;
-    this.panels[index].titleColor = '#000000'; // Farbe, wenn geöffnet
-  }
-
-  onPanelClosed(index: number) {
-    this.panels[index].expanded = false;
-    this.panels[index].arrowImagePath =
-      'assets/img/icon/arrow_drop_down_color.png';
-    this.panels[index].iconPath = this.panels[index].iconPathClosed;
-    this.panels[index].titleColor = '#535AF1'; // Farbe, wenn geschlossen
-  } */
-
   onPanelOpened(panel: MatExpansionPanel, index: number) {
     this.panels[index].expanded = true;
     this.panels[index].arrowImagePath = 'assets/img/icon/arrow_drop_down.png';
     this.panels[index].iconPath = this.panels[index].iconPathOpened;
-    this.panels[index].titleColor = '#000000'; // Farbe, wenn geöffnet
-    // panel._body.nativeElement.classList.remove('no-overflow');
-    // panel._body.nativeElement.classList.remove('hide-scrollbar');
-    // panel._body.nativeElement.classList.remove('hide-overflow');
+    this.panels[index].titleColor = '#000000';
   }
   
   onPanelClosed(panel: MatExpansionPanel, index: number) {
@@ -154,14 +111,11 @@ export class MainContentComponent implements OnInit {
     this.panels[index].arrowImagePath =
       'assets/img/icon/arrow_drop_down_color.png';
     this.panels[index].iconPath = this.panels[index].iconPathClosed;
-    this.panels[index].titleColor = '#535AF1'; // Farbe, wenn geschlossen
-    // panel._body.nativeElement.classList.add('no-overflow');
-    // panel._body.nativeElement.classList.add('hide-scrollbar');
-    // panel._body.nativeElement.classList.add('hide-overflow');
+    this.panels[index].titleColor = '#535AF1';
   }  
 
   onAddClick(event: MouseEvent): void {
-    event.stopPropagation(); // Verhindert, dass das Click-Event weiter zum mat-expansion-panel propagiert wird.
+    event.stopPropagation();
     this.navigateToAddChannel();
   }
   

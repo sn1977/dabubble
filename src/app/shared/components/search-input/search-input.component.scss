@@ -78,13 +78,14 @@
   list-style-type: none;
 
   .type{
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: 700;
     color: #535af1;
   }
 
   .font-italic{
     font-style:italic;
+    font-size: 0.8rem;
   }
 
   .avatar{
@@ -93,8 +94,11 @@
     border-radius: 50%;
   }
 
-  li>span{
-    @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 8px);
+  li{
+    @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 4px);
+    >span{
+      @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 4px);
+    }
   }
 
   >li:hover {
