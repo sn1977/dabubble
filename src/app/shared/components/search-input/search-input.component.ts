@@ -35,9 +35,12 @@ export class SearchInputComponent implements OnInit {
   constructor() {
     this.isDesktop = this.matchMedia.checkIsDesktop();
   }
-  ngOnInit(): void {
+  
+  async ngOnInit(): Promise<void> {
     this.firestore.globalSearch();
     this.setPlaceholderText();
+
+    await this.getUserName('M7BioHSQtFZaPYj0xa7jpR3cR7u1');
   }
 
   setPlaceholderText() {
@@ -48,10 +51,10 @@ export class SearchInputComponent implements OnInit {
     }
   }
 
-  findeEintraegeMitWert(array: any, gesuchterText: any) {
-    const gesuchterTextKlein = gesuchterText.toLowerCase();
+  findeEintraegeMitWert(array: any, searchInputValue: any) {
+    const searchInputValueSmall = searchInputValue.toLowerCase();
     return array.filter(
-      (eintrag: {
+      (entry: {
         data: {
           text: any;
           displayName: any;
@@ -60,17 +63,17 @@ export class SearchInputComponent implements OnInit {
           name: any;
         };
       }) => {
-        const text = (eintrag.data?.text || '').toLowerCase();
-        const displayName = (eintrag.data?.displayName || '').toLowerCase();
-        const email = (eintrag.data?.email || '').toLowerCase();
-        const description = (eintrag.data?.description || '').toLowerCase();
-        const name = (eintrag.data?.name || '').toLowerCase();
+        const text = (entry.data?.text || '').toLowerCase();
+        const displayName = (entry.data?.displayName || '').toLowerCase();
+        const email = (entry.data?.email || '').toLowerCase();
+        const description = (entry.data?.description || '').toLowerCase();
+        const name = (entry.data?.name || '').toLowerCase();
         return (
-          text.includes(gesuchterTextKlein) ||
-          displayName.includes(gesuchterTextKlein) ||
-          email.includes(gesuchterTextKlein) ||
-          description.includes(gesuchterTextKlein) ||
-          name.includes(gesuchterTextKlein)
+          text.includes(searchInputValueSmall) ||
+          displayName.includes(searchInputValueSmall) ||
+          email.includes(searchInputValueSmall) ||
+          description.includes(searchInputValueSmall) ||
+          name.includes(searchInputValueSmall)
         );
       }
     );
@@ -113,5 +116,15 @@ export class SearchInputComponent implements OnInit {
 
     this.router.navigate([type, id]);
 
+  }
+
+  async getUserName(user: string){
+    if(this.firestore.userList){
+
+      // await this.firestore.userList;    
+      console.log(this.firestore.userList);    
+      console.log(user);
+    }
+    // return 
   }
 }

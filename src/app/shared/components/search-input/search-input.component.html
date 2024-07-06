@@ -48,7 +48,8 @@
               <span (click)="openSelectedResult(item.component, item.data.channelId, item.data.name, item.thread)">Nachricht
                 @if(item.thread){
                   <span class="font-italic"> [Thread]</span>
-                }: "{{ item.data.text }}" von {{ item.data.creator }} {{ item.ref }} </span>
+                }: "{{ item.data.text }}" von {{ item.data.creator }} </span>
+                <!-- }: "{{ item.data.text }}" von {{ getUserName(item.data.creator) }} </span> -->
               }
           </li>
         </div>
