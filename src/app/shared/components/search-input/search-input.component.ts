@@ -24,8 +24,8 @@ export class SearchInputComponent implements OnInit{
   showDropdown = false;  
   firestore = inject(FirestoreService);
   placeholder: string = '';
-  resultList: any [] = [];  
-  groupedItems: { [key: string]: any[] } = {};
+  resultList: any [] = [];
+  groupedData: { [key: string]: any[] } = {};
   @Output() search = new EventEmitter<string>(); 
 
   constructor(){
@@ -58,14 +58,28 @@ export class SearchInputComponent implements OnInit{
   });
   }
   
-  startSearching(query: string){
+  async startSearching(query: string){
+    this.groupedData = {};
     this.resultList = this.findeEintraegeMitWert(this.firestore.globalValuesArray, query);      
-    console.log('Suchwert: ', query);    
-    console.log(this.resultList);
+    // console.log('Suchwert: ', query);    
+    // console.log(this.resultList);
     if(query){
       this.showDropdown = true;
     } else{
       this.showDropdown = false;
-    }    
+    }
+    await this.groupDataByType();
+    console.log(this.groupedData);    
+  }  
+
+  async groupDataByType() {
+    this.resultList.forEach(item => {
+      const type = item.type;
+      if (!this.groupedData[type]) {
+        this.groupedData[type] = [];
+      }
+      this.groupedData[type].push(item);
+    });
   }
+
 }

@@ -16,16 +16,41 @@
   @if(showDropdown){
   <div class="dropdown-menu">
     <div class="scroll">
-      @for (item of this.resultList; track $index) {
-      <div class="selection">
-        <span>{{ item.type }}</span>
-        <span>{{ item.thread }}</span>
-        <span>{{ item.data.text }}</span>
-        <span>{{ item.data.name }}</span>
-        <span>{{ item.data.description }}</span>
-        <span>{{ item.data.displayName }}</span>
+      <div *ngFor="let type of groupedData | keyvalue">
+        <div class="selection">
+          @switch (type.key) { @case ("channelmessage") {
+          <div class="type">Nachricht</div>
+          } @case ("channel") {
+          <div class="type">Kanal</div>
+          } @case ("user") {
+          <div class="type">Benutzer</div>
+          } 
+        }
+          <li *ngFor="let item of type.value">
+            @if(type.key === 'user' ){
+            <span>{{ item.data.displayName }} 
+              @if(item.data.email !== ''){                
+                <span class="font-italic">(Email: {{ item.data.email }})</span>
+              }
+            </span>
+            } @if(type.key === 'channel' ){
+            <span>{{ item.data.name }} 
+              @if(item.data.description !== ''){                
+                <span class="font-italic">(Beschreibung: {{ item.data.description }})</span>
+              }
+
+            </span>
+            }
+            @if(type.key === 'channelmessage' ){
+              <span>{{ item.data.text }} </span>
+              @if(item.thread){                
+                <span class="font-italic">(Thread)</span>
+              }
+              }
+          </li>
+        </div>
       </div>
-      } @if(this.resultList.length == 0){
+      @if(this.resultList.length == 0){
       <div class="error">
         Kein Inhalt gefunden der "{{ textData.text }}" enthält.
       </div>

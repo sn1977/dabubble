@@ -74,15 +74,27 @@
 }
 
 .selection{
-  padding: 8px;
-  &:hover {
-    cursor: pointer;
-    background-color: #eceefe;
-    border-radius: 30px;
+  padding: 8px;  
+  list-style-type: none;
+
+  .type{
+    font-size: 1rem;
     font-weight: 700;
     color: #535af1;
   }
-}
+
+  .font-italic{
+    font-style:italic;
+  }
+
+  >li:hover {
+      cursor: pointer;
+      background-color: #eceefe;
+      border-radius: 30px;
+      font-weight: 700;
+      color: #535af1;
+    }
+  }
 
 .error{
   color: #ed1e79;
