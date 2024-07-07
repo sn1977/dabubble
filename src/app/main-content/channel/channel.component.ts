@@ -46,19 +46,50 @@ import { ProgressSpinnerComponent } from "../../shared/components/progress-spinn
         ProgressSpinnerComponent
     ]
 })
+
 export class ChannelComponent implements OnInit {
+  /**
+   * The Firestore service used for interacting with the Firebase Firestore database.
+   */
   firestore = inject(FirestoreService);
+  /**
+   * The router object for navigating between routes.
+   */
   router = inject(Router);
+  /**
+   * The ID of the item.
+   */
   itemID: any = '';
+  /**
+   * Represents a user in the channel component.
+   */
   user: User = new User();
+  /**
+   * Represents a channel.
+   */
   channel: Channel = new Channel();
+  /**
+   * Represents the channel messages.
+   */
   channelMessages: ChannelMessage = new ChannelMessage();
+  /**
+   * Represents a list of channels.
+   */
   channelList: any[] = [];
+  /**
+   * The Firebase authentication instance.
+   */
   firebaseAuth = inject(Auth);
   authService = inject(AuthService);
   isDesktop: boolean = false;
   matchMedia = inject(MatchMediaService);
+  /**
+   * The data service used in the channel component.
+   */
   dataService = inject(DataService);
+  /**
+   * Represents the data for the text box in the channel component.
+   */
   textBoxData: any = {
     placeholder: 'Nachricht an #',
     channelName: '',
@@ -69,6 +100,9 @@ export class ChannelComponent implements OnInit {
   };
   hovering = false;
 
+  /**
+   * The reference to the message content element.
+   */
   @ViewChild('messageContent') messageContent!: ElementRef;
 
   constructor(
@@ -81,6 +115,9 @@ export class ChannelComponent implements OnInit {
   )
   {}
 
+  /**
+   * Represents the channel data.
+   */
   channelData = {
     creator: this.channel.creator,
     description: this.channel.description,
@@ -88,6 +125,7 @@ export class ChannelComponent implements OnInit {
     name: this.channel.name,
   };
 
+  //TODO - Funktion muss noch gekürzt werden!
   async ngOnInit(): Promise<void> {
     this.dataService.searchWorkspace('');
     this.isDesktop = this.matchMedia.checkIsDesktop();
@@ -123,14 +161,31 @@ export class ChannelComponent implements OnInit {
     });
   }
 
+  /**
+   * Filters the users based on the provided member ID.
+   * 
+   * @returns An array of filtered users.
+   */
   filterUsers() {
     return this.filterUsersById(this.firestore.getUsers(), this.channel.member);
   }
   
+  /**
+   * Filters an array of users based on their IDs.
+   *
+   * @param usersArray - The array of users to filter.
+   * @param idsArray - The array of IDs to filter by.
+   * @returns An array of users whose IDs are included in the `idsArray`.
+   */
   filterUsersById(usersArray: any[], idsArray: string | any[]) {
     return usersArray.filter((user) => idsArray.includes(user.id));
   }
 
+  /**
+   * Retrieves the values of an item from a collection asynchronously.
+   * @param collection - The name of the collection to retrieve the item from.
+   * @param itemID - The ID of the item to retrieve.
+   */
   async getItemValues(collection: string, itemID: string) {
     await this.delay(200);
     this.firestore.getSingleItemData(collection, itemID, () => {
@@ -140,6 +195,10 @@ export class ChannelComponent implements OnInit {
     });
   }
 
+  /**
+   * Scrolls the message content to the bottom.
+   * If `scrollToBottom` is set to `true` in `matchMedia`, it scrolls the content smoothly to the bottom.
+   */
   async scrollToBottom() {
     await this.delay(200);
 
@@ -154,12 +213,21 @@ export class ChannelComponent implements OnInit {
     this.matchMedia.scrollToBottom = false;
   }
 
+  /**
+   * Waits for the user data to be available.
+   * @returns A Promise that resolves when the user data is available.
+   */
   async waitForUserData(): Promise<void> {
     while (!this.authService.activeUserAccount) {
       await this.delay(100);
     }
   }
 
+  /**
+   * Delays the execution of code for the specified number of milliseconds.
+   * @param ms - The number of milliseconds to delay.
+   * @returns A Promise that resolves after the specified delay.
+   */
   delay(ms: number): Promise<void> {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
@@ -169,6 +237,12 @@ export class ChannelComponent implements OnInit {
     this.getItemValuesProfile('users', id);
   }
 
+  /**
+   * Toggles the display of an overlay element based on its ID.
+   * If the overlay is currently hidden, it will be shown. If it is currently shown, it will be hidden.
+   *
+   * @param overlayId - The ID of the overlay element to toggle.
+   */
   toggleOverlay(overlayId: string): void {
     const newOverlay = document.getElementById(overlayId);
     if (newOverlay) {
@@ -177,6 +251,10 @@ export class ChannelComponent implements OnInit {
     }
   }
 
+  /**
+   * Closes the overlay with the specified ID.
+   * @param overlayId - The ID of the overlay to close.
+   */
   closeOverlay(overlayId: string): void {
     const overlay = document.getElementById(overlayId) as HTMLElement;
     if (overlay) {
@@ -184,26 +262,51 @@ export class ChannelComponent implements OnInit {
     }
   }
 
+  /**
+   * Opens the bottom sheet.
+   */
   openBottomSheet(): void {
     this._bottomSheet.open(BottomSheetComponent);
   }
 
+  /**
+   * Opens a channel based on the provided path and document reference ID.
+   * Navigates to the specified path with the document reference ID as a parameter.
+   *
+   * @param event - The mouse event that triggered the channel opening.
+   * @param path - The path of the channel to open.
+   */
   openChannel(event: MouseEvent, path: string) {
     const docRefId = (event.currentTarget as HTMLElement).id;
     this.router.navigate(['/' + path + '/' + docRefId]);
   }
 
+  /**
+   * Retrieves the values of an item from a specified collection and assigns them to the component's user property.
+   * 
+   * @param collection - The name of the collection to retrieve the item from.
+   * @param itemID - The ID of the item to retrieve.
+   */
   getItemValuesProfile(collection: string, itemID: string) {
     this.firestore.getSingleItemData(collection, itemID, () => {
       this.user = new User(this.firestore.user);
     });
   }
 
+  /**
+   * Opens a dialog for direct messaging with a user.
+   * @param user - The user to open the dialog with.
+   * @param itemId - The ID of the item associated with the dialog.
+   */
   openDialog(user: User, itemId: string) {
     this.dialogService.openDirectMessageDialog(user, itemId);
     this.closeOverlay('overlay1');
   }
 
+  /**
+   * Gets the number of members in the channel.
+   * @returns The number of members in the channel.
+   */
   get memberCount(): number {
     return this.channel.member.length;
   }

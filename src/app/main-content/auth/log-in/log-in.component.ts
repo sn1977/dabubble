@@ -38,19 +38,48 @@ import { DesktopFooterComponent } from '../../../shared/components/desktop-foote
   ],
 })
 export class LogInComponent implements OnInit {
+  /**
+   * Represents the contact data for the user.
+   */
   contactData = {
     name: '',
     email: '',
     password: '',
   };
+  /**
+   * The HttpClient instance used for making HTTP requests.
+   */
   http = inject(HttpClient);
+  /**
+   * The authentication service used for logging in.
+   */
   authService = inject(AuthService);
+  /**
+   * The matchMedia variable represents the MatchMediaService used for media query matching.
+   */
   matchMedia = inject(MatchMediaService);
+  /**
+   * The router object for navigating between routes.
+   */
   router = inject(Router);
+  /**
+   * Represents the error message for the login component.
+   * This property can hold a string value or null.
+   */
   errorMessage: string | null = null;
+  /**
+   * Specifies whether the intro animation should be played.
+   */
   playIntroAnimation: boolean = true;
+  /**
+   * Indicates whether the current device is a desktop view.
+   */
   isDesktop: boolean = false;
 
+  /**
+   * Represents the LogInComponent class.
+   * This component is responsible for handling the login functionality.
+   */
   constructor() {
     setTimeout(() => {
       if (this.authService.activeUserId) {
@@ -59,10 +88,20 @@ export class LogInComponent implements OnInit {
     }, 500);
   }
 
+  /**
+   * Initializes the component.
+   * This method is called after the component has been created and initialized.
+   */
   ngOnInit(): void {
     this.isDesktop = this.matchMedia.checkIsDesktop();
   }
 
+  /**
+   * Handles the form submission when the user clicks the submit button.
+   * Calls the login method of the authService to authenticate the user.
+   * If the login is successful, navigates to the '/main' route.
+   * If there is an error, sets the errorMessage property to the error code.
+   */
   onSubmit(): void {
     this.authService
       .login(this.contactData.email, this.contactData.password)
@@ -76,19 +115,32 @@ export class LogInComponent implements OnInit {
       });
   }
 
+  /**
+   * Logs out the user.
+   */
   logout(): void {
     this.playIntroAnimation = true;
     this.authService.logout();
   }
 
+  /**
+   * Signs in the user with Google using a redirect.
+   * This method calls the `googleAuth` method of the `authService`.
+   */
   signInWithGoogleRedirect() {
     this.authService.googleAuth();
   }
 
+  /**
+   * Performs an anonymous login.
+   */
   anonymousLogin() {
     this.authService.signInAnonymous();
   }
 
+  /**
+   * Redirects the user to the main page.
+   */
   redirectToMain() {
     this.router.navigateByUrl('/main');
   }

@@ -23,6 +23,12 @@ export class ImprintComponent {
   constructor(private navigationService: NavigationService) {
   }
 
+
+/**
++   * Navigates back to the previous page using the navigation service.
++   *
++   * @return {void} This function does not return anything.
++   */
   goBack(): void {
     this.navigationService.goBack();
   }
