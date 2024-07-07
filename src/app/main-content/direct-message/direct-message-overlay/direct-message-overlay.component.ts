@@ -47,20 +47,33 @@ export class DirectMessageOverlayComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: { user: User; itemId: string }
   ) {}
 
+  /**
+   * Initializes the component.
+   * If `data` and `data.itemId` are provided, assigns the value of `data.itemId` to `itemId`.
+   */
   ngOnInit() {
     if (this.data && this.data.itemId) {
       this.itemId = this.data.itemId;
     }
   }
 
+  /**
+   * Closes the dialog when the "No" button is clicked.
+   */
   onNoClick(): void {
     this.dialogRef.close();
   }
 
+  /**
+   * Closes the direct message overlay.
+   */
   closeDirectMessageOverlay() {
     this.dialogRef.close();
   }
 
+  /**
+   * Opens the edit profile card dialog.
+   */
   openEditProfileCard(): void {
     const dialogRef = this.dialog.open(EditProfilCardComponent, {
       minWidth: '398px',
