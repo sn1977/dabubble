@@ -89,6 +89,7 @@ export class HeaderMobileComponent implements OnInit {
   }
 
   openOverlay(): void {
+    this.matchMedia.showSearchDropdown = false;
     if (this.isDesktop) {
       this.overlayVisible = !this.overlayVisible;      
     }

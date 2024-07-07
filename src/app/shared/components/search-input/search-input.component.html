@@ -13,44 +13,97 @@
       border: isDesktop ? '1px solid #FFFFFF' : '1px solid #ADB0D9'
     }"
   />
-  @if(showDropdown){
+  @if(this.matchMedia.showSearchDropdown){
   <div class="dropdown-menu">
     <div class="scroll">
       <div *ngFor="let type of groupedData | keyvalue">
         <div class="selection">
           @switch (type.key) { @case ("channelmessage") {
-          <div class="type">Nachricht <span class="font-italic"> [{{this.groupedData['channelmessage'].length}} Ergebnisse]</span></div>
+          <div class="type">
+            Nachricht
+            <span class="font-italic">
+              [{{ this.groupedData["channelmessage"].length }}               
+              @if(this.groupedData["channelmessage"].length > 1){
+                Ergebnisse
+              }@else {
+                Ergebnis
+              }]</span
+            >
+          </div>
           } @case ("channel") {
-          <div class="type">Kanal <span class="font-italic"> [{{this.groupedData['channel'].length}} Ergebnisse]</span></div>
+          <div class="type">
+            Kanal
+            <span class="font-italic">
+              [{{ this.groupedData["channel"].length }} 
+              @if(this.groupedData["channel"].length > 1){
+                Ergebnisse
+              }@else {
+                Ergebnis
+              }]</span
+            >
+          </div>
           } @case ("user") {
-          <div class="type">Benutzer <span class="font-italic"> [{{this.groupedData['user'].length}} Ergebnisse]</span></div>
-          } 
-        }
+          <div class="type">
+            Benutzer
+            <span class="font-italic">
+              [{{ this.groupedData["user"].length }} 
+              @if(this.groupedData["user"].length > 1){
+                Ergebnisse
+              }@else {
+                Ergebnis
+              }]</span
+            >
+          </div>
+          } }
           <li *ngFor="let item of type.value">
             @if(type.key === 'user' ){
-              <span (click)="openSelectedResult(item.component, item.data.id, item.data.displayName, item.thread)">
-              <img class="avatar" src="{{ item.data.avatar }}" alt="">              
+            <span
+              (click)="
+                openSelectedResult(
+                  item.component,
+                  item.data.id,
+                  item.data.displayName,
+                  item.thread
+                )
+              "
+            >
+              <img class="avatar" src="{{ item.data.avatar }}" alt="" />
               {{ item.data.displayName }}
-              @if(item.data.email !== ''){                
-                <span class="font-italic">(Email: {{ item.data.email }})</span>
+              @if(item.data.email !== ''){
+              <span class="font-italic">(Email: {{ item.data.email }})</span>
               }
             </span>
             } @if(type.key === 'channel' ){
-            <span (click)="openSelectedResult(item.type, item.data.id, item.data.name, item.thread)">#{{ item.data.name }} 
-              @if(item.data.description !== ''){                
-                <span                 
-                class="font-italic">(Beschreibung: {{ item.data.description }})</span>
+            <span
+              (click)="
+                openSelectedResult(
+                  item.type,
+                  item.data.id,
+                  item.data.name,
+                  item.thread
+                )
+              "
+              >#{{ item.data.name }}
+              @if(item.data.description !== ''){
+              <span class="font-italic"
+                >(Beschreibung: {{ item.data.description }})</span
+              >
               }
             </span>
+            } @if(type.key === 'channelmessage' ){
+            <span
+              (click)="
+                openSelectedResult(
+                  item.component,
+                  item.data.channelId,
+                  item.data.name,
+                  item.thread
+                )
+              "
+              >Nachricht @if(item.thread){
+              <span class="font-italic"> [Thread]</span>
+              }: "{{ item.data.text }}" von <span class="font-italic">{{ getDisplayNameById(item.data.creator) }}</span></span>
             }
-            @if(type.key === 'channelmessage' ){
-              <!-- <span (click)="openSelectedResult(item.component, item.data.creator, item.data.name, item.thread)">Nachricht -->
-              <span (click)="openSelectedResult(item.component, item.data.channelId, item.data.name, item.thread)">Nachricht
-                @if(item.thread){
-                  <span class="font-italic"> [Thread]</span>
-                }: "{{ item.data.text }}" von {{ item.data.creator }} </span>
-                <!-- }: "{{ item.data.text }}" von {{ getUserName(item.data.creator) }} </span> -->
-              }
           </li>
         </div>
       </div>

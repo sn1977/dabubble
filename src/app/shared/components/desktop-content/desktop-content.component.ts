@@ -32,7 +32,8 @@ export class DesktopContentComponent implements OnInit {
     this.isDesktop = this.matchMedia.checkIsDesktop();
   }
 
-  toggleDiv() {
+  toggleDiv() {    
+    this.matchMedia.showSearchDropdown = false;
     this.isCollapsed = !this.isCollapsed;
   }
 
@@ -41,6 +42,7 @@ export class DesktopContentComponent implements OnInit {
   }
 
   openNewMessage() {
+    this.matchMedia.showSearchDropdown = false;
     this.matchMedia.loading = true;
     this.router.navigateByUrl('/new-message');
   }

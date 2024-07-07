@@ -27,6 +27,7 @@ import { ChannelMessage } from '../../../models/channel-message.class';
 import { DirectMessage } from '../../../models/direct-message.class';
 import { MatchMediaService } from './match-media.service';
 import { map } from 'rxjs/operators';
+import { Auth } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root',
@@ -34,6 +35,7 @@ import { map } from 'rxjs/operators';
 export class FirestoreService {
   firestore: Firestore = inject(Firestore);
   router = inject(Router);
+  firebaseAuth = inject(Auth);
   activeUser: any = [];
   user: User = new User();
   channel: Channel = new Channel();
@@ -153,7 +155,6 @@ export class FirestoreService {
       reactions: obj.reactions,
       attachment: obj.attachment,
       threads: obj.threads,
-      indexField: obj.indexField,
     };
   }
 
@@ -483,18 +484,18 @@ export class FirestoreService {
     );
   }
 
-  async globalSearch() {    
+  async globalSearch() {
     this.globalValuesArray = [];
     await this.addChannelMessagesToGlobalSearch();
     await this.addChannelsToGlobalSearch();
-    await this.addUsersToGlobalSearch();    
+    await this.addUsersToGlobalSearch();
   }
 
   async addChannelMessagesToGlobalSearch()
   {
     const results = query(
       collectionGroup(this.firestore, 'channelmessages'),
-      where('indexField', '==', 'index'),
+      where('creator', '==', this.firebaseAuth.currentUser!.uid),
       orderBy('createdAt')
     );
 

@@ -69,6 +69,7 @@ export class TextBoxComponent implements AfterViewInit {
   }
 
   onSubmit() {
+    this.matchMedia.showSearchDropdown = false;
     if (this.textBoxData.messageText != '') {
       this.textBoxData.subcollection;
       let type: string | undefined;

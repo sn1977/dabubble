@@ -6,7 +6,6 @@ import {
   inject,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { DataService } from '../../services/data.service';
 import { MatchMediaService } from '../../services/match-media.service';
 import { CommonModule } from '@angular/common';
 import { FirestoreService } from '../../services/firestore.service';
@@ -23,8 +22,7 @@ export class SearchInputComponent implements OnInit {
   textData = { text: '' };
   inputHasValue = false;
   matchMedia = inject(MatchMediaService);
-  isDesktop: boolean = false;
-  showDropdown = false;
+  isDesktop: boolean = false;  
   firestore = inject(FirestoreService);
   placeholder: string = '';
   resultList: any[] = [];
@@ -39,8 +37,6 @@ export class SearchInputComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.firestore.globalSearch();
     this.setPlaceholderText();
-
-    await this.getUserName('M7BioHSQtFZaPYj0xa7jpR3cR7u1');
   }
 
   setPlaceholderText() {
@@ -86,9 +82,9 @@ export class SearchInputComponent implements OnInit {
       query
     );    
     if (query) {
-      this.showDropdown = true;
+      this.matchMedia.showSearchDropdown = true;
     } else {
-      this.showDropdown = false;
+      this.matchMedia.showSearchDropdown = false;
     }
     await this.groupDataByType();
     console.log(this.groupedData);    
@@ -105,26 +101,17 @@ export class SearchInputComponent implements OnInit {
   }
 
   openSelectedResult(type: string, id: string, name: string, thread: boolean){
-    this.showDropdown = false;
+    this.matchMedia.showSearchDropdown = false;
     this.textData.text = '';
     this.matchMedia.loading = true;
     this.matchMedia.channelName = name;
     this.matchMedia.showThread = thread;
     this.firestore.conversation = '';
-
-    console.log(type, id);
-
     this.router.navigate([type, id]);
-
   }
 
-  async getUserName(user: string){
-    if(this.firestore.userList){
-
-      // await this.firestore.userList;    
-      console.log(this.firestore.userList);    
-      console.log(user);
-    }
-    // return 
+  getDisplayNameById(id: string): string | undefined {
+    const user = this.firestore.userList.find((user: { id: string; }) => user.id === id);
+    return user ? user.displayName : undefined;
   }
 }

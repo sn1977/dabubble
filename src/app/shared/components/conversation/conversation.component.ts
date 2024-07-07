@@ -95,7 +95,6 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
             this.channelMessage.text = data['text'];
             this.channelMessage.reactions = data['reactions'];
             this.channelMessage.attachment = data['attachment'];
-            this.channelMessage.indexField = data['indexField'];
 
             if (this.channelMessage.attachment) {
               this.fileType =

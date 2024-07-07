@@ -23,6 +23,7 @@ import { CommonModule, NgForOf, NgIf } from '@angular/common';
 import { ChannelMessage } from '../../models/channel-message.class';
 import {SearchInputComponent} from '../shared/components/search-input/search-input.component';
 import { MatchMediaService } from '../shared/services/match-media.service';
+import { timeout } from 'rxjs';
 
 @Component({
   selector: 'app-main-content',
@@ -65,7 +66,7 @@ export class MainContentComponent implements OnInit {
       iconPath: '',
       iconPathOpened: 'assets/img/icon/workspaces.png',
       iconPathClosed: 'assets/img/icon/workspaces_color.png',
-      title: 'Channels',
+      title: 'Kanäle',
       titleColor: '#000000',
     },
     {
@@ -100,6 +101,7 @@ export class MainContentComponent implements OnInit {
   }
 
   onPanelOpened(panel: MatExpansionPanel, index: number) {
+    this.matchMedia.showSearchDropdown = false;
     this.panels[index].expanded = true;
     this.panels[index].arrowImagePath = 'assets/img/icon/arrow_drop_down.png';
     this.panels[index].iconPath = this.panels[index].iconPathOpened;
@@ -107,6 +109,7 @@ export class MainContentComponent implements OnInit {
   }
   
   onPanelClosed(panel: MatExpansionPanel, index: number) {
+    this.matchMedia.showSearchDropdown = false;
     this.panels[index].expanded = false;
     this.panels[index].arrowImagePath =
       'assets/img/icon/arrow_drop_down_color.png';
@@ -115,11 +118,13 @@ export class MainContentComponent implements OnInit {
   }  
 
   onAddClick(event: MouseEvent): void {
+    this.matchMedia.showSearchDropdown = false;
     event.stopPropagation();
     this.navigateToAddChannel();
   }
   
   navigateToAddChannel() {
+    this.matchMedia.showSearchDropdown = false;
     this.matchMedia.channelName = '';
     this.matchMedia.showThread = false;
     this.navigationService.navigate(['/add-channel']);
@@ -128,7 +133,8 @@ export class MainContentComponent implements OnInit {
   openChannel(event: MouseEvent, path: string, name: string) {
     this.matchMedia.loading = true;
     this.matchMedia.channelName = name;
-    this.matchMedia.showThread = false;
+    this.matchMedia.showThread = false;    
+    this.matchMedia.showSearchDropdown = false;
     this.firestore.conversation = '';
     const docRefId = (event.currentTarget as HTMLElement).id;
     this.itemStateService.setItemId(docRefId);

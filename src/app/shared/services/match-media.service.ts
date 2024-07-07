@@ -16,6 +16,7 @@ export class MatchMediaService {
   loading: boolean = true;
   newMessage: boolean = false;
   inputValid: boolean = false;
+  showSearchDropdown: boolean = false;
   
   constructor() { }
 
