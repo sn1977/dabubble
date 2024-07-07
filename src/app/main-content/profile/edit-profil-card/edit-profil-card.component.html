@@ -32,7 +32,12 @@
     </div>
 
     <div class="avatar-list">
-        <div *ngFor="let count of [1,2,3,4,5,6]; let i = index; trackBy: trackByFn">
+        <div
+            *ngFor="
+                let count of [1, 2, 3, 4, 5, 6];
+                let i = index;
+                trackBy: trackByFn
+            ">
             <div class="selection">
                 <img
                     class="pointer"
@@ -141,7 +146,11 @@
                 (click)="closeEditProfilCard()">
                 Abbrechen
             </button>
-            <button mat-flat-button class="btn-flat" (click)="saveProfile()" [disabled]="showPasswordField && passwordControl.invalid">
+            <button
+                mat-flat-button
+                class="btn-flat"
+                (click)="saveProfile()"
+                [disabled]="showPasswordField && passwordControl.invalid">
                 Speichern
             </button>
         </div>

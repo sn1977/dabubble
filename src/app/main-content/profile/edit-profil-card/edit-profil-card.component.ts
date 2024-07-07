@@ -25,7 +25,6 @@ import "firebase/firestore";
 
 import { MemberService } from "../../../shared/services/member-service.service";
 import { Auth } from "@angular/fire/auth";
-// import { AvatarService } from "../../../shared/services/avatar-service.service";
 import {
     getAuth,
     updateEmail,
@@ -49,7 +48,7 @@ import { VerificationEmailDialogComponent } from "../../auth/verification-email-
         MatCardActions,
         MatButton,
         CommonModule,
-        VerificationEmailDialogComponent
+        VerificationEmailDialogComponent,
     ],
     templateUrl: "./edit-profil-card.component.html",
     styleUrls: ["./edit-profil-card.component.scss"],
@@ -67,16 +66,25 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
     inputHasValue = false;
     showPasswordField = false;
 
+    /**
+     * Represents the form control for the name input field.
+     */
     nameControl = new FormControl("", [
         Validators.required,
         Validators.minLength(5),
     ]);
 
+    /**
+     * Represents the email form control in the edit profile card component.
+     */
     emailControl = new FormControl("", [
         Validators.required,
         Validators.pattern("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"),
     ]);
 
+    /**
+     * Represents the form control for the password input field.
+     */
     passwordControl = new FormControl("", [
         Validators.required,
         Validators.minLength(6),
@@ -107,10 +115,23 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
         private memberService: MemberService // private avatarService: AvatarService
     ) {}
 
+    /**
+     * Returns a unique identifier for each item in a collection.
+     * This method is used as the trackBy function in Angular's ngFor directive.
+     *
+     * @param index - The index of the current item in the collection.
+     * @param item - The current item in the collection.
+     * @returns The unique identifier for the item.
+     */
     trackByFn(index: number, item: any) {
         return index; // or item.id
     }
 
+    /**
+     * Updates the avatar of the member.
+     *
+     * @param newAvatarUrl - The URL of the new avatar.
+     */
     updateMemberAvatar(newAvatarUrl: string) {
         this.memberService.updateMemberAvatar(
             this.authService.activeUserAccount.uid,
@@ -118,67 +139,114 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
         );
     }
 
+    /**
+     * Handles the change event of the email input field.
+     * Updates the visibility of the password field based on the email value.
+     * @param value - The new value of the email input field.
+     */
     onEmailChange(value: string): void {
         this.showPasswordField = value !== this.data.user.email;
     }
 
+    /**
+     * Updates the email for the current user.
+     *
+     * @returns {Promise<void>} A promise that resolves when the email is updated.
+     */
     async updateEmailForUser() {
-      const user = this.getCurrentUser();
-      if (!user) return;
-  
-      if (this.emailControl.valid && this.passwordControl.valid) {
-          const newEmail = this.emailControl.value;
-          const currentPassword = this.passwordData.password;
-          if (newEmail && currentPassword) {
-              await this.handleEmailUpdate(user, newEmail, currentPassword);
-          }
-      }
-  }
-  
-  getCurrentUser() {
-      const auth = getAuth();
-      const user = auth.currentUser;
-      if (!user) {
-          console.log("No user is signed in.");
-          return null;
-      }
-      return user;
-  }
-  
-  async handleEmailUpdate(user: any, newEmail: string, currentPassword: string) {
-      const email = user.email;
-      localStorage.setItem("newEmail", newEmail);
-      try {
-          const credentials = EmailAuthProvider.credential(email!, currentPassword);
-          await reauthenticateWithCredential(user, credentials);
-          await verifyBeforeUpdateEmail(user, newEmail, { url: window.location.href });
-          this.dialog.open(VerificationEmailDialogComponent);
-          
-      } catch (error: any) {
-          console.error("Error updating email:", error.code, error.message);
-          alert(`Error: ${error.message}`);
-      } finally {
-          localStorage.removeItem("newEmail");          
-      }
-  }
+        const user = this.getCurrentUser();
+        if (!user) return;
 
+        if (this.emailControl.valid && this.passwordControl.valid) {
+            const newEmail = this.emailControl.value;
+            const currentPassword = this.passwordData.password;
+            if (newEmail && currentPassword) {
+                await this.handleEmailUpdate(user, newEmail, currentPassword);
+            }
+        }
+    }
+
+    /**
+     * Retrieves the currently authenticated user.
+     *
+     * @returns The currently authenticated user, or `null` if no user is authenticated.
+     */
+    getCurrentUser() {
+        const auth = getAuth();
+        const user = auth.currentUser;
+        if (!user) {
+            return null;
+        }
+        return user;
+    }
+
+    /**
+     * Handles the update of the user's email address.
+     *
+     * @param user - The user object.
+     * @param newEmail - The new email address to update.
+     * @param currentPassword - The current password of the user.
+     */
+    async handleEmailUpdate(
+        user: any,
+        newEmail: string,
+        currentPassword: string
+    ) {
+        const email = user.email;
+        localStorage.setItem("newEmail", newEmail);
+        try {
+            const credentials = EmailAuthProvider.credential(
+                email!,
+                currentPassword
+            );
+            await reauthenticateWithCredential(user, credentials);
+            await verifyBeforeUpdateEmail(user, newEmail, {
+                url: window.location.href,
+            });
+            this.dialog.open(VerificationEmailDialogComponent);
+        } catch (error: any) {
+            console.error("Error updating email:", error.code, error.message);
+            alert(`Error: ${error.message}`);
+        } finally {
+            localStorage.removeItem("newEmail");
+        }
+    }
+
+    /**
+     * Closes the dialog without performing any action.
+     */
     onNoClick(): void {
         this.dialogRef.close();
     }
 
+    /**
+     * Checks if the input value is empty or not.
+     * @param value - The input value to check.
+     */
     checkInput(value: string): void {
         this.inputHasValue = !!value.trim();
     }
 
+    /**
+     * Closes the edit profile card.
+     */
     closeEditProfilCard() {
         this.dialogRef.close();
     }
 
+    /**
+     * Handles the focus event for the input fields.
+     * Clears the placeholders for name and email.
+     */
     onFocus() {
         this.namePlaceholder = "";
         this.emailPlaceholder = "";
     }
 
+    /**
+     * Initializes the component.
+     * Subscribes to the user list and sets the initial values for name and email data.
+     */
     ngOnInit() {
         this.firestore.subUserList(); // Abonniere die Benutzerliste
 
@@ -186,42 +254,82 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
         this.emailData.email = this.data.user.email || "";
     }
 
+    /**
+     * Lifecycle hook that is called when the component is destroyed.
+     * It unsubscribes from the Firestore users collection.
+     */
     ngOnDestroy() {
         this.firestore.unsubUsers(); // Beende das Abonnement
     }
 
+    /**
+     * Saves the user profile if the input is valid.
+     * Updates the user profile, user in Firestore, user photo URL, and email for the user.
+     * Closes the dialog after updating the user in Firestore.
+     */
     saveProfile(): void {
-        if (this.nameControl.valid && this.emailControl.valid) {
-            this.data.user.displayName =
-                this.nameData.name || this.data.user.displayName;
-            this.data.user.email = this.emailData.email || this.data.user.email;
-
-            this.firestore
-                .updateUser(
-                    this.data.user,
-                    this.authService.activeUserAccount.uid
-                )
-                .then(() => {
-                    this.dialogRef.close();
-                })
-                .catch((error) => {
-                    console.error(
-                        "Fehler beim Aktualisieren des Profils:",
-                        error
-                    );
-                });
-
-            if (this.firebaseAuth.currentUser?.photoURL) {
-                this.authService.updateUserData(
-                    this.nameData.name,
-                    this.firebaseAuth.currentUser.photoURL
-                );
-            }
-
+        if (this.isValidInput()) {
+            this.updateUserProfile();
+            this.updateUserInFirestore().then(() => this.closeDialog());
+            this.updateUserPhotoURL();
             this.updateEmailForUser();
         }
     }
 
+    /**
+     * Checks if the input values for name and email are valid.
+     * @returns {boolean} True if both name and email inputs are valid, false otherwise.
+     */
+    isValidInput(): boolean {
+        return this.nameControl.valid && this.emailControl.valid;
+    }
+
+    /**
+     * Updates the user profile with the provided name and email data.
+     * If the name data is empty, the display name remains unchanged.
+     * If the email data is empty, the email remains unchanged.
+     */
+    updateUserProfile() {
+        this.data.user.displayName =
+            this.nameData.name || this.data.user.displayName;
+        this.data.user.email = this.emailData.email || this.data.user.email;
+    }
+
+    /**
+     * Updates the user in Firestore.
+     * 
+     * @returns A promise that resolves when the user is successfully updated.
+     */
+    updateUserInFirestore(): Promise<void> {
+        return this.firestore.updateUser(
+            this.data.user,
+            this.authService.activeUserAccount.uid
+        );
+    }
+
+    /**
+     * Closes the dialog.
+     */
+    closeDialog() {
+        this.dialogRef.close();
+    }
+
+    /**
+     * Updates the user's photo URL in the user data.
+     * If the current user has a photo URL, it updates the user data with the name and photo URL.
+     */
+    updateUserPhotoURL() {
+        if (this.firebaseAuth.currentUser?.photoURL) {
+            this.authService.updateUserData(
+                this.nameData.name,
+                this.firebaseAuth.currentUser.photoURL
+            );
+        }
+    }
+
+    /**
+     * Opens the avatar dialog.
+     */
     openAvatarDialog(): void {
         this.dialog.open(ChooseAvatarComponent, {
             width: "80%",
@@ -229,6 +337,9 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
         });
     }
 
+    /**
+     * Uploads a single file and updates the user's avatar.
+     */
     uploadSingleFile2() {
         if (this.selectedAvatar) {
             this.file = this.selectedAvatar.item(0);
@@ -254,15 +365,29 @@ export class EditProfilCardComponent implements OnInit, OnDestroy {
         }
     }
 
+    /**
+     * Updates the authentication service with the given URL.
+     * 
+     * @param url - The URL to update the authentication service with.
+     */
     updateAuthService(url: string) {
         this.authService.updateUserData(this.user.displayName!, url);
     }
 
+    /**
+     * Updates the selected avatar based on the user's input and triggers the upload of the file.
+     * @param event - The event object containing information about the selected files.
+     */
     detectAvatar(event: any) {
         this.selectedAvatar = event.target.files;
         this.uploadSingleFile2();
     }
 
+    /**
+     * Sets the avatar for the user.
+     * 
+     * @param event - The event object triggered by the avatar selection.
+     */
     setAvatar(event: any) {
         this.data.user.avatar = event.target.src;
         this.updateAuthService(event.target.src);
