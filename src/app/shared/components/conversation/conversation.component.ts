@@ -16,7 +16,6 @@ import { EmojiPickerComponent } from '../emoji-picker/emoji-picker.component';
 import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { DateFormatService } from '../../services/date-format.service';
-import { PositionService } from '../../services/position.service';
 import { Router } from '@angular/router';
 import { MatchMediaService } from '../../services/match-media.service';
 import { Subscription } from 'rxjs';
@@ -40,7 +39,6 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private dialog: MatDialog,
     public dateFormatService: DateFormatService,
-    private positionService: PositionService,
   ) {
     this.previousMessageDate = '';
   }
@@ -325,8 +323,7 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
       let colId = 'channels';
 
       if (this.isThread) {
-        this.channelMessage.messageId =
-          // this.matchMedia.subID + '/threads/' + this.channelMessage.messageId;
+        this.channelMessage.messageId =          
           this.matchMedia.subID + '/channelmessages/' + this.channelMessage.messageId;
       }
 
@@ -350,7 +347,7 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   async openThread() {
-
+    this.matchMedia.showSearchDropdown = false;
     this.matchMedia.showThread = false;
     this.matchMedia.hideReactionIcons = false;
     await this.delay(200);
@@ -365,10 +362,8 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
 
       if(this.isDirectMessage){
         this.matchMedia.collectionType = 'messages';
-        // console.log(this.matchMedia.collectionType);     
       }else{
         this.matchMedia.collectionType = 'channels';
-        // console.log(this.matchMedia.collectionType);
       }
 
       if (this.isDesktop === true) {

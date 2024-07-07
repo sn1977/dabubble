@@ -61,6 +61,7 @@ export class DirectMessageComponent implements OnInit {
         channelId: "",
         collection: "messages",
         subcollection: "channelmessages",
+        recipient: "",
     };
 
     /**
@@ -122,6 +123,7 @@ export class DirectMessageComponent implements OnInit {
     resetTextBox() {
         this.textBoxData.messageText = "";
         this.textBoxData.inputField = "";
+        this.textBoxData.recipient = "";
     }
 
     /**
@@ -147,6 +149,7 @@ export class DirectMessageComponent implements OnInit {
         this.headerStateService.setAlternativeHeader(true);
         this.textBoxData.placeholder =
             "Nachricht an " + this.matchMedia.channelName;
+        this.textBoxData.recipient = this.itemID;
         this.delayAndLoadMessages();
     }
 

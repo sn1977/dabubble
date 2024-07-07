@@ -80,8 +80,8 @@ export class TextBoxComponent implements AfterViewInit {
         createdAt: serverTimestamp(),
         reactions: (this.textBoxData.reactions = this.reactions),
         attachment: [`${this.textBoxData.inputField}`],
-        threads: 0,
-        indexField: 'index',
+        threads: 0,        
+        recipient: this.textBoxData.recipient,
       });
 
       if (this.textBoxData.subcollection != 'channelmessages') {

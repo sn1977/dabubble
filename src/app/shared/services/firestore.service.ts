@@ -155,6 +155,7 @@ export class FirestoreService {
       reactions: obj.reactions,
       attachment: obj.attachment,
       threads: obj.threads,
+      recipient: obj.recipient,
     };
   }
 

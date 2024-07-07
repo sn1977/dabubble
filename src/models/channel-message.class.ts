@@ -7,15 +7,17 @@ export class ChannelMessage {
   reactions: { emoji: string; users: string[] }[] = [];
   attachment?: string[];
   threads: number;
+  recipient?: string;
   
   constructor(obj?: any) {
-    this.channelId = obj ? obj.channelId : '';
+    this.channelId = obj ? obj.channelId : '';    
     this.creator = obj ? obj.creator : '';
     this.createdAt = obj ? obj.createdAt : '';
     this.text = obj ? obj.text : '';
     this.reactions = obj ? obj.reactions : [];
     this.attachment = obj ? obj.attachment : [];
     this.threads = obj ? obj.threads : 0;
+    this.recipient = obj ? obj.recipient : '';
   }
 
   public toJSON() {
@@ -27,6 +29,7 @@ export class ChannelMessage {
       reactions: this.reactions,
       attachment: this.attachment,
       threads: this.threads,
+      recipient: this.recipient,
     };
   }
 }

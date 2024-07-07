@@ -57,6 +57,7 @@ export class ThreadComponent implements OnInit, OnDestroy {
     channelId: '',
     collection: 'channels',
     subcollection: 'channelmessages',
+    recipient: '',
   };
 
   @ViewChild('threadContent') threadContent!: ElementRef;

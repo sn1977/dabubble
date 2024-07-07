@@ -22,36 +22,33 @@
           <div class="type">
             Nachricht
             <span class="font-italic">
-              [{{ this.groupedData["channelmessage"].length }}               
-              @if(this.groupedData["channelmessage"].length > 1){
-                Ergebnisse
-              }@else {
-                Ergebnis
-              }]</span
+              [{{
+                this.groupedData["channelmessage"].length
+              }}
+              @if(this.groupedData["channelmessage"].length > 1){ Ergebnisse
+              }@else { Ergebnis }]</span
             >
           </div>
           } @case ("channel") {
           <div class="type">
             Kanal
             <span class="font-italic">
-              [{{ this.groupedData["channel"].length }} 
-              @if(this.groupedData["channel"].length > 1){
-                Ergebnisse
-              }@else {
-                Ergebnis
-              }]</span
+              [{{
+                this.groupedData["channel"].length
+              }}
+              @if(this.groupedData["channel"].length > 1){ Ergebnisse }@else {
+              Ergebnis }]</span
             >
           </div>
           } @case ("user") {
           <div class="type">
             Benutzer
             <span class="font-italic">
-              [{{ this.groupedData["user"].length }} 
-              @if(this.groupedData["user"].length > 1){
-                Ergebnisse
-              }@else {
-                Ergebnis
-              }]</span
+              [{{
+                this.groupedData["user"].length
+              }}
+              @if(this.groupedData["user"].length > 1){ Ergebnisse }@else {
+              Ergebnis }]</span
             >
           </div>
           } }
@@ -91,18 +88,49 @@
               }
             </span>
             } @if(type.key === 'channelmessage' ){
-            <span
-              (click)="
-                openSelectedResult(
-                  item.component,
-                  item.data.channelId,
-                  item.data.name,
-                  item.thread
-                )
-              "
-              >Nachricht @if(item.thread){
-              <span class="font-italic"> [Thread]</span>
-              }: "{{ item.data.text }}" von <span class="font-italic">{{ getDisplayNameById(item.data.creator) }}</span></span>
+
+              @if(item.thread){
+                <span
+                (click)="
+                  openSelectedResult(
+                    item.component,
+                    item.data.channelId,
+                    item.data.name,
+                    item.thread,
+                    item.ref
+                  )
+                "
+                >
+                <span class="font-italic">[Thread] </span>"{{ item.data.text }} " an 
+                @if(item.component === 'channel')
+                {                  
+                    #{{getChannelNameById(item.data.channelId)}}                  
+                }
+                @else{
+                  &#64;{{getUserNameById(item.data.recipient)}}
+                }
+              </span>
+              }
+              @else {
+                <span
+                (click)="
+                  openSelectedResult(
+                    item.component,
+                    item.data.recipient,
+                    item.data.name,
+                    item.thread
+                  )
+                "
+                >"{{ item.data.text }} " an 
+                @if(item.component === 'channel')
+                {
+                  #{{getChannelNameById(item.data.recipient)}}               
+                }
+                @else{
+                  &#64;{{getUserNameById(item.data.recipient)}}
+                }
+              </span>
+              }
             }
           </li>
         </div>

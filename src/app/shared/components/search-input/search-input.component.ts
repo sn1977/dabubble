@@ -100,18 +100,46 @@ export class SearchInputComponent implements OnInit {
     });
   }
 
-  openSelectedResult(type: string, id: string, name: string, thread: boolean){
+  openSelectedResult(type: string, id: string, name: string, thread: boolean, ref?: any){
     this.matchMedia.showSearchDropdown = false;
     this.textData.text = '';
     this.matchMedia.loading = true;
+
+    console.log(name);
+    
+
     this.matchMedia.channelName = name;
     this.matchMedia.showThread = thread;
     this.firestore.conversation = '';
-    this.router.navigate([type, id]);
+
+    if(!this.isDesktop && thread){
+      this.matchMedia.showThread = false;
+      this.matchMedia.hideReactionIcons = true;
+      this.matchMedia.channelId = id;      
+      const parts = ref.split("channelmessages/");      
+      const messageId = parts[1].split('/')[0];
+      this.matchMedia.subID = messageId;
+
+      if(type === 'direct-message'){
+         this.matchMedia.collectionType = 'messages';
+       }else{
+         this.matchMedia.collectionType = 'channels';
+      }
+
+      this.router.navigate(['/thread']);
+    }else{
+      this.router.navigate([type, id]);
+    }
   }
 
-  getDisplayNameById(id: string): string | undefined {
+  getChannelNameById(id: string): string | undefined {
+    const channel = this.firestore.channelList.find((channel: { id: string; }) => channel.id === id);
+    return channel ? channel.name : undefined;
+  }
+
+  getUserNameById(id: string): string | undefined {
     const user = this.firestore.userList.find((user: { id: string; }) => user.id === id);
     return user ? user.displayName : undefined;
   }
+
 }

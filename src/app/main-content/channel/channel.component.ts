@@ -97,6 +97,7 @@ export class ChannelComponent implements OnInit {
     channelId: '',
     collection: 'channels',
     subcollection: 'channelmessages',
+    recipient: '',
   };
   hovering = false;
 
@@ -137,6 +138,7 @@ export class ChannelComponent implements OnInit {
       this.itemID = paramMap.get('id');
       this.textBoxData.messageText = '';
       this.textBoxData.inputField = '';
+      this.textBoxData.recipient = this.itemID;
 
       this.firestore.getSingleItemData('channels', this.itemID, () => {
         this.channel = new Channel(this.firestore.channel);
