@@ -1,10 +1,12 @@
 <div class="content">
-  <div class="logo" [routerLink]="[ '/' ]">
-    <img src="assets/img/mobile-logo.svg"/>
-    <span>DABubble</span>
-  </div>
-  <app-search-input class="searchbar" (search)="searchWorkspace($event)"></app-search-input>
-  <div class="header">
-    <app-header-mobile [isDesktop]="true"></app-header-mobile>
-  </div>
+    <div class="logo" [routerLink]="['/']">
+        <img src="assets/img/mobile-logo.svg" />
+        <span>DABubble</span>
+    </div>
+    <app-search-input
+        class="searchbar"
+        (search)="searchWorkspace($event)"></app-search-input>
+    <div class="header">
+        <app-header-mobile [isDesktop]="true"></app-header-mobile>
+    </div>
 </div>

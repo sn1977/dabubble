@@ -1,27 +1,27 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import { Component, EventEmitter, Output } from "@angular/core";
 import { HeaderMobileComponent } from "../header-mobile/header-mobile.component";
-import {SearchInputComponent} from '../search-input/search-input.component';
-import { RouterModule } from '@angular/router';
+import { SearchInputComponent } from "../search-input/search-input.component";
+import { RouterModule } from "@angular/router";
 
 @Component({
-    selector: 'app-desktop-headline',
+    selector: "app-desktop-headline",
     standalone: true,
-    templateUrl: './desktop-headline.component.html',
-    styleUrl: './desktop-headline.component.scss',
-    imports: [ 
-      HeaderMobileComponent, 
-      SearchInputComponent, 
-      RouterModule
-    ]
+    templateUrl: "./desktop-headline.component.html",
+    styleUrl: "./desktop-headline.component.scss",
+    imports: [HeaderMobileComponent, SearchInputComponent, RouterModule],
 })
 export class DesktopHeadlineComponent {
-  textData = { text: '' };
-  inputHasValue = false;
+    textData = { text: "" };
+    inputHasValue = false;
 
-  @Output() search = new EventEmitter<string>();
+    @Output() search = new EventEmitter<string>();
 
-  searchWorkspace(query: string) {
-    this.inputHasValue = !!query;
-    this.search.emit(query);
-  }
+    /**
+     * Searches the workspace based on the provided query.
+     * @param query - The search query.
+     */
+    searchWorkspace(query: string) {
+        this.inputHasValue = !!query;
+        this.search.emit(query);
+    }
 }
