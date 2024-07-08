@@ -239,7 +239,7 @@ export class FirestoreService {
         console.error(err);
       })
       .then((docRef) => {
-        console.log('Document written with ID: ', docRef?.id);
+        console.log('Document written with ID: ', docRef?.id);        
         this.globalSearch();
         this.router.navigate(['/channel/' + docRef?.id]);
       });
@@ -260,7 +260,7 @@ export class FirestoreService {
         if (type && type === 'thread') {
           this.matchMedia.scrollToBottomThread = true;
           await this.updateThreadCounter();
-        }
+        }        
         this.globalSearch();
       });
   }
@@ -427,7 +427,7 @@ export class FirestoreService {
     const docRef = this.getSingleDocRef(colId, messageDoc);
     await updateDoc(docRef, item).catch((err) => {
       console.log(err);
-    });
+    });    
     this.globalSearch();
   }
 
@@ -486,6 +486,7 @@ export class FirestoreService {
   }
 
   async globalSearch() {
+
     this.globalValuesArray = [];
     await this.addChannelMessagesToGlobalSearch();
     await this.addChannelsToGlobalSearch();
@@ -522,8 +523,6 @@ export class FirestoreService {
         thread: thread,
       });
     });
-
-    console.log(this.globalValuesArray);
   }
 
   async addChannelsToGlobalSearch() {

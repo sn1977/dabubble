@@ -99,6 +99,9 @@
         > span {
             width: 100%;
             @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 4px);
+            .userInfo{
+                @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 4px);
+            }
         }
     }
 

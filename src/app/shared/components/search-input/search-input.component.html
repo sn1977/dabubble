@@ -62,14 +62,17 @@
                                     item.thread
                                 )
                             ">
-                            <img
-                                class="avatar"
-                                src="{{ item.data.avatar }}"
-                                alt="" />
-                            {{ item.data.displayName }}
+                            <div class="userInfo">
+                              <img
+                              class="avatar"
+                              src="{{ item.data.avatar }}"
+                              alt="" />
+                              {{ item.data.displayName }}
+                            </div>
+
                             @if(item.data.email !== ''){
                             <span class="font-italic"
-                                >(Email: {{ item.data.email }})</span
+                                >({{ item.data.email }})</span
                             >
                             }
                         </span>
@@ -96,16 +99,13 @@
                             (click)="
                                 openSelectedResult(
                                     item.component,
-                                    item.data.channelId,
-                                    item.data.name,
+                                    item.data.channelId,                                    
+                                    item.component === 'channel' ? getChannelNameById(item.data.channelId) : getUserNameById(item.data.recipient),
                                     item.thread,
                                     item.ref
                                 )
                             ">
-                            <span class="font-italic">[Thread] </span>"{{
-                                item.data.text
-                            }}
-                            " an @if(item.component === 'channel') { #{{
+                            <span class="font-italic">[Thread] </span>"{{ item.data.text }}" an @if(item.component === 'channel') { #{{
                                 getChannelNameById(item.data.channelId)
                             }}
                             } @else{ &#64;{{
@@ -123,7 +123,7 @@
                                     item.thread
                                 )
                             "
-                            >"{{ item.data.text }} " an @if(item.component ===
+                            >"{{ item.data.text }}" an @if(item.component ===
                             'channel') { #{{
                                 getChannelNameById(item.data.recipient)
                             }}
