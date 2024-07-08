@@ -1,146 +1,147 @@
 <div class="input-field">
-  <input
-    type="text"
-    name="text"
-    [(ngModel)]="textData.text"
-    (ngModelChange)="startSearching(textData.text)"
-    [class.input-has-value]="inputHasValue"
-    placeholder="{{ placeholder }}"
-    required
-    autocomplete="off"
-    class="full-width input-field-design input-background-icon"
-    [ngStyle]="{
-      border: isDesktop ? '1px solid #FFFFFF' : '1px solid #ADB0D9'
-    }"
-  />
-  @if(this.matchMedia.showSearchDropdown){
-  <div class="dropdown-menu">
-    <div class="scroll">
-      <div *ngFor="let type of groupedData | keyvalue">
-        <div class="selection">
-          @switch (type.key) { @case ("channelmessage") {
-          <div class="type">
-            Nachricht
-            <span class="font-italic">
-              [{{
-                this.groupedData["channelmessage"].length
-              }}
-              @if(this.groupedData["channelmessage"].length > 1){ Ergebnisse
-              }@else { Ergebnis }]</span
-            >
-          </div>
-          } @case ("channel") {
-          <div class="type">
-            Kanal
-            <span class="font-italic">
-              [{{
-                this.groupedData["channel"].length
-              }}
-              @if(this.groupedData["channel"].length > 1){ Ergebnisse }@else {
-              Ergebnis }]</span
-            >
-          </div>
-          } @case ("user") {
-          <div class="type">
-            Benutzer
-            <span class="font-italic">
-              [{{
-                this.groupedData["user"].length
-              }}
-              @if(this.groupedData["user"].length > 1){ Ergebnisse }@else {
-              Ergebnis }]</span
-            >
-          </div>
-          } }
-          <li *ngFor="let item of type.value">
-            @if(type.key === 'user' ){
-            <span
-              (click)="
-                openSelectedResult(
-                  item.component,
-                  item.data.id,
-                  item.data.displayName,
-                  item.thread
-                )
-              "
-            >
-              <img class="avatar" src="{{ item.data.avatar }}" alt="" />
-              {{ item.data.displayName }}
-              @if(item.data.email !== ''){
-              <span class="font-italic">(Email: {{ item.data.email }})</span>
-              }
-            </span>
-            } @if(type.key === 'channel' ){
-            <span
-              (click)="
-                openSelectedResult(
-                  item.type,
-                  item.data.id,
-                  item.data.name,
-                  item.thread
-                )
-              "
-              >#{{ item.data.name }}
-              @if(item.data.description !== ''){
-              <span class="font-italic"
-                >(Beschreibung: {{ item.data.description }})</span
-              >
-              }
-            </span>
-            } @if(type.key === 'channelmessage' ){
-
-              @if(item.thread){
-                <span
-                (click)="
-                  openSelectedResult(
-                    item.component,
-                    item.data.channelId,
-                    item.data.name,
-                    item.thread,
-                    item.ref
-                  )
-                "
-                >
-                <span class="font-italic">[Thread] </span>"{{ item.data.text }} " an 
-                @if(item.component === 'channel')
-                {                  
-                    #{{getChannelNameById(item.data.channelId)}}                  
-                }
-                @else{
-                  &#64;{{getUserNameById(item.data.recipient)}}
-                }
-              </span>
-              }
-              @else {
-                <span
-                (click)="
-                  openSelectedResult(
-                    item.component,
-                    item.data.recipient,
-                    item.data.name,
-                    item.thread
-                  )
-                "
-                >"{{ item.data.text }} " an 
-                @if(item.component === 'channel')
-                {
-                  #{{getChannelNameById(item.data.recipient)}}               
-                }
-                @else{
-                  &#64;{{getUserNameById(item.data.recipient)}}
-                }
-              </span>
-              }
+    <input
+        type="text"
+        name="text"
+        [(ngModel)]="textData.text"
+        (ngModelChange)="startSearching(textData.text)"
+        [class.input-has-value]="inputHasValue"
+        placeholder="{{ placeholder }}"
+        required
+        autocomplete="off"
+        class="full-width input-field-design input-background-icon"
+        [ngStyle]="{
+            border: isDesktop ? '1px solid #FFFFFF' : '1px solid #ADB0D9'
+        }" />
+    @if(this.matchMedia.showSearchDropdown){
+    <div class="dropdown-menu">
+        <div class="scroll">
+            <div *ngFor="let type of groupedData | keyvalue">
+                <div class="selection">
+                    @switch (type.key) { @case ("channelmessage") {
+                    <div class="type">
+                        Nachricht
+                        <span class="font-italic">
+                            [{{
+                                this.groupedData["channelmessage"].length
+                            }}
+                            @if(this.groupedData["channelmessage"].length > 1){
+                            Ergebnisse }@else { Ergebnis }]</span
+                        >
+                    </div>
+                    } @case ("channel") {
+                    <div class="type">
+                        Kanal
+                        <span class="font-italic">
+                            [{{
+                                this.groupedData["channel"].length
+                            }}
+                            @if(this.groupedData["channel"].length > 1){
+                            Ergebnisse }@else { Ergebnis }]</span
+                        >
+                    </div>
+                    } @case ("user") {
+                    <div class="type">
+                        Benutzer
+                        <span class="font-italic">
+                            [{{
+                                this.groupedData["user"].length
+                            }}
+                            @if(this.groupedData["user"].length > 1){ Ergebnisse
+                            }@else { Ergebnis }]</span
+                        >
+                    </div>
+                    } }
+                    <li *ngFor="let item of type.value">
+                        @if(type.key === 'user' ){
+                        <span
+                            (click)="
+                                openSelectedResult(
+                                    item.component,
+                                    item.data.id,
+                                    item.data.displayName,
+                                    item.thread
+                                )
+                            ">
+                            <img
+                                class="avatar"
+                                src="{{ item.data.avatar }}"
+                                alt="" />
+                            {{ item.data.displayName }}
+                            @if(item.data.email !== ''){
+                            <span class="font-italic"
+                                >(Email: {{ item.data.email }})</span
+                            >
+                            }
+                        </span>
+                        } @if(type.key === 'channel' ){
+                        <span
+                            (click)="
+                                openSelectedResult(
+                                    item.type,
+                                    item.data.id,
+                                    item.data.name,
+                                    item.thread
+                                )
+                            "
+                            >#{{ item.data.name }}
+                            @if(item.data.description !== ''){
+                            <span class="font-italic"
+                                >(Beschreibung:
+                                {{ item.data.description }})</span
+                            >
+                            }
+                        </span>
+                        } @if(type.key === 'channelmessage' ){ @if(item.thread){
+                        <span
+                            (click)="
+                                openSelectedResult(
+                                    item.component,
+                                    item.data.channelId,
+                                    item.data.name,
+                                    item.thread,
+                                    item.ref
+                                )
+                            ">
+                            <span class="font-italic">[Thread] </span>"{{
+                                item.data.text
+                            }}
+                            " an @if(item.component === 'channel') { #{{
+                                getChannelNameById(item.data.channelId)
+                            }}
+                            } @else{ &#64;{{
+                                getUserNameById(item.data.recipient)
+                            }}
+                            }
+                        </span>
+                        } @else {
+                        <span
+                            (click)="
+                                openSelectedResult(
+                                    item.component,
+                                    item.data.recipient,
+                                    item.data.name,
+                                    item.thread
+                                )
+                            "
+                            >"{{ item.data.text }} " an @if(item.component ===
+                            'channel') { #{{
+                                getChannelNameById(item.data.recipient)
+                            }}
+                            } @else{ &#64;{{
+                                getUserNameById(item.data.recipient)
+                            }}
+                            }
+                        </span>
+                        } }
+                    </li>
+                </div>
+            </div>
+            @if(this.resultList.length == 0){
+            <div class="error">
+                Kein Inhalt gefunden der "{{ textData.text }}" enthält.
+            </div>
             }
-          </li>
         </div>
-      </div>
-      @if(this.resultList.length == 0){
-      <div class="error">
-        Kein Inhalt gefunden der "{{ textData.text }}" enthält.
-      </div>
-      }
     </div>
-  </div>
-  }
+    }
 </div>
