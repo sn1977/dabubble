@@ -1,12 +1,16 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform } from "@angular/core";
 
 @Pipe({
-  name: 'onlineStatus',
-  standalone: true
+    name: "onlineStatus",
+    standalone: true,
 })
 export class OnlineStatusPipe implements PipeTransform {
-
-  transform(value: boolean): string {
-    return value ? 'Aktiv' : 'Abwesend';
-  }
+    /**
+     * Transforms a boolean value into a string representation of online status.
+     * @param value - The boolean value indicating the online status.
+     * @returns The string representation of the online status ('Aktiv' for true, 'Abwesend' for false).
+     */
+    transform(value: boolean): string {
+        return value ? "Aktiv" : "Abwesend";
+    }
 }
