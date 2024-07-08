@@ -192,11 +192,11 @@ export class SearchInputComponent implements OnInit {
     if(thread){
       const messageId = ref.split('channelmessages/')[1].split('/')[0];
       this.matchMedia.subID = messageId;
-    }
-    
-    this.matchMedia.collectionType = ref.includes('direct-message')
+      
+      this.matchMedia.collectionType = ref.includes('direct-message')
       ? 'messages'
       : 'channels';
+    }
   }
 
   /**
