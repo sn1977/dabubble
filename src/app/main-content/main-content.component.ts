@@ -179,7 +179,6 @@ export class MainContentComponent implements OnInit {
     openChannel(event: MouseEvent, path: string, name: string) {
         this.matchMedia.loading = true;
         this.matchMedia.channelName = name;
-        console.log(this.matchMedia.channelName);
         this.matchMedia.showThread = false;
         this.matchMedia.showSearchDropdown = false;
         this.firestore.conversation = "";
