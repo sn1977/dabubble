@@ -22,9 +22,7 @@
     "lib": [
       "ES2022",
       "dom"
-    ],
-    "noUnusedLocals": true,
-    "noUnusedParameters": true
+    ]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
