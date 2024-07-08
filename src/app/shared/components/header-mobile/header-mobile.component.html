@@ -1,38 +1,40 @@
 <div
-  class="content-header-mobile bg-c"
-  (mouseenter)="currentImage = hoverImage"
-  (mouseleave)="currentImage = defaultImage"
-  [ngStyle]="{ 'justify-content': isDesktop ? 'flex-end' : 'space-between' }"
-  (click)="openOverlay()"
->
-  @if (isDesktop) {
+    class="content-header-mobile bg-c"
+    (mouseenter)="currentImage = hoverImage"
+    (mouseleave)="currentImage = defaultImage"
+    [ngStyle]="{ 'justify-content': isDesktop ? 'flex-end' : 'space-between' }"
+    (click)="openOverlay()">
+    @if (isDesktop) {
     {{ user.displayName }}
-  } @else {
-    @if (!alternativeHeader) {
+    } @else { @if (!alternativeHeader) {
 
-      <div class="logo-header">
-        <img src="./assets/img/mobile-logo.svg"/>
+    <div class="logo-header">
+        <img src="./assets/img/mobile-logo.svg" />
         <span class="logo-name">DABubble</span>
-      </div>
+    </div>
 
     } @else {
-      <div class="alternative-header">
+    <div class="alternative-header">
         <img
-          [src]="
-        hoverBack
-          ? './assets/img/icon/arrow_back_color.svg'
-          : './assets/img/icon/arrow_back.svg'
-      "
-          (click)="onBack()"
-          (mouseenter)="hoverBack = true"
-          (mouseleave)="hoverBack = false"
-        />
-        <img src="./assets/img/icon/Property 1=Default (1).svg"/>
-      </div>
-    }
-  }
+            [src]="
+                hoverBack
+                    ? './assets/img/icon/arrow_back_color.svg'
+                    : './assets/img/icon/arrow_back.svg'
+            "
+            (click)="onBack()"
+            (mouseenter)="hoverBack = true"
+            (mouseleave)="hoverBack = false" />
+        <img src="./assets/img/icon/Property 1=Default (1).svg" />
+    </div>
+    } }
 
-  <img class="header-img" (click)="openBottomSheet()" src="{{ user.avatar }}"/>
-  <img *ngIf="isDesktop" [src]="currentImage"/>
+    <img
+        class="header-img"
+        (click)="openBottomSheet()"
+        src="{{ user.avatar }}" />
+    <img *ngIf="isDesktop" [src]="currentImage" />
 </div>
-<app-desktop-overlay *ngIf="overlayVisible" [user]="user" (closeOverlay)="closeOverlay()"></app-desktop-overlay>
+<app-desktop-overlay
+    *ngIf="overlayVisible"
+    [user]="user"
+    (closeOverlay)="closeOverlay()"></app-desktop-overlay>
