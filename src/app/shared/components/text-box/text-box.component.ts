@@ -56,11 +56,19 @@ export class TextBoxComponent implements AfterViewInit {
     private renderer: Renderer2
   ) {}
 
+  /**
+   * Adds an emoji to the message text.
+   * 
+   * @param event - The EmojiEvent object containing the selected emoji.
+   */
   addEmoji(event: EmojiEvent) {
     const { emoji } = event;
     this.textBoxData.messageText += emoji.native;
   }
 
+  /**
+   * Sets the hovered state of the delete button to false.
+   */
   deleteHovered() {
     this.add_hovered = false;
     this.smile_hovered = false;
@@ -68,6 +76,7 @@ export class TextBoxComponent implements AfterViewInit {
     this.send_hovered = false;
   }
 
+  //TODO - split function!!!
   onSubmit() {
     this.matchMedia.showSearchDropdown = false;
     if (this.textBoxData.messageText != '') {
@@ -119,7 +128,30 @@ export class TextBoxComponent implements AfterViewInit {
       }
     }
   }
+  
+  isMessageSendable() {
+    return this.isNewMessage || (this.isNewMessage === undefined && this.matchMedia.inputValid);
+  }
+  
+  resetForm() {
+    this.textBoxData.inputField = '';
+    this.selectedFiles = null;
+    this.file = undefined;
+    this.textBoxData.messageText = '';
+    this.resetTextareaHeight();
+  }
+  
+  updateNewMessageStatus() {
+    if (this.isNewMessage === false && this.matchMedia.inputValid === true) {
+      this.matchMedia.newMessage = true;
+    }
+  }
 
+  /**
+   * Submits the form when the submit button is clicked.
+   * 
+   * @param event - The event object triggered by the submit button click.
+   */
   submitForm(event: any) {
     event.preventDefault();
     if (this.textBoxData.messageText.trim() !== '') {
@@ -127,11 +159,19 @@ export class TextBoxComponent implements AfterViewInit {
     }
   }
 
+  /**
+   * Handles the file detection event.
+   * 
+   * @param event - The file detection event.
+   */
   detectFile(event: any) {
     this.selectedFiles = event.target.files;
     this.uploadSingleFile();
   }
 
+  /**
+   * Uploads a single file.
+   */
   uploadSingleFile() {
     if (this.selectedFiles) {
       this.file = this.selectedFiles.item(0);
@@ -154,6 +194,12 @@ export class TextBoxComponent implements AfterViewInit {
     }
   }
 
+  /**
+   * Opens the emoji picker dialog.
+   * 
+   * This method opens a dialog that allows the user to select an emoji. 
+   * When an emoji is selected, it is added to the text box and the dialog is closed.
+   */
   openEmojiPickerDialog(): void {
     const dialogRef = this.dialog.open(EmojiPickerComponent, {
       width: '400px',
@@ -166,6 +212,11 @@ export class TextBoxComponent implements AfterViewInit {
     });
   }
 
+  /**
+   * Lifecycle hook that is called after Angular has fully initialized the component's view.
+   * It is called only once after the first `ngAfterContentChecked`.
+   * Use this hook to perform any additional initialization tasks that require the view to be fully rendered.
+   */
   ngAfterViewInit() {
     const textarea = this.messageText.nativeElement;
     this.initialHeight = textarea.style.height || 'auto';
@@ -173,16 +224,26 @@ export class TextBoxComponent implements AfterViewInit {
     this.setFocus();
   }
 
+  /**
+   * Adjusts the height of a textarea element based on its content.
+   * @param textarea - The HTMLTextAreaElement to adjust the height of.
+   */
   adjustTextareaHeight(textarea: HTMLTextAreaElement) {
     textarea.style.height = 'auto';
     textarea.style.height = textarea.scrollHeight + 'px';
     textarea.focus();
   }
 
+  /**
+   * Sets the focus on the message text element.
+   */
   setFocus() {
     this.renderer.selectRootElement(this.messageText.nativeElement).focus();
   }
 
+  /**
+   * Resets the height of the textarea to its initial height.
+   */
   resetTextareaHeight() {
     const textarea = this.messageText.nativeElement;
     textarea.style.height = this.initialHeight;
