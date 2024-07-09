@@ -159,6 +159,7 @@ export class SearchInputComponent implements OnInit {
     this.matchMedia.loading = true;
     this.matchMedia.channelName = name;
     this.firestore.conversation = '';
+    this.matchMedia.scrollToBottom = true;
   }
 
   /**
@@ -172,6 +173,7 @@ export class SearchInputComponent implements OnInit {
    */
   async handleNavigation(type: string, id: string, thread: boolean, ref?: any) {
     await this.prepareForThreadView(id, ref, thread);
+    
     if (!this.isDesktop && thread) {
       this.router.navigate(['/thread']);
     } else {      
@@ -192,6 +194,8 @@ export class SearchInputComponent implements OnInit {
     this.matchMedia.hideReactionIcons = true;
     this.matchMedia.channelId = id;    
     this.matchMedia.collectionType = 'channels';
+    this.matchMedia.scrollToBottom = true;
+    this.matchMedia.scrollToBottomThread = thread;
     
     if(thread){
       const messageId = ref.split('channelmessages/')[1].split('/')[0];
