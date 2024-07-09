@@ -113,8 +113,7 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
      *
      * @param data - The channel data to be processed.
      */
-    processChannelData(data: any) {
-        
+    processChannelData(data: any) {        
         if (data) {
             this.updateChannelMessage(data);
             this.adjustTextareaHeight(this.messageToEdit.nativeElement);
@@ -469,7 +468,7 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
     /**
      * Saves the channel message data to the Firestore database.
      */
-    saveMessage() {
+    saveMessage() {        
         if (this.channelMessage.messageId !== undefined) {
             let colId = "channels";
 

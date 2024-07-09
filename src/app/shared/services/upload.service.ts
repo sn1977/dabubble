@@ -1,60 +1,92 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import {
-    getDownloadURL,
-    getStorage,
-    ref,
-    uploadBytesResumable,
-} from "@angular/fire/storage";
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+} from '@angular/fire/storage';
 
 @Injectable({
-    providedIn: "root",
+  providedIn: 'root',
 })
 export class UploadService {
-    constructor() {}
+  constructor() {}
 
-    //TODO - shorten this function!!!
-    uploadFile(file: File, filedate: number, folder: string): Promise<string> {
-        return new Promise<string>((resolve, reject) => {
-            const storage = getStorage();
-            const metadata = {
-                contentType: file.type,
-            };
+  /**
+   * Set metadata for file
+   * @returns content type.
+   */
+  createMetadata(file: File) {
+    return {
+      contentType: file.type,
+    };
+  }
 
-            const newFileName = filedate + "_" + file.name;
-            const storageRef = ref(storage, folder + "/" + newFileName);
-            const uploadTask = uploadBytesResumable(storageRef, file, metadata);
+  /**
+   * Create file name
+   * @returns file name.
+   */
+  createFileName(filedate: number, file: File) {
+    return `${filedate}_${file.name}`;
+  }
 
-            uploadTask.on(
-                "state_changed",
-                (snapshot) => {},
-                (error) => {
-                    switch (error.code) {
-                        case "storage/unauthorized":
-                            reject(error);
-                            break;
-                        case "storage/canceled":
-                            reject(error);
-                            break;
-                        case "storage/unknown":
-                            reject(error);
-                            break;
-                        default:
-                            reject(error);
-                            break;
-                    }
-                },
-                () => {
-                    getDownloadURL(uploadTask.snapshot.ref)
-                        .then((downloadURL) => {
-                            resolve(downloadURL);
-                        })
-                        .catch((error) => {
-                            reject(error);
-                        });
-                }
-            );
-        });
+  /**
+   * Set storage reference
+   * @returns reference
+   */
+  createStorageRef(storage: any, folder: string, newFileName: string) {
+    return ref(storage, `${folder}/${newFileName}`);
+  }
+
+  /**
+   * Error handling
+  * @returns error text depending on error.code
+  */
+  handleUploadError(error: any, reject: (reason?: any) => void) {
+    switch (error.code) {
+      case 'storage/unauthorized':
+      case 'storage/canceled':
+      case 'storage/unknown':
+      default:
+        reject(error);
+        break;
     }
+  }
 
-    
+  /**
+   * retrieving download-url
+   */
+  getDownloadUrlAndResolve(
+    uploadTask: any,
+    resolve: (value: string | PromiseLike<string>) => void,
+    reject: (reason?: any) => void
+  ) {
+    getDownloadURL(uploadTask.snapshot.ref)
+      .then((downloadURL: string) => {
+        resolve(downloadURL);
+      })
+      .catch((error: any) => {
+        reject(error);
+      });
+  }
+
+  /**
+   * Upload file to storage bucket
+   */
+  uploadFile(file: File, filedate: number, folder: string): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+      const storage = getStorage();
+      const metadata = this.createMetadata(file);
+      const newFileName = this.createFileName(filedate, file);
+      const storageRef = this.createStorageRef(storage, folder, newFileName);
+      const uploadTask = uploadBytesResumable(storageRef, file, metadata);
+
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {},
+        (error) => this.handleUploadError(error, reject),
+        () => this.getDownloadUrlAndResolve(uploadTask, resolve, reject)
+      );
+    });
+  }
 }

@@ -30,6 +30,7 @@ import { MatchMediaService } from '../../services/match-media.service';
 export class TextBoxComponent implements AfterViewInit {
   authService = inject(AuthService);
   firestore = inject(FirestoreService);
+  message: ChannelMessage = new ChannelMessage();
   reactions = [];
   selectedFiles: FileList | undefined | null;
   file: any = undefined;
@@ -58,7 +59,7 @@ export class TextBoxComponent implements AfterViewInit {
 
   /**
    * Adds an emoji to the message text.
-   * 
+   *
    * @param event - The EmojiEvent object containing the selected emoji.
    */
   addEmoji(event: EmojiEvent) {
@@ -76,63 +77,81 @@ export class TextBoxComponent implements AfterViewInit {
     this.send_hovered = false;
   }
 
-  //TODO - split function!!!
-  onSubmit() {
+  /**
+   * Prepare for save a new message after Submit
+   */
+  async onSubmit() {
     this.matchMedia.showSearchDropdown = false;
     if (this.textBoxData.messageText != '') {
       this.textBoxData.subcollection;
-      let type: string | undefined;
-      const message = new ChannelMessage({
-        creator: this.authService.activeUserId,
-        text: this.textBoxData.messageText,
-        channelId: this.textBoxData.channelId,
-        createdAt: serverTimestamp(),
-        reactions: (this.textBoxData.reactions = this.reactions),
-        attachment: [`${this.textBoxData.inputField}`],
-        threads: 0,        
-        recipient: this.textBoxData.recipient,
-      });
+      await this.setMessageContent();
 
-      if (this.textBoxData.subcollection != 'channelmessages') {
-        type = 'thread';
+      if (this.isNewMessage || this.isNewMessage === undefined || this.matchMedia.inputValid) {
+        this.storeNewMessage();
       }
-
-      if (
-        !this.isNewMessage &&
-        this.isNewMessage != undefined &&
-        !this.matchMedia.inputValid
-      ) {
-      } else {        
-        let colID = '';
-        if (this.matchMedia.collectionType === 'messages') {
-          colID = 'messages';
-        } else {
-          colID = 'channels';
-        }
-
-        this.firestore.addChannelMessage(
-          message,
-          `${colID}/${message.channelId}/${this.textBoxData.subcollection}`,
-          type
-        );
-      }
-
-      this.textBoxData.inputField = '';
-      this.selectedFiles = null;
-      this.file = undefined;
-      this.textBoxData.messageText = '';
-      this.resetTextareaHeight();
-
-      if (this.isNewMessage === false && this.matchMedia.inputValid === true) {
-        this.matchMedia.newMessage = true;
-      }
+      await this.resetValuesAfterStore();
     }
   }
-  
-  isMessageSendable() {
-    return this.isNewMessage || (this.isNewMessage === undefined && this.matchMedia.inputValid);
+
+  /**
+   * Set necessary values and store in database
+   */
+  storeNewMessage() {
+    let type: string | undefined;
+    let colID = '';
+    type = (this.textBoxData.subcollection != 'channelmessages') ? 'thread' : type;
+    colID = (this.matchMedia.collectionType === 'messages') ? 'messages' : 'channels';
+
+    this.firestore.addChannelMessage(
+      this.message,
+      `${colID}/${this.message.channelId}/${this.textBoxData.subcollection}`,
+      type
+    );
   }
-  
+
+  /**
+   * Set object values
+   */
+  async setMessageContent() {
+    this.message = new ChannelMessage({
+      creator: this.authService.activeUserId,
+      text: this.textBoxData.messageText,
+      channelId: this.textBoxData.channelId,
+      createdAt: serverTimestamp(),
+      reactions: (this.textBoxData.reactions = this.reactions),
+      attachment: [`${this.textBoxData.inputField}`],
+      threads: 0,
+      recipient: this.textBoxData.recipient,
+    });
+  }
+
+  /**
+   * Reset values after storage
+   */
+  async resetValuesAfterStore() {
+    this.textBoxData.inputField = '';
+    this.selectedFiles = null;
+    this.file = undefined;
+    this.textBoxData.messageText = '';
+    this.resetTextareaHeight();
+    if (this.isNewMessage === false && this.matchMedia.inputValid === true) {
+      this.matchMedia.newMessage = true;
+    }
+  }
+
+  /**
+   * Check if message is valid
+   */
+  isMessageSendable() {
+    return (
+      this.isNewMessage ||
+      (this.isNewMessage === undefined && this.matchMedia.inputValid)
+    );
+  }
+
+  /**
+   * Reset the form
+   */
   resetForm() {
     this.textBoxData.inputField = '';
     this.selectedFiles = null;
@@ -140,7 +159,10 @@ export class TextBoxComponent implements AfterViewInit {
     this.textBoxData.messageText = '';
     this.resetTextareaHeight();
   }
-  
+
+  /**
+   * Update status
+   */
   updateNewMessageStatus() {
     if (this.isNewMessage === false && this.matchMedia.inputValid === true) {
       this.matchMedia.newMessage = true;
@@ -149,7 +171,7 @@ export class TextBoxComponent implements AfterViewInit {
 
   /**
    * Submits the form when the submit button is clicked.
-   * 
+   *
    * @param event - The event object triggered by the submit button click.
    */
   submitForm(event: any) {
@@ -161,7 +183,7 @@ export class TextBoxComponent implements AfterViewInit {
 
   /**
    * Handles the file detection event.
-   * 
+   *
    * @param event - The file detection event.
    */
   detectFile(event: any) {
@@ -196,8 +218,8 @@ export class TextBoxComponent implements AfterViewInit {
 
   /**
    * Opens the emoji picker dialog.
-   * 
-   * This method opens a dialog that allows the user to select an emoji. 
+   *
+   * This method opens a dialog that allows the user to select an emoji.
    * When an emoji is selected, it is added to the text box and the dialog is closed.
    */
   openEmojiPickerDialog(): void {

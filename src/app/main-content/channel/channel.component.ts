@@ -27,26 +27,25 @@ import { TimeSeperatorComponent } from '../../shared/components/time-seperator/t
 import { MatchMediaService } from '../../shared/services/match-media.service';
 import { DataService } from '../../shared/services/data.service';
 import { ChannelMessage } from '../../../models/channel-message.class';
-import { ProgressSpinnerComponent } from "../../shared/components/progress-spinner/progress-spinner.component";
+import { ProgressSpinnerComponent } from '../../shared/components/progress-spinner/progress-spinner.component';
 
 @Component({
-    selector: 'app-channel',
-    standalone: true,
-    templateUrl: './channel.component.html',
-    styleUrl: './channel.component.scss',
-    imports: [
-        RouterLink,
-        BottomSheetComponent,
-        ConversationComponent,
-        HeaderMobileComponent,
-        TextBoxComponent,
-        CommonModule,
-        SearchUserComponent,
-        TimeSeperatorComponent,
-        ProgressSpinnerComponent
-    ]
+  selector: 'app-channel',
+  standalone: true,
+  templateUrl: './channel.component.html',
+  styleUrl: './channel.component.scss',
+  imports: [
+    RouterLink,
+    BottomSheetComponent,
+    ConversationComponent,
+    HeaderMobileComponent,
+    TextBoxComponent,
+    CommonModule,
+    SearchUserComponent,
+    TimeSeperatorComponent,
+    ProgressSpinnerComponent,
+  ],
 })
-
 export class ChannelComponent implements OnInit {
   /**
    * The Firestore service used for interacting with the Firebase Firestore database.
@@ -113,8 +112,7 @@ export class ChannelComponent implements OnInit {
     private headerStateService: HeaderStateService,
     private dialogService: DialogServiceService,
     public dateFormatService: DateFormatService
-  )
-  {}
+  ) {}
 
   /**
    * Represents the channel data.
@@ -126,13 +124,15 @@ export class ChannelComponent implements OnInit {
     name: this.channel.name,
   };
 
-  //TODO - Funktion muss noch gekürzt werden!
+  /**
+   * Initializes the component and sets up necessary configurations.
+   * This method is called after the component has been created and initialized.
+   * It is used to perform any initialization logic required by the component.
+   */
   async ngOnInit(): Promise<void> {
-    this.dataService.searchWorkspace('');
-    this.isDesktop = this.matchMedia.checkIsDesktop();
-    this.matchMedia.collectionType = 'channels';
+    await this.setInitialData();
     await this.waitForUserData();
-    this.test();
+    await this.getActiveUser();
 
     this.route.paramMap.subscribe((paramMap) => {
       this.itemID = paramMap.get('id');
@@ -141,37 +141,66 @@ export class ChannelComponent implements OnInit {
       this.textBoxData.recipient = this.itemID;
 
       this.firestore.getSingleItemData('channels', this.itemID, () => {
-        this.channel = new Channel(this.firestore.channel);
-        this.textBoxData.channelName = this.channel.name;
-
-        this.firestore.channelMessages = [];
-        this.firestore.getAllChannelMessages(
-          this.itemID,
-          this.textBoxData.collection,
-          this.textBoxData.subcollection
-        );
-        this.textBoxData.channelName = this.channel.name;
-        this.textBoxData.channelId = this.itemID;
-
-        this.headerStateService.setAlternativeHeader(true);
-        this.matchMedia.scrollToBottom = true;
-        setInterval(() => {
-          this.scrollToBottom();
-          this.matchMedia.loading = false;
-        }, 1000);
+        this.setChannelData();
       });
     });
   }
 
   /**
+   * Sets necessary configurations like collectionType,
+   * empty search and check if view is desktop or mobile
+   */
+  async setInitialData() {
+    this.dataService.searchWorkspace('');
+    this.isDesktop = this.matchMedia.checkIsDesktop();
+    this.matchMedia.collectionType = 'channels';
+  }
+
+  /**
+   * Sets necessary channelData
+   */
+  setChannelData() {
+    this.channel = new Channel(this.firestore.channel);
+    this.firestore.channelMessages = [];
+    this.setTextBoxData();
+    this.setLoadingState();
+  }
+
+  /**
+   * Sets necessary textBoxData
+   */
+  setTextBoxData() {
+    this.textBoxData.channelName = this.channel.name;
+    this.firestore.getAllChannelMessages(
+      this.itemID,
+      this.textBoxData.collection,
+      this.textBoxData.subcollection
+    );
+    this.textBoxData.channelName = this.channel.name;
+    this.textBoxData.channelId = this.itemID;
+  }
+
+  /**
+   * Sets loading States (scroll on new content)
+   */
+  setLoadingState() {
+    this.headerStateService.setAlternativeHeader(true);
+    this.matchMedia.scrollToBottom = true;
+    setInterval(() => {
+      this.scrollToBottom();
+      this.matchMedia.loading = false;
+    }, 1000);
+  }
+
+  /**
    * Filters the users based on the provided member ID.
-   * 
+   *
    * @returns An array of filtered users.
    */
   filterUsers() {
     return this.filterUsersById(this.firestore.getUsers(), this.channel.member);
   }
-  
+
   /**
    * Filters an array of users based on their IDs.
    *
@@ -234,7 +263,7 @@ export class ChannelComponent implements OnInit {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
-  test() {
+  async getActiveUser() {
     let id = this.authService.activeUserAccount.uid;
     this.getItemValuesProfile('users', id);
   }
@@ -285,7 +314,7 @@ export class ChannelComponent implements OnInit {
 
   /**
    * Retrieves the values of an item from a specified collection and assigns them to the component's user property.
-   * 
+   *
    * @param collection - The name of the collection to retrieve the item from.
    * @param itemID - The ID of the item to retrieve.
    */
