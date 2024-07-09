@@ -114,6 +114,7 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
      * @param data - The channel data to be processed.
      */
     processChannelData(data: any) {
+        
         if (data) {
             this.updateChannelMessage(data);
             this.adjustTextareaHeight(this.messageToEdit.nativeElement);
@@ -136,9 +137,9 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
             reactions: data["reactions"],
             attachment: data["attachment"],
             threads: data["threads"],
-            timestampLastThread: data["timestampLastThread"],
             recipient: data["recipient"],
         });
+        this.timestampLastThread = data["timestampLastThread"];
         this.fileType =
             this.channelMessage.attachment?.[0].includes(".pdf?") || false;
     }
