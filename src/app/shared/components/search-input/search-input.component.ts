@@ -85,6 +85,7 @@ export class SearchInputComponent implements OnInit {
    * @returns A Promise that resolves when the search process is complete.
    */
   async startSearching(query: string) {
+    this.matchMedia.showThread = false;
     this.groupedData = {};
     this.resultList = this.findeEintraegeMitWert(
       this.firestore.globalValuesArray,
@@ -143,17 +144,16 @@ export class SearchInputComponent implements OnInit {
     name: string | undefined,
     thread: boolean,
     ref?: any
-  ) {
-
+  ) {    
     await this.resetSearchState(name!);
     await this.handleNavigation(type, id, thread, ref);
   }
-
+  
   /**
    * Resets the search state.
    * @param name - The channel name.
-   */
-  async resetSearchState(name: string) {
+  */
+ async resetSearchState(name: string) {
     this.matchMedia.showSearchDropdown = false;
     this.textData.text = '';
     this.matchMedia.loading = true;
@@ -187,16 +187,20 @@ export class SearchInputComponent implements OnInit {
    * @param ref - The reference string.
    */
   async prepareForThreadView(id: string, ref: string, thread: boolean) {
+
     this.matchMedia.showThread = false;
     this.matchMedia.hideReactionIcons = true;
-    this.matchMedia.channelId = id;
+    this.matchMedia.channelId = id;    
+    this.matchMedia.collectionType = 'channels';
+    
     if(thread){
       const messageId = ref.split('channelmessages/')[1].split('/')[0];
       this.matchMedia.subID = messageId;
       
-      this.matchMedia.collectionType = ref.includes('direct-message')
-      ? 'messages'
-      : 'channels';
+      if (ref.startsWith("messages")) {
+        const channel = ref.split('messages/')[1].split('/')[0];                
+        this.matchMedia.channelId = channel;
+      }
     }
   }
 
