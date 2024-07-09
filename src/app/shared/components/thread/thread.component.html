@@ -4,8 +4,10 @@
         <div class="channel-box pointer">
             <h1 class="no-margin">
                 <span>Thread</span>
-                <span class="subtitle">#</span>
-                <span class="subtitle">{{ this.matchMedia.channelName }}</span>
+                <span class="sub-description">
+                    <span class="subtitle">@if(this.matchMedia.collectionType === 'messages'){&#64;}@else {#}</span>
+                    <span class="subtitle">{{ this.matchMedia.channelName }}</span>
+                </span>
             </h1>
         </div>
         <div class="menu-icon-hover pointer">

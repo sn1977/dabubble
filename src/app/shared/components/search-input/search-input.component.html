@@ -51,9 +51,13 @@
                         >
                     </div>
                     } }
-                    <li *ngFor="let item of type.value">
+                    <li *ngFor="let item of type.value; let i = index" [ngClass]="{'colored-background': isEven(i)}">
                         @if(type.key === 'user' ){
-                        <span
+                        <span 
+                        [ngStyle]="{
+                            'flex-direction': 'row',
+                            'align-items': 'center'
+                        }"                 
                             (click)="
                                 openSelectedResult(
                                     item.component,
@@ -78,6 +82,10 @@
                         </span>
                         } @if(type.key === 'channel' ){
                         <span
+                        [ngStyle]="{
+                            'flex-direction': 'row',
+                            'align-items': isDesktop ? 'center' : 'flex-start',
+                        }"
                             (click)="
                                 openSelectedResult(
                                     item.type,
@@ -89,13 +97,16 @@
                             >#{{ item.data.name }}
                             @if(item.data.description !== ''){
                             <span class="font-italic"
-                                >(Beschreibung:
-                                {{ item.data.description }})</span
+                                >({{ item.data.description }})</span
                             >
                             }
                         </span>
                         } @if(type.key === 'channelmessage' ){ @if(item.thread){
                         <span
+                        [ngStyle]="{
+                            'flex-direction': 'row',
+                            'align-items': isDesktop ? 'center' : 'flex-start',
+                        }"
                             (click)="
                                 openSelectedResult(
                                     item.component,                                    
@@ -104,14 +115,14 @@
                                     item.thread,
                                     item.ref
                                 )
-                            ">
-                            <span class="font-italic">[Thread] </span>"{{ item.data.text }}" an @if(item.component === 'channel') { #{{
+                            ">@if(item.component === 'channel') { #{{
                                 getChannelNameById(item.data.channelId)
                             }}
                             } @else{ &#64;{{
                                 getUserNameById(item.data.recipient)
                             }}
                             }
+                            <span class="font-italic"> [Thread]</span>: "{{ item.data.text }}" 
                         </span>
                         } @else {
                         <span
@@ -119,18 +130,18 @@
                                 openSelectedResult(
                                     item.component,
                                     item.data.recipient,
-                                    item.data.name,
+                                    item.component === 'channel' ? getChannelNameById(item.data.channelId) : getUserNameById(item.data.recipient),
                                     item.thread
                                 )
                             "
-                            >"{{ item.data.text }}" an @if(item.component ===
+                            >@if(item.component ===
                             'channel') { #{{
                                 getChannelNameById(item.data.recipient)
                             }}
                             } @else{ &#64;{{
                                 getUserNameById(item.data.recipient)
                             }}
-                            }
+                            }: "{{ item.data.text }}"
                         </span>
                         } }
                     </li>

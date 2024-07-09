@@ -94,6 +94,7 @@ export class ThreadComponent implements OnInit, OnDestroy {
         this.newMessage = false;
         this.headerStateService.setAlternativeHeader(true);
         this.scrollToBottom();
+        this.textBoxData.recipient = this.matchMedia.threadId;
 
         await this.firestore.getSingleMessageData(
             this.matchMedia.collectionType,

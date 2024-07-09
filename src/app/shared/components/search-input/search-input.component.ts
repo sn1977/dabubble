@@ -98,7 +98,7 @@ export class SearchInputComponent implements OnInit {
     }
 
     this.uniqueResultList = await this.getUniqueResults();
-    console.log(this.uniqueResultList);
+    // console.log(this.uniqueResultList);
     await this.groupDataByType();
   }
 
@@ -156,7 +156,7 @@ export class SearchInputComponent implements OnInit {
  async resetSearchState(name: string) {
     this.matchMedia.showSearchDropdown = false;
     this.textData.text = '';
-    this.matchMedia.loading = true;
+    this.matchMedia.loading = true;    
     this.matchMedia.channelName = name;
     this.firestore.conversation = '';
     this.matchMedia.scrollToBottom = true;
@@ -204,6 +204,7 @@ export class SearchInputComponent implements OnInit {
       if (ref.startsWith("messages")) {
         const channel = ref.split('messages/')[1].split('/')[0];                
         this.matchMedia.channelId = channel;
+        this.matchMedia.collectionType = 'messages';
       }
     }
   }
@@ -231,4 +232,14 @@ export class SearchInputComponent implements OnInit {
     );
     return user ? user.displayName : undefined;
   }
+
+  /**
+   * Retrieves if the index is even
+   * @param index - The index of the user.
+   * @returns false or true if even or odd
+   */
+  isEven(index: number): boolean {
+    return index % 2 === 0;
+  }
+
 }

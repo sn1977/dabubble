@@ -97,6 +97,9 @@ h1 {
     margin: 0;
     @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 5px);
 
+    .sub-description{
+        @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 0);
+    }
     .subtitle {
         color: #535af1;
         font-family: Nunito;

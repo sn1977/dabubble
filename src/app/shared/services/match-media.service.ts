@@ -7,6 +7,7 @@ export class MatchMediaService {
     showThread: boolean = false;
     channelId: string = "";
     subID: string = "";
+    threadId: string = "";
     channelName: string = "";
     hideReactionIcons: boolean = false;
     scrollToBottom: boolean = true;

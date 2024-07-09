@@ -99,7 +99,8 @@ export class DirectMessageComponent implements OnInit {
         this.routeSubscription = this.route.paramMap.subscribe(
             async (paramMap) => {
                 this.resetTextBox();
-                this.itemID = paramMap.get("id");
+                this.itemID = paramMap.get("id");                
+                this.matchMedia.threadId = this.itemID;
                 this.getItemValues("users", this.itemID);
                 await this.handleDirectMessages();
                 this.setupHeaderAndMessages();

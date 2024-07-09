@@ -355,7 +355,7 @@ export class FirestoreService {
                 console.error(err);
             })
             .then((docRef) => {
-                console.log("Document written with ID: ", docRef?.id);
+                // console.log("Document written with ID: ", docRef?.id);
                 this.globalSearch();
                 this.router.navigate(["/channel/" + docRef?.id]);
             });
@@ -378,7 +378,7 @@ export class FirestoreService {
                 console.error(err);
             })
             .then(async (docRef) => {
-                console.log("Document written with ID: ", docRef?.id);
+                // console.log("Document written with ID: ", docRef?.id);
                 this.matchMedia.scrollToBottom = true;
                 if (type && type === "thread") {
                     this.matchMedia.scrollToBottomThread = true;

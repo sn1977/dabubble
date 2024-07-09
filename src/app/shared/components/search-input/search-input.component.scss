@@ -97,8 +97,9 @@
     li {
         @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 4px);
         > span {
+            display: flex;
+            gap: 4px;
             width: 100%;
-            @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 4px);
             .userInfo{
                 @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 4px);
             }
@@ -112,6 +113,12 @@
         font-weight: 700;
         color: #535af1;
     }
+
+    .colored-background {
+        background-color: #f9f5f5;
+        border-radius: 20px;
+    }
+
 }
 
 .error {
