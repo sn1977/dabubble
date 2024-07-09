@@ -23,7 +23,6 @@ export const routes: Routes = [
   { path: 'privacy-policy', component: PrivacyPolicyComponent },
   { path: 'add-channel', component: AddChannelComponent, canActivate:[IsAdminGuard] },
   { path: 'register', component: RegisterComponent },
-  // { path: 'email/*', component: EmailComponent },
   { path: 'email/__/auth/action', component: EmailComponent },  
   { path: 'choose-avatar', component: ChooseAvatarComponent },
   { path: 'login', component: LogInComponent },
@@ -34,7 +33,4 @@ export const routes: Routes = [
   { path: 'new-message', component: NewMessageComponent, canActivate:[IsAdminGuard]},
   { path: 'channel-edition/:id', component: ChannelEditionComponent, canActivate:[IsAdminGuard]},  
   { path: 'thread', component: ThreadComponent, canActivate:[IsAdminGuard]},
-  // { path: '**', redirectTo: '/login', pathMatch: 'full' },
-
-  // { path: 'newchannel', component: NewChannelComponent, canActivate:[IsAdminGuard]},  
 ];
