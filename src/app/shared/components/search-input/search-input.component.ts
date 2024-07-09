@@ -144,6 +144,7 @@ export class SearchInputComponent implements OnInit {
     thread: boolean,
     ref?: any
   ) {
+
     await this.resetSearchState(name!);
     await this.handleNavigation(type, id, thread, ref);
   }

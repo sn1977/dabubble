@@ -40,9 +40,6 @@ export class BottomSheetComponent {
     /**
      * Opens the profile card dialog.
      */
-    /**
-     * Opens the profile card dialog.
-     */
     openProfileCard(): void {
         const dialogRef = this.dialog.open(ProfilCardComponent, {
             minWidth: "398px",
@@ -51,9 +48,9 @@ export class BottomSheetComponent {
             data: { user: this.data.user },
         });
 
-        dialogRef.afterClosed().subscribe((result) => {
-            console.log("Der Dialog wurde geschlossen");
-        });
+        // dialogRef.afterClosed().subscribe((result) => {
+        //     console.log("Der Dialog wurde geschlossen");
+        // });
     }
 
     /**

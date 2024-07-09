@@ -98,8 +98,8 @@
                         <span
                             (click)="
                                 openSelectedResult(
-                                    item.component,
-                                    item.data.channelId,                                    
+                                    item.component,                                    
+                                    item.component === 'channel' ? item.data.channelId : item.data.recipient,
                                     item.component === 'channel' ? getChannelNameById(item.data.channelId) : getUserNameById(item.data.recipient),
                                     item.thread,
                                     item.ref
