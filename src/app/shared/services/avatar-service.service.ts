@@ -1,14 +1,19 @@
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { Subject } from "rxjs";
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: "root",
 })
 export class AvatarService {
-  private avatarChangeSource = new Subject<string>();
-  avatarChange$ = this.avatarChangeSource.asObservable();
+    private avatarChangeSource = new Subject<string>();
+    avatarChange$ = this.avatarChangeSource.asObservable();
 
-  avatarChanged(newAvatarUrl: string) {
-    this.avatarChangeSource.next(newAvatarUrl);
-  }
+    /**
+     * Changes the avatar URL and notifies subscribers.
+     *
+     * @param newAvatarUrl - The new URL of the avatar.
+     */
+    avatarChanged(newAvatarUrl: string) {
+        this.avatarChangeSource.next(newAvatarUrl);
+    }
 }
