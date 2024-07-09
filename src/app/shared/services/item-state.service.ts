@@ -1,20 +1,27 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { BehaviorSubject } from "rxjs";
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: "root",
 })
 export class ItemStateService {
-  private itemIdSource = new BehaviorSubject<string | null>(null);
-  itemId$ = this.itemIdSource.asObservable();
+    private itemIdSource = new BehaviorSubject<string | null>(null);
+    itemId$ = this.itemIdSource.asObservable();
 
-  constructor() { }
+    constructor() {}
 
-  setItemId(id: string) {
-    this.itemIdSource.next(id);
-  }
+    /**
+     * Sets the item ID.
+     * @param id - The ID of the item.
+     */
+    setItemId(id: string) {
+        this.itemIdSource.next(id);
+    }
 
-  clearItemId() {
-    this.itemIdSource.next(null);
-  }
+    /**
+     * Clears the current item ID.
+     */
+    clearItemId() {
+        this.itemIdSource.next(null);
+    }
 }
