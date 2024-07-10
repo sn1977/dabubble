@@ -63,6 +63,7 @@ export class NewMessageComponent implements OnInit, OnDestroy {
         channelId: "",
         collection: "",
         subcollection: "channelmessages",
+        recipient: '',
     };
 
     constructor(
@@ -89,7 +90,7 @@ export class NewMessageComponent implements OnInit, OnDestroy {
         this.matchMedia.newMessage = false;
         this.matchMedia.inputValid = false;
         await this.waitForUserData();
-        this.test();
+        this.getActiveUser();
         this.textBoxData.channelId = this.firestore.conversation;
         this.headerStateService.setAlternativeHeader(true);
 
@@ -129,7 +130,7 @@ export class NewMessageComponent implements OnInit, OnDestroy {
         return new Promise((resolve) => setTimeout(resolve, ms));
     }
 
-    test() {
+    getActiveUser() {
         let id = this.authService.activeUserAccount.uid;
         this.getItemValues("users", id);
     }
@@ -251,6 +252,7 @@ export class NewMessageComponent implements OnInit, OnDestroy {
             ...this.textBoxData,
             collection,
             channelId: selection,
+            recipient: selection,
         };
 
         if (collection === "messages") {
