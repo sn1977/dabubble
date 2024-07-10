@@ -57,6 +57,9 @@
   font-weight: 700;
   font-size: 1rem;
   line-height: 24.55px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   &:hover{
     border: 1px solid $bgch;

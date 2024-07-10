@@ -213,6 +213,7 @@ mat-card {
             $ch: #fff,
             $fbc: #444df2
         );
+        
     }
 
     span {
@@ -345,3 +346,12 @@ mat-card {
     transform: scale(0.83);
   }
 }
+
+@media (max-width: 400px) {
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      font-size: 0.8rem !important;
+    }
+  }
+  
