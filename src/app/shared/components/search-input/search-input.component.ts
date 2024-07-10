@@ -160,6 +160,7 @@ export class SearchInputComponent implements OnInit {
     this.matchMedia.channelName = name;
     this.firestore.conversation = '';
     this.matchMedia.scrollToBottom = true;
+    this.matchMedia.hideReactionIcons = true;
   }
 
   /**
@@ -191,7 +192,7 @@ export class SearchInputComponent implements OnInit {
   async prepareForThreadView(id: string, ref: string, thread: boolean) {
 
     this.matchMedia.showThread = false;
-    this.matchMedia.hideReactionIcons = true;
+    this.matchMedia.hideReactionIcons = false;
     this.matchMedia.channelId = id;    
     this.matchMedia.collectionType = 'channels';
     this.matchMedia.scrollToBottom = true;
