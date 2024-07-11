@@ -118,7 +118,7 @@
                             ">@if(item.component === 'channel') { {{
                                 getChannelNameById(item.data.channelId)
                             }}
-                            } @else{ &#64;{{
+                            } @else{ {{
                                 getUserNameById(item.data.recipient)
                             }}
                             }
@@ -138,7 +138,7 @@
                             'channel') { {{
                                 getChannelNameById(item.data.recipient)
                             }}
-                            } @else{ &#64;{{
+                            } @else{ {{
                                 getUserNameById(item.data.recipient)
                             }}
                             }: "{{ item.data.text }}"

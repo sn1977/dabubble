@@ -59,7 +59,7 @@ export class SearchInputComponent implements OnInit {
    * @param searchInputValue - The search input value to match against the entries.
    * @returns An array of entries that match the search input value.
    */
-  findeEintraegeMitWert(array: any[], searchInputValue: string) {
+  filterEntriesWithValue(array: any[], searchInputValue: string) {
     const searchInputValueSmall = searchInputValue.toLowerCase();
     return array.filter((entry) =>
       this.matchEntry(entry.data, searchInputValueSmall)
@@ -86,8 +86,8 @@ export class SearchInputComponent implements OnInit {
    */
   async startSearching(query: string) {
     this.matchMedia.showThread = false;
-    this.groupedData = {};
-    this.resultList = this.findeEintraegeMitWert(
+    this.groupedData = {};    
+    this.resultList = this.filterEntriesWithValue(
       this.firestore.globalValuesArray,
       query
     );
@@ -97,8 +97,7 @@ export class SearchInputComponent implements OnInit {
       this.matchMedia.showSearchDropdown = false;
     }
 
-    this.uniqueResultList = await this.getUniqueResults();
-    // console.log(this.uniqueResultList);
+    this.uniqueResultList = await this.getUniqueResults();    
     await this.groupDataByType();
   }
 
@@ -154,6 +153,7 @@ export class SearchInputComponent implements OnInit {
    * @param name - The channel name.
   */
  async resetSearchState(name: string) {
+    name = name.replace(/^[#@]/, '');
     this.matchMedia.showSearchDropdown = false;
     this.textData.text = '';
     this.matchMedia.loading = true;    

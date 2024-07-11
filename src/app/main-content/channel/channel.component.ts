@@ -90,7 +90,7 @@ export class ChannelComponent implements OnInit {
    * Represents the data for the text box in the channel component.
    */
   textBoxData: any = {
-    placeholder: 'Nachricht an ',
+    placeholder: 'Nachricht an #',
     channelName: '',
     messageText: '',
     channelId: '',

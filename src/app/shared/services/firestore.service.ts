@@ -746,6 +746,9 @@ export class FirestoreService {
     async addChannelsToGlobalSearch() {
         for (let i = 0; i < this.channelList.length; i++) {
             const element = this.channelList[i];
+            element.name = element.name.replace(/^#+/, '');
+            element.name = '#' + element.name;
+
             this.globalValuesArray.push({
                 ref: "channels/" + element.id,
                 type: "channel",
@@ -767,6 +770,9 @@ export class FirestoreService {
     async addUsersToGlobalSearch() {
         for (let i = 0; i < this.userList.length; i++) {
             const element = this.userList[i];
+            element.displayName = element.displayName.replace(/^@+/, '');
+            element.displayName = '@' + element.displayName;
+            
             this.globalValuesArray.push({
                 ref: "users/" + element.id,
                 type: "user",

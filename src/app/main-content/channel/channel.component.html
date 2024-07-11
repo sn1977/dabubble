@@ -9,7 +9,8 @@
             (click)="openChannel($event, 'channel-edition')"
             (mouseover)="hovering = true"
             (mouseout)="hovering = false">
-            <h1 class="no-margin">                
+            <h1 class="no-margin">
+                <span>#</span>
                 <span>{{ channel.name }}</span>
             </h1>
             <img
@@ -67,8 +68,8 @@
                         <span>{{ channel.name }}</span>
                     </h1>
                     <p>
-                        Das ist der Anfang des Channels
-                        <span>{{ channel.name }}</span>
+                        Das ist der Anfang des Channels                        
+                        <span># {{ channel.name }}</span>
                     </p>
                 </div>
             </div>

@@ -177,6 +177,7 @@ export class MainContentComponent implements OnInit {
      * @param name - The name of the channel.
      */
     openChannel(event: MouseEvent, path: string, name: string) {
+        name = name.replace(/^[#@]/, '');        
         this.matchMedia.loading = true;
         this.matchMedia.channelName = name;
         this.matchMedia.showThread = false;
