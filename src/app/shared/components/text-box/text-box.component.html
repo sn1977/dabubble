@@ -114,6 +114,11 @@
                 Die gewünschte Datei ist zu groß (max. 500KB)
             </div>
             }
+            @if(noInput){
+                <div class="error required">
+                    Keine Nachricht oder Anhang erfasst.
+                </div>
+                }
         </div>
     </form>
     <emoji-mart

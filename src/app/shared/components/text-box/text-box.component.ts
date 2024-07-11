@@ -45,6 +45,7 @@ export class TextBoxComponent implements AfterViewInit {
   @ViewChild('messageText') messageText!: ElementRef<HTMLTextAreaElement>;
   private initialHeight: string = '';
   matchMedia = inject(MatchMediaService);
+  noInput:boolean = false;
 
   add_hovered: boolean = false;
   smile_hovered: boolean = false;
@@ -82,7 +83,8 @@ export class TextBoxComponent implements AfterViewInit {
    */
   async onSubmit() {
     this.matchMedia.showSearchDropdown = false;
-    if (this.textBoxData.messageText != '') {
+    if (this.textBoxData.messageText != '' || this.textBoxData.inputField != '') {
+      this.noInput = false;
       this.textBoxData.subcollection;
       await this.setMessageContent();
 
@@ -90,6 +92,8 @@ export class TextBoxComponent implements AfterViewInit {
         this.storeNewMessage();
       }
       await this.resetValuesAfterStore();
+    } else {
+      this.noInput = true;
     }
   }
 
