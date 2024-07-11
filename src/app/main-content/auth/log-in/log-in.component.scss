@@ -259,7 +259,7 @@ mat-card {
 }
 
 .logo-animated-desktop-start {
-    animation: logoAnimation 0.4s ease-out 3.5s forwards;
+    animation: logoAnimationDesktop 0.4s ease-out 3.5s forwards;
 
     img {
         animation: imgAnimation 3s ease-out 0.6s forwards;
@@ -298,7 +298,6 @@ mat-card {
 }
 
 .logo-animated-desktop {
-    background-color: yellow;
     height: 100vh;
     width: 100%;
     @include dFlex($jc: center, $ai: center, $fd: row, $g: 12.8px);
@@ -313,14 +312,24 @@ mat-card {
         height: 70px;
         width: 70px;
     }
+    
+    .logo-name-animated-desktop {
+        position: absolute;
+        right: 40%;
+        font-size: 2.2rem;
+        font-weight: 700;
+        font-family: "Nunito";
+        color: #fff;
+        opacity: 0;
+    }
 }
 
 .newDABubble {
     position: absolute;
     top: 75px;
     @include dFlex($jc: space-between, $ai: center, $fd: row, $g: 12.8px);
-    width: 90%;
-    height: 200px;    
+    width: 75%;
+    height: 100px;    
 
     .headline-desktop-left{        
         span{
@@ -351,7 +360,6 @@ mat-card {
         :nth-last-child(1) {
             color: #797ef3;
             cursor: pointer;
-            z-index: 7;
         }
     }
 }
@@ -369,4 +377,9 @@ mat-card {
       font-size: 0.8rem !important;
     }
   }
-  
+
+  @media screen and (max-width: 1440px) and (max-height: 900px){
+    mat-card {        
+        max-width: 545px;
+    }
+  } 

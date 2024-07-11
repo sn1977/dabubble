@@ -20,30 +20,30 @@
   }
 }
 
-@keyframes introAnimation{
+@keyframes introAnimation {
   0% {
-    opacity: 1;   
-    z-index: 1;
-  }
-  90%{
     opacity: 1;
     z-index: 1;
   }
-  100%{
+  90% {
+    opacity: 1;
+    z-index: 1;
+  }
+  100% {
     opacity: 0;
     z-index: -1;
   }
 }
 
-@keyframes logoAnimation{
-  0%{
+@keyframes logoAnimation {
+  0% {
     height: 100vh;
-    width: 100%;    
+    width: 100%;
     position: absolute;
     top: 0;
     bottom: 0;
   }
-  100%{
+  100% {
     width: 100%;
     position: relative;
     height: 56px;
@@ -51,49 +51,97 @@
   }
 }
 
-@keyframes imgAnimation{
-  0%{
+@keyframes logoAnimationDesktop {
+  0% {
+    height: 100vh;
+    width: 100%;
+  }
+  10% {
+    height: 95vh;
+    width: 95%;
+  }
+  20% {
+    height: 90vh;
+    width: 90%;
+  }
+  30% {
+    height: 80vh;
+    width: 80%;
+  }
+  40% {
+    height: 70vh;
+    width: 70%;
+  }
+  50% {
+    height: 60vh;
+    width: 60%;
+  }
+  60% {
+    height: 50vh;
+    width: 50%;
+  }
+  70% {
+    height: 40vh;
+    width: 40%;
+  }
+  80% {
+    height: 30vh;
+    width: 30%;    
+  }
+  90% {
+    height: 20vh;
+    width: 20%;    
+  }
+
+  100% {
+    height: 10vh;
+    width: 10%;
+  }
+}
+
+@keyframes imgAnimation {
+  0% {
     transform: translateX(0);
   }
-  30%{
+  30% {
     transform: translateX(-120%);
   }
-  99%{
+  99% {
     transform: translateX(-150%);
     height: 70px;
     width: 70px;
   }
-  100%{
+  100% {
     transform: translateX(-150%);
     height: 56px;
     width: 56px;
   }
 }
 
-@keyframes textAnimation{
-  0%{
+@keyframes textAnimation {
+  0% {
     opacity: 0;
     transform: translateX(0);
-    color: #FFF;
+    color: #fff;
   }
-  
-  20%{
+
+  20% {
     transform: translateX(+40%);
   }
 
-  60%{
+  60% {
     opacity: 0.9;
     transform: translateX(+50%);
-    color: #FFF;
+    color: #fff;
   }
 
-  99%{
+  99% {
     opacity: 1;
     transform: translateX(+50%);
-    color: #FFF;
+    color: #fff;
   }
 
-  100%{
+  100% {
     opacity: 1;
     transform: translateX(+50%);
     color: #000;
@@ -103,7 +151,8 @@
 @keyframes rotate90deg {
   from {
     transform: rotate(0);
-  } to {
+  }
+  to {
     transform: rotate(90deg);
   }
 }
