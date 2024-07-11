@@ -16,6 +16,9 @@ body {
     @include dFlex($jc: center, $ai: center, $fd: column, $g: 0px);
     background-color: #eceefe;
     height: 100%;
+    
+    // outline: 2px solid;
+    // outline-color: red;
 }
 
 /* nunito-regular - latin */
@@ -113,6 +116,7 @@ app-root {
     margin-top: 8px;
     @include dFlex($jc: flex-end, $ai: center, $fd: row, $g: 0px);
     width: 100%;
+    overflow: hidden;
 }
 
 .overlay-animation {
