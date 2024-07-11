@@ -94,7 +94,7 @@
                                     item.thread
                                 )
                             "
-                            >#{{ item.data.name }}
+                            >{{ item.data.name }}
                             @if(item.data.description !== ''){
                             <span class="font-italic"
                                 >({{ item.data.description }})</span
@@ -115,7 +115,7 @@
                                     item.thread,
                                     item.ref
                                 )
-                            ">@if(item.component === 'channel') { #{{
+                            ">@if(item.component === 'channel') { {{
                                 getChannelNameById(item.data.channelId)
                             }}
                             } @else{ &#64;{{
@@ -135,7 +135,7 @@
                                 )
                             "
                             >@if(item.component ===
-                            'channel') { #{{
+                            'channel') { {{
                                 getChannelNameById(item.data.recipient)
                             }}
                             } @else{ &#64;{{

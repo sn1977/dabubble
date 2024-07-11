@@ -1,7 +1,7 @@
 <div class="background">
     <div class="mdc-card">
         <div class="channel-header">
-            <h1 class="no-margin"># {{ channel.name }}</h1>
+            <h1 class="no-margin">{{ channel.name }}</h1>
             <span class="menu-icon-hover pointer">
                 <img
                     src="./assets/img/icon/close.svg"
@@ -42,14 +42,14 @@
                     </div>
 
                     @if(!isEditingChannelName){
-                    <p id="description"># {{ channel.name }}</p>
+                    <p id="description">{{ channel.name }}</p>
                     }@else {
                     <input
                         name="name"
                         #name="ngModel"
                         id="input-edit-channel-name"
                         class="input-edit"
-                        type="text"
+                        type="text"                        
                         [(ngModel)]="channelData.name" />
                     }
 

@@ -39,6 +39,7 @@
                 <textarea
                     class="message text-white"
                     [ngStyle]="{
+                        'display': hideTextBox ? 'none' : 'flex',
                         'background-color': hovered ? '#797EF3' : '#797EF3',
                         'border-radius': isMessageFromYou
                             ? '0 30px 30px 30px'
@@ -81,6 +82,7 @@
             <textarea
                 class="message"
                 [ngStyle]="{
+                    'display': hideTextBox ? 'none' : 'flex',
                     'background-color': hovered ? '#FFFFFF' : '#ECEEFE',
                     'border-radius': isMessageFromYou
                         ? '0 30px 30px 30px'
@@ -89,7 +91,7 @@
                 #messageToEdit
                 [disabled]="true"
                 (input)="adjustTextareaHeight(messageToEdit)"
-                (change)="adjustTextareaHeight(messageToEdit)"
+                (change)="adjustTextareaHeight(messageToEdit)"                
                 >{{ channelMessage.text }} </textarea
             >
             } @if (channelMessage.attachment!.length > 0 &&

@@ -101,11 +101,12 @@ export class AddChannelComponent implements OnInit {
      * @returns A new Channel instance with the specified properties.
      */
     createChannel(userIds: string[]) {
+        this.channelData.name = this.channelData.name.replace(/^#+/, '');        
         return new Channel({
             creator: this.authService.activeUserId,
             description: this.channelData.description,
             member: userIds,
-            name: this.channelData.name,
+            name: '#' + this.channelData.name,
             count: this.channelData.count,
             newMessage: this.channelData.newMessage,
         });

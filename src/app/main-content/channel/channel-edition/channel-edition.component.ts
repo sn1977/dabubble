@@ -35,12 +35,10 @@ export class ChannelEditionComponent implements OnInit {
         description: this.channel.description,
         member: this.channel.member,
         name: this.channel.name,
-        // newMessage: this.channel.newMessage,
     };
 
     constructor(
         private route: ActivatedRoute,
-        private firestoreService: FirestoreService
     ) {}
 
     /**
@@ -50,6 +48,8 @@ export class ChannelEditionComponent implements OnInit {
      * @param toggle - The toggle value indicating which action to perform.
      */
     onSubmit(toggle: string) {
+        this.channelData.name.replace(/^#+/, '');
+        this.channel.name.replace(/^#+/, '');
         if (toggle === "channelName") {
             this.handleChannelNameChange();
         } else if (toggle === "channelDescription") {
@@ -64,7 +64,7 @@ export class ChannelEditionComponent implements OnInit {
         const nameChanged =
             this.channel.name.toLowerCase() !==
             this.channelData.name.toLowerCase();
-        const nameNotEmpty = this.channelData.name !== "";
+        const nameNotEmpty = this.channelData.name.slice(1) !== "";
         if (nameChanged) {
             this.channelNameExists = this.checkChannelName(
                 this.channelData.name
@@ -109,14 +109,16 @@ export class ChannelEditionComponent implements OnInit {
         this.channelData.member = this.channelData.member.length
             ? this.channelData.member
             : this.channel.member;
-
+        
+        this.channelData.name = this.channelData.name.replace(/^#+/, '');
+        this.channel.name = this.channel.name.replace(/^#+/, '');
+        
         const channel = new Channel({
             creator: this.channel.creator,
             description: this.channelData.description,
             member: this.channelData.member,
-            name: this.channelData.name,
+            name: '#' + this.channelData.name,
         });
-
         this.firestore.updateChannel(this.itemID, channel);
     }
     /**
@@ -190,7 +192,7 @@ export class ChannelEditionComponent implements OnInit {
      */
     async ngOnInit(): Promise<void> {
         this.route.paramMap.subscribe(async (paramMap) => {
-            this.itemID = paramMap.get("id");
+            this.itemID = paramMap.get("id");            
             this.getItemValues("channels", this.itemID);
             await this.waitForUserData();
         });
@@ -233,7 +235,7 @@ export class ChannelEditionComponent implements OnInit {
      */
     getItemValues(collection: string, itemID: string) {
         this.firestore.getSingleItemData(collection, itemID, () => {
-            this.channel = new Channel(this.firestore.channel);
+            this.channel = new Channel(this.firestore.channel);            
             this.user = new User(this.firestore.user);
         });
         setTimeout(() => {
@@ -275,12 +277,16 @@ export class ChannelEditionComponent implements OnInit {
             this.channel.member.splice(index, 1);
         }
 
+        this.channelData.name = this.channelData.name.replace(/^#+/, '');
+        this.channel.name = this.channel.name.replace(/^#+/, '');
+
         const channel = new Channel({
             creator: this.channel.creator,
             description: this.channelData.description,
             member: this.channel.member,
-            name: this.channelData.name,
+            name: '#' + this.channelData.name,
         });
+        
         this.firestore.updateChannel(this.itemID, channel);
         this.router.navigate(["/main"]);
     }
