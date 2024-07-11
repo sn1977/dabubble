@@ -74,7 +74,7 @@ export class LogInComponent implements OnInit {
   /**
    * Indicates whether the current device is a desktop view.
    */
-  isDesktop: boolean = false;
+  isDesktopAnimation: boolean = false;
 
   /**
    * Represents the LogInComponent class.
@@ -93,7 +93,7 @@ export class LogInComponent implements OnInit {
    * This method is called after the component has been created and initialized.
    */
   ngOnInit(): void {
-    this.isDesktop = this.matchMedia.checkIsDesktop();
+    this.isDesktopAnimation = this.matchMedia.checkIsDesktopAnimation();
   }
 
   /**

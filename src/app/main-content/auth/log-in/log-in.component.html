@@ -1,17 +1,18 @@
 <div class="intro"
 [ngClass]="{'intro-start': playIntroAnimation}"
 ></div>
-
-<div class="content">  
-    <div class="logo-animated"
-  [ngClass]="{'logo-animated-start': playIntroAnimation}"
-  >
-    <img src="./assets/img/auth/logo.svg" />
-    <span class="logo-name-animated"
-    [ngClass]="{'logo-name-animated-start': playIntroAnimation}"
-    [ngStyle]="{ 'right': isDesktop ? 'unset' : '40%' }"
-    >DABubble</span>
-  </div>
+<div class="content">
+  @if(!isDesktopAnimation){
+      <div class="logo-animated"
+      [ngClass]="{'logo-animated-start': playIntroAnimation}"
+      >
+      <img src="./assets/img/auth/logo.svg" />
+      <span class="logo-name-animated"
+      [ngClass]="{'logo-name-animated-start': playIntroAnimation}"
+      [ngStyle]="{ 'right': isDesktopAnimation ? 'unset' : '40%' }"
+      >DABubble</span>
+    </div>
+  }  
 
   <mat-card>
         <mat-card-header>
@@ -114,11 +115,19 @@
     </mat-card-content>
   </mat-card>
 
-  @if(isDesktop){
+  @if(isDesktopAnimation){
     <app-desktop-footer></app-desktop-footer>
     <div class="newDABubble">
-      <span>Neu bei DABubble?</span>
-      <span class="btn-secondary pointer" routerLink="/register" routerLinkActive="router-link-active">Konto erstellen</span>
+      <div class="headline-desktop-left">
+        <img src="./assets/img/auth/logo.svg" />
+        <span class="logo-name-animated"
+        >DABubble</span>
+      </div>
+      <div class="headline-desktop-right">
+        <span>Neu bei DABubble?</span>
+        <span class="btn-secondary pointer" routerLink="/register" routerLinkActive="router-link-active">Konto erstellen</span>
+      </div>
+
     </div>
   }@else {
     <div class="buttons" style="flex-direction: column">

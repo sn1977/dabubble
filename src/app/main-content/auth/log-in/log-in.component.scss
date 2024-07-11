@@ -318,32 +318,47 @@ mat-card {
 .newDABubble {
     position: absolute;
     top: 75px;
-    left: 24px;
+    @include dFlex($jc: space-between, $ai: center, $fd: row, $g: 12.8px);
     width: 90%;
-    height: 200px;
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
+    height: 200px;    
 
-    span {
-        display: flex;
-        justify-content: flex-end;
-        font-family: "Nunito";
-        font-size: 1rem;
-        font-weight: 400;
-        color: #000;
+    .headline-desktop-left{        
+        span{
+            font-size: 2.2rem;
+            font-weight: 700;
+            font-family: "Nunito";
+        }
+
+        img{
+            height: 70px;
+            width: 70px;
+        }
+
+        @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 12.8px);
     }
 
-    :nth-last-child(1) {
-        color: #797ef3;
-        cursor: pointer;
-        z-index: 7;
+    .headline-desktop-right{
+        @include dFlex($jc: flex-start, $ai: flex-end, $fd: column, $g: 25px);
+        span {
+            display: flex;
+            justify-content: flex-end;
+            font-family: "Nunito";
+            font-size: 1rem;
+            font-weight: 400;
+            color: #000;
+        }
+    
+        :nth-last-child(1) {
+            color: #797ef3;
+            cursor: pointer;
+            z-index: 7;
+        }
     }
 }
 
 @media screen and (max-width: 375px) and (max-height: 800px){
   .content {
-    transform: scale(0.83);
+    gap: 0;
   }
 }
 

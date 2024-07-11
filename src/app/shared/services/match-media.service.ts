@@ -48,4 +48,16 @@ export class MatchMediaService {
             return false;
         }
     }
+
+    /**
+     * Desktop or mobile
+     * @returns boolean
+     */
+    checkIsDesktopAnimation() {
+        if (window.matchMedia("(min-width: 1025px)").matches) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
