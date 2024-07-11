@@ -45,7 +45,8 @@ export class TextBoxComponent implements AfterViewInit {
   @ViewChild('messageText') messageText!: ElementRef<HTMLTextAreaElement>;
   private initialHeight: string = '';
   matchMedia = inject(MatchMediaService);
-  noInput:boolean = false;
+  noInput: boolean = false;
+  showUserDropdown: boolean = false;
 
   add_hovered: boolean = false;
   smile_hovered: boolean = false;
@@ -248,6 +249,30 @@ export class TextBoxComponent implements AfterViewInit {
     this.initialHeight = textarea.style.height || 'auto';
     this.adjustTextareaHeight(textarea);
     this.setFocus();
+  }
+
+  /**
+   * Check keys
+   * Submit on enter
+   * Show User-Dropdown on @-char
+   */
+  checkKeys(event: any){
+    if(event.key === 'Enter'){      
+      this.submitForm(event);
+    }
+    else if(event.key === '@'){
+      this.showUserDropdown = true;
+    }
+  }
+
+  /**
+   * Hide Dropdown and remove @-char if input ends with @-char
+   */
+  hideUserDropdown(){
+    this.showUserDropdown = false;
+    if(this.messageText.nativeElement.value.endsWith('@')){
+      this.messageText.nativeElement.value = this.messageText.nativeElement.value.slice(0,-1);
+    }
   }
 
   /**
