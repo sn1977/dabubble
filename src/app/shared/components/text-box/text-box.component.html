@@ -1,4 +1,4 @@
-<div class="footer">    
+<div class="footer">
   <form (ngSubmit)="onSubmit()" #messageForm="ngForm" ngNativeValidate>
     <div class="message-box">
       <div class="text-content">
@@ -122,24 +122,34 @@
       }
     </div>
     @if(showUserDropdown){
-        <div class="dropdown-menu">
-          <div class="scroll">
-            <div class="selection">
-                <div class="type">
-                    <span>Benutzer</span>
-                    <span class="menu-icon-hover pointer">
-                        <img
-                            src="./assets/img/icon/close.svg"
-                            alt=""
-                            (click)="hideUserDropdown()" />
-                    </span>
-                </div>
-            </div>
+    <div class="dropdown-menu">
+      <div class="scroll">
+        <div class="selection">
+          <div class="type">
+            <span>Benutzer</span>
+            <span class="menu-icon-hover pointer">
+              <img
+                src="./assets/img/icon/close.svg"
+                alt=""
+                (click)="hideUserDropdown()"
+              />
+            </span>
           </div>
+          @for (user of this.firestore.userList; track $index; let e = $even;) {
+          <li [ngClass]="{ 'colored-background': e }" (click)="selectUser(user.displayName)">
+            <span>
+              <div class="userInfo">
+                <img class="avatar" src="{{ user.avatar }}" />
+                {{ user.displayName.slice(1) }}
+              </div>
+            </span>
+          </li>
+          }
         </div>
-        }  
-</form>
-
+      </div>
+    </div>
+    }
+  </form>
 
   <emoji-mart
     *ngIf="openEmojiPicker"

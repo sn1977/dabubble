@@ -130,6 +130,7 @@ textarea {
 
     li {
         @include dFlex($jc: flex-start, $ai: center, $fd: row, $g: 4px);
+        margin-bottom: 6px;
         > span {
             display: flex;
             gap: 4px;

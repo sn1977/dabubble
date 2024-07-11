@@ -276,6 +276,14 @@ export class TextBoxComponent implements AfterViewInit {
   }
 
   /**
+   * Add user to input and hide Dropdown
+   */
+  selectUser(user: string){
+    this.showUserDropdown = false;
+    this.messageText.nativeElement.value = this.messageText.nativeElement.value + user.slice(1);
+  }
+
+  /**
    * Adjusts the height of a textarea element based on its content.
    * @param textarea - The HTMLTextAreaElement to adjust the height of.
    */
@@ -298,5 +306,14 @@ export class TextBoxComponent implements AfterViewInit {
   resetTextareaHeight() {
     const textarea = this.messageText.nativeElement;
     textarea.style.height = this.initialHeight;
+  }
+
+  /**
+   * Retrieves if the index is even
+   * @param index - The index of the user.
+   * @returns false or true if even or odd
+   */
+  isEven(index: number): boolean {
+    return index % 2 === 0;
   }
 }
