@@ -51,8 +51,7 @@ app-desktop-overlay {
 }
 
 @media (max-width: 400px) {
-    .content-header-mobile {      
-      transform: scale(0.8) !important;
-      padding-left: 0px !important;
+    .alternative-header>img:last-child{
+        width: 200px !important;
     }
 }
