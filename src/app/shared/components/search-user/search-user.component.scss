@@ -183,3 +183,9 @@ input[type="button"] {
 .btn-pos {
     @include dFlex($jc: flex-end, $ai: center, $fd: row, $g: 0);
 }
+
+@media screen and (max-width: 399px){
+    .overlay{
+        height: 80vh;
+    }
+}

@@ -177,7 +177,7 @@ mat-card {
     );
 }
 
-@media (max-width: 400px) {
+@media (max-width: 350px) {
     input[type="text"],
     input[type="email"],
     input[type="password"] {
@@ -186,10 +186,32 @@ mat-card {
 
     mat-card {
         transform: scale(0.9) !important;
+        gap: 0 !important;
+    }
+
+    form{
+        gap: 8px !important;
+    }
+
+    mat-card-title{
+        line-height: 20px !important;
+        font-size: 22px !important;
+    }
+
+    .avatar{
+        height: 75px !important;
+        width: 75px !important;
     }
 
     .avatar-list {
-        transform: scale(0.9) !important;
+        .selection{
+            width: 36px !important;
+            height: 36px !important;
+            img{
+                width: 32px !important;
+                height: 32px !important;
+            }
+        }
     }
 
     .buttons {

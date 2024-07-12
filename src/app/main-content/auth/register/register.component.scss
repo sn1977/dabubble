@@ -150,14 +150,23 @@ app-choose-avatar {
   width: 100%;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 350px) {
   input[type="text"],
   input[type="email"],
   input[type="password"] {
     font-size: 0.8rem !important;
   }
 
+  .logo {
+    display: none !important;
+  }
+
   mat-card-title {
     font-size: 1.4rem !important;
-}
+  }
+
+  app-chose-avatar {
+    @include dFlex($jc: center, $ai: center, $fd: row, $g: 0);
+    position: relative;
+  }
 }
