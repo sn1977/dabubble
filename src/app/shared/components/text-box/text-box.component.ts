@@ -266,6 +266,16 @@ export class TextBoxComponent implements AfterViewInit {
   }
 
   /**
+   * Open Dropdown and add @-char
+   */
+  openUserDropdown(){
+    if(!this.showUserDropdown){      
+      this.showUserDropdown = true;
+      this.messageText.nativeElement.value = this.messageText.nativeElement.value + '@';
+    }
+  }
+
+  /**
    * Hide Dropdown and remove @-char if input ends with @-char
    */
   hideUserDropdown(){

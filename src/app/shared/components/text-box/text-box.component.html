@@ -89,6 +89,25 @@
             alt=""
           />
           }
+          @if (email_hovered) {
+            <img
+              class="pointer"
+              (mouseenter)="email_hovered = true"
+              (mouseleave)="deleteHovered()"
+              (click)="openUserDropdown()"
+              src="./assets/img/icon/email_hover.svg"
+              alt=""
+            />
+          } @else {
+            <img
+              class="pointer"
+              (mouseenter)="email_hovered = true"
+              (mouseleave)="deleteHovered()"
+              (click)="openUserDropdown()"
+              src="./assets/img/icon/email.svg"
+              alt=""
+            />
+          }
         </div>
 
         @if (send_hovered) {
