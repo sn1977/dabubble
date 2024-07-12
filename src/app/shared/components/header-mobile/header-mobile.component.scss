@@ -49,3 +49,10 @@ app-desktop-overlay {
         padding-right: 8px;
     }
 }
+
+@media (max-width: 400px) {
+    .content-header-mobile {      
+      transform: scale(0.8) !important;
+      padding-left: 0px !important;
+    }
+}
