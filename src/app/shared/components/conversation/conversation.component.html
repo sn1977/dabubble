@@ -45,6 +45,7 @@
                             ? '0 30px 30px 30px'
                             : '30px 0 30px 30px'
                     }"
+                    rows="1"
                     [disabled]="isMessageDisabled"
                     id="{{ channelMessage.messageId }}"
                     #messageToEdit
@@ -88,6 +89,7 @@
                         ? '0 30px 30px 30px'
                         : '30px 0 30px 30px'
                 }"
+                rows="1"
                 #messageToEdit
                 [disabled]="true"
                 (input)="adjustTextareaHeight(messageToEdit)"
@@ -205,12 +207,14 @@
             <img
                 src="./assets/img/emojis/check_mark2.svg"
                 alt=""
+                title="✅ hinzufügen"
                 (click)="addEmojiReaction('✅')" />
         </div>
         <div class="reaction-icon-small pointer">
             <img
                 src="./assets/img/emojis/raised_hands.svg"
                 alt=""
+                title="🙌 hinzufügen"
                 (click)="addEmojiReaction('🙌')" />
         </div>
         }
@@ -218,19 +222,20 @@
             src="./assets/img/emojis/add_reaction.svg"
             class="pointer"
             alt=""
-            (click)="openEmojiPicker()" />
-
-        @if(!isMessageFromYou){
+            title="Emojis"
+            (click)="openEmojiPicker()" />        
         <img
             src="./assets/img/emojis/answer.svg"
             class="pointer"
             alt=""
+            title="Antworten"
             (click)="openThread()" />
-        } @if(isMessageFromYou){
+        @if(isMessageFromYou){
         <img
             src="./assets/img/emojis/answer2.svg"
             class="pointer"
             alt=""
+            title="Nachricht bearbeiten"
             (click)="toggleEditMessage($event); doNotClose($event)" />
         }
     </div>

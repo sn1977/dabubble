@@ -230,3 +230,9 @@ app-progress-spinner {
     }
   }
 }
+
+@media (max-width: 1350px) {
+  .container {    
+    height: 100%;
+  }
+}

@@ -207,11 +207,11 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
    * @param id - The ID of the user.
    * @returns The display name of the user, or undefined if the user is not found.
    */
-  getDisplayNameById(id: string): string | undefined {
+  getDisplayNameById(id: string): string | undefined {    
     const user = this.firestore.userList.find(
       (user: { id: string }) => user.id === id
     );
-    return user ? user.displayName : undefined;
+    return user ? user.displayName.slice(1) : undefined;
   }
 
   /**
@@ -224,10 +224,11 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
   getDisplayNamesWithCurrentUser(reactionUsers: string[]): string[] {
     const currentUserDisplayName =
       this.authService.activeUserAccount.displayName;
+      
     const displayNames = reactionUsers
       .map((userId) => this.getDisplayNameById(userId))
-      .filter((name): name is string => name !== undefined);
-
+      .filter((name): name is string => name !== undefined);      
+      
     const isCurrentUserIncluded = displayNames.includes(currentUserDisplayName);
 
     if (isCurrentUserIncluded) {
@@ -510,7 +511,7 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   async adjustTextareaHeight(textarea: HTMLTextAreaElement) {
     await this.delay(100);
-    textarea.style.height = this.channelMessage.text === '' ? '76px' : 'auto';
+    textarea.style.height = this.channelMessage.text === '' ? '50px' : 'auto';
     textarea.style.height = textarea.scrollHeight + 'px';
   }
 
