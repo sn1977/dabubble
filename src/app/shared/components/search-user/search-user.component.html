@@ -39,7 +39,7 @@
                         *ngFor="let user of filterUsers()"
                         class="selected-user">
                         <img src="{{ user.avatar }}" />
-                        <span>{{ user.displayName }}</span>
+                        <span>{{ user.displayName.slice(1) }}</span>
                         <input
                             (click)="toggleMember(user)"
                             type="button"
@@ -77,7 +77,7 @@
                                 class="offline-avatar" />
                             <div class="space-between">
                                 <span
-                                    >{{ user.displayName }}
+                                    >{{ user.displayName!.slice(1) }}
                                     <span
                                         *ngIf="
                                             user.id ===

@@ -277,10 +277,15 @@ main {
     }
 }
 
+@media (max-width: 1350px) {
+    .background {
+        height: 100%;
+    }
+}
+
 @media (max-width: 500px) {
     .background {
         background-color: white;
-        height: 100%;
         overflow: scroll;
         overflow-x: hidden;
     }
