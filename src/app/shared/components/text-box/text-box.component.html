@@ -168,6 +168,33 @@
       </div>
     </div>
     }
+    @if(showChannelDropdown){
+      <div class="dropdown-menu">
+        <div class="scroll">
+          <div class="selection">
+            <div class="type">
+              <span>Kanäle</span>
+              <span class="menu-icon-hover pointer">
+                <img
+                  src="./assets/img/icon/close.svg"
+                  alt=""
+                  (click)="hideChannelDropdown()"
+                />
+              </span>
+            </div>
+            @for (channel of this.firestore.channelList; track $index; let e = $even;) {
+            <li [ngClass]="{ 'colored-background': e }" (click)="selectUser(channel.name)">
+              <span>
+                <div class="userInfo">
+                  #{{ channel.name.slice(1) }}
+                </div>
+              </span>
+            </li>
+            }
+          </div>
+        </div>
+      </div>
+      }
   </form>
 
   <emoji-mart

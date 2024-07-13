@@ -47,6 +47,7 @@ export class TextBoxComponent implements AfterViewInit {
   matchMedia = inject(MatchMediaService);
   noInput: boolean = false;
   showUserDropdown: boolean = false;
+  showChannelDropdown: boolean = false;
 
   add_hovered: boolean = false;
   smile_hovered: boolean = false;
@@ -83,8 +84,8 @@ export class TextBoxComponent implements AfterViewInit {
    * Prepare for save a new message after Submit
    */
   async onSubmit() {
-    this.matchMedia.showSearchDropdown = false;
-    if (this.textBoxData.messageText != '' || this.textBoxData.inputField != '') {
+    this.matchMedia.showSearchDropdown = false;      
+    if (this.messageText.nativeElement.value != '' || this.textBoxData.inputField != '') {
       this.noInput = false;
       this.textBoxData.subcollection;
       await this.setMessageContent();
@@ -120,7 +121,7 @@ export class TextBoxComponent implements AfterViewInit {
   async setMessageContent() {
     this.message = new ChannelMessage({
       creator: this.authService.activeUserId,
-      text: this.textBoxData.messageText,
+      text: this.messageText.nativeElement.value,
       channelId: this.textBoxData.channelId,
       createdAt: serverTimestamp(),
       reactions: (this.textBoxData.reactions = this.reactions),
@@ -138,6 +139,7 @@ export class TextBoxComponent implements AfterViewInit {
     this.selectedFiles = null;
     this.file = undefined;
     this.textBoxData.messageText = '';
+    this.messageText.nativeElement.value = '';
     this.resetTextareaHeight();
     if (this.isNewMessage === false && this.matchMedia.inputValid === true) {
       this.matchMedia.newMessage = true;
@@ -262,6 +264,11 @@ export class TextBoxComponent implements AfterViewInit {
     }
     else if(event.key === '@'){
       this.showUserDropdown = true;
+      this.showChannelDropdown = false;
+    }
+    else if(event.key === '#'){
+      this.showChannelDropdown = true;
+      this.showUserDropdown = false;
     }
   }
 
@@ -281,7 +288,19 @@ export class TextBoxComponent implements AfterViewInit {
   hideUserDropdown(){
     this.showUserDropdown = false;
     if(this.messageText.nativeElement.value.endsWith('@')){
-      this.messageText.nativeElement.value = this.messageText.nativeElement.value.slice(0,-1);
+      this.messageText.nativeElement.value = this.messageText.nativeElement.value.slice(0,-1);      
+      
+    }
+  }
+
+  /**
+   * Hide Dropdown and remove @-char if input ends with @-char
+   */
+  hideChannelDropdown(){
+    this.showChannelDropdown = false;
+    if(this.messageText.nativeElement.value.endsWith('#')){
+      this.messageText.nativeElement.value = this.messageText.nativeElement.value.slice(0,-1);      
+      
     }
   }
 
@@ -289,7 +308,7 @@ export class TextBoxComponent implements AfterViewInit {
    * Add user to input and hide Dropdown
    */
   selectUser(user: string){
-    this.showUserDropdown = false;
+    this.showUserDropdown = false;    
     this.messageText.nativeElement.value = this.messageText.nativeElement.value + user.slice(1);
   }
 
