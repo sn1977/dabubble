@@ -241,30 +241,30 @@ mat-card {
 }
 
 .intro-start {
-  animation: introAnimation 2.8s ease-out 0s forwards;
+  animation: introAnimation 4.3s ease-out 0s forwards;
 }
 
 .logo-animated-start {
-  animation: logoAnimation 0.4s ease-out 2.5s forwards;
+  animation: logoAnimation 0.4s ease-out 3.5s forwards;
 
   img {
-    animation: imgAnimation 2.5s ease-out 0.6s forwards;
+    animation: imgAnimation 3s ease-out 0.6s forwards;
   }
 
   .logo-name-animated-start {
-    animation: textAnimation 2.5s ease-out 1s forwards;
+    animation: textAnimation 3s ease-out 1s forwards;
   }
 }
 
 .logo-animated-desktop-start {
-  animation: logoAnimationDesktop 0.4s ease-out 2.5s forwards;
+  animation: logoAnimationDesktop 0.4s ease-out 3.5s forwards;
 
   img {
-    animation: imgAnimation 2.5s ease-out 0.6s forwards;
+    animation: imgAnimation 3s ease-out 0.6s forwards;
   }
 
   .logo-name-animated-desktop-start {
-    animation: textAnimation 2.5s ease-out 1s forwards;
+    animation: textAnimation 3s ease-out 1s forwards;
   }
 }
 
@@ -319,6 +319,19 @@ mat-card {
     font-family: "Nunito";
     color: #fff;
     opacity: 0;
+  }
+}
+
+.default-setting{
+  @include dFlex($jc: space-between, $ai: center, $fd: row, $g: 12.8px);
+  img{
+    height: 56px !important;
+    width: 56px !important;
+  }
+  span{
+    font-size: 2.2rem;
+    font-weight: 700;
+    font-family: "Nunito";
   }
 }
 
@@ -387,7 +400,6 @@ mat-card {
 
 @media screen and (max-width: 399px) {
   mat-card {
-    // transform: scale(0.86);
     padding: 12px 8px;
     gap: 0px !important;
     font-size: 0.8rem;

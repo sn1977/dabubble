@@ -1,21 +1,37 @@
-<div class="intro"
-[ngClass]="{'intro-start': playIntroAnimation}"
+@if(this.playIntroAnimation === null){
+<div
+  class="intro"
+  [ngClass]="{ 'intro-start': this.playIntroAnimation === null }"
 ></div>
-<div class="content">
-  @if(!isDesktopAnimation){
-      <div class="logo-animated"
-      [ngClass]="{'logo-animated-start': playIntroAnimation}"
-      >
+}
+
+<div class="content">  
+  @if(!isDesktopAnimation){ @if(this.playIntroAnimation === null){
+  <div
+    class="logo-animated"
+    [ngClass]="{ 'logo-animated-start': this.playIntroAnimation === null }"
+  >
+    <img src="./assets/img/auth/logo.svg" />
+    <span
+      class="logo-name-animated"
+      [ngClass]="{
+        'logo-name-animated-start': this.playIntroAnimation === null
+      }"
+      [ngStyle]="{ right: isDesktopAnimation ? 'unset' : '40%' }"
+      >DABubble</span
+    >
+  </div>
+  }
+  @else {
+    <div class="default-setting">
       <img src="./assets/img/auth/logo.svg" />
-      <span class="logo-name-animated"
-      [ngClass]="{'logo-name-animated-start': playIntroAnimation}"
-      [ngStyle]="{ 'right': isDesktopAnimation ? 'unset' : '40%' }"
-      >DABubble</span>
+      <span>DABubble</span>
     </div>
-  }  
+    }
+}
 
   <mat-card>
-        <mat-card-header>
+    <mat-card-header>
       <div class="headline">
         <mat-card-title>Anmeldung</mat-card-title>
         <mat-card-subtitle>
@@ -25,14 +41,13 @@
       </div>
     </mat-card-header>
     <mat-card-content class="card-content">
-      @if(errorMessage){ 
-        <div class="required">
-        @switch (errorMessage) { @case
-        ("auth/email-already-in-use") { auth/email-already-in-use } @case
-        ("auth/user-disabled") { Konto inaktiv } @default {
-        Ungültige Anmeldedaten } } 
+      @if(errorMessage){
+      <div class="required">
+        @switch (errorMessage) { @case ("auth/email-already-in-use") {
+        auth/email-already-in-use } @case ("auth/user-disabled") { Konto inaktiv
+        } @default { Ungültige Anmeldedaten } }
       </div>
-    }
+      }
 
       <form (ngSubmit)="onSubmit()" #contactForm="ngForm" ngNativeValidate>
         <input type="submit" hidden />
@@ -42,7 +57,7 @@
               type="email"
               name="email"
               #email="ngModel"
-              [(ngModel)]="contactData.email"              
+              [(ngModel)]="contactData.email"
               pattern="[a-zA-ZO0-9.%+\-]+@[a-zA-Z0-9.\-]+.[a-zA-Z]{2,}"
               placeholder="beispielname@email.com"
               required
@@ -95,7 +110,7 @@
           <span>ODER</span>
         </div>
 
-        <div class="form-box">          
+        <div class="form-box">
           <div class="google pointer" (click)="signInWithGoogleRedirect()">
             <img
               class="google-img"
@@ -109,42 +124,66 @@
 
         <div class="buttons">
           <button class="btn-primary pointer" type="submit">Anmelden</button>
-          <button class="btn-secondary pointer" type="button" (click)="anonymousLogin()">Gäste-Login</button>
+          <button
+            class="btn-secondary pointer"
+            type="button"
+            (click)="anonymousLogin()"
+          >
+            Gäste-Login
+          </button>
         </div>
       </form>
     </mat-card-content>
   </mat-card>
 
   @if(isDesktopAnimation){
-    <app-desktop-footer></app-desktop-footer>
-    <div class="newDABubble">
-      <div class="headline-desktop-left">
-        <div class="logo-animated-desktop"
-        [ngClass]="{'logo-animated-desktop-start': playIntroAnimation}"
+  <app-desktop-footer></app-desktop-footer>
+  <div class="newDABubble">
+    <div class="headline-desktop-left">
+      @if(this.playIntroAnimation === null){
+      <div
+        class="logo-animated-desktop"
+        [ngClass]="{
+          'logo-animated-desktop-start': this.playIntroAnimation === null
+        }"
+      >
+        <img src="./assets/img/auth/logo.svg" />
+        <span
+          class="logo-name-animated-desktop"
+          [ngClass]="{
+            'logo-name-animated-desktop-start': this.playIntroAnimation === null
+          }"
+          [ngStyle]="{ right: isDesktopAnimation ? 'unset' : '40%' }"
+          >DABubble</span
         >
-        <img src="./assets/img/auth/logo.svg" />        
-        <span class="logo-name-animated-desktop"
-        [ngClass]="{'logo-name-animated-desktop-start': playIntroAnimation}"
-        [ngStyle]="{ 'right': isDesktopAnimation ? 'unset' : '40%' }"
-        >DABubble</span>
       </div>
+      } @else {
+      <div class="default-setting">
+        <img src="./assets/img/auth/logo.svg" />
+        <span>DABubble</span>
       </div>
-      <div class="headline-desktop-right">
-        <span>Neu bei DABubble?</span>
-        <span class="btn-secondary pointer" routerLink="/register" routerLinkActive="router-link-active">Konto erstellen</span>
-      </div>
-
+      }
     </div>
-  }@else {
-    <div class="buttons" style="flex-direction: column">
+    <div class="headline-desktop-right">
       <span>Neu bei DABubble?</span>
-      <button
+      <span
+        class="btn-secondary pointer"
+        routerLink="/register"
+        routerLinkActive="router-link-active"
+        >Konto erstellen</span
+      >
+    </div>
+  </div>
+  }@else {
+  <div class="buttons" style="flex-direction: column">
+    <span>Neu bei DABubble?</span>
+    <button
       class="btn-secondary pointer"
       routerLink="/register"
       routerLinkActive="router-link-active"
-      >
+    >
       Konto erstellen
     </button>
   </div>
-}
+  }
 </div>

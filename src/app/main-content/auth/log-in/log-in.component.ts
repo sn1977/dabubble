@@ -70,7 +70,7 @@ export class LogInComponent implements OnInit {
   /**
    * Specifies whether the intro animation should be played.
    */
-  playIntroAnimation: boolean = true;
+  playIntroAnimation: string | null = null;
   /**
    * Indicates whether the current device is a desktop view.
    */
@@ -92,8 +92,19 @@ export class LogInComponent implements OnInit {
    * Initializes the component.
    * This method is called after the component has been created and initialized.
    */
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    await this.checkFirstRun();
     this.isDesktopAnimation = this.matchMedia.checkIsDesktopAnimation();
+    if(this.playIntroAnimation === null){
+      localStorage.setItem('firstRunAnimation', 'done');
+    }
+  }
+
+  /**
+   * Check if animation should play
+   */
+  async checkFirstRun(){
+    this.playIntroAnimation = localStorage.getItem('firstRunAnimation');
   }
 
   /**
@@ -118,8 +129,7 @@ export class LogInComponent implements OnInit {
   /**
    * Logs out the user.
    */
-  logout(): void {
-    this.playIntroAnimation = true;
+  logout(): void {    
     this.authService.logout();
   }
 
