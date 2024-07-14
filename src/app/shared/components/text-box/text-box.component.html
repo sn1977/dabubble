@@ -155,7 +155,7 @@
             </span>
           </div>
           @for (user of this.firestore.userList; track $index; let e = $even;) {
-          <li [ngClass]="{ 'colored-background': e }" (click)="selectUser(user.displayName)">
+          <li [ngClass]="{ 'colored-background': e }" (click)="selectUser(user.displayName, user.id)">
             <span>
               <div class="userInfo">
                 <img class="avatar" src="{{ user.avatar }}" />
@@ -183,7 +183,7 @@
               </span>
             </div>
             @for (channel of this.firestore.channelList; track $index; let e = $even;) {
-            <li [ngClass]="{ 'colored-background': e }" (click)="selectUser(channel.name)">
+            <li [ngClass]="{ 'colored-background': e }" (click)="selectUser(channel.name, channel.id)">
               <span>
                 <div class="userInfo">
                   #{{ channel.name.slice(1) }}

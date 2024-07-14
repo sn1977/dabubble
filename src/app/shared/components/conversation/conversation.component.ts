@@ -137,6 +137,34 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   /**
+   * Check if user is tagged in message
+   *   
+   * @returns A boolean value indicating whether the user is tagged or not in this message.
+   */
+  isUserTagged() {
+    for (let tag of this.channelMessage.tags) {
+      if (tag.user === this.authService.activeUserAccount.uid) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Check if user is tagged in message
+   *   
+   * @returns A boolean value indicating whether the user is tagged or not in this message.
+   */
+  isChannelTagged() {
+    for (let tag of this.channelMessage.tags) {
+      if (tag.user === this.channelMessage.channelId) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
    * Updates the channel message with the provided data.
    *
    * @param data - The data to update the channel message with.
@@ -150,6 +178,7 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
       attachment: data['attachment'],
       threads: data['threads'],
       recipient: data['recipient'],
+      tags: data['tags'],
     });
     this.timestampLastThread = data['timestampLastThread'];
     this.fileType =
@@ -207,7 +236,7 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
    * @param id - The ID of the user.
    * @returns The display name of the user, or undefined if the user is not found.
    */
-  getDisplayNameById(id: string): string | undefined {    
+  getDisplayNameById(id: string): string | undefined {
     const user = this.firestore.userList.find(
       (user: { id: string }) => user.id === id
     );
@@ -224,11 +253,11 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
   getDisplayNamesWithCurrentUser(reactionUsers: string[]): string[] {
     const currentUserDisplayName =
       this.authService.activeUserAccount.displayName;
-      
+
     const displayNames = reactionUsers
       .map((userId) => this.getDisplayNameById(userId))
-      .filter((name): name is string => name !== undefined);      
-      
+      .filter((name): name is string => name !== undefined);
+
     const isCurrentUserIncluded = displayNames.includes(currentUserDisplayName);
 
     if (isCurrentUserIncluded) {
@@ -418,11 +447,11 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
    * Edits a message based on the provided ID.
    * @param id - The ID of the message to be edited.
    */
-  editMessage(id?: string): void {    
-      if (id) {
+  editMessage(id?: string): void {
+    if (id) {
       this.adjustTextareaHeight(this.messageToEdit.nativeElement);
       this.hideTextBox = false;
-      this.isMessageDisabled = false;      
+      this.isMessageDisabled = false;
       const setFocusMessage = this.messageToEdit.nativeElement;
       setFocusMessage.classList.add('edit-message');
 
@@ -480,6 +509,8 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   saveMessage() {
     this.toggleTextBox();
+
+    console.log(this.channelMessage);
 
     if (this.channelMessage.messageId !== undefined) {
       let colId = 'channels';

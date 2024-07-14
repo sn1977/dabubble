@@ -8,6 +8,7 @@ export class ChannelMessage {
   attachment?: string[];
   threads: number;
   recipient?: string;
+  tags: { read: boolean; user: string }[] = [];
   
   constructor(obj?: any) {
     this.channelId = obj ? obj.channelId : '';    
@@ -18,6 +19,7 @@ export class ChannelMessage {
     this.attachment = obj ? obj.attachment : [];
     this.threads = obj ? obj.threads : 0;
     this.recipient = obj ? obj.recipient : '';
+    this.tags = obj ? obj.tags : [];
   }
 
   public toJSON() {
@@ -30,6 +32,7 @@ export class ChannelMessage {
       attachment: this.attachment,
       threads: this.threads,
       recipient: this.recipient,
+      tags: this.tags,
     };
   }
 }

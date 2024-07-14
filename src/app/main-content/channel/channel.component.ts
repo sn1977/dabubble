@@ -134,7 +134,7 @@ export class ChannelComponent implements OnInit {
     await this.waitForUserData();
     await this.getActiveUser();
 
-    this.route.paramMap.subscribe((paramMap) => {
+    this.route.paramMap.subscribe((paramMap) => {      
       this.itemID = paramMap.get('id');
       this.textBoxData.messageText = '';
       this.textBoxData.inputField = '';

@@ -96,7 +96,7 @@ export class DirectMessageComponent implements OnInit {
      */
     async ngOnInit(): Promise<void> {
         this.setupComponent();
-        this.routeSubscription = this.route.paramMap.subscribe(
+        this.routeSubscription = this.route.paramMap.subscribe(            
             async (paramMap) => {
                 this.resetTextBox();
                 this.itemID = paramMap.get("id");                

@@ -32,6 +32,7 @@ export class TextBoxComponent implements AfterViewInit {
   firestore = inject(FirestoreService);
   message: ChannelMessage = new ChannelMessage();
   reactions = [];
+  tags: { read: boolean; user: string }[] = [];
   selectedFiles: FileList | undefined | null;
   file: any = undefined;
   filedate: number | undefined;
@@ -84,13 +85,20 @@ export class TextBoxComponent implements AfterViewInit {
    * Prepare for save a new message after Submit
    */
   async onSubmit() {
-    this.matchMedia.showSearchDropdown = false;      
-    if (this.messageText.nativeElement.value != '' || this.textBoxData.inputField != '') {
+    this.matchMedia.showSearchDropdown = false;
+    if (
+      this.messageText.nativeElement.value != '' ||
+      this.textBoxData.inputField != ''
+    ) {
       this.noInput = false;
       this.textBoxData.subcollection;
       await this.setMessageContent();
 
-      if (this.isNewMessage || this.isNewMessage === undefined || this.matchMedia.inputValid) {
+      if (
+        this.isNewMessage ||
+        this.isNewMessage === undefined ||
+        this.matchMedia.inputValid
+      ) {
         this.storeNewMessage();
       }
       await this.resetValuesAfterStore();
@@ -105,8 +113,10 @@ export class TextBoxComponent implements AfterViewInit {
   storeNewMessage() {
     let type: string | undefined;
     let colID = '';
-    type = (this.textBoxData.subcollection != 'channelmessages') ? 'thread' : type;
-    colID = (this.matchMedia.collectionType === 'messages') ? 'messages' : 'channels';
+    type =
+      this.textBoxData.subcollection != 'channelmessages' ? 'thread' : type;
+    colID =
+      this.matchMedia.collectionType === 'messages' ? 'messages' : 'channels';
 
     this.firestore.addChannelMessage(
       this.message,
@@ -128,6 +138,7 @@ export class TextBoxComponent implements AfterViewInit {
       attachment: [`${this.textBoxData.inputField}`],
       threads: 0,
       recipient: this.textBoxData.recipient,
+      tags: this.tags,
     });
   }
 
@@ -140,6 +151,10 @@ export class TextBoxComponent implements AfterViewInit {
     this.file = undefined;
     this.textBoxData.messageText = '';
     this.messageText.nativeElement.value = '';
+    this.showChannelDropdown = false;
+    this.showUserDropdown = false;
+    this.tags = [];
+
     this.resetTextareaHeight();
     if (this.isNewMessage === false && this.matchMedia.inputValid === true) {
       this.matchMedia.newMessage = true;
@@ -258,15 +273,13 @@ export class TextBoxComponent implements AfterViewInit {
    * Submit on enter
    * Show User-Dropdown on @-char
    */
-  checkKeys(event: any){
-    if(event.key === 'Enter'){      
+  checkKeys(event: any) {
+    if (event.key === 'Enter') {
       this.submitForm(event);
-    }
-    else if(event.key === '@'){
+    } else if (event.key === '@') {
       this.showUserDropdown = true;
       this.showChannelDropdown = false;
-    }
-    else if(event.key === '#'){
+    } else if (event.key === '#') {
       this.showChannelDropdown = true;
       this.showUserDropdown = false;
     }
@@ -275,41 +288,59 @@ export class TextBoxComponent implements AfterViewInit {
   /**
    * Open Dropdown and add @-char
    */
-  openUserDropdown(){
-    if(!this.showUserDropdown){      
+  openUserDropdown() {
+    if (!this.showUserDropdown) {
       this.showUserDropdown = true;
-      this.messageText.nativeElement.value = this.messageText.nativeElement.value + '@';
+      this.messageText.nativeElement.value =
+        this.messageText.nativeElement.value + '@';
     }
   }
 
   /**
    * Hide Dropdown and remove @-char if input ends with @-char
    */
-  hideUserDropdown(){
+  hideUserDropdown() {
     this.showUserDropdown = false;
-    if(this.messageText.nativeElement.value.endsWith('@')){
-      this.messageText.nativeElement.value = this.messageText.nativeElement.value.slice(0,-1);      
-      
+    if (this.messageText.nativeElement.value.endsWith('@')) {
+      this.messageText.nativeElement.value =
+        this.messageText.nativeElement.value.slice(0, -1);
     }
   }
 
   /**
    * Hide Dropdown and remove @-char if input ends with @-char
    */
-  hideChannelDropdown(){
+  hideChannelDropdown() {
     this.showChannelDropdown = false;
-    if(this.messageText.nativeElement.value.endsWith('#')){
-      this.messageText.nativeElement.value = this.messageText.nativeElement.value.slice(0,-1);      
-      
+    if (this.messageText.nativeElement.value.endsWith('#')) {
+      this.messageText.nativeElement.value =
+        this.messageText.nativeElement.value.slice(0, -1);
     }
   }
 
   /**
    * Add user to input and hide Dropdown
    */
-  selectUser(user: string){
-    this.showUserDropdown = false;    
-    this.messageText.nativeElement.value = this.messageText.nativeElement.value + user.slice(1);
+  selectUser(user: string, id: string) {
+    this.showUserDropdown = false;
+    this.showChannelDropdown = false;
+    this.messageText.nativeElement.value =
+      this.messageText.nativeElement.value + user.slice(1);
+    if (id) {
+      this.addUserTag(id);
+    }
+  }
+
+  /**
+   * Add user to input and hide Dropdown
+   */
+  addUserTag(id: string) {
+    const newTag: { read: boolean; user: string } = {
+      read: true,
+      user: id,
+    };
+
+    this.tags.push(newTag);
   }
 
   /**

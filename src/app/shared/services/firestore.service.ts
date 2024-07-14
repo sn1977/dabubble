@@ -227,6 +227,7 @@ export class FirestoreService {
             attachment: obj.attachment,
             threads: obj.threads,
             recipient: obj.recipient,
+            tags: obj.tags,
         };
     }
 
