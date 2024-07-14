@@ -241,30 +241,30 @@ mat-card {
 }
 
 .intro-start {
-  animation: introAnimation 4.3s ease-out 0s forwards;
+  animation: introAnimation 2.8s ease-out 0s forwards;
 }
 
 .logo-animated-start {
-  animation: logoAnimation 0.4s ease-out 3.5s forwards;
+  animation: logoAnimation 0.4s ease-out 2.5s forwards;
 
   img {
-    animation: imgAnimation 3s ease-out 0.6s forwards;
+    animation: imgAnimation 2.5s ease-out 0.6s forwards;
   }
 
   .logo-name-animated-start {
-    animation: textAnimation 3s ease-out 1s forwards;
+    animation: textAnimation 2.5s ease-out 1s forwards;
   }
 }
 
 .logo-animated-desktop-start {
-  animation: logoAnimationDesktop 0.4s ease-out 3.5s forwards;
+  animation: logoAnimationDesktop 0.4s ease-out 2.5s forwards;
 
   img {
-    animation: imgAnimation 3s ease-out 0.6s forwards;
+    animation: imgAnimation 2.5s ease-out 0.6s forwards;
   }
 
   .logo-name-animated-desktop-start {
-    animation: textAnimation 3s ease-out 1s forwards;
+    animation: textAnimation 2.5s ease-out 1s forwards;
   }
 }
 
