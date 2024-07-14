@@ -283,11 +283,17 @@ export class ChannelComponent implements OnInit {
   }
 
   /**
-   * Closes the overlay with the specified ID.
-   * @param overlayId - The ID of the overlay to close.
+   * Closes the overlay.
+   * @param event - The optional mouse event that triggered the close action.
    */
-  closeOverlay(overlayId: string): void {
-    const overlay = document.getElementById(overlayId) as HTMLElement;
+  closeOverlay(event?: MouseEvent): void {
+    if (event) {
+      const overlayContent = document.querySelector('.overlay-content');
+      if (overlayContent && overlayContent.contains(event.target as Node)) {
+        return;
+      }
+    }
+    const overlay = document.getElementById('overlay1');
     if (overlay) {
       overlay.style.display = 'none';
     }
@@ -331,7 +337,7 @@ export class ChannelComponent implements OnInit {
    */
   openDialog(user: User, itemId: string) {
     this.dialogService.openDirectMessageDialog(user, itemId);
-    this.closeOverlay('overlay1');
+    this.closeOverlay();
   }
 
   /**

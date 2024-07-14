@@ -80,15 +80,15 @@
     <app-text-box [textBoxData]="textBoxData" [isThread]="false"></app-text-box>
 </div>
 
-<div id="overlay1" style="display: none" class="overlay">
-    <div class="overlay-content">
+<div id="overlay1" style="display: none" class="overlay" (click)="closeOverlay($event)">
+    <div class="overlay-content" (click)="$event.stopPropagation()">
         <div class="display-flex">
             <h1 class="no-margin">Mitglieder</h1>
             <span>
                 <img
                     src="./assets/img/icon/close.svg"
                     alt=""
-                    (click)="closeOverlay('overlay1')" />
+                    (click)="closeOverlay()" />
             </span>
         </div>
         <div class="members">
@@ -114,7 +114,7 @@
 
             <div
                 class="profil"
-                (click)="closeOverlay('overlay1'); toggleOverlay('overlay')">
+                (click)="closeOverlay(); toggleOverlay('overlay')">
                 <img
                     class="height"
                     src="./assets/img/icon/add_member.svg"
