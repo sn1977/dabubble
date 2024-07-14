@@ -510,8 +510,6 @@ export class ConversationComponent implements OnInit, AfterViewInit, OnDestroy {
   saveMessage() {
     this.toggleTextBox();
 
-    console.log(this.channelMessage);
-
     if (this.channelMessage.messageId !== undefined) {
       let colId = 'channels';
 
