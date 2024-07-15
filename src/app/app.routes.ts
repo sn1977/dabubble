@@ -6,7 +6,7 @@ import { RegisterComponent } from './main-content/auth/register/register.compone
 import { LogInComponent } from './main-content/auth/log-in/log-in.component';
 import { AddChannelComponent } from './main-content/channel/add-channel/add-channel.component';
 import { ChannelComponent } from './main-content/channel/channel.component';
-// import { IsAdminGuard } from './shared/services/authguard.service';
+import { IsAdminGuard } from './shared/services/authguard.service';
 import { SendEmailComponent } from './main-content/auth/send-email/send-email.component';
 import { ResetPasswordComponent } from './main-content/auth/reset-password/reset-password.component';
 import { NewMessageComponent } from './main-content/new-message/new-message.component';
@@ -18,19 +18,19 @@ import { EmailComponent } from './main-content/auth/email/email.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'main', component: MainContentComponent },
+  { path: 'main', component: MainContentComponent, canActivate:[IsAdminGuard] },
   { path: 'imprint', component: ImprintComponent },
   { path: 'privacy-policy', component: PrivacyPolicyComponent },
-  { path: 'add-channel', component: AddChannelComponent },
+  { path: 'add-channel', component: AddChannelComponent, canActivate:[IsAdminGuard] },
   { path: 'register', component: RegisterComponent },
-  { path: 'email/__/auth/action', component: EmailComponent },
+  { path: 'email/__/auth/action', component: EmailComponent },  
   { path: 'choose-avatar', component: ChooseAvatarComponent },
   { path: 'login', component: LogInComponent },
   { path: 'send-email', component: SendEmailComponent },
-  { path: 'reset-password', component: ResetPasswordComponent },
-  { path: 'channel/:id', component: ChannelComponent },
-  { path: 'direct-message/:id', component: DirectMessageComponent },
-  { path: 'new-message', component: NewMessageComponent },
-  { path: 'channel-edition/:id', component: ChannelEditionComponent },
-  { path: 'thread', component: ThreadComponent },
+  { path: 'reset-password', component: ResetPasswordComponent },  
+  { path: 'channel/:id', component: ChannelComponent, canActivate:[IsAdminGuard] },  
+  { path: 'direct-message/:id', component: DirectMessageComponent, canActivate:[IsAdminGuard] },
+  { path: 'new-message', component: NewMessageComponent, canActivate:[IsAdminGuard]},
+  { path: 'channel-edition/:id', component: ChannelEditionComponent, canActivate:[IsAdminGuard]},  
+  { path: 'thread', component: ThreadComponent, canActivate:[IsAdminGuard]},
 ];
