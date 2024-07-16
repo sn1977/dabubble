@@ -125,6 +125,8 @@
     </div>
 </div>
 
-<div id="overlay" style="display: none" class="overlay">
-    <app-search-user></app-search-user>
+<div id="overlay" style="display: none" class="overlay" (click)="closeOverlay($event)">
+    <div (click)="$event.stopPropagation()">
+        <app-search-user></app-search-user>
+    </div>
 </div>

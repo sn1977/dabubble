@@ -173,12 +173,30 @@ export class ChannelEditionComponent implements OnInit {
      * Closes the overlay with the specified ID.
      * @param overlayId - The ID of the overlay to close.
      */
-    closeOverlay(overlayId: string): void {
+    ycloseOverlay(overlayId: string): void {
         const overlay = document.getElementById(overlayId) as HTMLElement;
         if (overlay) {
             overlay.style.display = "none";
         }
     }
+
+    /**
+   * Closes the overlay.
+   * @param event - The optional mouse event that triggered the close action.
+   */
+  closeOverlay(event?: MouseEvent): void {
+    if (event) {
+      const overlayContent = document.querySelector('.overlay-content');
+      if (overlayContent && overlayContent.contains(event.target as Node)) {
+        return;
+      }
+    }    
+    const overlay = document.getElementById('overlay');    
+    if (overlay) {       
+      overlay.style.display = 'none';      
+    }
+    
+  }
 
     /**
      * Initializes the component and performs necessary setup tasks.

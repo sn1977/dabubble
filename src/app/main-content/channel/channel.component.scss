@@ -79,6 +79,8 @@ h1 {
 }
 
 .members {
+    max-height: 65vh;
+    overflow-y: scroll;
     @include dFlex($jc: flex-start, $ai: flex-start, $fd: column, $g: 16px);
     padding: 20px;
 }

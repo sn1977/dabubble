@@ -292,11 +292,15 @@ export class ChannelComponent implements OnInit {
       if (overlayContent && overlayContent.contains(event.target as Node)) {
         return;
       }
+    }    
+    const overlay1 = document.getElementById('overlay1');    
+    if (overlay1) {       
+      overlay1.style.display = 'none';      
     }
-    const overlay = document.getElementById('overlay1');
-    if (overlay) {
-      overlay.style.display = 'none';
-    }
+    const overlay = document.getElementById('overlay');
+    if (overlay) {       
+      overlay.style.display = 'none';      
+    }    
   }
 
   /**
