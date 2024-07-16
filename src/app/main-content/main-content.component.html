@@ -47,22 +47,22 @@
             <div
                 class="channel-name pointer"
                 [ngClass]="
-                    this.matchMedia.channelName == channel.name
+                    this.matchMedia.channelId == channel.id
                         ? 'selected-menu-item'
                         : ''
                 "
                 [id]="channel.id"
-                (click)="openChannel($event, 'channel', channel.name)">
+                (click)="openChannel($event, 'channel', channel.name, channel.id)">
                 <div class="pf">
                     <span
                         class="channel-tag"
                         [ngStyle]="{
                             'font-weight':
-                                this.matchMedia.channelName != channel.name
+                                this.matchMedia.channelId != channel.id
                                     ? '400'
                                     : '700',
                             color:
-                                this.matchMedia.channelName != channel.name
+                                this.matchMedia.channelId != channel.id
                                     ? '#000000'
                                     : '#535af1'
                         }"
@@ -71,11 +71,11 @@
                     <span
                         [ngStyle]="{
                             'font-weight':
-                                this.matchMedia.channelName != channel.name
+                                this.matchMedia.channelId != channel.id
                                     ? '400'
                                     : '700',
                             color:
-                                this.matchMedia.channelName != channel.name
+                                this.matchMedia.channelId != channel.id
                                     ? '#000000'
                                     : '#535af1'
                         }"
@@ -121,8 +121,8 @@
                 <div
                     class="user-name pointer"
                     [ngClass]="
-                        this.matchMedia.channelName ==
-                        authService.activeUserAccount.displayName
+                        this.matchMedia.channelId ==
+                        this.authService.activeUserId
                             ? 'selected-menu-item'
                             : ''
                     "
@@ -131,7 +131,8 @@
                         openChannel(
                             $event,
                             'direct-message',
-                            authService.activeUserAccount.displayName
+                            authService.activeUserAccount.displayName,
+                            this.authService.activeUserId
                         )
                     ">
                     <div class="pf">
@@ -151,13 +152,13 @@
                         <span
                             [ngStyle]="{
                                 'font-weight':
-                                    this.matchMedia.channelName !=
-                                    authService.activeUserAccount.displayName
+                                    this.matchMedia.channelId !=
+                                    authService.activeUserId
                                         ? '400'
                                         : '700',
                                 color:
-                                    this.matchMedia.channelName !=
-                                    authService.activeUserAccount.displayName
+                                    this.matchMedia.channelId !=
+                                    authService.activeUserId
                                         ? '#000000'
                                         : '#535af1'
                             }"
@@ -165,15 +166,13 @@
                             <span
                                 [ngStyle]="{
                                     'font-weight':
-                                        this.matchMedia.channelName !=
-                                        authService.activeUserAccount
-                                            .displayName
+                                        this.matchMedia.channelId !=
+                                        authService.activeUserId
                                             ? '400'
                                             : '700',
                                     color:
-                                        this.matchMedia.channelName !=
-                                        authService.activeUserAccount
-                                            .displayName
+                                        this.matchMedia.channelId !=
+                                        authService.activeUserId
                                             ? '#000000'
                                             : '#535af1'
                                 }">
@@ -188,13 +187,13 @@
                 <div
                     class="user-name"
                     [ngClass]="
-                        this.matchMedia.channelName == user.displayName
+                        this.matchMedia.channelId == user.id
                             ? 'selected-menu-item'
                             : ''
                     "
                     [id]="user.id"
                     (click)="
-                        openChannel($event, 'direct-message', user.displayName)
+                        openChannel($event, 'direct-message', user.displayName, user.id)
                     ">
                     <div class="pf">
                         <img src="{{ user.avatar }}" />
@@ -213,13 +212,13 @@
                         <span
                             [ngStyle]="{
                                 'font-weight':
-                                    this.matchMedia.channelName !=
-                                    user.displayName
+                                    this.matchMedia.channelId !=
+                                    user.id
                                         ? '400'
                                         : '700',
                                 color:
-                                    this.matchMedia.channelName !=
-                                    user.displayName
+                                    this.matchMedia.channelId !=
+                                    user.id
                                         ? '#000000'
                                         : '#535af1'
                             }"

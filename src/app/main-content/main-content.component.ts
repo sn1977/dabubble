@@ -23,7 +23,6 @@ import { CommonModule, NgForOf, NgIf } from "@angular/common";
 import { ChannelMessage } from "../../models/channel-message.class";
 import { SearchInputComponent } from "../shared/components/search-input/search-input.component";
 import { MatchMediaService } from "../shared/services/match-media.service";
-import { timeout } from "rxjs";
 
 @Component({
     selector: "app-main-content",
@@ -176,10 +175,11 @@ export class MainContentComponent implements OnInit {
      * @param path - The path to navigate to.
      * @param name - The name of the channel.
      */
-    openChannel(event: MouseEvent, path: string, name: string) {
+    openChannel(event: MouseEvent, path: string, name: string, id: string) {
         name = name.replace(/^[#]/, '');        
         this.matchMedia.loading = true;
         this.matchMedia.channelName = name;
+        this.matchMedia.channelId = id;
         this.matchMedia.showThread = false;
         this.matchMedia.showSearchDropdown = false;
         this.firestore.conversation = "";
