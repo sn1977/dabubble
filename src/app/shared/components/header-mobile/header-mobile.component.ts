@@ -6,6 +6,7 @@ import {
     Input,
     OnInit,
     ViewChild,
+    Renderer2
 } from "@angular/core";
 import { MatBottomSheet } from "@angular/material/bottom-sheet";
 import { BottomSheetComponent } from "../bottom-sheet/bottom-sheet.component";
@@ -43,13 +44,16 @@ export class HeaderMobileComponent implements OnInit {
         private headerStateService: HeaderStateService,
         private _location: Location,
         private router: Router,
-        private cd: ChangeDetectorRef
+        private cd: ChangeDetectorRef,
+        private renderer: Renderer2,
+        private elRef: ElementRef
     ) {}
 
     /**
      * Initializes the component.
-     * This method is called after the component's data-bound properties have been initialized.
-     * It waits for user data, performs some tests, and subscribes to the alternativeHeader observable.
+     * This method is called after the component's data-bound properties have been initialized,
+     * and the component's view has been fully initialized.
+     * It is used to perform any additional initialization tasks.
      * @returns A promise that resolves when the initialization is complete.
      */
     async ngOnInit(): Promise<void> {
@@ -59,6 +63,14 @@ export class HeaderMobileComponent implements OnInit {
         this.headerStateService.alternativeHeader$.subscribe((value) => {
             this.alternativeHeader = value;
         });
+
+        // Add document click listener
+        this.renderer.listen('document', 'click', (event: Event) => {
+          const targetElement = event.target as HTMLElement;
+          if (this.overlayVisible && !this.elRef.nativeElement.contains(targetElement)) {
+              this.closeOverlay();
+          }
+      });
     }
 
     /**
