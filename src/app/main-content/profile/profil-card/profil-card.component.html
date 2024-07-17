@@ -24,7 +24,7 @@
     <div>
       <div class="user">
         <span>{{ data.user.displayName }}</span>
-        @if(data.user.displayName !== 'Gastbenutzer'){
+        @if(data.user.displayName !== 'Gast'){
         <div class="edit-icon" (click)="openEditProfileCard()">
           <img
             ngSrc="./assets/img/icon/edit.png"
@@ -58,7 +58,7 @@
     </div>
   </mat-card-content>
 
-  @if(data.user.displayName === 'Gastbenutzer'){
+  @if(data.user.displayName === 'Gast'){
   <mat-card-content>
     <div class="required">      
         Daten vom Gast können nicht geändert werden.
