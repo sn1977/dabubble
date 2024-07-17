@@ -149,6 +149,22 @@ export class LogInComponent implements OnInit {
   }
 
   /**
+   * Performs an guest login.
+   */
+  guestLogin(): void {
+    this.authService
+      .login('gast@dabubble.com', 'gastlogin')
+      .subscribe({
+        next: () => {
+          this.router.navigateByUrl('/main');
+        },
+        error: (err) => {
+          this.errorMessage = err.code;
+        },
+      });
+  }
+
+  /**
    * Redirects the user to the main page.
    */
   redirectToMain() {
