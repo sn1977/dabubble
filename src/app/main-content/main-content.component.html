@@ -221,8 +221,12 @@
                                     user.id
                                         ? '#000000'
                                         : '#535af1'
-                            }"
-                            >{{ user.displayName.slice(1) }}
+                            }">
+                            @if( user.displayName.startsWith('@')){
+                                {{ user.displayName.slice(1) }}
+                            } @else {
+                                {{ user.displayName }}
+                            }
                         </span>
                     </div>
                 </div>
