@@ -79,7 +79,12 @@
                                     ? '#000000'
                                     : '#535af1'
                         }"
-                        >{{ channel.name.slice(1) }}
+                        >
+                        @if( channel.name.startsWith('#')){
+                            {{ channel.name.slice(1) }}
+                        } @else {
+                            {{ channel.name }}
+                        }
                     </span>
                 </div>
             </div>
@@ -162,7 +167,11 @@
                                         ? '#000000'
                                         : '#535af1'
                             }"
-                            >{{ user.displayName }}
+                            >@if( user.displayName!.startsWith('@')){
+                                {{ user.displayName!.slice(1) }}
+                            } @else {
+                                {{ user.displayName }}
+                            }
                             <span
                                 [ngStyle]="{
                                     'font-weight':
