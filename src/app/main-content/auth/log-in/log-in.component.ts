@@ -153,7 +153,7 @@ export class LogInComponent implements OnInit {
    */
   guestLogin(): void {
     this.authService
-      .login('gast@dabubble.com', 'gastlogin')
+      .login('gast@dabubble.com', 'gast1Login')
       .subscribe({
         next: () => {
           this.router.navigateByUrl('/main');
