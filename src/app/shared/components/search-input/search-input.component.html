@@ -3,7 +3,7 @@
         type="text"
         name="text"
         [(ngModel)]="textData.text"
-        (ngModelChange)="startSearching(textData.text)"
+        (ngModelChange)="startSearching(textData.text)"                
         [class.input-has-value]="inputHasValue"
         placeholder="{{ placeholder }}"
         required
@@ -13,7 +13,7 @@
             border: isDesktop ? '1px solid #FFFFFF' : '1px solid #ADB0D9'
         }" />
     @if(this.matchMedia.showSearchDropdown){
-    <div class="dropdown-menu">
+    <div appClickOutside (clickOutside)="handleOutsideClick()" class="dropdown-menu">
         <div class="scroll">
             <div *ngFor="let type of groupedData | keyvalue">
                 <div class="selection">

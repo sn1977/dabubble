@@ -4,6 +4,8 @@ import { MatchMediaService } from '../../services/match-media.service';
 import { CommonModule } from '@angular/common';
 import { FirestoreService } from '../../services/firestore.service';
 import { Router } from '@angular/router';
+import { ClickOutsideDirective } from '../../directives/clickoutside.directive';
+
 
 @Component({
   selector: 'app-search-input',
@@ -101,6 +103,11 @@ export class SearchInputComponent implements OnInit {
     await this.groupDataByType();
   }
 
+  handleOutsideClick() {
+    console.log('Klick außerhalb des Dropdowns');
+    // Deine Logik hier
+  }
+
   /**
    * Remove duplicates from array.
    * @returns unique values.
@@ -152,12 +159,12 @@ export class SearchInputComponent implements OnInit {
    * Resets the search state.
    * @param name - The channel name.
   */
- async resetSearchState(name: string) {
-    name = name.replace(/^[#@]/, '');
+ async resetSearchState(name: string) {  
+    name = name!.replace(/^[#@]/, '');
+    this.matchMedia.channelName = name;
     this.matchMedia.showSearchDropdown = false;
     this.textData.text = '';
-    this.matchMedia.loading = true;    
-    this.matchMedia.channelName = name;
+    this.matchMedia.loading = true;
     this.firestore.conversation = '';
     this.matchMedia.scrollToBottom = true;
     this.matchMedia.hideReactionIcons = true;
