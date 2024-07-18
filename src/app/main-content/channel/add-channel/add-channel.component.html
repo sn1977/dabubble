@@ -51,7 +51,7 @@
                 Erstellen
             </button>
         </div>
-        <div id="overlay" class="overlay" [class.show-overlay]="overlayVisible">
+        <div id="overlay" class="overlay" [class.show-overlay]="overlayVisible" appClickOutside (clickOutside)="handleOutsideClick()">
             <div class="pos-overlay">
                 <div class="overlay-content">
                     <div class="channel-header">

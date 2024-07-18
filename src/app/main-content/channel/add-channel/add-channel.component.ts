@@ -8,10 +8,11 @@ import { User } from "../../../../models/user.class";
 import { Channel } from "../../../../models/channel.class";
 import { AuthService } from "../../../shared/services/auth.service";
 import { MatchMediaService } from "../../../shared/services/match-media.service";
+import { ClickOutsideDirective } from "../../../shared/directives/clickoutside.directive";
 @Component({
     selector: "app-add-channel",
     standalone: true,
-    imports: [NgIf, FormsModule, RouterLink, CommonModule],
+    imports: [NgIf, FormsModule, RouterLink, CommonModule, ClickOutsideDirective],
     templateUrl: "./add-channel.component.html",
     styleUrl: "./add-channel.component.scss",
 })
@@ -280,5 +281,11 @@ export class AddChannelComponent implements OnInit {
      */
     getInputValue(event: any): string {
         return event && event.target && event.target.value;
+    }
+
+    handleOutsideClick() {
+      console.log('Klick außerhalb des Dropdowns');
+      // this.overlayVisible = false;
+      // this.toggleOverlay();
     }
 }

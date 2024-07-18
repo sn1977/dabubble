@@ -103,8 +103,11 @@ export class SearchInputComponent implements OnInit {
     await this.groupDataByType();
   }
 
+  /**
+   * Handles the outside click event for the search input component.
+   * This method is called when a click event occurs outside the dropdown.
+   */
   handleOutsideClick() {
-    console.log('Klick außerhalb des Dropdowns');
     this.matchMedia.showSearchDropdown = false;
   }
 
