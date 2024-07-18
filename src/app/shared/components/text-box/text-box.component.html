@@ -143,7 +143,7 @@
     @if(showUserDropdown){
     <div class="dropdown-menu">
       <div class="scroll">
-        <div class="selection">
+        <div class="selection" appClickOutside (clickOutside)="handleOutsideClick()">
           <div class="type">
             <span>Benutzer</span>
             <span class="menu-icon-hover pointer">

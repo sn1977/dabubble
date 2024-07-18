@@ -19,11 +19,12 @@ import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { MatDialog } from '@angular/material/dialog';
 import { EmojiPickerComponent } from '../emoji-picker/emoji-picker.component';
 import { MatchMediaService } from '../../services/match-media.service';
+import { ClickOutsideDirective } from '../../directives/clickoutside.directive';
 
 @Component({
   selector: 'app-text-box',
   standalone: true,
-  imports: [CommonModule, FormsModule, PickerComponent],
+  imports: [CommonModule, FormsModule, PickerComponent, ClickOutsideDirective],
   templateUrl: './text-box.component.html',
   styleUrl: './text-box.component.scss',
 })
@@ -376,4 +377,14 @@ export class TextBoxComponent implements AfterViewInit {
   isEven(index: number): boolean {
     return index % 2 === 0;
   }
+
+    /**
+   * Handles the outside click event for the search input component.
+   * This method is called when a click event occurs outside the dropdown.
+   */
+    handleOutsideClick() {
+      console.log('Klick außerhalb des Dropdowns');
+      // this.hideChannelDropdown();
+      // this.showChannelDropdown = false;
+    }
 }
