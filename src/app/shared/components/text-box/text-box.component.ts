@@ -382,11 +382,8 @@ export class TextBoxComponent implements AfterViewInit {
    * Handles the outside click event for the search input component.
    * This method is called when a click event occurs outside the dropdown.
    */
-    handleOutsideClick() {
-      // console.log('Klick außerhalb des Dropdowns');
-      this.hideChannelDropdown();
-      // this.showChannelDropdown = false;
-      // this.showUserDropdown = false;
+    handleOutsideClick() {      
+      this.hideChannelDropdown();      
       this.hideUserDropdown();
     }
 }

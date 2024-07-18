@@ -7,8 +7,6 @@ import { CommonModule } from "@angular/common";
 import { User } from "../../../../models/user.class";
 import { Channel } from "../../../../models/channel.class";
 import { AuthService } from "../../services/auth.service";
-//NOTE - Not working yet
-import { ClickOutsideDirective } from "../../directives/clickoutside.directive";
 
 @Component({
     selector: "app-search-user",

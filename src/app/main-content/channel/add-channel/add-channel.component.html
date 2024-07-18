@@ -47,19 +47,22 @@
             placeholder="Dein Text hier" />
 
         <div class="btn-pos">
-            <button type="button" class="add-button" (click)="toggleOverlay()">
+            <button type="button" class="add-button" (click)="showOverlay()">
                 Erstellen
             </button>
-        </div>
-        <div id="overlay" class="overlay" [class.show-overlay]="overlayVisible" appClickOutside (clickOutside)="handleOutsideClick()">
+        </div>        
+        @if(overlayVisible){        
+        <div id="overlay" class="overlay show-overlay">
             <div class="pos-overlay">
-                <div class="overlay-content">
+                <div class="overlay-content" appClickOutside (clickOutside)="handleOutsideClick()">
                     <div class="channel-header">
                         <h1>Leute hinzufügen</h1>
-                        <img
+                        <span>
+                            <img
                             src="./assets/img/icon/close.svg"
                             alt=""
-                            (click)="toggleOverlay()" />
+                            (click)="closeOverlay()" />
+                        </span>
                     </div>
                     <div class="checkbox-container">
                         <input
@@ -153,5 +156,6 @@
                 </div>
             </div>
         </div>
+    }
     </form>
 </div>
