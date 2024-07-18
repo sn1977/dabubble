@@ -141,9 +141,9 @@
       }
     </div>
     @if(showUserDropdown){
-    <div class="dropdown-menu">
+    <div class="dropdown-menu" appClickOutside (clickOutside)="handleOutsideClick()">
       <div class="scroll">
-        <div class="selection" appClickOutside (clickOutside)="handleOutsideClick()">
+        <div class="selection">
           <div class="type">
             <span>Benutzer</span>
             <span class="menu-icon-hover pointer">
@@ -169,7 +169,7 @@
     </div>
     }
     @if(showChannelDropdown){
-      <div class="dropdown-menu">
+      <div class="dropdown-menu" appClickOutside (clickOutside)="handleOutsideClick()">
         <div class="scroll">
           <div class="selection">
             <div class="type">

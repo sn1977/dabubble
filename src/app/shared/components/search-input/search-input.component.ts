@@ -5,12 +5,14 @@ import { CommonModule } from '@angular/common';
 import { FirestoreService } from '../../services/firestore.service';
 import { Router } from '@angular/router';
 import { ClickOutsideDirective } from '../../directives/clickoutside.directive';
-
-
 @Component({
   selector: 'app-search-input',
   standalone: true,
-  imports: [FormsModule, CommonModule, ClickOutsideDirective],
+  imports: [
+    FormsModule, 
+    CommonModule, 
+    ClickOutsideDirective
+  ],
   templateUrl: './search-input.component.html',
   styleUrl: './search-input.component.scss',
 })
@@ -109,6 +111,7 @@ export class SearchInputComponent implements OnInit {
    */
   handleOutsideClick() {
     this.matchMedia.showSearchDropdown = false;
+    this.textData.text = '';
   }
 
   /**
