@@ -287,14 +287,13 @@ export class TextBoxComponent implements AfterViewInit {
   }
 
   /**
-   * Open Dropdown and add @-char
+   * Open Dropdown and add @-char after delay of 500ms (because of handleOutsideClick)
    */
-  openUserDropdown() {
-    if (!this.showUserDropdown) {
+  openUserDropdown() {    
+    setTimeout(() => {
       this.showUserDropdown = true;
-      this.messageText.nativeElement.value =
-        this.messageText.nativeElement.value + '@';
-    }
+      this.messageText.nativeElement.value = this.messageText.nativeElement.value + '@';      
+    }, 500);
   }
 
   /**
@@ -378,12 +377,12 @@ export class TextBoxComponent implements AfterViewInit {
     return index % 2 === 0;
   }
 
-    /**
+  /**
    * Handles the outside click event for the search input component.
    * This method is called when a click event occurs outside the dropdown.
    */
-    handleOutsideClick() {      
-      this.hideChannelDropdown();      
-      this.hideUserDropdown();
-    }
+  handleOutsideClick() {
+    this.hideUserDropdown();
+    this.hideChannelDropdown();    
+  }
 }
