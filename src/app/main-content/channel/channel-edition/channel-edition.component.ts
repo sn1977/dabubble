@@ -194,8 +194,7 @@ export class ChannelEditionComponent implements OnInit {
     const overlay = document.getElementById('overlay');    
     if (overlay) {       
       overlay.style.display = 'none';      
-    }
-    
+    }    
   }
 
     /**
@@ -322,4 +321,17 @@ export class ChannelEditionComponent implements OnInit {
     filterUsersById(usersArray: any[], idsArray: string | any[]) {
         return usersArray.filter((user) => idsArray.includes(user.id));
     }
+
+    /**
+   * Retrieves the username by the given user ID.
+   * @param id - The ID of the user.
+   * @returns The username associated with the given ID, or undefined if no user is found.
+   */
+  getUserNameById(id: string): string | undefined {
+    const user = this.firestore.userList.find(
+      (user: { id: string }) => user.id === id
+    );
+    return user ? user.displayName : undefined;
+  }
+
 }

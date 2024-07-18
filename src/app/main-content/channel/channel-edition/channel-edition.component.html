@@ -99,7 +99,8 @@
                 <div class="horizontal-line"></div>
                 <div>
                     <p>Erstellt von</p>
-                    <p class="color">{{ user.displayName }}</p>
+                    <p class="color">{{ getUserNameById(channelData.creator)?.slice(1) }}</p>
+
                 </div>
             </div>
             <!-- Mitglieder von Firebase -->
@@ -145,18 +146,13 @@
                     Channel Verlassen
                 </button>
             </div>
-            <div class="space"></div>
-            
+            <div class="space"></div>            
             
             <div id="overlay" style="display: none" class="overlay" (click)="closeOverlay($event)">
                 <div (click)="$event.stopPropagation()">
                     <app-search-user></app-search-user>
                 </div>
             </div>
-
-            <!-- <div id="overlay" class="overlay" style="display: none">
-                <app-search-user></app-search-user>
-            </div> -->
         </main>
     </form>
 </div>
