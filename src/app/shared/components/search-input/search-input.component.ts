@@ -10,7 +10,7 @@ import { ClickOutsideDirective } from '../../directives/clickoutside.directive';
 @Component({
   selector: 'app-search-input',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, ClickOutsideDirective],
   templateUrl: './search-input.component.html',
   styleUrl: './search-input.component.scss',
 })
@@ -105,7 +105,7 @@ export class SearchInputComponent implements OnInit {
 
   handleOutsideClick() {
     console.log('Klick außerhalb des Dropdowns');
-    // Deine Logik hier
+    this.matchMedia.showSearchDropdown = false;
   }
 
   /**
