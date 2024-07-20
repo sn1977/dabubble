@@ -262,10 +262,10 @@ export class TextBoxComponent implements AfterViewInit {
    * It is called only once after the first `ngAfterContentChecked`.
    * Use this hook to perform any additional initialization tasks that require the view to be fully rendered.
    */
-  ngAfterViewInit() {
+  async ngAfterViewInit() {
     const textarea = this.messageText.nativeElement;
     this.initialHeight = textarea.style.height || 'auto';
-    this.adjustTextareaHeight(textarea);
+    await this.adjustTextareaHeight(textarea);
     this.setFocus();
   }
 
@@ -347,7 +347,7 @@ export class TextBoxComponent implements AfterViewInit {
    * Adjusts the height of a textarea element based on its content.
    * @param textarea - The HTMLTextAreaElement to adjust the height of.
    */
-  adjustTextareaHeight(textarea: HTMLTextAreaElement) {
+  async adjustTextareaHeight(textarea: HTMLTextAreaElement) {
     textarea.style.height = 'auto';
     textarea.style.height = textarea.scrollHeight + 'px';
     textarea.focus();
