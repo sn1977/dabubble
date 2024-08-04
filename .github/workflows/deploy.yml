@@ -1,0 +1,28 @@
+on: push
+name: 🚀 Deploy website on push
+jobs:
+  web-deploy:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v2
+    
+    - name: Node 16.14.2
+      uses: actions/setup-node@v1
+      with:
+        node-version: 22.1.0
+
+    - name: Install and build
+      run: |
+        npm i
+        npm run build
+
+
+    - name: 📂 Sync files
+      uses: SamKirkland/FTP-Deploy-Action@4.3.1
+      with:
+        server: dabubble.sascha-nemeth.com
+        username: ${{ secrets.FTP_USER }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        local-dir: dist/dabubble/
